@@ -1,0 +1,45 @@
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building biovigilans web 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for opensymphony:quartz:jar:1.6.0 is missing, no dependency information available
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ biovigilans_web ---
+[INFO] Deleting C:\svnroot2\nokc\biovigilans\trunk\biovigilans_web\target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:resources (default-resources) @ biovigilans_web ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:compile (default-compile) @ biovigilans_web ---
+[INFO] Compiling 50 source files to C:\svnroot2\nokc\biovigilans\trunk\biovigilans_web\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:testResources (default-testResources) @ biovigilans_web ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:testCompile (default-testCompile) @ biovigilans_web ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ biovigilans_web ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-war-plugin:2.2:war (default-war) @ biovigilans_web ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [biovigilans_web] in [C:\svnroot2\nokc\biovigilans\trunk\biovigilans_web\target\biovigilans_web]
+[INFO] Processing war project
+[INFO] Copying webapp resources [C:\svnroot2\nokc\biovigilans\trunk\biovigilans_web\src\main\webapp]
+[INFO] Webapp assembled in [6402 msecs]
+[INFO] Building war: C:\svnroot2\nokc\biovigilans\trunk\biovigilans_web\target\biovigilans_web.war
+[INFO] WEB-INF\web.xml already added, skipping
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ biovigilans_web ---
+[INFO] Installing C:\svnroot2\nokc\biovigilans\trunk\biovigilans_web\target\biovigilans_web.war to C:\Users\olj\.m2\repository\no\kunnskapssenteret\biovigilans_web\1.0-SNAPSHOT\biovigilans_web-1.0-SNAPSHOT.war
+[INFO] Installing C:\svnroot2\nokc\biovigilans\trunk\biovigilans_web\pom.xml to C:\Users\olj\.m2\repository\no\kunnskapssenteret\biovigilans_web\1.0-SNAPSHOT\biovigilans_web-1.0-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 19.676s
+[INFO] Finished at: Tue Jun 16 13:55:05 CEST 2015
+[INFO] Final Memory: 38M/356M
+[INFO] ------------------------------------------------------------------------

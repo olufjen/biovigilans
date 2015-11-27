@@ -1,0 +1,205 @@
+<html>
+<head>
+
+  <title>Rapporter hendelse - Hemovigilans</title>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html;">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta content="Kunnskapssenteret oppsummerer forskning om effekt av helsetiltak, gjør helseøkonomiske analyser, måler kvalitet, og arbeider med kvalitetsforbedring og pasientsikkerhet. " name="description">
+
+  <link href="http://www.kunnskapssenteret.no/_public/shared/img/favicon.ico" type="image/x-icon" rel="shortcut icon">
+  <link href="http://www.kunnskapssenteret.no/_public/theme-kunnskapssenteret/css/main.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="left hidden-print">        
+        <button type="button" class="btn btn-default btn-lg">Tilbake</button>        
+      </div>
+<<<<<<< HEAD
+      <figure class="main-logo">
+        <a class="ie8-special" href="http://www.kunnskapssenteret.no/forsiden">
+          <img alt="Logo Nasjonalt kunnskapssenter for helsetjenesten" src="http://www.kunnskapssenteret.no/_public/theme-kunnskapssenteret/img/logo.png">
+        </a>
+=======
+      <figure class="main-logo">        
+        <img alt="Logo Nasjonalt kunnskapssenter for helsetjenesten" src="http://www.kunnskapssenteret.no/_public/theme-kunnskapssenteret/img/logo.png">        
+>>>>>>> logo
+      </figure>
+    </div>
+    <br />
+  </header>
+    
+<div class="container">
+
+<h1>Rapporter hendelse–Hemovigilans</h1>
+   <ul class="pager">
+    <li class="previous" title="Ved startsiden velger du ny melding eller oppfølgingsmelding "><a href="#">Start</a></li>
+    <li class="previous" title="Du er ved type hendelse. Her velger du type melding "><a href="#"><strong><span style="color:black">Type hendelse</span></strong></a></li>
+    <li class="previous" title="Her fyller du inn detaljer om meldingen "><a href="#">Hendelsesdetaljer</a></li>
+    <li class="previous" title="Her fyller du inn kontaktinformasjon "><a href="#">Kontaktinformasjon</a></li>
+    <li class="previous" title="Her vises kvitteringen for meldingen "><a href="#">Kvittering</a></li>
+  </ul> 
+<form id="rapport" action="?method=PUT" method="post"> 
+<script type="text/javascript">
+var Spinner1;
+var foo;
+function toggleDisplay(id, displayvalue)
+{    
+//	 alert("step 1 "+displayvalue);
+    if ( displayvalue == 1 ) {
+         document.getElementById(id).style.display = 'block';
+//         alert("step 2");
+    } else if (displayvalue == 0) {
+         document.getElementById(id).style.display = 'none';
+    //     alert("step 3");
+    }
+ //   alert("step 4");
+}
+function initialize()
+{
+    var SpinnerValue_Changed = function() {
+       alert("event captured");
+    };
+   
+    Spinner1 = document.getElementById("p-blod-erytrocytt");
+    foo = document.getElementById("foo");
+    alert("step 1");
+    foo.hidden ="false";
+  //  Spinner1.addEventListener("change", SpinnerValue_Changed, false);
+    alert("step 2");
+}
+//window.onload=initialize();
+</script>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+ <!--   <li class="active"><a href="#meldfra" data-toggle="tab">Meld fra om</a></li>
+  <li><a href="rapporter_kontakt.html" data-toggle="tab">Kontaktinformasjon</a></li>
+ 
+  <li><a href="rapporter_giver.html" data-toggle="tab">Komplikasjoner ved tapping av blodgivere</a></li>
+  <li><a href="rapporter_transfusjon.html"  data-toggle="tab">Transfusjonskomplikasjoner</a></li>
+  <li><a href="rapporter_andrehendelser.html" data-toggle="tab">Andre uønskede hendelser</a></li>
+  -->
+</ul>
+
+<!-- Tab panes  -->
+<div class="tab-content">
+
+  <!--------------------Meld fra om----------------------------------------->
+  
+
+<div class="tab-pane active" id="meldfra">
+    <div class="form-group">
+      <label>Er dette en pasientrelatert hendelse?</label>
+    </div>
+      <div class="radio">
+          <label>
+            <input type="radio" name="p-pasient" id="p-pasient-ja" value="pasient-ja" onclick="toggleDisplay('pasient-ja', this.checked);toggleDisplay('pasient-nei', 0)"/>Ja
+          </label>
+      </div>
+      <div class="radio">
+          <label>
+            <input type="radio" name="p-pasient" id="p-pasient-nei" value="pasient-nei" onclick="toggleDisplay('pasient-ja', 0); toggleDisplay('pasient-nei', this.checked)"/>Nei
+          </label>
+      </div>
+
+	<div id="pasient-ja" style="display: none " class="form-group" >
+	    <div id="pasienttype" class="form-group">
+		    <b>Symptomer hos pasient?</b>
+		 
+		    <div class="radio">
+		          <label>
+		            <input type="radio" name="p-pasientsymptom" id="p-pasientsymptom-ja" value="pasient-ja" onclick="document.location='rapporter_transfusjon.html';"/>Ja
+		          </label>
+		      </div>
+		      <div class="radio">
+		          <label>
+		            <input type="radio" name="p-pasientsymptom" id="p-pasientsymptom-nei" value="pasient-nei" onclick="document.location='rapporter_andrehendelser.html';"/>Nei
+		          </label>
+		      </div>     
+		</div>
+		
+		<!-- <div id="feilblod" style="display: none" class="form-group">
+		  <b>Er dette Feil Blod transfudert?</b>
+		  <div class="radio">
+	          <label>
+	            <input type="radio" name="p-feilblod" id="p-feilblod-ja" value="feilblod-ja" />Ja
+	          </label>
+	      </div>
+	      <div class="radio">
+	          <label>
+	            <input type="radio" name="p-feilblod" id="p-feilblod-nei" value="feilblod-nei" onclick="document.location='rapporter_andrehendelser.html';" />Nei
+	          </label>
+	      </div>     
+		</div> -->
+ 	</div>
+ 	<div id="pasient-nei" style="display: none">
+	 	<div id="giverrelatert"  class="form-group">
+		  <b>Er dette en giverrelatert hendelse?</b>
+		  <div class="radio">
+	          <label>
+	            <input type="radio" name="p-giverrelatert" id="p-giverrelatert-ja" value="giverrelatert-ja" onclick="toggleDisplay('giverrelatert-ja', this.checked);" />Ja
+	          </label>
+	      </div>
+	      <div class="radio">
+	          <label>
+	            <input type="radio" name="p-giverrelatert" id="p-giverrelatert-nei" value="giverrelatert-nei" onclick="document.location='rapporter_andrehendelser.html';" />Nei
+	          </label>
+	      </div>
+	  	</div>	  	
+ 	</div>
+ 	<div id="giverrelatert-ja" style="display: none">
+	 	<div id="symptomer"  class="form-group">
+		  <b>Hadde giveren symptomer?</b>
+		  <div class="radio">
+	          <label>
+	            <input type="radio" name="p-symptomer" id="p-symptomer-ja" value="symptomer-ja" onclick="document.location='rapporter_giver.html';" />Ja
+	          </label>
+	      </div>
+	      <div class="radio">
+	          <label>
+	            <input type="radio" name="p-symptomer" id="p-symptomer-nei" value="symptomer-nei" onclick="document.location='rapporter_andrehendelser.html';" />Nei
+	          </label>
+	      </div>
+	  	</div>	  	
+ 	</div>
+<!-- 
+      <div class="radio">
+          <label>
+            <input type="radio" name="mfo-tapping-blodgivere" id="mfo-tapping-blodgivere" value="option1" checked/>
+   			Er dette en pasientrelatert hendelse?
+          </label>
+      </div>
+      <div class="radio">
+          <label>
+            <input type="radio" name="mfo-pasient" id="mfo-pasient" value="option2"/>
+            Transfusjonskomplikasjoner
+          </label>
+      </div>
+      <div class="radio">
+          <label>
+            <input type="radio" name="mfo-andre" id="mfo-andre" value="option3"/>
+            Andre uønskede hendelser
+          </label>
+      </div>
+      
+        <br/>
+      <button name="avbryt1" type="submit" class="btn btn-default">Avbryt</button>
+      <button name="lukk1" type="submit" class="btn btn-default">Lukk</button>
+      <button name="lagre1" type="submit" class="btn btn-primary">Lagre</button>
+ -->       
+    
+</div><!--slutt Meld fra om-->
+</div>
+</form>
+</div>
+</body>
+</html>

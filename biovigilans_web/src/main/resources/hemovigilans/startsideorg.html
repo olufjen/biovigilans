@@ -1,0 +1,137 @@
+<html>
+<head>
+
+  <title>Rapporter hendelse - Hemovigilans</title>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html;">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta content="Kunnskapssenteret oppsummerer forskning om effekt av helsetiltak, gjør helseøkonomiske analyser, måler kvalitet, og arbeider med kvalitetsforbedring og pasientsikkerhet. " name="description">
+
+  <link href="http://www.kunnskapssenteret.no/_public/shared/img/favicon.ico" type="image/x-icon" rel="shortcut icon">
+  <link href="http://www.kunnskapssenteret.no/_public/theme-kunnskapssenteret/css/main.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</head>
+
+<body class="events">
+  <header>
+    <div class="container">
+      <div class="left hidden-print">        
+        <button type="button" class="btn btn-default btn-lg">Tilbake</button>        
+      </div>
+<<<<<<< HEAD
+      <figure class="main-logo">
+        <a class="ie8-special" href="http://www.kunnskapssenteret.no/forsiden">
+          <img alt="Logo Nasjonalt kunnskapssenter for helsetjenesten" src="http://www.kunnskapssenteret.no/_public/theme-kunnskapssenteret/img/logo.png">
+        </a>
+=======
+      <figure class="main-logo">        
+        <img alt="Logo Nasjonalt kunnskapssenter for helsetjenesten" src="http://www.kunnskapssenteret.no/_public/theme-kunnskapssenteret/img/logo.png">        
+>>>>>>> logo
+      </figure>
+    </div>
+    <br />
+  </header>
+
+<div class="container">
+   <ul class="pager">
+    <li class="previous" title="Du er ved startsiden. Her velger du ny melding eller oppfølgingsmelding "><a href="#"><strong><span style="color:black">Start</span></strong></a></li>
+    <li class="previous" title="Her velger du type melding "><a href="#">Type hendelse</a></li>
+    <li class="previous" title="Her fyller du inn detaljer om meldingen "><a href="#">Hendelsesdetaljer</a></li>
+    <li class="previous" title="Her fyller du inn kontaktinformasjon "><a href="#">Kontaktinformasjon</a></li>
+    <li class="previous" title="Her vises kvitteringen for meldingen "><a href="#">Kvittering</a></li>
+  </ul> 
+  
+<form action="?method=PUT" method="post">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+var blurCount = 0;
+function homePage(){
+	var curAddr = document.location.href;
+//	 alert(curAddr);
+	var newAddr = curAddr.replace("startside.html","");
+//	alert(newAddr);
+	document.location = newAddr;
+
+}
+function toggleDisplay(id, displayvalue)
+{    
+//	 alert("step 1 "+displayvalue);
+    if ( displayvalue == 1 ) {
+         document.getElementById(id).style.display = 'block';
+//         alert("step 2");
+    } else if (displayvalue == 0) {
+         document.getElementById(id).style.display = 'none';
+    //     alert("step 3");
+    }
+ //   alert("step 4");
+}
+
+function meldingsnokkel(){
+	blurCount = blurCount + 1;
+//	alert("nøkkel"+blurCount);
+    if (blurCount <= 1){
+    	$("#btnnokkel").click();
+    } 
+	
+}
+</script>
+
+<h2>Hemovigilans Rapporter en hendelse </h2>
+  
+ <div id="levert" class="form-group">
+        <label></label>
+ 
+ </div>
+
+      <div class="radio">
+          <label>
+            <input name="k-nymelding" type="radio" id="k-nymelding" value="ny-melding" onclick="toggleDisplay('passord-div',0);document.location='rapporter_hendelse_main.html';" />
+             Ny melding
+          </label>
+      </div>
+      <div class="radio">
+          <label>
+            <input name="k-nymelding" type="radio" id="k-oppfolging" value="oppfølgningsmelding" onclick="toggleDisplay('passord-div',this.checked);toggleDisplay('nyttpassord',1);toggleDisplay('btnnokkel',1)"/>
+             Oppfølgningsmelding
+          </label>
+        <div class="form-group" id="passord-div" style="display:none">
+        <label for="k-epost">Melders E-post:</label>
+        <div>
+          <input name="k-melderepost" type="text" class="form-control" id="k-meldingsnokkel" placeholder="Melders epost" >
+        </div><br />
+        <label for="k-passord">Melders passord:</label>
+        <div>
+          <input name="k-melderpassord" type="password" class="form-control" id="k-meldingsnokkel" placeholder="Melders passord" >
+        </div><br />       
+      </div>
+      </div>
+ 
+     <div class="form-group" id="ingennokkel" >
+     	<label><b>${melding}</b></label>
+     </div>
+ 
+
+<div class="panel-group" id="accordion">
+
+</div>
+    <table align="left" border="0" cellspacing="0" cellpadding="3" class="table-condensed">
+            <tr>
+             <td colspan="2" align="left"><button type="submit" id="btnnokkel" value="nokkel"  name="formValue" class="btn btn-primary" style="display: none" > Log inn </button>
+             </td>
+             <td colspan="2" align="left"><button name="nyttpassord" type="submit" id="nyttpassord" class="btn btn-default" style="display: none" >Glemt passord?</button>
+             </td>
+            </tr>
+    </table>
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<!--<script src="js/bootstrap.min.js"></script>-->
+</form>
+</div> <!--slutt container-->
+</body>
+</html>

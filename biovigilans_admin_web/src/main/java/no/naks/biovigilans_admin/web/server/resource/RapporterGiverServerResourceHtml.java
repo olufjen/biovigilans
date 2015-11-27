@@ -1,0 +1,593 @@
+package no.naks.biovigilans_admin.web.server.resource;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import no.naks.biovigilans.model.Diskusjon;
+import no.naks.biovigilans.model.Donasjon;
+import no.naks.biovigilans.model.DonasjonImpl;
+import no.naks.biovigilans.model.Giver;
+import no.naks.biovigilans.model.GiverImpl;
+import no.naks.biovigilans.model.Giverkomplikasjon;
+import no.naks.biovigilans.model.GiverkomplikasjonImpl;
+import no.naks.biovigilans.model.Giveroppfolging;
+import no.naks.biovigilans.model.GiveroppfolgingImpl;
+import no.naks.biovigilans.model.Komplikasjonsdiagnosegiver;
+import no.naks.biovigilans.model.KomplikasjonsdiagnosegiverImpl;
+import no.naks.biovigilans.model.Melder;
+import no.naks.biovigilans.model.Sak;
+import no.naks.biovigilans.model.Saksbehandler;
+import no.naks.biovigilans.model.Vigilansmelding;
+import no.naks.biovigilans.felles.model.DonasjonwebModel;
+import no.naks.biovigilans.felles.model.GiverKomplikasjonwebModel;
+import no.naks.biovigilans.felles.model.KomDiagnosegiverwebModel;
+import no.naks.biovigilans.felles.model.LoginModel;
+import no.naks.biovigilans.felles.model.MelderwebModel;
+import no.naks.biovigilans.felles.model.SakModel;
+import no.naks.biovigilans.felles.server.resource.SessionServerResource;
+import no.naks.biovigilans.felles.control.SaksbehandlingWebService;
+
+import org.restlet.Request;
+import org.restlet.data.Form;
+import org.restlet.data.LocalReference;
+import org.restlet.data.MediaType;
+import org.restlet.data.Parameter;
+import org.restlet.ext.freemarker.TemplateRepresentation;
+import org.restlet.representation.Representation;
+import org.restlet.resource.ClientResource;
+import org.restlet.resource.Get;
+import org.restlet.resource.Post;
+
+import com.ibm.icu.util.Calendar;
+
+import freemarker.template.SimpleScalar;
+
+/**
+ * @author olj
+ *  Denne resursen er knyttet til siden for å rapportere giverhendelser 
+ */
+public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServer {
+	
+	private String statusflagKey = "statusflag";
+
+	
+	public RapporterGiverServerResourceHtml() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+
+
+
+
+
+	/**
+	 * getInnmelding
+	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
+	 * en rapportert hendelse
+	 * @return
+	 */
+	/**
+	 * @return
+	 */
+	@Get
+	public Representation getHemovigilans() {
+
+		//invalidateSessionobjects();
+	    // Reference reference = new Reference(getReference(),"..").getTargetRef();
+	
+
+/*
+ * En Hashmap benyttes dersom en html side henter data fra flere javaklasser.	
+ * Hver javaklasse får en id (ex pasientkomplikasjonId) som er tilgjengelig for html
+ *      
+*/	     
+	     Map<String, Object> dataModel = new HashMap<String, Object>();
+	
+	     Request request = getRequest();
+	    /* LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
+                 "/hemovigilans");
+	    
+	     LocalReference localUri = new LocalReference(reference);
+	*/
+// Denne client resource forholder seg til src/main/resource katalogen !!!	
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
+	    
+//	     setTransfusjonsObjects(); // Setter opp alle session objekter
+/*
+ * Lager alltid nye session model objekter
+ * Dersom meldingsnøkkel er angitt så vil session model objektene få modelobjekter fra databasen.	     
+ */
+	     SakModel sakModel = (SakModel)sessionAdmin.getSessionObject(request,  sakModelKey);
+	     if (sakModel == null){
+	    	 sakModel = new SakModel();
+	    	 sessionAdmin.setSessionObject(request, sakModel, sakModelKey);
+	     }
+	     sakModel.setMerknader(merknader);
+	     sakModel.setStatusflag(statusflag);
+	     
+	     setGiverhendelser(); // Setter opp giverHendelser session objekter
+	     List diskusjoner = null;
+	     List<Sak> saker = null;
+	     
+	     Giver giver = giverModel.getGiver();
+	     Donasjon donasjonen = giverModel.getDonasjonen();
+	     Komplikasjonsdiagnosegiver komplikasjonsdiagnoseGiver = giverModel.getKomplikasjonsdiagnoseGiver();
+		 Giveroppfolging giveroppfolging = giverModel.getGiveroppfolging();
+		 giverKomplikasjon = (Giverkomplikasjon)giverModel.getGiverKomplikasjon();
+		 Melder melder = null;
+	     if (giverModel.getVigilansmelding().getMeldingsnokkel() != null){
+	    	 displayPart = "block";
+	    	 datePart = "none";
+	    	 Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
+	    	 setGivermelding();
+	    	 giverModel.setVigilansmelding(melding); // Fjernet kommentert ut. Denne linjen var kommentert ut OLJ 07.10.15
+	    	//==  Hent alle diskusjoner og merknader   =======	    	 
+	    	 Long meldeId = melding.getMeldeid();
+		    	
+	    	 String mKey = melding.getMeldingsnokkel();
+	   
+	   	     Long orgmeldeId = getmeldingsNokkelsak(mKey); //Hent meldingsid for første melding med samme meldingsnøkkel
+	    	 Map<String,List> diskusjonene = saksbehandlingWebservice.collectDiskusjoner(meldeId);
+	     	 diskusjoner = diskusjonene.get(mKey);
+	    	 String omKey = "";
+	    	 Map<String,List> orgMapdiskusjoner = null;
+	    	 List<Diskusjon> orgdiskusjoner = null;
+	    	 if (orgmeldeId != null){
+	    		 orgMapdiskusjoner = saksbehandlingWebservice.collectDiskusjoner(orgmeldeId); // Henter diskusjoner fra tidligere meldinger med samme nøkkel
+	    		 omKey = String.valueOf(orgmeldeId.longValue());
+	    		 orgdiskusjoner =  orgMapdiskusjoner.get(omKey);
+	    	 }	    	 
+	    	 String mmKey = String.valueOf(meldeId.longValue());
+	    	 diskusjoner = diskusjonene.get(mmKey);	    	 
+	    	 if (diskusjoner == null)
+	    		 diskusjoner = new ArrayList<Diskusjon>();
+	    	 if (orgdiskusjoner != null)
+	    		 diskusjoner.addAll(orgdiskusjoner);
+	    	 if (!diskusjoner.isEmpty()){
+	    		 checkDiskusjoner(diskusjoner);
+	    	 }
+	    	 if (orgMapdiskusjoner != null)
+	    		 diskusjonene.putAll(orgMapdiskusjoner);
+	    	 
+	    	 sessionAdmin.setSessionObject(request, diskusjonene, diskusjonsKey);
+	    	 melder = hentMelder(giverModel.getVigilansmelding());
+ /*
+ * Hent saker til diskusjonene 	    	 
+ */
+ 	    	 setsaksbehandlerTildiskusjon(request, diskusjoner, saker);
+	    	 if(giverKomplikasjon.getDatosymptomer() == null){
+	    			Calendar kalender = Calendar.getInstance();
+	    			int month = kalender.get(Calendar.MONTH);
+	    			kalender.set(Calendar.MONTH, month+1);
+	    			giverKomplikasjon.setDatosymptomer(kalender.getTime());
+	    			giverKomplikasjon.setSymptomMelding("Fiktiv ikke angitt: ");
+	    	 }
+	    	 
+	    	 giverModel.setHendelseDato(melding.getDatoforhendelse());
+	    	 giverModel.setMeldingsNokkel(melding.getMeldingsnokkel());
+	    	 donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(request, donasjonId);
+	    	 giver = (Giver)sessionAdmin.getSessionObject(request,  giverenKey);
+	    	 giverModel.setGiver(giver);
+	    	 donasjonen = (Donasjon) sessionAdmin.getSessionObject(request,  donasjonKey);
+	    	 giveroppfolging = (Giveroppfolging) sessionAdmin.getSessionObject(request,giverOppfolgingKey);
+	    	 giverModel.setGiveroppfolging(giveroppfolging);
+	    	 giverModel.setDonasjonen(donasjonen);
+	    	 donasjon.setDonasjon(donasjonen);
+	    	 komplikasjonsdiagnoseGiver = (Komplikasjonsdiagnosegiver)sessionAdmin.getSessionObject(request,giverkomplikasjondiagnoseKey);
+	    	 if (komplikasjonsdiagnoseGiver.getBivirkningbeskrivelse() == null || komplikasjonsdiagnoseGiver.getBivirkningbeskrivelse().isEmpty())
+	    		 komplikasjonsdiagnoseGiver.setBivirkningbeskrivelse("Ikke angitt");
+	    	 komDiagnosegiver.setKomDiagnosegiver(komplikasjonsdiagnoseGiver);
+	    	 giverModel.setKomplikasjonsdiagnoseGiver(komplikasjonsdiagnoseGiver);
+	    	 
+	     }
+/*	   
+ * Alle model objekter som benyttes i html må settes med initielle verdier dersom
+ * dette er en ny melding
+ *  Dette er flyttet til giverkomplikasjonswebmodel se funksjonen  setTransfusjonsObjects(); !!  
+*/	    
+		 melder = hentMelder(giverModel.getVigilansmelding());
+	  	 SimpleScalar tilMelder = new SimpleScalar(tilMelderPart);
+    	 dataModel.put(tilMelding,tilMelder);
+    	 
+
+    	 SimpleScalar simple = new SimpleScalar(displayPart);
+    	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
+ 	 	 dataModel.put(behandlingsFlaggKey, diskusjoner);
+    	 dataModel.put(statusflagKey,statusflag);
+    	 dataModel.put(giverkomplikasjonKey, giverKomplikasjon);
+    	 dataModel.put(giverenKey, giver);
+     	 dataModel.put(donasjonKey, donasjonen);
+    	 dataModel.put(displayKey, simple);
+    	 dataModel.put(displaydateKey, hendelseDate);
+	     dataModel.put(giverkomplikasjonId, giverModel);
+	     dataModel.put(donasjonId, donasjon);
+	     dataModel.put(komDiagnosegiverId, komDiagnosegiver);
+	 	dataModel.put(tilmelderKey, melder);
+    	 dataModel.put(giverOppfolgingKey,giveroppfolging);
+    	 dataModel.put(giverkomplikasjondiagnoseKey,komplikasjonsdiagnoseGiver);
+	     
+	     sessionAdmin.setSessionObject(request, giverModel,giverkomplikasjonId);
+	     sessionAdmin.setSessionObject(request, donasjon,donasjonId);
+	     sessionAdmin.setSessionObject(request, komDiagnosegiver, komDiagnosegiverId);
+        Representation givertkomplikasjonFtl = clres2.get();
+
+	        TemplateRepresentation  templatemapRep = new TemplateRepresentation(givertkomplikasjonFtl,dataModel,
+	                MediaType.TEXT_HTML ); 
+		 return templatemapRep;
+	 }
+	
+
+	
+	
+	public String[] getAldergruppe() {
+		return aldergruppe;
+	}
+
+	public void setAldergruppe(String[] aldergruppe) {
+		this.aldergruppe = aldergruppe;
+	}
+
+	public String[] getKjonnValg() {
+		return kjonnValg;
+	}
+
+	public void setKjonnValg(String[] kjonnValg) {
+		this.kjonnValg = kjonnValg;
+	}
+	public String[] getReaksjonengruppe() {
+		return reaksjonengruppe;
+	}
+
+	public void setReaksjonengruppe(String[] reaksjonengruppe) {
+		this.reaksjonengruppe = reaksjonengruppe;
+	}
+	
+	public String[] getUtenforBlodbankengruppe() {
+		return utenforBlodbankengruppe;
+	}
+
+	public void setUtenforBlodbankengruppe(String[] utenforBlodbankengruppe) {
+		this.utenforBlodbankengruppe = utenforBlodbankengruppe;
+	}
+	
+	
+	
+	public String[] getDonasjonsstedgruppe() {
+		return donasjonsstedgruppe;
+	}
+
+	public void setDonasjonsstedgruppe(String[] donasjonsstedgruppe) {
+		this.donasjonsstedgruppe = donasjonsstedgruppe;
+	}
+
+	/**
+     * storeHemovigilans
+     * Denne rutinen tar imot alle ny informasjon fra bruker om den rapporterte hendelsen
+     * @param form
+     * @return
+     */
+    /**
+     * @param form
+     * @return
+     */
+    @Post
+    public Representation storeHemovigilans(Form form) {
+    	TemplateRepresentation  templateRep = null;
+    	Request request = getRequest();
+    	if (form == null){
+    		sessionAdmin.getSession(request,giverkomplikasjonId).invalidate();
+    		sessionAdmin.getSession(request, donasjonId).invalidate();
+    		sessionAdmin.getSession(request, komDiagnosegiverId).invalidate();
+    	}
+    	   login = (LoginModel)sessionAdmin.getSessionObject(request,loginKey);
+    	if (form != null){
+    		
+    		giverModel = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(request,giverkomplikasjonId);
+    		donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(request, donasjonId);
+    		komDiagnosegiver = (KomDiagnosegiverwebModel) sessionAdmin.getSessionObject(request,komDiagnosegiverId );
+    //		giverKvittering = (GiverKvitteringWebModel)sessionAdmin.getSessionObject(request,kvitteringGiverId);
+   	     	melderwebModel = ( MelderwebModel)sessionAdmin.getSessionObject(request,melderId);
+   	        Melder melder = null;
+    		Parameter logout = form.getFirst("avbryt4");
+    		Parameter lukk = form.getFirst("lukk4");
+    	     Map<String, Object> dataModel = new HashMap<String, Object>();
+    	     
+    	     SakModel sakModel = (SakModel)sessionAdmin.getSessionObject(request,  sakModelKey);
+    	     if (sakModel == null){
+    	    	 sakModel = new SakModel();
+    	    	 sessionAdmin.setSessionObject(request, sakModel, sakModelKey);
+    	     }
+    		sakModel.setFlaggNames(flaggNames);
+    	     Map<String,List> diskusjonene = (Map<String,List>)sessionAdmin.getSessionObject(request, diskusjonsKey);
+    	     
+    		if (logout != null || lukk != null){
+    			sessionAdmin.getSession(request,giverkomplikasjonId).invalidate();
+    			sessionAdmin.getSession(request, donasjonId).invalidate();
+    			sessionAdmin.getSession(request, komDiagnosegiverId).invalidate();
+    			sessionAdmin.getSession(request,kvitteringGiverId).invalidate();
+    			
+	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemivigilans/Logout.html"));
+	    		Representation pasientkomplikasjonFtl = clres2.get();
+	    	/*	templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+	    				MediaType.TEXT_HTML);
+	    	*/	
+	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, giverModel,
+	    				MediaType.TEXT_HTML);
+    			return templateRep; // return a new page!!!
+    		}
+    		
+    		if (giverModel == null){
+    			giverModel = new GiverKomplikasjonwebModel();
+    			// giverModel.setFormNames(sessionParams);
+    		}
+ 
+    		if(donasjon==null){
+    			donasjon = new DonasjonwebModel();
+    			donasjon.setFormNames(sessionParams);
+    		}
+    		
+    		if(komDiagnosegiver == null){
+    	    	 komDiagnosegiver = new KomDiagnosegiverwebModel();
+    	    	 komDiagnosegiver.setFormNames(sessionParams);
+    	     }
+    		
+    	/*	if (giverKvittering == null){
+    			giverKvittering = new GiverKvitteringWebModel();
+    			giverKvittering.setFormNames(sessionParams);
+		     }*/
+    		
+   		for (Parameter entry : form) {
+    			if (entry.getValue() != null && !(entry.getValue().equals("")))
+    					System.out.println(entry.getName() + "=" + entry.getValue());
+    			giverModel.setValues(entry);
+/*    			donasjon.setValues(entry);
+    			komDiagnosegiver.setValues(entry);
+    			giverKvittering.setValues(entry);
+    			if(entry.getName().equalsIgnoreCase("tab-annenreak")){
+    				giverKvittering.annenreakList.add(entry.getValue()) ;
+    			}*/
+    		}
+
+    		
+    		Giver giver = (Giver)sessionAdmin.getSessionObject(request,  giverenKey);
+    		Donasjon donasjonen = (Donasjon) sessionAdmin.getSessionObject(request,  donasjonKey);
+	    	Giveroppfolging giveroppfolging = (Giveroppfolging) sessionAdmin.getSessionObject(request,giverOppfolgingKey);
+	    	Komplikasjonsdiagnosegiver komplikasjonsdiagnoseGiver = (Komplikasjonsdiagnosegiver)sessionAdmin.getSessionObject(request,giverkomplikasjondiagnoseKey);
+	    	Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
+	   	    melder = hentMelder(giverModel.getVigilansmelding());
+	   	    
+	   	    
+/*	  	     String mmKey = melding.getMeldingsnokkel(); //
+    	     Long orgmeldeId = getmeldingsNokkelsak(mmKey); //Hent meldingsid for første melding med samme meldingsnøkkel
+    		 Map<String,List> orgMapdiskusjoner = null;
+	    	 String omKey = "";
+	    	 List orgdiskusjoner = null;
+	    	 if (orgmeldeId != null){
+	    		 orgMapdiskusjoner = saksbehandlingWebservice.collectDiskusjoner(orgmeldeId); // Henter diskusjoner fra tidligere meldinger med samme nøkkel
+	    		 omKey = String.valueOf(orgmeldeId.longValue());
+	    		 orgdiskusjoner =  orgMapdiskusjoner.get(omKey);
+	    	 }
+	    	 
+	    	Long meldeId = melding.getMeldeid();
+  		  	String mKey = String.valueOf(meldeId.longValue());
+  		    List<Diskusjon>diskusjoner = diskusjonene.get(mKey);
+  	    	 if (diskusjoner == null)
+	    		 diskusjoner = new ArrayList<Diskusjon>(); 
+  
+  	    	 if (orgdiskusjoner != null)
+	    		 diskusjoner.addAll(orgdiskusjoner);
+  	     	 if (!diskusjoner.isEmpty()){
+	    		 checkDiskusjoner(diskusjoner); // Sjekker om diskusjonene inneholder medling til melder
+	    	 }*/
+		    Long gmlMeldeid = sakModel.getGmlMeldeid();
+	   	 	Long meldeId = melding.getMeldeid();
+  		  	String mKey = String.valueOf(meldeId.longValue());  
+  		    if (gmlMeldeid != null){
+  		    	mKey = String.valueOf(gmlMeldeid.longValue());
+  		    }
+  		    List<Diskusjon>diskusjoner = diskusjonene.get(mKey); 
+ 		 	dataModel.put(behandlingsFlaggKey, diskusjoner); 	    	 
+	    	giverKomplikasjon = (Giverkomplikasjon)giverModel.getGiverKomplikasjon();
+    		sessionAdmin.setSessionObject(request, giverModel,giverkomplikasjonId);
+    		sessionAdmin.setSessionObject(request, donasjon, donasjonId);
+    		sessionAdmin.setSessionObject(request, komDiagnosegiver, komDiagnosegiverId);
+    	    sessionAdmin.setSessionObject(request, melderwebModel,melderId);
+    		SimpleScalar tilMelder = new SimpleScalar(tilMelderPart);
+     	    dataModel.put(tilMelding,tilMelder);
+    	     displayPart = "block";
+	    	 datePart = "none";
+    	   	 SimpleScalar simple = new SimpleScalar(displayPart);
+        	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
+        	 dataModel.put(statusflagKey,statusflag);
+        	 dataModel.put(giverkomplikasjonKey, giverKomplikasjon);
+        	 dataModel.put(giverenKey, giver);
+         	 dataModel.put(donasjonKey, donasjonen);
+        	 dataModel.put(displayKey, simple);
+        	 dataModel.put(displaydateKey, hendelseDate);
+    	     dataModel.put(giverkomplikasjonId, giverModel);
+    	     dataModel.put(donasjonId, donasjon);
+    	     dataModel.put(komDiagnosegiverId, komDiagnosegiver);
+    	     
+        	 dataModel.put(giverOppfolgingKey,giveroppfolging);
+        	 dataModel.put(giverkomplikasjondiagnoseKey,komplikasjonsdiagnoseGiver);
+    		dataModel.put(giverkomplikasjonId, giverModel);
+    		 dataModel.put(tilmelderKey, melder);
+    	//	dataModel.put(kvitteringGiverId, giverKvittering);
+    		
+    		Parameter lagre = form.getFirst("btnSendinn");
+       		Parameter lagreFlagg = form.getFirst("btnlagreflagg");
+    		Parameter statusChange = form.getFirst("btnstatuschange");
+    		Parameter avslutt = form.getFirst("btnavslutt");
+       		
+    		Parameter sendTilmelder = form.getFirst("btnsend");
+    		if (sendTilmelder != null){
+       			meldingsType = "giver";
+       			sessionAdmin.setSessionObject(request,meldingsType, meldingstypeKey);
+    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
+    			 
+    			Representation giverHendelser = clres2.get();
+ //       		invalidateSessionobjects();
+        		templateRep = new TemplateRepresentation(giverHendelser, dataModel,
+        				MediaType.TEXT_HTML);
+        		String page = "../hemovigilans/meldingtilmelder.html";
+        		redirectPermanent(page);
+        		return templateRep;  // Hvorfor er denne nødvendig? OLJ 28.07.15
+    		}
+    		
+    		if (avslutt != null){ // Bruker avslutter
+    			LoginModel newLogin = new LoginModel();
+    			newLogin.setSaksbehandler(login.getSaksbehandler());
+    			newLogin.setPassord(login.getSaksbehandler().getBehandlerpassord());
+    			newLogin.setEpostAdresse(login.getSaksbehandler().getBehandlerepost());
+   			    List<Saksbehandler> saksbehandlere = (List<Saksbehandler>) sessionAdmin.getSessionObject(request,behandlereKey);
+    			invalidateSessionobjects();
+    			sessionAdmin.getSession(request,diskusjonsKey).invalidate();
+    			sessionAdmin.getSession(request,sakModelKey).invalidate();
+    			sessionAdmin.setSessionObject(request, newLogin, loginKey);
+   			    sessionAdmin.setSessionObject(request, saksbehandlere, behandlereKey);
+    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
+   			 
+    			Representation giverHendelser = clres2.get();
+//        		invalidateSessionobjects();
+        		templateRep = new TemplateRepresentation(giverHendelser, dataModel,
+        				MediaType.TEXT_HTML);
+        		redirectPermanent("../hemovigilans/saksbehandling.html");
+        		return templateRep;  // Hvorfor er denne nødvendig? OLJ 28.07.15
+    		}
+    		if (statusChange != null){
+       			melding = (Vigilansmelding) giverModel.getGiverKomplikasjon();
+    			Date datoforhendelse =  melding.getDatoforhendelse();
+    			melding.setDatoforhendelse(datoforhendelse);
+    			String statusCode = "";
+    			for (Parameter entry : form) {
+        			if (entry.getName().equals("nystatus") && entry.getValue() != null && !(entry.getValue().equals(""))){
+        				statusCode = entry.getValue();
+        				System.out.println(entry.getName() + "=" + entry.getValue());
+        		
+        			}
+    			}
+    			if (!statusCode.equals("")){
+    				if (statusCode.equals(statusflag[0])) // Dersom status settes til Levert, så skal det settes til null i db
+    					statusCode = null;
+    				giverModel.getVigilansmelding().setSjekklistesaksbehandling(statusCode);
+    				hendelseWebService.updateVigilansmelding(giverModel.getVigilansmelding());
+       				if (statusCode == null){
+    					statusCode = statusflag[0];
+    					giverModel.getVigilansmelding().setSjekklistesaksbehandling(statusCode);
+    				}
+       				sakModel.setLoginSaksbehandler(login.getSaksbehandler());
+    				sakModel.lagSak(meldeId, statusCode);
+        			saksbehandlingWebservice.saveDiskusjon(sakModel.getDiskusjonsMappe());
+        			sakModel.setSakdiskusjon();
+        			saksbehandlingWebservice.saveSak(sakModel.getSaksMappe());
+        			
+        			List<Diskusjon> nyediskusjoner = sakModel.lagDiskusjonsliste();
+        			if (diskusjoner != null)
+        				diskusjoner.addAll(nyediskusjoner);
+           			sakModel.setDiskusjonsMappe(null);
+        			sakModel.setSaksMappe(null);
+    			}
+    		
+ //   			setDiplayvalues(dataModel);
+    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
+    			 
+    			Representation andreHendelser = clres2.get();
+//        		invalidateSessionobjects();
+        		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
+        				MediaType.TEXT_HTML);
+        		return templateRep;  // Hvorfor er denne nødvendig? OLJ 28.07.15
+    		}
+    		//Parameter ikkegodkjet = form.getFirst("ikkegodkjent");
+    		//Parameter godkjet = form.getFirst("godkjent");
+    		if (lagreFlagg != null){
+       			melding = (Vigilansmelding) giverModel.getGiverKomplikasjon();
+    			Date datoforhendelse =  melding.getDatoforhendelse();
+    			melding.setDatoforhendelse(datoforhendelse);
+    			sakModel.setLoginSaksbehandler(login.getSaksbehandler());
+
+/*
+ * Hent flaggverdier valgt fra bruker
+ */
+    			sakModel.setFlaggNames(flaggNames);
+    			sakModel.getFormMap().clear();
+    			for (Parameter entry : form) {
+        			if (entry.getValue() != null && !(entry.getValue().equals(""))){
+        					System.out.println(entry.getName() + "=" + entry.getValue());
+        					sakModel.setValues(entry);
+        			}
+    			}
+    			sakModel.saveSaker(melding.getMeldeid()); // Setter også saksbehandler navn til merknad
+    			saksbehandlingWebservice.saveDiskusjon(sakModel.getDiskusjonsMappe());
+    			sakModel.setSakdiskusjon();
+    			saksbehandlingWebservice.saveSak(sakModel.getSaksMappe());
+    			List nyediskusjoner = sakModel.lagDiskusjonsliste();
+    			if (diskusjoner != null)
+    				diskusjoner.addAll(nyediskusjoner);
+      			
+      			if (sakModel.isTilDialog()){
+    				String mailTxt = sakModel.getHemovigilansDiskusjon().getKommentar() + " Meldingsnøkkel: " + giverModel.getVigilansmelding().getMeldingsnokkel()+ " Type Giverhendelse.";
+        			dialogHemivigilans(request, sakModel.getDiskId(),mailTxt,giverModel.getVigilansmelding());
+    			}
+      			if (sakModel.isReklassifikasjon()){
+      				sakModel.setGmlMeldeid(meldeId);
+      				savegiverReclassifikasjon();
+    			}
+       			sakModel.setDiskusjonsMappe(null);
+    			sakModel.setSaksMappe(null);
+    			tilMelderPart = "none";
+    			if (sakModel.isTilMelder())
+    				tilMelderPart = "block";
+    			tilMelder = null;
+    		    tilMelder = new SimpleScalar(tilMelderPart);
+    	    	dataModel.put(tilMelding,tilMelder); 		
+
+    			dataModel.put(behandlingsFlaggKey, diskusjoner);
+    			String newStatus = sakModel.setsakStatus(nyediskusjoner);
+    			if (newStatus != null){
+    				giverModel.getVigilansmelding().setSjekklistesaksbehandling(newStatus);
+    				hendelseWebService.updateVigilansmelding(giverModel.getVigilansmelding());
+    			}
+//    			setDiplayvalues(dataModel);
+    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
+    			 
+    			Representation andreHendelser = clres2.get();
+//        		invalidateSessionobjects();
+        		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
+        				MediaType.TEXT_HTML);
+        		return templateRep;  // Hvorfor er denne nødvendig? OLJ 28.07.15
+    		}    		
+    		if(lagre!=null){
+    	
+    	
+    			giverModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[1]);
+    			hendelseWebService.updateVigilansmelding(giverModel.getVigilansmelding());
+   
+ 
+    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
+	    		Representation pasientkomplikasjonFtl = clres2.get();
+	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
+	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
+	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,MediaType.TEXT_HTML);
+	    		
+    		}else{
+    			/*
+    			 * Dette må gjøres om (OLJ 06.07.15
+    			 */
+    				
+    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
+    			Representation pasientkomplikasjonFtl = clres2.get();
+        		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+        				MediaType.TEXT_HTML);
+			}
+    		
+    	}
+    
+    	return templateRep;
+      
+    }
+
+}

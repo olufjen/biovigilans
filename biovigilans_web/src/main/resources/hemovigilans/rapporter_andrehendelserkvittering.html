@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Rapporter hendelse - Hemovigilans</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/fonts/font-source-sans-pro.css"/>
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/vendor/bootstrap.min.css"/>
+	<!-- <link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/defaults.css"/> -->
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/page.css"/>
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/components.css"/>	
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/custom.css"/>
+	<!--<link rel="stylesheet" href="css/bootstrap.css">-->
+</head>
+<body>
+<header class="master-header" role="navation">
+      <div class="container">
+        <!-- synlig header -->
+        <div class="row">
+          <div class="col-xs-9 col-sm-6 col-sm-push-3 col-vertical-bottom-sm logo-container">
+            <div class="bottom">
+              <a class="home" href="#" id="home" rel="home" title="">
+                <img class="logo" src="http://newwindow.no/ks/nokc-0.1.7/img/ks-logo.png" alt="" />
+              </a>
+            </div>
+          </div>
+          <div class="hidden-xs col-sm-3 col-sm-push-3 col-vertical-bottom-sm">
+            <div class="bottom">
+              <span class="nkfh">Nasjonalt kunnskapssenter<br />for helsetjenesten</span>
+            </div>
+          </div>
+          <div class="col-xs-3 col-sm-pull-9 col-vertical-bottom-sm">
+            <div class="bottom">
+              <button type="button" class="btn-master-menu" data-toggle="collapse" data-target=".master-menu">
+                <!-- <button type="button" class="btn-master-menu"> -->
+                <span class="sr-only">Åpne eller lukke meny.</span>
+                <span class="text hidden-xs">Meny</span>
+                <div class="bar-box">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </div>
+              </button>
+              <ul class="list-inline english-aa hidden-xs">
+                <li class="english">
+                  <a href="#" id="english" title="">English</a></li><li class="aa">
+                  <a href="#">
+                    <span class="small">A </span>
+                    <span class="medium">A</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+	<div class="container">
+		<script type="text/javascript">
+
+				function toggleDisplay(id)
+				{    
+					document.getElementById('smitte').style.display = 'none';
+					document.getElementById('feilblod').style.display = 'none';
+					document.getElementById('intervju').style.display = 'none';
+					document.getElementById('giveren').style.display = 'none';
+					document.getElementById('utstyr').style.display = 'none';
+					document.getElementById('analyser').style.display = 'none';
+					document.getElementById('merking').style.display = 'none';
+					document.getElementById('giver').style.display = 'none';
+					document.getElementById('transport').style.display = 'none';
+					document.getElementById('merking').style.display = 'none';
+					document.getElementById('annet').style.display = 'none';
+					
+					document.getElementById(id).style.display = 'block';
+				    
+				}
+			</script>
+			
+		<form id="rapport" action="?method=PUT" method="post"> 
+			
+			<h1>Rapporter Andre Hendelser</h1>
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs">
+			  <li ><a href="rapporter_hendelse_main.html" data-toggle="tab">Meld fra om</a></li>
+			  <li><a href="rapporter_kontakt.html" data-toggle="tab">Kontaktinformasjon</a></li>
+			  <li class="active"><a href="#andrehendelser" data-toggle="tab">Rapporter Andre-hendelser</a></li>
+			</ul>
+			<div class="tab-pane" id="andrehendelser">
+				<div class="form-group">
+					<label>Dato For hendelsen</label><br>
+					<span>${andreHendelse.annenKomplikasjon.datoforhendelseKvittering}</span>
+				</div>
+	
+				<div class="form-group">
+				<label>Beskrivelse av hendelsen</label><br>
+					<span > ${andreHendelse.annenKomplikasjon.komplikasjonbeskrivelse} </span>
+					<!-- <textarea class="form-control" name="beskrivelse" rows="3" ></textarea> -->
+				</div>
+			
+				<div class="form-group">
+					<label>Hvilken hovedprosess gjaldt hendelsen?</label><br>
+					<span > ${andreHendelse.annenKomplikasjon.hovedprosess} </span>
+				</div>
+		
+			<div class="form-group">
+				<label>Primærårsak til feil eller avvik </label><br>
+				<span > ${andreHendelse.annenKomplikasjon.avvikarsak} </span>
+			</div>
+			<div class="form-group">
+				<label>Klassifikasjon av feilen eller avviket</label><br>
+				<span > ${andreHendelse.annenKomplikasjon.klassifikasjon} </span>
+			</div>
+			<div class="form-group">
+				<label>HVA GIKK GALT?</label><br>
+				<#list andreHendelse.komplikasjonsklassifikasjon.klassifikasjonList as hvagikkgalt>
+					<div>
+						<span>${hvagikkgalt}</span>
+					</div>
+				</#list>
+			</div>
+			<div class="form-group">
+				<label>Delkode</label><br>
+				<span > ${andreHendelse.annenKomplikasjon.delkode} </span>
+			</div>
+			<div class="form-group">
+				<label>Definisjon av alvorlig hendelse</label><br>
+				<span > ${andreHendelse.annenKomplikasjon.komplikasjondefinisjon} </span>
+			</div>
+			<div class="form-group">
+			<label>Hvordan ble hendelsen oppdaget?</label><br>
+				<span > ${andreHendelse.annenKomplikasjon.oppdaget} </span>
+			</div>
+
+			<div class="form-group">
+			<label>Gjennomførte eller planlagte forebyggende tiltak. Beskriv kort.</label><br>
+				<span > ${andreHendelse.annenKomplikasjon.tiltak} </span>
+			</div>
+
+			<div class="form-group">
+			<label>Kommentar</label><br>
+				<span > ${andreHendelse.annenKomplikasjon.kommentar} </span>
+			</div>
+			 	<button name="ikkegodkjent" type="submit" class="btn btn-default" value="ikkegodkjent" >Ikke Godkjent</button>
+      			<button name="godkjent" type="button"  class="btn btn-primary"  onclick="document.location='rapporter_kontakt.html';">Godkjent</button>
+			</div>
+		</form>
+	</div>	
+</body>

@@ -1,0 +1,39 @@
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building biovigilans business 1.0
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for opensymphony:quartz:jar:1.6.0 is missing, no dependency information available
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ biovigilans_business ---
+[INFO] Deleting C:\svnroot2\nokc\biovigilans\trunk\biovigilans_business\target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:resources (default-resources) @ biovigilans_business ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:compile (default-compile) @ biovigilans_business ---
+[INFO] Compiling 125 source files to C:\svnroot2\nokc\biovigilans\trunk\biovigilans_business\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:testResources (default-testResources) @ biovigilans_business ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:testCompile (default-testCompile) @ biovigilans_business ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ biovigilans_business ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ biovigilans_business ---
+[INFO] Building jar: C:\svnroot2\nokc\biovigilans\trunk\biovigilans_business\target\biovigilans_business.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ biovigilans_business ---
+[INFO] Installing C:\svnroot2\nokc\biovigilans\trunk\biovigilans_business\target\biovigilans_business.jar to C:\Users\olj\.m2\repository\no\kunnskapssenteret\biovigilans_business\1.0\biovigilans_business-1.0.jar
+[INFO] Installing C:\svnroot2\nokc\biovigilans\trunk\biovigilans_business\pom.xml to C:\Users\olj\.m2\repository\no\kunnskapssenteret\biovigilans_business\1.0\biovigilans_business-1.0.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 5.362s
+[INFO] Finished at: Tue May 26 08:28:06 CEST 2015
+[INFO] Final Memory: 22M/219M
+[INFO] ------------------------------------------------------------------------

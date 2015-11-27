@@ -1,0 +1,9 @@
+*.class
+# ignore all files in target
+target/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+

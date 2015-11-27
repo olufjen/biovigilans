@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Rapporter hendelse - Hemovigilans</title>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html;">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta content="Kunnskapssenteret oppsummerer forskning om effekt av helsetiltak, gjør helseøkonomiske analyser, måler kvalitet, og arbeider med kvalitetsforbedring og pasientsikkerhet." name="description">
+  <link href="/biovigilans_admin_web/resources/css/main.css" rel="stylesheet">
+  <link href="/biovigilans_admin_web/resources/css/biovigilans.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+ 
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" /><!-- Viktig for dato !! -->
+    
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> <!-- Viktig for dato !! -->
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" ></script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="left hidden-print">        
+        <button type="button" onclick="homePage()" class="btn btn-default btn-lg">Tilbake</button>        
+      </div>
+      <figure class="main-logo" title="Version 1.0 November 2015">        
+       <img class="logo" src="/biovigilans_admin_web/resources/css/logo.png" alt="" />
+       </figure>
+    </div>
+  </header>
+
+  <div class="container">
+    <form id="rapport" action="?method=PUT" method="post"> 
+      <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+      <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" ></script>
+
+      <script type="text/javascript">
+      /**
+      This  function set the calender for date to the browsers those doesn't support html5 input type date.
+
+      */
+      window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+      var reqFlag =  "${display}";
+      var fs = null;
+      var initDatepicker = function() {
+        $('input[type=date]').each(function() {
+          var $input = $(this);
+          var id = $(this).attr('id')
+        	var min="";
+          
+          if(id=="til-dato"){
+          	min = $("#fra-dato").val();
+          	$("#til-dato").datepicker('option', 'minDate', min);
+          }
+          $(this).datepicker({
+              maxDate: "",
+              dateFormat: 'yy-mm-dd',
+          });
+      });
+      };
+
+      if(!Modernizr.inputtypes.date){
+      $(document).ready(initDatepicker);
+      };
+      function dateValidation(felt){
+      	var dfelt = "#"+felt;
+
+      		 var dateFra = $(dfelt).val();
+      		   if(!Modernizr.inputtypes.date){
+      			 	$(document).ready(initDatepicker);
+      			};
+      		 if (felt == "fra-datomelde"){
+      			 $('#til-datomelde').attr('min', dateFra);
+      		 } 	
+      		 if (felt == "fra-dato"){
+      			 $('#til-dato').attr('min', dateFra);
+      		 }   	
+
+
+      	  
+       }
+// Files and directories
+		function InitFileSystem() {
+            window.requestFileSystem(window.PERSISTENT, 1024 * 1024, function (filesystem) {
+                fs = filesystem;
+
+                ListFoldersFiles();
+            }, handleError);
+        }
+      function ListFoldersFiles() {
+    	 // alert("folders ");
+    	 if (window.requestFileSystem) {
+            InitFileSystem();
+        } else {
+            alert('Sorry! Your browser doesn\'t support the FileSystem API :(');
+        }
+          var path = document.querySelector("#folderNameL").value;
+          document.querySelector('#folderList').innerHTML = '';
+//          alert("path "+path);
+          if (path.length > 0)
+          {
+              ListFoldersFilesContent(path)
+          }
+          else
+          {
+              ListDirectories();
+          }             
+      }
+      function ListDirectories() {
+          var dirReader = fs.root.createReader();
+          var entries = [];
+
+          // Call the reader.readEntries() until no more results are returned.
+          function ReadEntries() {
+              dirReader.readEntries(function (results) {
+
+                  if (!entries.length) {
+                      document.querySelector('#folderList').innerHTML = 'No files or folders exists.';
+                  } else {
+                      document.querySelector('#folderList').innerHTML = '';
+                  }
+
+                  if (!results.length) {
+                      ListResults(entries.sort());
+                  } else {
+                      entries = entries.concat(results);
+                      ReadEntries();
+                  }
+              }, handleError);
+          };
+
+          ReadEntries(); // Start reading dirs.
+      }
+      function ListFoldersFilesContent(path)
+      {            
+          fs.root.getDirectory(path, {}, function (dirEntry) {
+              var dirReader = dirEntry.createReader();
+              dirReader.readEntries(function (entries) {
+
+                  entries.forEach(function (entry, i) {
+                      var img = entry.isDirectory ? '<img src="/images/folder.jpg" alt="Folder" /> ' :
+                                                      '<img src="/images/file.jpg" alt="Files" /> ';
+
+                      var li = document.createElement('li');
+                      li.innerHTML = img + ' ' + entry.fullPath;
+
+                      document.querySelector('#folderList').appendChild(li);
+                  });
+              }, handleError);
+          }, handleError);
+      }
+      // Generic Error handler used in the FileSyste that is found on the web
+
+      function handleError(error) {
+          var message = '';
+
+          switch (error.code) {
+              case FileError.SECURITY_ERR:
+                  message = 'Security Error occured';
+                  break;
+              case FileError.NOT_FOUND_ERR:
+                  message = 'File Not Found';
+                  break;
+              case FileError.QUOTA_EXCEEDED_ERR:
+                  message = 'Quota limit Exceeded';
+                  break;
+              case FileError.INVALID_MODIFICATION_ERR:
+                  message = "Can''t modify";
+                  break;
+              case FileError.INVALID_STATE_ERR:
+                  message = 'Invalid State';
+                  break;
+              default:
+                  message = 'Do not know, what happened. Report to webmaster';
+                  break;
+          }
+          alert(message);
+      }
+      function selectFolder(e) {
+    	    var theFiles = e.target.files;
+    	    var relativePath = theFiles[0].webkitRelativePath;
+    	    var path = theFiles[0].webkitRelativePath.replace("/.", "");
+    	    var folderName = "";
+    	    if (isFolder(theFiles[0])){
+    	    	 folderName = path.match(/([^\/]*)\/*$/)[1];
+    	          $("body").append("<div>" + folderName + "</div>");
+    	    }
+    	    var folder = relativePath.split("/");
+//    	    alert("folder "+folder[0]);
+    	    alert("folder "+path);
+    	    alert("name "+folderName);
+    	}
+      function isFolder(x) {
+    	    if (x.name == "." && x.type == "") {
+    	        return true;
+    	    } else {
+    	        return false;
+    	    }
+    	} 
+// Files and directories end      
+      
+      function homePage(){
+      	var curAddr = document.location.href;
+      //	 alert(curAddr);
+      	var newAddr = curAddr.replace("rapportering.html","");
+      //	alert(newAddr);
+      	document.location = newAddr;
+
+      }
+      var Spinner1;
+      var foo;
+      function toggleDisplay(id, displayvalue)
+      {    
+      //	 alert("step 1 "+displayvalue);
+          if ( displayvalue == 1 ) {
+               document.getElementById(id).style.display = 'block';
+      //         alert("step 2");
+          } else if (displayvalue == 0) {
+               document.getElementById(id).style.display = 'none';
+          //     alert("step 3");
+          }
+       //   alert("step 4");
+      }
+      function velgstatus(){
+      //	alert("status velges");
+      //	$("#btnForetak").click();
+      //	alert("status velges 2");
+      	$("#btnutvalg").click();
+      //	$("#btnRegion").click();
+      //	alert("status valgt");
+      }
+      function formSubmit(button){
+      	var clickbutton = "#"+button;
+      //	alert("Før clicked");
+      //	$("#valgt").click();
+      	$(clickbutton).click();
+      //	alert("clicked");
+
+      	}
+      function sorterdatohendelse(){
+      	alert("File katalog ");
+      }	
+      //window.onload=initialize();
+      </script>
+
+      <h1>Hemovigilans - Rapportering og analyse</h1>
+      <!-- Nav tabs -->
+
+      <!-- Tab panes  -->
+      <div class="tab-content">
+        <!-- ------------------ Meld fra om --------------------------------------- -->
+        <div class="tab-pane active" id="sak">
+
+          <!--
+          <div class="form-group">
+          -->
+            <!-- pcv, 29.10.2015: Denne div er tom. Slettes? -->
+            <!--
+          </div>
+        -->
+
+          <div class="c-jumbotron">
+            <div class="jumbotron">
+              <div class="container">
+                <div class="row" id="saken">
+                  <div class="col-xs-12 col-sm-4 bottom-xs-1-6 teaser">
+                    <h3>Søkekriterier meldinger</h3>
+                    <div id="status">
+                      <div for="nystatus">Listeutvalg meldingsstatus:</div>
+                      <div class="input-group">
+                        <select name ="nystatus" id="nystatus" onchange="velgstatus();">
+                          <option >${valgt}</option>
+                          <#list statusflag as flag>
+                            <option>${flag} </option>
+                          </#list>
+                        </select>
+                      </div>
+                      <div for="merkn">Rapporter:</div>
+                         <div class="input-group">
+                          <a href="javascript:toggleDisplay('filer', 1);">Forbered rapport til excel</a><br>
+                      </div>  
+                                      
+                      <div class="input-group" id="filer" style="display: none">
+                      <a href="javascript:ListFoldersFiles();">Kataloger</a><br>
+     <!--                   <input type="text" placeholder="Write folder name to create" name="folderNameL" id="folderNameL" />
+                       <ul id="folderList"></ul> -->
+                      <label></label><br>
+<!-- 				    	<input  type="file" id="filename"   name="files[]" onchange="selectFolder(event);" multiple mozdirectory webkitdirectory directory msdirectory /><br>
+ -->				    	<div class="input-group">
+                          <button type="submit" id="btnrapportexcel" name="excel" value="excel" class="btn btn-primary">Utvalg til excel</button>
+                      </div>
+                      </div>  
+
+                    </div>                    
+                  </div>
+
+                  <div class="col-xs-12 col-sm-4 bottom-xs-1-6 teaser">
+                    <h3>Tidsperiode hendelsesdato</h3>
+                    <div class="periode">
+                      <div class="control-group">
+                        <div for="fra-dato">Fra dato:</div>
+                        <input type="date" class="date-input-large" name="fra-dato" id="fra-dato" onchange="dateValidation('fra-dato');" />
+                      </div>
+                      <div class="control-group">                    
+                        <div for="til-dato">Til dato:</div>
+                        <input type="date" size="16" class="date-input-large" name="til-dato" id="til-dato" onchange="formSubmit('btndatohendt');" />
+                      </div>
+                    </div>
+
+                    <h3>Tidsperiode meldt dato</h3>
+                    <div class="periode">
+                      <div class="control-group">
+                        <div for="fra-dato">Fra dato:</div>
+                        <input type="date" size="16" class="date-input-large" name="fra-dato" id="fra-dato" onchange="dateValidation('fra-dato');" />
+                      </div>
+                      <div class="control-group">                    
+                        <div for="til-dato">Til dato:</div>
+                        <input type="date" size="16" class="date-input-large" name="til-dato" id="til-dato" onchange="formSubmit('btndatohendt');" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-4 bottom-xs-1-6 teaser">
+                    <h3>Årsperiode hendelsesdato</h3>
+                    <div class="periode">
+                      <div class="control-group">
+                        <div for="fra-dato">Fra dato:</div>
+                        <input type="text" size="16" class="date-input-large" name="fra-ar" id="fra-ar" onchange="dateValidation();" />
+                      </div>
+                      <div class="control-group">                    
+                        <div for="til-dato">Til dato:</div>
+                        <input type="text" size="16" class="date-input-large" name="til-ar" id="til-ar" onchange="dateValidation();" />
+                      </div>
+                    </div>
+
+                    <h3>Årsperiode meldt dato</h3>
+                    <div class="periode">
+                      <div class="control-group">
+                        <div for="fra-dato">Fra dato:</div>
+                        <input type="text" size="16" class="date-input-large" name="fra-arm" id="fra-arm" onchange="dateValidation();" />
+                      </div>
+                      <div class="control-group">                    
+                        <div for="til-dato">Til dato:</div>
+                        <input type="text" size="16" class="date-input-large" name="til-arm" id="til-arm" onchange="dateValidation();" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+   <!-- Sorteringsscript: <a href="javascript:sorterdatohendelse();"></a> -->
+     <div class="form-group" id="tabeller" >
+     	<table class="table table-hover" border=1>
+  		<tr><th >Meldingsnøkkel</th><th><a href="javascript:formSubmit('btnsorteringdatohendt');">Dato for hendelse</a> </th><th><a href="javascript:formSubmit('btnsorteringdatomeldt');">Meldingsdato</a></th><th>Meldingstype</th><th>Status</th></tr>
+  			<#list meldinger as melding>
+  		<tr><td id="nokkel">${melding.meldingsnokkel}</td><td>${melding.datoforhendelse?date}</td><td>${melding.meldingsdato?date}</td><td>${melding.meldingstype}</td><td id="tabstatus" bgcolor="green">${melding.sjekklistesaksbehandling}</td></tr> 
+  			</#list>
+		</table>  
+     </div>
+ 
+  
+      <button type="submit" id="btnleveransexx" name="lukk1" value="lukk"  class="btn btn-default">Lukk</button>
+ 	 <button type="submit" id="btnutvalg" name="utvalg" value="utvalg" style="display: none" >getValue</button> 
+ 	  <button type="submit" id="btnmerknad" name="merknad" value="merknad" style="display: none" >getValue</button>
+  <button type="submit" id="btndatomeldt" value="datomeldt"  name="datomeldt" class="btn btn-primary" style="display: none" > getValue </button>
+  <button type="submit" id="btndatohendt" value="datohendt"  name="datohendt" class="btn btn-primary" style="display: none" > getValue </button>
+  <button type="submit" id="btnsorteringdatohendt" value="sorteringdatohendt"  name="sorteringdatohendt" class="btn btn-primary" style="display: none" > getValue </button>
+  <button type="submit" id="btnsorteringdatomeldt" value="sorteringdatomeldt"  name="sorteringdatomeldt" class="btn btn-primary" style="display: none" > getValue </button>
+       
+    
+</div><!--sluttsak-->
+</div>
+</form>
+</div>
+</body>
+</html>

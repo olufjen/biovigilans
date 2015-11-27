@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html;">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta content="Kunnskapssenteret oppsummerer forskning om effekt av helsetiltak, gjør helseøkonomiske analyser, måler kvalitet, og arbeider med kvalitetsforbedring og pasientsikkerhet. " name="description">
+
+<!--   <link href="http://www.kunnskapssenteret.no/_public/shared/img/favicon.ico" type="image/x-icon" rel="shortcut icon"> -->
+  <link href="/biovigilans_admin_web/resources/css/main.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link href="/biovigilans_admin_web/resources/css/biovigilans.css" rel="stylesheet">
+  
+ 
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" /><!-- Viktig for dato !! -->
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> <!-- Viktig for dato !! -->
+    <script src="https://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" ></script>
+
+<title>Administrasjon Biovigilans</title>
+</head>
+<body class="events">
+ <header class="master-header" role="navigation">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-9 col-sm-6 col-sm-push-3 col-vertical-bottom-sm logo-container">
+            <div class="bottom">
+              <a class="home" href="#" id="home" rel="home" title="Version 1.1 (Sortering) November 2015">
+                 <img class="logo" src="/biovigilans_admin_web/resources/css/logo.png" alt="" />
+                </a>
+            </div>
+          </div>
+          <div class="hidden-xs col-sm-3 col-sm-push-5 col-vertical-bottom-sm">
+       
+          </div>
+          <div class="col-xs-3 col-sm-pull-9 col-vertical-bottom-sm">
+            <div class="bottom">
+				<button type="button" class="btn btn-default">Tilbake</button>
+			</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+<div class="container">
+
+<h1>Biovigilans Administrasjon</h1>
+
+<!--  <a href="#" name="hvg-dialog"  class="btn btn-default">Dialog med melder</a>-->
+<a href="saksbehandling.html" name="hvg-sak"  class="btn btn-primary">Saksbehandling</a>
+<a class="btn btn-default" name="hvg-analyse" href="rapportering.html" >Analyse og uttrekk</a>
+<a href="#" name="hvg-rapport"  class="btn btn-default">Rapportering</a>
+<!-- <a href="rapporter_hendelse_main.html"><button name="hvg-rapporter" type="button" class="btn btn-primary">Rapporter hendelse</button></a>
+<a href="#"><button name="hvg-laring" type="button" class="btn btn-default">Læringsnotater</button></a> -->
+</div>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          Administrasjonsgrensesnitt
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+Som administrator for Biovigilans kan du gjøre:
+Analyse og uttrekk <br />
+Du kan opprette en sak, og fordele oppgaver til sakbehandlere.<br />
+Du kan føre dialog med melder, og all dialog blir loggført.<br />
+Det er også mulig å lage automatiske rapporter til andre etater. 
+      </div>
+    </div>
+  </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseA">
+         Analyse og uttrekk 
+        </a>
+      </h4>
+    </div>
+    <div id="collapseA" class="panel-collapse collapse">
+      <div class="panel-body">
+       Her kan du gjøre analyse og uttrekk av meldinger: <br />
+Kunne gjøre all kvalitetssikring i databasen.<br />
+Eks: Endre diagnose, endre meldingstypen.<br />
+Automatiserte analyser ved bruk av SPSS eller excel.<br />
+      </div>
+    </div>
+</div>  
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+          Saksbehandling
+        </a>
+      </h4>
+    </div>
+    <div id="collapseSix" class="panel-collapse collapse">
+      <div class="panel-body">
+      Her kan du vurdere meldinger og ev. opprette en sak og fordele oppgaver til sakbehandler.<br />
+       Her vises liste over meldinger som ikke er gjennomgått eller fordelt.<br />
+       En sak kan ha en eller flere av disse statusene:<br />
+       - Skal meldes videre til HDIR<br />
+- Skal diskuteres på neste møte<br />
+- Egnet som eksempler i rapport<br />
+- Egnet som oppgave på seminar<br />
+- Trenger ytterligere opplysninger<br />
+- Trenger å følges opp<br />
+- Ferdig behandlet<br />
+- Utgått, dette betyr at meldingen ikke skal med i oversikter <br />
+- Levert: Dette er intiell status som settes når melding er levert av melder.<br />
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
+          Dialog med melder
+        </a>
+      </h4>
+    </div>
+    <div id="collapseSeven" class="panel-collapse collapse">
+      <div class="panel-body">
+       Her kan du følge opp all dialog med melder knyttet til en eller flere meldinger.
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<!--<script src="js/bootstrap.min.js"></script>-->
+</div> <!--slutt container-->
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Rapporter hendelse - Hemovigilans</title>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.6/css/fonts/font-source-sans-pro.css"/>
+<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.6/css/vendor/bootstrap.min.css"/>
+<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.6/css/defaults.css"/>
+<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.6/css/page.css"/>
+<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.6/css/components.css"/>	
+<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.6/css/custom.css"/>
+<!--<link rel="stylesheet" href="css/bootstrap.css">-->
+
+</head>
+
+<body>
+  <header class="master-header" role="navation">
+      <div class="container">
+        <!-- synlig header -->
+        <div class="row">
+          <div class="col-xs-9 col-sm-6 col-sm-push-3 col-vertical-bottom-sm logo-container">
+            <div class="bottom">
+              <a class="home" href="#" id="home" rel="home" title="">
+                <img class="logo" src="http://newwindow.no/ks/nokc-0.1.6/img/ks-logo.png" alt="" />
+              </a>
+            </div>
+          </div>
+          <div class="hidden-xs col-sm-3 col-sm-push-3 col-vertical-bottom-sm">
+            <div class="bottom">
+              <span class="nkfh">Nasjonalt kunnskapssenter<br />for helsetjenesten</span>
+            </div>
+          </div>
+          <div class="col-xs-3 col-sm-pull-9 col-vertical-bottom-sm">
+            <div class="bottom">
+              <button type="button" class="btn-master-menu" data-toggle="collapse" data-target=".master-menu">
+                <!-- <button type="button" class="btn-master-menu"> -->
+                <span class="sr-only">Åpne eller lukke meny.</span>
+                <span class="text hidden-xs">Meny</span>
+                <div class="bar-box">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </div>
+              </button>
+              <ul class="list-inline english-aa hidden-xs">
+                <li class="english">
+                  <a href="#" id="english" title="">English</a></li><li class="aa">
+                  <a href="#">
+                    <span class="small">A </span>
+                    <span class="medium">A</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+<div class="container">
+<form id="rapport" action="?method=PUT" method="post" > 
+<script type="text/javascript">
+var Spinner1;
+var foo;
+function toggleDisplay(id, displayvalue)
+{    
+	// alert("step 1 "+displayvalue);
+    if ( displayvalue == 1 ) {
+         document.getElementById(id).style.display = 'block';
+    //     alert("step 2");
+    } else if (displayvalue == 0) {
+         document.getElementById(id).style.display = 'none';
+    //     alert("step 3");
+    }
+ //   alert("step 4");
+}
+
+function initialize()
+{
+    var SpinnerValue_Changed = function() {
+       alert("event captured");
+    };
+   
+    Spinner1 = document.getElementById("p-blod-erytrocytt");
+    foo = document.getElementById("foo");
+    alert("step 1");
+    foo.hidden ="false";
+  //  Spinner1.addEventListener("change", SpinnerValue_Changed, false);
+    alert("step 2");
+}
+function updateOutput(id1,id2,id3){
+	 // alert("step 1");
+	 
+	 var num1 =  document.getElementById(id1).value;
+	 var num2 =  document.getElementById(id2).value;
+	 var num3 = num2 - num1;
+	 document.getElementById(id3).value = num3;
+	 if (num3 < 2){
+		// document.getElementById(id3).removeAttr("class");
+		 document.getElementById(id3).className = "text-danger";
+	//	 alert("v1: "+num1+" V2 "+num2);
+	 }
+	 if (num3 >= 2){
+		 document.getElementById(id3).className = "text-info";
+	 }
+	
+}
+function addRow() {
+//	 alert("adding ");
+    var myName = document.getElementById("hemolyseparamvalg");
+    var table = document.getElementById("hemolyseTableData");
+ 
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+//    alert("adding 2 ");
+    var scntDiv =  document.getElementById("p_scents");
+//    alert("adding 3 ");
+    var para = document.getElementById("pp_scents");
+    var inpvalg1 = document.getElementById("p_scnt");
+//    alert("adding 4 ");
+    var i = para.size + 1;
+//    alert("size "+i);
+//	$('<input type="text" id="p_scnt" size="20" name="p_scnt_' + i +'" value="ny" placeholder="Input Value" />').appendTo(scntDiv.id);
+//	scntDiv.innerHTML = '<input type="text" id="p_scntx" size="20" name="p_scnt_' + i +'" value="ny" placeholder="Input Valuexx" />';
+    row.insertCell(0).innerHTML= '<input type="button" value = "Fjern" onClick="deleteRow(this)">';
+    //myName.name = myName.value;
+ 
+    row.name= myName.value;
+    row.insertCell(1).innerHTML= '<input type="text" id="p_scnt" size="25" name="p_scnt_' + i +'" value="ny" placeholder="Input Valuexx" />';
+    var inpvalg = document.getElementById("p_scnt");
+    inpvalg.value = myName.value;
+    inpvalg.name = myName.value;
+    inpvalg.id = myName.value;
+    
+   // row.insertCell(1).innerHTML='<input/>'.attr({type:"text",name:myName.value,value:"abcd"});
+    
+ //   var html [];
+   // html.push("<input type='text' name='name'",myName.value,"/>")
+  	//alert("Row name "+row.name)
+ 
+}
+function deleteRow(obj) {
+	      
+	    var index = obj.parentNode.parentNode.rowIndex;
+	    var table = document.getElementById("hemolyseTableData");
+	    table.deleteRow(index);
+	    
+	}
+//window.onload=initialize();
+</script>
+
+<h1>Rapporter hendelse–Hemovigilans</h1>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+  <li ><a href="rapporter_hendelse_main.html" data-toggle="tab">Meld fra om</a></li>
+  <li><a href="rapporter_kontakt.html" data-toggle="tab">Kontaktinformasjon</a></li>
+  <li class="active"><a href="#pasientkomplikasjoner" class="active" data-toggle="tab">Transfusjonskomplikasjoner</a></li>
+</ul>
+
+<!-- Tab panes -->
+
+
+  <!--------------------------------------------Transfusjonskomplikasjoner--------------------------------------->
+  
+<div class="tab-pane" id="pasientkomplikasjoner">
+<h2>Kvittering</h2>
+    <h3>Pasient </h3>
+      <div class="form-group">
+        <label>Kjønn:</label>
+        	<div class="radio">
+	          <label name="tab-kjonn" id="tab-kjonn-1" >
+	         ${kvittering.kjonn}
+	          </label>
+		    </div>
+    </div>
+     <div class="form-group">
+
+      <label>Alder:</label>
+      	<div class="radio">
+      	<label>${pasientkomplikasjon.alder}</label>
+ 		</div>
+    </div>
+
+    <br/><br/>
+   	<div class="form-group">
+      <label>Sykdom pasienten behandles for (diagnose)</label>
+      	<div class="radio">
+         <label>${kvittering.sykdomBehandling}</label>
+ 		</div>
+    
+<!--   Erstattet av linjene over !!    
+      <select name="p-antistoff-sykdom" class="form-control">
+          <option name="p-antistoff-sykdom-1"></option>
+          <option name="p-antistoff-sykdom-2"></option>
+      </select>
+-->       
+    </div> 
+ 
+	<div class="form-group">
+      <label>Annen Sykdom av betydning for komplikasjonen (diagnose)</label>
+      <div class="radio">
+         <label>${kvittering.sykdomBetydning}</label>
+		</div>
+    
+<!--   Erstattet av linjene over !!    
+      <select name="p-antistoff-sykdom" class="form-control">
+          <option name="p-antistoff-sykdom-1"></option>
+          <option name="p-antistoff-sykdom-2"></option>
+      </select>
+-->       
+    </div>
+  
+ 
+    <div id="tidligeretransfusjon" style="display: display:${kvittering.displaytidligereTrans}" class="form-group">
+        <b>Tidligere transfusjonskomplikasjoner</b>
+     <div class="radio">
+      <label>
+        ${kvittering.tidligere}
+      </label>
+    </div>
+   
+  
+    
+    </div>
+    
+    
+    
+    <b>Inneliggende/poliklinisk</b>
+    <div class="radio">
+      <label>
+          ${kvittering.pasientType}
+      </label>
+  </div>
+ 
+ <!--    <b>Avdeling inn her????</b>  -->
+	<br/>       
+    <div id="avdeling" class="form-group" >
+        <label>Avdeling</label>
+         <div class="radio">
+      	<label>${kvittering.avdeling}</label>
+      	</div>
+  	</div>
+ 	<br/> 
+ 		
+	<!-- Transfusjon  -->
+	<h3>Transfusjon </h3>
+	<br/> 
+	<b>Transfusjondato og klokkelslett.</b>
+	<div class="radio">
+		<label>${kvittering.datoTransfusjon} - </label>
+		<label>${kvittering.tidTransfusjon}</label>
+	</div>
+    <b>Hastegrad</b>
+    <div class="radio">
+      <label>
+         ${kvittering.hastegrad}
+      </label>
+    </div>
+  
+  
+  <div class="form-group">
+         <label>Indikasjon for transfusjonen (diagnose)</label>
+          <div class="radio">
+            	<label> ${kvittering.indikasjonTransfusjon}</label>
+          </div>  	
+ </div>   	
+	  
+<!--  <button id="btnShow">Show</button> -->
+<!--  <button id="btnHide">Hide</button>   -->
+
+    <h3>Blodprodukt </h3>
+    <b>Blodprodukt mistenkt som årsak til komplikasjonen</b>
+    <div class="checkbox">
+      <label>
+       ${kvittering.blodprodukt}
+       </label>
+  	</div>
+    <div id="erytrocyttantall" class="form-group">
+     <label>Antall</label> 
+     <div class="checkbox">
+      <label>${kvittering.antallPakker}</label>
+      </div>
+    </div>
+ 
+   <div id="tappingtypetromb" class="form-group">
+	<b>Type tapping</b>
+    <div class="radio">
+      <label>
+      ${kvittering.tapping}
+      </label>
+  	</div>
+  	<div id="blod-suspensjon" >
+    <b>Suspensjonsmedium </b>
+    <div class="radio">
+      <label>
+          ${kvittering.suspensjon}
+      </label>
+  	</div>
+  
+    </div>
+    </div>
+ 
+ 
+    <div id="blod-plasmagruppe" style="display:${kvittering.displayPlasma}">
+         <label>Valg av plasma</label>
+         <div class="radio">
+          ${kvittering.plasma}
+         </div>
+    
+    </div>
+ 
+ 
+    <div id="blod-traumeantall" class="form-group" style="display:${kvittering.displayPakker}">
+      <label>Antall erytrocyttkonsentrater</label> 
+      <div class="radio">
+      <label>${kvittering.erytrocytipakke}</label>
+      </div>
+      <label>Antall trombocyttkonsentrater</label> 
+       <div class="radio">
+      <label>${kvittering.tromboipakke}</label>
+      </div>
+      <label>Antall plasmaenheter</label> 
+       <div class="radio">
+      <label>${kvittering.plasmaipakke}</label>
+      </div>
+  
+    </div>    
+
+     
+    <b>Spesielle egenskaper</b>
+    <div class="checkbox">
+    <label>
+  		${kvittering.egenskapKriseblod} ${kvittering.egenskapVasket} ${kvittering.egenskapBestralt} ${kvittering.egenskapHla} ${kvittering.egenskapPatogen} ${kvittering.egenskapblodvarmer}
+  		</label>
+ 
+    </div>
+ 
+    <b>Andre blodprodukter gitt siste 24 timer</b><br/>
+
+    <div class="checkbox" >
+      <label>
+        ${kvittering.annetBlodprodukt}
+      </label>
+  	</div>
+    <div id="annenblod-erytrocyttantall" class="form-group" >
+     <label>Antall</label> 
+        <div class="checkbox" >
+      <label>${kvittering.annetblodAntall}</label>
+      </div>
+    </div>  	
+
+ 
+    <div id="blod-traumeantall" class="form-group" style="display:${kvittering.displayandrePakker}">
+       <label>Antall erytrocyttkonsentrater</label> 
+      <div class="radio">
+      <label>${kvittering.annenAntallerytrocyt}</label>
+      </div>
+      <label>Antall trombocyttkonsentrater</label> 
+       <div class="radio">
+      <label>${kvittering.annenAntalltrombo}</label>
+      </div>
+      <label>Antall plasmaenheter</label> 
+       <div class="radio">
+      <label>${kvittering.annenAntallplasma}</label>
+      </div>
+  
+    </div>    
+
+
+  
+   	<br/><br/>  
+ 
+    
+    <h3>Komplikasjon</h3>
+    <b>Symptomer angitt</b>
+    <div class="checkbox">
+      <label>
+      <#list kvittering.symptomer?chunk(4, '-') as row>
+  		<#list row as cell>${cell} </#list>
+	  </#list>
+      
+      </label>
+    </div>
+     <div id="temperaturstigning" class="form-group" style="display: ${kvittering.displayTemperatur}">
+     <label>Temperatur før transfusjonsreaksjonen: </label> 
+     <label class="checkbox">${kvittering.temperaturFor}</label>
+      <label>Temperatur etter transfusjonsreaksjonen: </label> 
+      <label  class="checkbox">${kvittering.temperaturEtter}</label>
+      <label>Temperaturstigning: </label>
+      <label  class="checkbox">${kvittering.tempendring}</label> 
+     
+    </div>    
+
+
+      <b>Mistenkt årsak til transfusjonsreaksjon </b>
+      <div class="checkbox" >
+      <label>
+        ${kvittering.klassifikasjon}
+      </label>
+  	</div>
+  
+    <h3>Utredning</h3>
+    <b>Blodtypeserologisk utredning tyder på HTR</b>
+     <div class="checkbox">
+      <label>
+      <#list kvittering.antistoff?chunk(4, '-') as arow>
+  		<#list arow as cell>${cell} </#list>
+	  </#list>
+      
+      </label>
+    </div>
+    
+    
+
+     <b>Hemolyseparametere er positive.</b>
+ 
+    
+  	<b>Hemolyseparametre.</b>
+ 	     <div class="checkbox">
+      <label>
+      <#list kvittering.hemolyse?chunk(4, '-') as hrow>
+  		<#list hrow as cell>${cell} </#list>
+	  </#list>
+      
+      </label>
+    </div>	
+
+ 
+     <b>Dyrkning fra pose utført</b>
+     <div class="checkbox" >
+      <label>
+        ${kvittering.poseDyrkning}
+      </label>
+  	</div>  
+  	
+    <div class="form-group" >
+		<h3>Alvorlighetsgrad</h3>
+
+		<div class="radio">
+			<label>
+			  ${kvittering.alvorlighetsGrad}
+			</label>
+		</div>
+	
+	</div>
+	<div class="form-group" >
+		<h3>Klinisk Resultat</h3>
+		<div class="radio">
+			<label>
+				  ${kvittering.kliniskRes}
+			</label>
+		</div>
+
+	</div>
+	<div class="form-group" >
+		<h3>Årsakssammenheng</h3>
+		<div class="radio">
+			<label>
+				  ${kvittering.arsak}
+			</label>
+		</div>
+	
+	</div>
+    <br/>
+       <button name="avbryt4" type="submit" class="btn btn-default">Avbryt</button>
+      <button name="ikkegodkjent" type="submit" class="btn btn-default">Ikke godkjent</button>
+      <button name="godkjent" type="button"  class="btn btn-primary" onclick="document.location='rapporter_kontakt.html';">Godkjent</button>
+ <!--       <button name="godkjent" type="submit" class="btn btn-primary">Godkjent</button> -->
+    
+</div><!--slutt pasientkomplikasjon-->
+ </form>
+ </div>
+ </body>
+ </html> 

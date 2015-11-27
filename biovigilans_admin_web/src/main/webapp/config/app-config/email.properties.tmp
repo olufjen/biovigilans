@@ -1,0 +1,7 @@
+host=smtp.office365.com
+port=587
+authenticatorUser=Hemo.Vigi@kunnskapssenteret.no
+authenticatorPwd=Vinter_ISkommer
+mailFrom=hemovigilans@kunnskapssenteret.no
+subject=Hemovigilans Meldeordningen
+emailText=Takk for meldingen. Ditt meldingsnummer er: 

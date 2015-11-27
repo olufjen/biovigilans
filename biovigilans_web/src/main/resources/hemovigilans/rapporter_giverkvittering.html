@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Rapporter hendelse - Hemovigilans</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/fonts/font-source-sans-pro.css"/>
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/vendor/bootstrap.min.css"/>
+	<!-- <link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/defaults.css"/> -->
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/page.css"/>
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/components.css"/>	
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/custom.css"/>
+	<!--<link rel="stylesheet" href="css/bootstrap.css">-->
+</head>
+<body>
+  <header class="master-header" role="navation">
+      <div class="container">
+        <!-- synlig header -->
+        <div class="row">
+          <div class="col-xs-9 col-sm-6 col-sm-push-3 col-vertical-bottom-sm logo-container">
+            <div class="bottom">
+              <a class="home" href="#" id="home" rel="home" title="">
+                <img class="logo" src="http://newwindow.no/ks/nokc-0.1.7/img/ks-logo.png" alt="" />
+              </a>
+            </div>
+          </div>
+          <div class="hidden-xs col-sm-3 col-sm-push-3 col-vertical-bottom-sm">
+            <div class="bottom">
+              <span class="nkfh">Nasjonalt kunnskapssenter<br />for helsetjenesten</span>
+            </div>
+          </div>
+          <div class="col-xs-3 col-sm-pull-9 col-vertical-bottom-sm">
+            <div class="bottom">
+              <button type="button" class="btn-master-menu" data-toggle="collapse" data-target=".master-menu">
+                <!-- <button type="button" class="btn-master-menu"> -->
+                <span class="sr-only">Åpne eller lukke meny.</span>
+                <span class="text hidden-xs">Meny</span>
+                <div class="bar-box">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </div>
+              </button>
+              <ul class="list-inline english-aa hidden-xs">
+                <li class="english">
+                  <a href="#" id="english" title="">English</a></li><li class="aa">
+                  <a href="#">
+                    <span class="small">A </span>
+                    <span class="medium">A</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+	<div class="container">
+	<form id="rapport" action="?method=PUT" method="post"> 
+	<script type="text/javascript">
+	var Spinner1;
+	var foo;
+	function toggleDisplay(id, displayvalue)
+	{    
+		// alert("step 1 "+displayvalue);
+	    if ( displayvalue == 1 ) {
+	         document.getElementById(id).style.display = 'block';
+	      //  alert("step 2");
+	    } else if (displayvalue == 0) {
+	         document.getElementById(id).style.display = 'none';
+	       //  alert("step 3");
+	    }
+	 //   alert("step 4");
+	}
+	
+	function blodbankenOptions(){
+		var selectedValue = document.getElementById("re").value;
+		if(selectedValue=="Utenfor blodbanken"){
+			document.getElementById('utenfor').style.display = 'block';
+			document.getElementById('hendelseDato').style.display = 'none'
+		}
+		else if(selectedValue=="På blodgiverbenk"){
+			document.getElementById('hendelseDato').style.display = 'block'
+			document.getElementById('utenfor').style.display = 'none';
+		}else{
+			document.getElementById('hendelseDato').style.display = 'none'
+			document.getElementById('utenfor').style.display = 'none';
+		}
+	}
+	
+	function initialize()
+	{
+	    var SpinnerValue_Changed = function() {
+	       alert("event captured");
+	    };
+	   
+	    Spinner1 = document.getElementById("p-blod-erytrocytt");
+	    foo = document.getElementById("foo");
+	    foo.hidden ="false";
+	  //  Spinner1.addEventListener("change", SpinnerValue_Changed, false);
+		}
+	
+	number.oninvalid = function(e) {
+		e.target.setCustomValidity("");
+		if (!e.target.validity.valid) { e.target.setCustomValidity("Please enter only number value"); }
+		};
+		
+	
+	//window.onload=initialize();
+	</script>
+	
+	<h1>Rapporter hendelse–Hemovigilans</h1>
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs">
+	  <li ><a href="rapporter_hendelse_main.html" data-toggle="tab">Meld fra om</a></li>
+	  <li><a href="rapporter_kontakt.html" data-toggle="tab">Kontaktinformasjon</a></li>
+	  <li class="active"><a href="#tapping" data-toggle="tab">Komplikasjoner ved tapping av blodgivere</a></li>
+	 
+	</ul>
+	
+<!-------------------------- Komplikasjon ved tapping av blodgivere----------------------------------------------->
+    
+	<div class="tab-pane" id="tapping">
+		<h3>Giver</h3>
+	    <div class="form-group">
+	        <label>Kjønn:</label><br>
+	         <span  id="tab-kjonn-1" >${giverKvittering.kjonn} </span>
+		    </div>
+	    </div>
+	    
+	    <div class="form-group">
+	      <label>Alder:</label><br>
+	      <span  id="tab-alder"  >${giverKvittering.alder}</span>
+	    
+	     <!--  <select name ="tab-alder" id="giveralder" class="form-control">
+	       		<option> --- Select --- </option>
+	       		<#list giverkomplikasjon.aldergruppe as alder>
+	       		<option>${alder} </option>
+	     		   </#list>
+	     </select> -->
+	    </div>
+	    
+	   <div class="form-group">
+	    
+	     <label>Vekt i kg</label> <br>
+	      <!-- <input type="number"  min="0" name="givervektkg" size="80"  value="" class="form-control"/> -->
+	      <span id="givervektkg"  >${giverKvittering.givervektkg}</span>
+	   </div>
+	    
+	    <div class="form-group">
+	      <label>Givererfaring:</label><br>
+	      	 <span  id="tab-givererfaring"  >${giverKvittering.givererfaring}</span>
+	     </div>
+	     <div id="type-tapping"  class="form-group">
+	      <label>Type tapping:</label><br> <!-- Dersom aferese : første gang aferese /etablert aferese -->
+	      	 <span  id="givervektkg"  >${giverKvittering.tapping}</span>
+	     
+	    </div>
+	    <div class="form-group">
+	      <label>Tidligere reaksjoner på tapping:</label><br>
+	      <span id="tab-tidl-tapp">${giverKvittering.tidlTapp}</span>
+	    </div>
+	    <h3>Donasjon</h3>
+	    <div class="form-group">
+	    	<label>Når Oppstod Symptomene</label><br>
+	    	<span id="dato-donasjon" >${giverKvittering.datoDonasjon}</span>
+	    	<!-- <input type="date" name="dato-donasjon" /> -->
+	    </div>
+	    <div class="form-group">
+	      <label>Donasjonssted:</label><br>
+	      <span id="tab-sted" >${giverKvittering.donasjonSted}</span>
+	    </div>
+	    <div class="form-group">
+	      <label>Måltid innen tre timer før tapping:</label><br>
+	       <span id="tab-maltid" >${giverKvittering.maaltid}</span>
+	    </div>
+	    <div class="form-group">
+	      <label>Komplisert venepunksjon:</label><br>
+	      <span id="tab-vene">${giverKvittering.tabVene}</span>
+	    </div>
+	    <h3>Giverkomplikasjon</h3>
+	     <label>Hvor startet reaksjonen?</label><br>
+	    <span id="tab-hvor">${giverKvittering.tabHvor}</span><br>
+	    <span id="dato-hendelse">${giverKvittering.datoHendelse}</span>
+	    <span id="tab-utenForBlodbanken" >${giverKvittering.utenForBlodbanken}</span>
+	    <div class="form-group">
+	    	<label>Tid fra start tapping til reaksjon:</label><br>
+	    	<span id="tab-tapp-reak">${giverKvittering.tappReak}</span>
+	    </div>
+	      
+	   	<div class="form-group">
+		    <label>Varighet av komplikasjon/bivirkning/skade:</label><br>
+		    <span id="tab-varighet" >${giverKvittering.tabVarighet}</span>
+	    </div>
+	    
+	    <div class="form-group" >
+			<h3>Alvorlighetsgrad </h3>
+			<span id="alvor-mang">${giverKvittering.alvorMang}</span><br>
+		</div>
+	    
+	    <div class="form-group">
+	      <label>Klinisk Resultat (samordnes med komplikasjoner ved tapping av givere)</label><br>
+	      <span id="tab-klinisk">${giverKvittering.tabKlinisk}</span>
+	    </div>
+	    <h3>Type komplikasjon</h3>
+	    <div class="form-group">
+	      <label>Lokal:</label><br>
+	      <span id="tab-arm" >${giverKvittering.tabArm}</span> <br>
+	   	  <span id="tab-tabskadearm" >${giverKvittering.tabskadearm}</span> 
+	    </div>
+	    <div class="form-group">
+	      <label>Systemisk:</label><br>
+	      <span id="tab-bivirk">${giverKvittering.tabBivirk}</span> 
+	      <span id="tab-systemiskbivirkning">${giverKvittering.systemiskbivirkning}</span>
+	    <!--   <input name ="tab-systemiskbivirkning" list="systemiskbivirkning" class="form-control"> -->
+	    </div>
+		  <div class="form-group">
+	      <label>Annen reaksjon(spesifiser):</label><br>
+	      <span id="tab-annenreaksjon" >${giverKvittering.annenreaksjon}</span>
+	      <span id="tab-annet-beskriv" >${giverKvittering.annenreaksjonBeskriv}</span>
+		</div> 
+		  	
+		    <h3>Tiltak rettet mot giver</h3>
+		    <div class="form-group">
+		      <label>Strakstiltak:</label><br>
+		      <span id="tab-strakstiltak">${giverKvittering.strakstiltak}</span><br>
+		      <label>Behandling på syskehus</label>
+		      <span id="tab-strakstiltak">${giverKvittering.behandlingSykehus}</span><br>
+		      <label>Varighet av sykehusinnleggelse</label>
+		      <span id="tab-strakstiltak">${giverKvittering.innleggelsetxt}</span><br>
+		      
+	    </div>
+	       
+	    <div class="form-group">
+		 <label>Planlagte eller gjennomførte forbedringstiltak</label><br>
+		 <span id="tab-forbedringstiltak">${giverKvittering.forbedringstiltak}</span>
+	  		<br/>
+	  	</div>
+	  	 <div class="form-group">
+		      <label>Var komplikasjonen/hendelsen forebyggbar?</label><br>
+		      <span id="tab-forebyggbar">${giverKvittering.forebyggbar}</span>
+	     </div>	
+	     <div class="form-group">
+	      <label>Videre behandling/oppfølging nødvendig?</label><br>
+	      <span id="tab-annenreak" >${giverKvittering.behandling}</span><br>
+	      <label>annenreak</label><br>
+	      <#list giverKvittering.annenreakList as annenreak >
+	      	<span id="tab-annenreak" >${annenreak}</span><br>
+	      </#list>
+	    </div>
+	    <div class="form-group">
+	      <label>Giver er avregistrert (p.g.a komplikasjonen)</label><br>
+	  	  <span id="tab-avreg" >${giverKvittering.avreg}</span>
+	    </div>
+	      <button name="ikkegodkjent" type="button" class="btn btn-default" value="ikkegodkjent" onclick="document.location='rapporter_giver.html';">Ikke Godkjent</button>
+	      <button name="godkjent" type="button"  class="btn btn-primary" onclick="document.location='rapporter_kontakt.html';">Godkjent</button>
+	</form>
+	</div> <!--slutt Tapping av blodgivere-->
+	  
+</body>
+</html>

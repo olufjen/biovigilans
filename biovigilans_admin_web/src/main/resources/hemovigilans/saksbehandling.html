@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Rapporter hendelse - Hemovigilans</title>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html;">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta content="Kunnskapssenteret oppsummerer forskning om effekt av helsetiltak, gjør helseøkonomiske analyser, måler kvalitet, og arbeider med kvalitetsforbedring og pasientsikkerhet." name="description">
+  <link href="/biovigilans_admin_web/resources/css/main.css" rel="stylesheet">
+  <link href="/biovigilans_admin_web/resources/css/biovigilans.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+ 
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" /><!-- Viktig for dato !! -->
+    
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> <!-- Viktig for dato !! -->
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" ></script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="left hidden-print">        
+        <button type="button" onclick="homePage()" class="btn btn-default btn-lg">Tilbake</button>        
+      </div>
+      <figure class="main-logo" title="Version 1.0 November 2015">        
+       <img class="logo" src="/biovigilans_admin_web/resources/css/logo.png" alt="" />
+       </figure>
+    </div>
+  </header>
+
+  <div class="container">
+    <form id="rapport" action="?method=PUT" method="post"> 
+      <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+      <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" ></script>
+
+      <script type="text/javascript">
+      /**
+      This  function set the calender for date to the browsers those doesn't support html5 input type date.
+
+      */
+      var reqFlag =  "${display}";
+      var initDatepicker = function() {
+        $('input[type=date]').each(function() {
+          var $input = $(this);
+          var id = $(this).attr('id')
+        	var min="";
+          
+          if(id=="til-dato"){
+          	min = $("#fra-dato").val();
+          	$("#til-dato").datepicker('option', 'minDate', min);
+          }
+          $(this).datepicker({
+              maxDate: "",
+              dateFormat: 'yy-mm-dd',
+          });
+      });
+      };
+
+      if(!Modernizr.inputtypes.date){
+      $(document).ready(initDatepicker);
+      };
+      function dateValidation(felt){
+      	var dfelt = "#"+felt;
+
+      		 var dateFra = $(dfelt).val();
+      		   if(!Modernizr.inputtypes.date){
+      			 	$(document).ready(initDatepicker);
+      			};
+      		 if (felt == "fra-datomelde"){
+      			 $('#til-datomelde').attr('min', dateFra);
+      		 } 	
+      		 if (felt == "fra-dato"){
+      			 $('#til-dato').attr('min', dateFra);
+      		 }   	
+
+
+      	  
+       }
+      	 
+      function homePage(){
+      	var curAddr = document.location.href;
+      //	 alert(curAddr);
+      	var newAddr = curAddr.replace("saksbehandling.html","");
+      //	alert(newAddr);
+      	document.location = newAddr;
+
+      }
+      var Spinner1;
+      var foo;
+      function toggleDisplay(id, displayvalue)
+      {    
+      //	 alert("step 1 "+displayvalue);
+          if ( displayvalue == 1 ) {
+               document.getElementById(id).style.display = 'block';
+      //         alert("step 2");
+          } else if (displayvalue == 0) {
+               document.getElementById(id).style.display = 'none';
+          //     alert("step 3");
+          }
+       //   alert("step 4");
+      }
+      function velgstatus(){
+      //	alert("status velges");
+      //	$("#btnForetak").click();
+      //	alert("status velges 2");
+      	$("#btnutvalg").click();
+      //	$("#btnRegion").click();
+      //	alert("status valgt");
+      }
+      function formSubmit(button){
+      	var clickbutton = "#"+button;
+      //	alert("Før clicked");
+      //	$("#valgt").click();
+      	$(clickbutton).click();
+      //	alert("clicked");
+
+      	}
+      function sorterdatohendelse(){
+      	alert("sorter etter hendelsesdato");
+      }	
+      //window.onload=initialize();
+      </script>
+
+      <h1>Hemovigilans - Saksbehandling</h1>
+      <!-- Nav tabs -->
+
+      <!-- Tab panes  -->
+      <div class="tab-content">
+        <!-- ------------------ Meld fra om --------------------------------------- -->
+        <div class="tab-pane active" id="sak">
+
+          <!--
+          <div class="form-group">
+          -->
+            <!-- pcv, 29.10.2015: Denne div er tom. Slettes? -->
+            <!--
+          </div>
+        -->
+
+          <div class="c-jumbotron">
+            <div class="jumbotron">
+              <div class="container">
+                <div class="row" id="saken">
+                  <div class="col-xs-12 col-sm-4 bottom-xs-1-6 teaser">
+                    <h3>Søkekriterier meldinger</h3>
+                    <div id="status">
+                      <div for="nystatus">Listeutvalg meldingsstatus:</div>
+                      <div class="input-group">
+                        <select name ="nystatus" id="nystatus" onchange="velgstatus();">
+                          <option >${valgt}</option>
+                          <#list statusflag as flag>
+                            <option>${flag} </option>
+                          </#list>
+                        </select>
+                      </div>
+                      
+                      <div for="merkn">Listeutvalg saksmerknader:</div>
+                      <div class="input-group">
+                        <select name ="merkn" id="merkn" onchange="formSubmit('btnmerknad');">
+                          <option >${merknadvalgt}</option>
+                          <#list merknader as merk>
+                            <option>${merk} </option>
+                          </#list>
+                        </select>
+                      </div>
+                    </div>                    
+                  </div>
+
+                  <div class="col-xs-12 col-sm-4 bottom-xs-1-6 teaser">
+                    <h3>Tidsperiode hendelsesdato</h3>
+                    <div class="periode">
+                      <div class="control-group">
+                        <div for="fra-dato">Fra dato:</div>
+                        <input type="date" class="date-input-large" name="fra-dato" id="fra-dato" onchange="dateValidation('fra-dato');" />
+                      </div>
+                      <div class="control-group">                    
+                        <div for="til-dato">Til dato:</div>
+                        <input type="date" size="16" class="date-input-large" name="til-dato" id="til-dato" onchange="formSubmit('btndatohendt');" />
+                      </div>
+                    </div>
+
+                    <h3>Tidsperiode meldt dato</h3>
+                    <div class="periode">
+                      <div class="control-group">
+                        <div for="fra-dato">Fra dato:</div>
+                        <input type="date" size="16" class="date-input-large" name="fra-dato" id="fra-dato" onchange="dateValidation('fra-dato');" />
+                      </div>
+                      <div class="control-group">                    
+                        <div for="til-dato">Til dato:</div>
+                        <input type="date" size="16" class="date-input-large" name="til-dato" id="til-dato" onchange="formSubmit('btndatohendt');" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-4 bottom-xs-1-6 teaser">
+                    <h3>Årsperiode hendelsesdato</h3>
+                    <div class="periode">
+                      <div class="control-group">
+                        <div for="fra-dato">Fra dato:</div>
+                        <input type="text" size="16" class="date-input-large" name="fra-ar" id="fra-ar" onchange="dateValidation();" />
+                      </div>
+                      <div class="control-group">                    
+                        <div for="til-dato">Til dato:</div>
+                        <input type="text" size="16" class="date-input-large" name="til-ar" id="til-ar" onchange="dateValidation();" />
+                      </div>
+                    </div>
+
+                    <h3>Årsperiode meldt dato</h3>
+                    <div class="periode">
+                      <div class="control-group">
+                        <div for="fra-dato">Fra dato:</div>
+                        <input type="text" size="16" class="date-input-large" name="fra-arm" id="fra-arm" onchange="dateValidation();" />
+                      </div>
+                      <div class="control-group">                    
+                        <div for="til-dato">Til dato:</div>
+                        <input type="text" size="16" class="date-input-large" name="til-arm" id="til-arm" onchange="dateValidation();" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+   <!-- Sorteringsscript: <a href="javascript:sorterdatohendelse();"></a> -->
+     <div class="form-group" id="tabeller" >
+     	<table class="table table-hover" border=1>
+  		<tr><th>Til PDF</th><th>Detaljer</th><th >Meldingsnøkkel</th><th><a href="javascript:formSubmit('btnsorteringdatohendt');">Dato for hendelse</a> </th><th><a href="javascript:formSubmit('btnsorteringdatomeldt');">Meldingsdato</a></th><th>Meldingstype</th><th>Status</th>
+  			<#list meldinger as melding>
+  			<tr id="nokkelr"><td><button type="submit" id="btnpdf" name="pdf" value="${melding.meldeid}"  class="btn btn-success btn-lg">Til PDF</button></td><td><button type="submit" id="btnleveranse" name="lukk1" value="${melding.meldeid}"  class="btn btn-default">Velg</button></td><td id="nokkel">${melding.meldingsnokkel}</td><td>${melding.datoforhendelse?date}</td><td>${melding.meldingsdato?date}</td><td>${melding.meldingstype}</td><td id="tabstatus" bgcolor="green">${melding.sjekklistesaksbehandling}</td> 
+  			</#list>
+		</table>  
+     </div>
+ 
+  
+      <button type="submit" id="btnleveransexx" name="lukk1" value="lukk"  class="btn btn-default">Lukk</button>
+ 	 <button type="submit" id="btnutvalg" name="utvalg" value="utvalg" style="display: none" >getValue</button> 
+ 	  <button type="submit" id="btnmerknad" name="merknad" value="merknad" style="display: none" >getValue</button>
+  <button type="submit" id="btndatomeldt" value="datomeldt"  name="datomeldt" class="btn btn-primary" style="display: none" > getValue </button>
+  <button type="submit" id="btndatohendt" value="datohendt"  name="datohendt" class="btn btn-primary" style="display: none" > getValue </button>
+  <button type="submit" id="btnsorteringdatohendt" value="sorteringdatohendt"  name="sorteringdatohendt" class="btn btn-primary" style="display: none" > getValue </button>
+  <button type="submit" id="btnsorteringdatomeldt" value="sorteringdatomeldt"  name="sorteringdatomeldt" class="btn btn-primary" style="display: none" > getValue </button>
+       
+    
+</div><!--sluttsak-->
+</div>
+</form>
+</div>
+</body>
+</html>

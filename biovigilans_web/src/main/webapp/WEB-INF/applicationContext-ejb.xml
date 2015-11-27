@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="dataSourceskjemabank" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${database.driver}"></property>
+		<property name="url" value="${database.url.innsiden}"></property>
+		<property name="username" value="${database.username}"></property>
+		<property name="password" value="${database.password}"></property>
+	</bean>
+
+	<bean id="jdbcTemplatebiovigilans" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSourceskjemabank"></property>
+	</bean>
+	<bean id="domainDictionary" class="no.naks.framework.web.control.DomainDictionaryImpl">
+  </bean>
+ 
+  <bean id="pasientDAO" class="no.naks.biovigilans.dao.PasientDAOImpl">
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	<property name="insertPatientSQL" value="${pasient.insertpasient}"></property>
+  	<property name="insertsykdomSQL" value="${sykdom.insertsykdom}"></property>
+  	<property name="pasientPrimaryKey" value="${primarykey.pasient}"></property>
+  	<property name="pasientprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	<property name="insertAntistoffSQL" value="${antistoff.insertantistoff}"></property>
+  	<property name="insertTiltakSQL" value="${tiltak.inserttiltak}"></property>
+  	<property name="insertForebyggendeSQL" value="${forebyggendetiltak.inserttiltak}"></property>
+  	<property name="tiltakPrimarykey" value="${primarkey.tiltak}"></property>
+ 
+  </bean>
+  <bean id="giverDAO" class ="no.naks.biovigilans.dao.GiverDAOImpl">
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	<property name="insertGiverSQL" value="${giver.insertGiver}"></property>
+  	<property name="giverPrimaryKey" value="${primaryKey.giver}"></property>
+  	<property name="giverprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	
+  	<property name="insertMeldingSQL" value="${vigilansmelding.insertvigilansmelding}"></property>
+  	<property name="meldingPrimaryKey" value="${primarykey.melding}"></property>
+  	<property name="meldingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	<property name="updateMeldingSQL" value="${vigilansmelding.updatevigilansmelding}"></property>
+  	
+  	
+  	<property name="insertGiverkomplikasjonSQL" value="${giverkomplikasjon.insertgiverkomplikasjon}"></property>
+  	<property name="giverkomplikasjonPrimaryKey" value="${primarykey.giverkomplikasjon}"></property>
+  	<property name="giverkomplikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	
+  	<property name="insertGiveroppfolgingSQL" value="${giveroppfolging.insertgiveroppfolging}"></property>
+  	<property name="giveroppfolgingPrimaryKey" value="${primarykey.giveroppfolging}"></property>
+  	<property name="giveroppfolgingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	
+  </bean>
+  <bean id="donasjonDAO" class="no.naks.biovigilans.dao.DonasjonDAOImpl" >
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	<property name="insertDonasjonSQL" value="${donasjon.insertDonasjon}"></property>
+  	<property name="donasjonPrimaryKey" value="${primaryKey.donasjon}"></property>
+  	<property name="donasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  </bean>
+  <bean id="melderDAO" class="no.naks.biovigilans.dao.MelderDAOImpl" >
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	<property name="insertMelderSQL" value="${melder.insertmelder}"></property>
+  	<property name="updateMelderSQL" value="${melder.updatemelder}"></property>
+  	<property name="melderPrimaryKey" value="${primarykey.melder}"></property>
+  	<property name="melderprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	<property name="selectMeldingSQL" value="${melder.selectmelder}"></property>
+  	<property name="vigilandsMeldingTableDefs" value="${vigilans.meldeid},${vigilans.datoforhendelse},${vigilans.datooppdaget},${vigilans.donasjonsoverforing},
+  	${vigilans.sjekklistesaksbehandling},${vigilans.supplerendeopplysninger},${vigilans.meldingsdato},${vigilans.meldingsnokkel},${vigilans.melderid},
+  	${vigilans.kladd},${vigilans.godkjent},${vigilans.endringsdato}"></property>
+  	<property name="selectvigilansMeldingSQL" value="${vigilansmelding.select}"></property>
+  	<property name="selectannenKomplikasjonSQL" value="${annenMeldingSelect}"></property>
+  	<property name="annenkomplikasjonTableDefs" value="${annenkomplikasjon.meldeid},${annenkomplikasjon.klassifikasjon},${annenkomplikasjon.klassifikasjonkode},
+  	${annenkomplikasjon.delkode},${annenkomplikasjon.komplikasjonbeskrivelse},${annenkomplikasjon.komplikasjondefinisjon},${annenkomplikasjon.avvikarsak},
+  	${annenkomplikasjon.hovedprosess},${annenkomplikasjon.tiltak},${annenkomplikasjon.kommentar},${annenkomplikasjon.oppdaget},${annenkomplikasjon.pasientopplysninger}"></property>
+  	<property name="pasientkomplikasjonTableDefs" value="${pasientkomplikasjon.meldeid},${pasientkomplikasjon.transfusjonsid},${pasientkomplikasjon.klassifikasjon},
+  	${pasientkomplikasjon.tidfrapabegynttransfusjontilkomplikasjon},${pasientkomplikasjon.alvorlighetsgrad},${pasientkomplikasjon.kliniskresultat},${pasientkomplikasjon.arsakssammenheng}"></property>
+  	<property name="selectpasientKomplikasjonSQL" value="${pasientkomplikasjon.Select}"></property>
+  	<property name="selectgiverKomplikasjonSQL" value="${giverkomplikasjon.select}"></property>
+  	<property name="giverkomplikasjonTableDefs" value="${giverkomplikasjon.meldeid},${giverkomplikasjon.donasjonsid},${giverkomplikasjon.stedforkomplikasjon},${giverkomplikasjon.tidfrarapporteringtilkomplikasjon},
+  	${giverkomplikasjon.behandlingssted},${giverkomplikasjon.tilleggsopplysninger},${giverkomplikasjon.alvorlighetsgrad},${giverkomplikasjon.kliniskresultat},
+  	${giverkomplikasjon.varighetkomplikasjon},${giverkomplikasjon.datosymptomer}"></property>
+  	<property name="selectDonasjonSQL" value="${donasjon.select}"></property>
+  	<property name="donasjonTabledefs" value="${donasjon.donasjonsid},${donasjon.donasjonssted},${donasjon.komplisertvenepunksjon},
+  	${donasjon.tappetype},${donasjon.tappevarighet},${donasjon.lokalisasjonvenepunksjon},${donasjon.maltidfortapping},${donasjon.giverid},
+  	${donasjon.donasjonsdato}"></property>
+  	<property name="selectgiverSQL" value="${giver.select}"></property>
+  	<property name="giverTableDefs" value="${giver.giverid},${giver.kjonn},${giver.alder},${giver.vekt},${giver.givererfaring},
+  	${giver.tidligerekomplikasjon},${giver.tidligerekomplikasjonforklaring},${giver.givererfaringaferese}"></property>
+  	<property name="giveroppfolgingSQL" value="${giveroppfolging.select}"></property>
+  	<property name="giveroppfolgingTableDefs" value="${giveroppfolging.giveroppfolgingid},${giveroppfolging.klassifikasjongiveroppfolging},
+  	${giveroppfolging.giveroppfolgingbeskrivelse},${giveroppfolging.avregistrering},${giveroppfolging.strakstiltak},${giveroppfolging.videreoppfolging},
+  	${giveroppfolging.meldeid}"></property>
+  	<property name="komplikasjonsdiagnosegiverSQL" value="${komplikasjonsdiagnosegiver.select}"></property>
+  	<property name="komplikasjonsdiagnosegiverTableDefs" value="${komplikasjondiagnosegiver.komplikasjonsdiagnoseid},${komplikasjondiagnosegiver.lokalskadearm},
+  	${komplikasjondiagnosegiver.systemiskbivirkning},${komplikasjondiagnosegiver.annenreaksjon},${komplikasjondiagnosegiver.lokalskadebeskrivelse},
+  	${komplikasjondiagnosegiver.bivirkningbeskrivelse},${komplikasjondiagnosegiver.annenreaksjonbeskrivelse},${komplikasjondiagnosegiver.kommentar},
+  	${komplikasjondiagnosegiver.meldeid}"></property>
+  	<property name="selectPasientSQL" value="${pasient.select}"></property>
+  	<property name="selecttransfusjonSQL" value="${transfusjon.select}"></property>
+  	<property name="selectSykdomSQL" value="${sykdom.select}"></property>
+  	<property name="transfusjonTableDefs" value="${transfusjon.transfusjonsid},${transfusjon.transfusjondato},${transfusjon.hastegrad},${transfusjon.feiltranfudert},
+  	${transfusjon.indikasjon},${transfusjon.tidligerkomplikasjon},${transfusjon.pasient_id}"></property>
+  	<property name="pasientTableDefs" value="${pasient.pasient_id},${pasient.kjonn},${pasient.aldersgruppe},${pasient.inneliggendepoli},${pasient.avdeling}"></property>
+  	<property name="sykdomTableDefs" value="${sykdom.sykdomid},${sykdom.sykdomnavn},${sykdom.symptomer},${sykdom.diagnosekode},${sykdom.pasient_id}"></property>
+   	<property name="komplikasjonSQL" value="${komplikasjonpasient.select}"></property>
+  	<property name="annenkomplikasjonSQL" value="${komplikasjonannen.select}"></property>
+  	<property name="komplikasjonTableDefs" value="${komplisjonklassifikasjon.klassifikasjonsid},${komplisjonklassifikasjon.klassifikasjon},
+  	${komplisjonklassifikasjon.klassifikasjonbeskrivelse},${komplisjonklassifikasjon.meldeidpasient},${komplisjonklassifikasjon.meldeidannen}"></property>
+    <property name="utredningSQL" value="${utredning.select}"></property>
+    <property name="utredningTableDefs" value="${utredning.utredningid},${utredning.klassifikasjon},${utredning.klassifikasjonsbeskrivelse},${utredning.meldeid}"></property>
+    <property name="blodProduktSQL" value="${blodprodukt.select}"></property>
+    <property name="blodproduktTableDefs" value="${blodprodukt.blodproduktid},${blodprodukt.tappetype},${blodprodukt.blodprodukt},${blodprodukt.suspensjon},${blodprodukt.transfusjonsid}"></property>
+    <property name="produktegenskapSQL" value="${produktegenskap.select}"></property>
+    <property name="produktegenskapTableDefs" value="${produktegenskap.produktegenskapid},${produktegenskap.egenskapkode},${produktegenskap.egenskapbeskrivelse},${produktegenskap.blodproduktid}"></property>
+    <property name="symptomerSQL" value="${symptomer.select}"></property>
+    <property name="symptomerTableDefs" value="${symptomer.symptomid},${symptomer.symptomklassifikasjon},${symptomer.symptombeskrivelse},
+    ${symptomer.tempfor},${symptomer.tempetter},${symptomer.meldeid}"></property>
+    <property name="tiltakSQL" value="${tiltak.select}"></property>
+    <property name="tiltakTableDefs" value="${tiltak.tiltakid},${tiltak.tiltaksdato},${tiltak.gjennomfortdato},${tiltak.beskrivelse},${tiltak.pasientid}"></property>
+    <property name="forebyggendetiltakSQL" value="${forebyggendetiltak.select}"></property>
+    <property name="forebyggendetiltakTableDefs" value="${forebyggendetiltak.forebyggendetiltakid},${forebyggendetiltak.tiltakvalg},${forebyggendetiltak.tiltakbeskrivelse},${forebyggendetiltak.tiltakid}"></property>
+  </bean>
+  <bean id="komplikasjonsdiagnosegiverDAO" class="no.naks.biovigilans.dao.KomplikasjonsdiagnosegiverDAOImpl" >
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	<property name="insertKomplikasjonsdiagnosegiverSQL" value="${komplikasjonsdiagnosegiver.insert}"></property>
+  	<property name="komplikasjonsdiagnosegiverPrimaryKey" value="${primarykey.komplikasjonsdiagnosegiver}"></property>
+  	<property name="komplikasjonsdiagnosegiverprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  </bean>
+  <bean id="transfusjonDAO"  class="no.naks.biovigilans.dao.TransfusjonDAOImpl">
+  	  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	  	<property name="insertTransfusjonSQL" value="${transfusjon.inserttransfusjon}"></property>
+  	  	<property name="transfusjonPrimaryKey" value="${primarykey.transfusjon}"></property>
+  	  	<property name="transfusjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	  	<property name="insertblodProduktSQL" value="${blodprodukt.insertblodprodukt}"></property>
+  	  	<property name="insertMeldingSQL" value="${vigilansmelding.insertvigilansmelding}"></property>
+   		<property name="updateMeldingSQL" value="${vigilansmelding.updatevigilansmelding}"></property>
+  	  	<property name="insertPasientkomplikasjonSQL" value="${pasientkomplikasjon.insertpasientkomplikasjon}"></property>
+  	  	<property name="meldingPrimaryKey" value="${primarykey.melding}"></property>
+  	  	<property name="meldingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	  	<property name="insertSymptomerSQL" value="${symptomer.insertsymptomer}"></property>
+  	  	<property name="symptomerPrimaryKey" value="${primarykey.symptomer}"></property>
+  	  	<property name="symptomerprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	  	<property name="insertUtredningSQL" value="${utredning.insertutredning}"></property>
+  	  	<property name="insertHemolyseSQL" value="${hemolyse.inserthemolyse}"></property>
+  	  	<property name="utredningPrimaryKey" value="${primarykey.utredning}"></property>
+  	  	<property name="utredningprimarykeyTabledefs" value="${primarykey.primarykey}"></property>
+  	  	<property name="insertproduktEgenskapSQL" value="${produktegenskap.insertegenskap}"></property>
+  	  	<property name="blodproduktPrimarykey" value="${primarykey.blodprodukt}"></property>
+  	  	<property name="blodproduktPrimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  </bean>
+  <bean id="annenkomplikasjonDAO" class="no.naks.biovigilans.dao.AnnenkomplikasjonDAOImpl">
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	<property name="insertAnnenKomplikasjonSQL" value="${annenkomplikasjon.insert}"></property>
+  	<property name="updateAnnenKomplikasjonSQL" value="${annenkomplikasjon.update}"></property>
+ 	<property name="annenKomplikasjonPrimaryKey" value="${primarykey.annenkomplikasjon}"></property>
+  	<property name="annenKomplikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+   	<property name="meldingPrimaryKey" value="${primarykey.melding}"></property>
+    <property name="meldingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+   	<property name="insertMeldingSQL" value="${vigilansmelding.insertvigilansmelding}"></property>
+  	<property name="updateMeldingSQL" value="${vigilansmelding.updatevigilansmelding}"></property>
+  </bean>
+  <bean id="komplikasjonsklassifikasjonDAO" class="no.naks.biovigilans.dao.KomplikasjonsklassifikasjonDAOImpl">
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	<property name="insertKomplikasjonsklassifikasjonSQL" value="${komplikasjonsklassifikasjon.insert}"></property>
+  	<property name="komplikasjonsklassifikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	<property name="komplikasjonsklassifikasjonPrimaryKey" value="${primarykey.komplikasjonsklassifikasjon}" ></property>
+  	<property name="deleteKomplikasjonsklassifikasjonSQL" value="${komplikasjonsklassifikasjon.delete}"></property>
+  </bean>
+  <bean id="hendelsehemovigilansDAO" class="no.naks.biovigilans.dao.HendelsehemovigilansDAOImpl">
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+ 	<property name="updateVigilansmeldingSQL" value="${vigilansmelding.updatemelderid}"></property>
+ 	<property name="updatestatusvigilansSQL" value="${vigilansmelding.updatestatus}"></property>
+ 	<property name="selectvigilansMeldingSQL" value="${vigilansmeldingmelder.select}"></property>
+ 	<property name="selectvigilansMeldingenSQL" value="${vigilansmeldingen.select}"></property>
+ 	<property name="vigilandsMeldingTableDefs" value="${vigilans.meldeid},${vigilans.datoforhendelse},${vigilans.datooppdaget},${vigilans.donasjonsoverforing},
+  	${vigilans.sjekklistesaksbehandling},${vigilans.supplerendeopplysninger},${vigilans.meldingsdato},${vigilans.meldingsnokkel},${vigilans.melderid},
+  	${vigilans.kladd},${vigilans.godkjent},${vigilans.endringsdato}"></property>
+  </bean>
+  <bean id="sakDAO" class="no.naks.biovigilans.dao.SakDAOImpl">
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	<property name="insertDiskusjonSQL" value="${diskusjon.insert}"></property>
+  	<property name="diskusjonPrimaryKey" value="${diskusjon.primarykey}"></property>
+  	<property name="diskusjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	<property name="insertSakSQL" value="${sak.insert}"></property>
+  	<property name="sakPrimaryKey" value="${sak.primarykey}"></property>
+  	<property name="sakprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	<property name="selectDiskusjonSQL" value="${diskusjon.select}"></property>
+  	<property name="selectenDiskusjonSQL" value="${diskusjonen.select}"></property>
+  	<property name="selectSakSQL" value="${sak.select}"></property>
+  	<property name="diskusjonTableDefs" value="${diskusjon.diskusjonid},${diskusjon.datoforkommentar},${diskusjon.kommentar},${diskusjon.tema},${diskusjon.meldeid}"></property>
+  	<property name="sakTableDefs" value="${sak.saksid},${sak.datosak},${sak.sakopplysninger},${sak.sakkommentar},${sak.sakstatus},${sak.diskusjonid},${sak.sakbehandlerid}"></property>
+  	<property name="flaggNames" value="${flagg.statusvalg},${flagg.statusvalg1},${flagg.statusvalg2},${flagg.statusvalg3},${flagg.statusvalg4},${flagg.statusvalg5}"></property>
+  	<property name="saksbehandlerSQL" value="${behandler.select}"></property>
+  	<property name="saksbehandlerTableDefs" value="${behandler.behandlerid},${behandler.behandlernavn},${behandler.behandlerepost},${behandler.behandlertlf},${behandler.behandlerpassord}"></property>
+  	<property name="selectmelderSQL" value="${melder.selectmelderfrasak}"></property>
+  	<property name="melderTableDefs" value="${melder.melderid},${melder.meldernavn},${melder.melderepost},${melder.meldertlf},${melder.melderpassord},${melder.helseregion},${melder.foretak},${melder.sykehus}"></property>
+  </bean>
+    <bean id="saksbehandlingDAO" class="no.naks.biovigilans.dao.SaksbehandlingDAOImpl">
+    	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  		<property name="selectvigilansMeldingSQL" value="${vigilansmeldingall.select}"></property>
+  		<property name="selectvigilansMeldingtypesSQL" value="${vigilansmeldingtype.select}"></property>
+  		<property name="selectvigilansMeldingnullSQL" value="${vigilansmeldingnull.select}"></property>
+  		<property name="selectannenMeldingSQL" value="${annenMeldingSelect}"></property>
+  		<property name="selectvigilansMeldingtimeperiodSQL" value="${vigilansmeldingmeldtdato.select}"></property>
+  		<property name="selectvigilansMeldinghentperiodSQL" value="${vigilansmeldinghentdato.select}"></property>
+  		<property name="vigilandsMeldingTableDefs" value="${vigilans.meldeid},${vigilans.datoforhendelse},${vigilans.datooppdaget},${vigilans.donasjonsoverforing},
+  	${vigilans.sjekklistesaksbehandling},${vigilans.supplerendeopplysninger},${vigilans.meldingsdato},${vigilans.meldingsnokkel},${vigilans.melderid},
+  	${vigilans.kladd},${vigilans.godkjent},${vigilans.endringsdato}"></property>
+  		<property name="annenMeldingTableDefs" value="${annenkomplikasjon.meldeid},${annenkomplikasjon.klassifikasjon},${annenkomplikasjon.klassifikasjonkode},${annenkomplikasjon.delkode},
+  		${annenkomplikasjon.komplikasjonbeskrivelse},${annenkomplikasjon.komplikasjondefinisjon},${annenkomplikasjon.avvikarsak},${annenkomplikasjon.hovedprosess},${annenkomplikasjon.tiltak},
+  		${annenkomplikasjon.kommentar},${annenkomplikasjon.oppdaget},${annenkomplikasjon.pasientopplysninger}"></property>
+  		
+	<property name="selectannenKomplikasjonSQL" value="${annenMeldingSelect}"></property>
+  	<property name="annenkomplikasjonTableDefs" value="${annenkomplikasjon.meldeid},${annenkomplikasjon.klassifikasjon},${annenkomplikasjon.klassifikasjonkode},
+  	${annenkomplikasjon.delkode},${annenkomplikasjon.komplikasjonbeskrivelse},${annenkomplikasjon.komplikasjondefinisjon},${annenkomplikasjon.avvikarsak},
+  	${annenkomplikasjon.hovedprosess},${annenkomplikasjon.tiltak},${annenkomplikasjon.kommentar},${annenkomplikasjon.oppdaget},${annenkomplikasjon.pasientopplysninger}"></property>
+  	<property name="pasientkomplikasjonTableDefs" value="${pasientkomplikasjon.meldeid},${pasientkomplikasjon.transfusjonsid},${pasientkomplikasjon.klassifikasjon},
+  	${pasientkomplikasjon.tidfrapabegynttransfusjontilkomplikasjon},${pasientkomplikasjon.alvorlighetsgrad},${pasientkomplikasjon.kliniskresultat},${pasientkomplikasjon.arsakssammenheng}"></property>
+  	<property name="selectpasientKomplikasjonSQL" value="${pasientkomplikasjon.Select}"></property>
+  	<property name="selectgiverKomplikasjonSQL" value="${giverkomplikasjon.select}"></property>
+  	<property name="giverkomplikasjonTableDefs" value="${giverkomplikasjon.meldeid},${giverkomplikasjon.donasjonsid},${giverkomplikasjon.stedforkomplikasjon},${giverkomplikasjon.tidfrarapporteringtilkomplikasjon},
+  	${giverkomplikasjon.behandlingssted},${giverkomplikasjon.tilleggsopplysninger},${giverkomplikasjon.alvorlighetsgrad},${giverkomplikasjon.kliniskresultat},
+  	${giverkomplikasjon.varighetkomplikasjon},${giverkomplikasjon.datosymptomer}"></property>  
+   	<property name="annenkomplikasjonSQL" value="${komplikasjonannen.select}"></property>
+  	<property name="komplikasjonTableDefs" value="${komplisjonklassifikasjon.klassifikasjonsid},${komplisjonklassifikasjon.klassifikasjon},
+  	${komplisjonklassifikasjon.klassifikasjonbeskrivelse},${komplisjonklassifikasjon.meldeidpasient},${komplisjonklassifikasjon.meldeidannen}"></property>
+    <property name="symptomerSQL" value="${symptomer.select}"></property>
+    <property name="symptomerTableDefs" value="${symptomer.symptomid},${symptomer.symptomklassifikasjon},${symptomer.symptombeskrivelse},
+    ${symptomer.tempfor},${symptomer.tempetter},${symptomer.meldeid}"></property>
+  	<property name="selectDonasjonSQL" value="${donasjon.select}"></property>
+  	<property name="donasjonTabledefs" value="${donasjon.donasjonsid},${donasjon.donasjonssted},${donasjon.komplisertvenepunksjon},
+  	${donasjon.tappetype},${donasjon.tappevarighet},${donasjon.lokalisasjonvenepunksjon},${donasjon.maltidfortapping},${donasjon.giverid},
+  	${donasjon.donasjonsdato}"></property>  
+  	  	<property name="selectgiverSQL" value="${giver.select}"></property>
+  	<property name="giverTableDefs" value="${giver.giverid},${giver.kjonn},${giver.alder},${giver.vekt},${giver.givererfaring},
+  	${giver.tidligerekomplikasjon},${giver.tidligerekomplikasjonforklaring},${giver.givererfaringaferese}"></property>
+   	<property name="giveroppfolgingSQL" value="${giveroppfolging.select}"></property>
+ 
+   	<property name="giveroppfolgingTableDefs" value="${giveroppfolging.giveroppfolgingid},${giveroppfolging.klassifikasjongiveroppfolging},
+  	${giveroppfolging.giveroppfolgingbeskrivelse},${giveroppfolging.avregistrering},${giveroppfolging.strakstiltak},${giveroppfolging.videreoppfolging},
+  	${giveroppfolging.meldeid}"></property>
+   	<property name="komplikasjonsdiagnosegiverSQL" value="${komplikasjonsdiagnosegiver.select}"></property>
+  	<property name="komplikasjonsdiagnosegiverTableDefs" value="${komplikasjondiagnosegiver.komplikasjonsdiagnoseid},${komplikasjondiagnosegiver.lokalskadearm},
+  	${komplikasjondiagnosegiver.systemiskbivirkning},${komplikasjondiagnosegiver.annenreaksjon},${komplikasjondiagnosegiver.lokalskadebeskrivelse},
+  	${komplikasjondiagnosegiver.bivirkningbeskrivelse},${komplikasjondiagnosegiver.annenreaksjonbeskrivelse},${komplikasjondiagnosegiver.kommentar},
+  	${komplikasjondiagnosegiver.meldeid}"></property>
+ 
+ 	<property name="selecttransfusjonSQL" value="${transfusjon.select}"></property>
+  	<property name="selectSykdomSQL" value="${sykdom.select}"></property>
+  	<property name="transfusjonTableDefs" value="${transfusjon.transfusjonsid},${transfusjon.transfusjondato},${transfusjon.hastegrad},${transfusjon.feiltranfudert},
+  	${transfusjon.indikasjon},${transfusjon.tidligerkomplikasjon},${transfusjon.pasient_id}"></property>
+  	<property name="selectPasientSQL" value="${pasient.select}"></property> 
+  	
+ 	<property name="pasientTableDefs" value="${pasient.pasient_id},${pasient.kjonn},${pasient.aldersgruppe},${pasient.inneliggendepoli},${pasient.avdeling}"></property>
+  	<property name="sykdomTableDefs" value="${sykdom.sykdomid},${sykdom.sykdomnavn},${sykdom.symptomer},${sykdom.diagnosekode},${sykdom.pasient_id}"></property>
+  	<property name="komplikasjonSQL" value="${komplikasjonpasient.select}"></property>
+    <property name="utredningSQL" value="${utredning.select}"></property>
+    <property name="utredningTableDefs" value="${utredning.utredningid},${utredning.klassifikasjon},${utredning.klassifikasjonsbeskrivelse},${utredning.meldeid}"></property>
+    <property name="tiltakSQL" value="${tiltak.select}"></property>
+  	<property name="tiltakTableDefs" value="${tiltak.tiltakid},${tiltak.tiltaksdato},${tiltak.gjennomfortdato},${tiltak.beskrivelse},${tiltak.pasientid}"></property>
+    <property name="blodProduktSQL" value="${blodprodukt.select}"></property>
+    <property name="blodproduktTableDefs" value="${blodprodukt.blodproduktid},${blodprodukt.tappetype},${blodprodukt.blodprodukt},${blodprodukt.suspensjon},${blodprodukt.transfusjonsid}"></property>
+    <property name="produktegenskapSQL" value="${produktegenskap.select}"></property>
+    <property name="produktegenskapTableDefs" value="${produktegenskap.produktegenskapid},${produktegenskap.egenskapkode},${produktegenskap.egenskapbeskrivelse},${produktegenskap.blodproduktid}"></property>
+    <property name="forebyggendetiltakSQL" value="${forebyggendetiltak.select}"></property>
+    <property name="forebyggendetiltakTableDefs" value="${forebyggendetiltak.forebyggendetiltakid},${forebyggendetiltak.tiltakvalg},${forebyggendetiltak.tiltakbeskrivelse},${forebyggendetiltak.tiltakid}"></property>
+  	<property name="selectvigilansMeldingidSQL" value="${saksbehandlingmelding.select}"></property>	 	  	 	
+  </bean>
+
+  <bean id="hendelseTablesService" class="no.naks.biovigilans.service.HendelseTablesServiceImpl">
+  	<property name="hendelsehemovigilansDAO" ref="hendelsehemovigilansDAO"></property>
+  	<property name="sakDAO" ref="sakDAO"></property>
+  </bean>
+  <bean id="PasientTableService" class="no.naks.biovigilans.service.PasientTableServiceImpl">
+  	<property name="pasientDAO" ref="pasientDAO"></property>
+  	<property name="transfusjonDAO" ref="transfusjonDAO"></property>
+  </bean>
+  <bean id="giverTableService" class="no.naks.biovigilans.service.GiverTableServiceImpl">
+  	<property name="giverDAO" ref="giverDAO"></property>
+  </bean>
+  <bean id="donasjonTableService" class="no.naks.biovigilans.service.DonasjonTableServiceImpl" >
+  	<property name="donasjonDAO" ref="donasjonDAO"></property>
+  </bean>
+  <bean id="komDiagnosegiverTableService" class="no.naks.biovigilans.service.KomDiagnosegiverTableServiceImpl" >
+  	<property name="komplikasjonsdiagnosegiverDAO" ref="komplikasjonsdiagnosegiverDAO"></property>
+  </bean>
+  <bean id="melderTableService" class="no.naks.biovigilans.service.MelderTableServiceImpl">
+  	<property name="melderDAO" ref="melderDAO"></property>
+  </bean>
+  <bean id="annenKomplikasjonTableService" class="no.naks.biovigilans.service.AnnenKomplikasjonTableServiceImpl" >
+  	<property name="annenKomplikasjonDAO" ref="annenkomplikasjonDAO"></property>
+  </bean>
+  <bean id="komplikasjonsklassifikasjonTableService" class="no.naks.biovigilans.service.KomplikasjonsklassifikasjonTableServiceImpl" >
+  	<property name="komplikasjonsklassifikasjonDAO" ref="komplikasjonsklassifikasjonDAO"></property>
+  </bean>
+    <bean id="saksbehandlingService"  class="no.naks.biovigilans.service.SaksbehandlingServiceImpl">
+  		<property name="saksbehandlingDAO" ref="saksbehandlingDAO"></property>
+  		<property name="sakDAO" ref="sakDAO"></property>
+  </bean>
+  <!-- /usr/local/tomcat6/xml/ -->
+  <!-- c:\\temp\\c:\\temp\\ -->
+  <bean id="meldingService" class="no.naks.nhn.service.MelderServiceImpl" >
+  		<property name="marshaller" ref="castorMarshaller"></property>
+   		<property name="catalog" value="c:\\temp\\"></property>
+  		<property name="FILE_NAME" value="basismelding"></property>
+  		<property name="opSys" value="DOS"></property>
+  		<property name="sysCommand" value="ls"></property>
+    	<property name="production" value="false"></property>
+  </bean>
+  <bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller">
+  
+  </bean>
+
+
+	<bean id="nhnClient" class="no.naks.nhn.service.NHNServiceClientImpl">
+		<property name="authenticatorUser" value="webservice"></property>
+		<property name="authenticatorPassword" value=""></property>
+		<property name="production" value="false"></property>
+		<property name="maxAdr" value="3"></property>
+		<property name="prodUrl" value="https://ws.nhn.no/Basic/v1/AR"></property>
+	</bean>
+<!-- 
+	<bean id="hiveService" class="no.naks.semweb.control.HiveServiceImpl">
+		<property name="hivePath" value="C:\\svnroot2\\nokc\\semantiskweb\\trunk\\semantiskweb_web\\src\\main\\webapp\\config\\app-config\"></property>
+		<property name="treeElements">
+			<list><value>Anatomi</value>
+			<value>Organisme</value>
+			<value>Sykdommer</value>
+			<value>Kjemikalier og medisiner</value>
+			<value>Analyse, diagnoser og terapeutiske teknikker og utstyr</value>
+			<value>Psykiatri og Psykologi</value>
+			<value>Antropologi Utdanning og sosiologi</value>
+			<value>Teknologi, Industri, Jordbruk</value>
+			<value>Humanoria</value>
+			<value>Informasjonsvitenskap</value>
+			<value>Navngitte grupper</value>
+			<value>Helsevesenet</value>
+			<value>Publikasjonkarakteristiska</value>
+			<value>Geografi</value>
+			</list>
+		</property>
+		<property name="anatomi">
+			<list>
+				<value>Body Regions</value>
+				<value>Musculoskeletal System</value>
+				<value>Digestive System</value>
+				<value>Respiratory System</value>
+				<value>Urogenital System</value>
+				<value>Endocrine System</value>
+				<value>Cardiovascular System</value>
+				<value>Nervous System</value>
+				<value>Sense Organs</value>
+				<value>Tissues</value>
+				<value>Cells</value>
+				<value>Fluids and Secretions</value>
+				<value>Animal Structure</value>
+				<value>Stomatognathic System</value>
+				<value>Hemic and Immune Systems</value>
+				<value>Embryonic Structures</value>
+				<value>Integumentary System</value>
+				<value>Plant Structure</value>
+				<value>Fungal Structure</value>
+				<value>Bacterial Structure</value>
+				<value>Viral Structure</value>
+			
+			</list>
+		</property>
+	</bean>
+ -->		
+
+</beans>
+

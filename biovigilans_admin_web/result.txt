@@ -1,0 +1,148 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building biovigilans admin web 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/webtjenester_business/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/webtjenester_business/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/webtjenester_business/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/webtjenester_business/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/webtjenester_business/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/webtjenester_business/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/webtjenester/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/webtjenester/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/webtjenester/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/webtjenester/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/webtjenester/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/webtjenester/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/rammeverk_kilde/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/rammeverk_kilde/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/rammeverk_kilde/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/rammeverk_kilde/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/rammeverk_kilde/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/rammeverk_kilde/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/rammeverk/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/rammeverk/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/rammeverk/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/rammeverk/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/rammeverk/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/rammeverk/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://repository.jboss.org/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: file://C:/Users/olj/.m2/repository/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://maven.restlet.org/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://people.apache.org/repo/m2-snapshot-repository/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://download.java.net/maven/1/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://download.java.net/maven/2/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://repo.maven.apache.org/maven2/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+[WARNING] The POM for opensymphony:quartz:jar:1.6.0 is missing, no dependency information available
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/webtjenestetest/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/webtjenestetest/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/webtjenestetest/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/webtjenestetest/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/webtjenestetest/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/webtjenestetest/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/biovigilans_felles/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/biovigilans_felles/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/biovigilans_felles/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/biovigilans_felles/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/biovigilans_felles/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/biovigilans_felles/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/rammeverk_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/rammeverk_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/rammeverk_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/rammeverk_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/rammeverk_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/rammeverk_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/hive-core/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/hive-core/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/hive-core/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/hive-core/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/hive-core/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/hive-core/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/semantiskweb_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/semantiskweb_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/semantiskweb_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/semantiskweb_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/semantiskweb_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/semantiskweb_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/elmo-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/elmo-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/elmo-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/elmo-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/elmo-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/elmo-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/elmo-dc-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/elmo-dc-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/elmo-dc-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/elmo-dc-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/elmo-dc-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/elmo-dc-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/elmo-foaf-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/elmo-foaf-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/elmo-foaf-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/elmo-foaf-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/elmo-foaf-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/elmo-foaf-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/elmo-rdfs-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/elmo-rdfs-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/elmo-rdfs-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/elmo-rdfs-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/elmo-rdfs-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/elmo-rdfs-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/elmo-skos-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/elmo-skos-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/elmo-skos-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/elmo-skos-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/elmo-skos-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/elmo-skos-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: file://C:/Users/olj/.m2/repository/no/kunnskapssenteret/openrdf-sesame-2.4.0-onejar/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/openrdf-sesame-2.4.0-onejar/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.restlet.org/no/kunnskapssenteret/openrdf-sesame-2.4.0-onejar/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/openrdf-sesame-2.4.0-onejar/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/openrdf-sesame-2.4.0-onejar/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/openrdf-sesame-2.4.0-onejar/1.0-SNAPSHOT/maven-metadata.xml
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ biovigilans_admin_web ---
+[INFO] Deleting C:\svnroot2\nokc\biovigilans\trunk\biovigilans_admin_web\target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:resources (default-resources) @ biovigilans_admin_web ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.3:compile (default-compile) @ biovigilans_admin_web ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 55 source files to C:\svnroot2\nokc\biovigilans\trunk\biovigilans_admin_web\target\classes
+[ERROR] error reading C:\Users\olj\.m2\repository\org\apache\poi\poi-ooxml-schemas\3.13\poi-ooxml-schemas-3.13.jar; invalid CEN header (bad signature)
+[INFO] /C:/svnroot2/nokc/biovigilans/trunk/biovigilans_admin_web/src/main/java/no/naks/web/framework/Log4jInitServlet.java: C:\svnroot2\nokc\biovigilans\trunk\biovigilans_admin_web\src\main\java\no\naks\web\framework\Log4jInitServlet.java uses or overrides a deprecated API.
+[INFO] /C:/svnroot2/nokc/biovigilans/trunk/biovigilans_admin_web/src/main/java/no/naks/web/framework/Log4jInitServlet.java: Recompile with -Xlint:deprecation for details.
+[INFO] /C:/svnroot2/nokc/biovigilans/trunk/biovigilans_admin_web/src/main/java/no/naks/biovigilans_admin/web/control/SaksbehandlingRealm.java: Some input files use unchecked or unsafe operations.
+[INFO] /C:/svnroot2/nokc/biovigilans/trunk/biovigilans_admin_web/src/main/java/no/naks/biovigilans_admin/web/control/SaksbehandlingRealm.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:testResources (default-testResources) @ biovigilans_admin_web ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.3:testCompile (default-testCompile) @ biovigilans_admin_web ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ biovigilans_admin_web ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-war-plugin:2.2:war (default-war) @ biovigilans_admin_web ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [biovigilans_admin_web] in [C:\svnroot2\nokc\biovigilans\trunk\biovigilans_admin_web\target\biovigilans_admin_web]
+[INFO] Processing war project
+[INFO] Copying webapp resources [C:\svnroot2\nokc\biovigilans\trunk\biovigilans_admin_web\src\main\webapp]
+[INFO] Webapp assembled in [4741 msecs]
+[INFO] Building war: C:\svnroot2\nokc\biovigilans\trunk\biovigilans_admin_web\target\biovigilans_admin_web.war
+[INFO] WEB-INF\web.xml already added, skipping
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ biovigilans_admin_web ---
+[INFO] Installing C:\svnroot2\nokc\biovigilans\trunk\biovigilans_admin_web\target\biovigilans_admin_web.war to C:\Users\olj\.m2\repository\no\kunnskapssenteret\biovigilans_admin_web\1.0-SNAPSHOT\biovigilans_admin_web-1.0-SNAPSHOT.war
+[INFO] Installing C:\svnroot2\nokc\biovigilans\trunk\biovigilans_admin_web\pom.xml to C:\Users\olj\.m2\repository\no\kunnskapssenteret\biovigilans_admin_web\1.0-SNAPSHOT\biovigilans_admin_web-1.0-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 54.158s
+[INFO] Finished at: Sat Nov 14 17:11:41 CET 2015
+[INFO] Final Memory: 41M/229M
+[INFO] ------------------------------------------------------------------------

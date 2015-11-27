@@ -1,0 +1,933 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Rapporter hendelse - Hemovigilans</title>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<!--<link rel="stylesheet" href="css/bootstrap.css">-->
+
+</head>
+
+<body>
+<div class="container">
+<form role="form" action="?method=PUT" method="post"> 
+<h1>Rapporter hendelse–Hemovigilans</h1>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#meldfra" data-toggle="tab">Meld fra om</a></li>
+  <li><a href="#kontakt1" data-toggle="tab">Kontaktinformasjon</a></li>
+  <li><a href="#tapping" data-toggle="tab">Tapping av blodgivere</a></li>
+    <li><a href="#pasientkomplikasjoner" data-toggle="tab">Pasientkomplikasjoner</a></li>
+  <li><a href="#kontakt2" data-toggle="tab">Kontaktinformasjon</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+
+  <!--------------------Meld fra om----------------------------------------->
+  
+
+<div class="tab-pane active" id="meldfra">
+ 
+      <div class="radio">
+          <label>
+            <input type="radio" name="mfo-tapping-blodgivere" id="mfo-tapping-blodgivere" value="option1" checked>
+            Komplikasjoner ved tapping av blodgivere
+          </label>
+      </div>
+      <div class="radio">
+          <label>
+            <input type="radio" name="mfo-pasient" id="mfo-pasient" value="option2">
+            Pasientkompolikasjoner
+          </label>
+      </div>
+      <div class="radio">
+          <label>
+            <input type="radio" name="mfo-andre" id="mfo-andre" value="option3">
+            Andre uønskede hendelser
+          </label>
+      </div>
+      <br/>
+      <button name="avbryt1" type="submit" class="btn btn-default">Avbryt</button>
+      <button name="lukk1" type="submit" class="btn btn-default">Lukk</button>
+      <button name="lagre1" type="submit" class="btn btn-primary">Lagre</button>
+</div><!--slutt Meld fra om-->
+  
+    <!--------------------------------------Kontaktinformasjon---------------------------------->
+    
+<div class="tab-pane" id="kontakt1">
+	<div class="form-group">
+        <label for="k-epost">Melders epost:</label>
+        <div>
+          <input name="k-epost" type="email" class="form-control" id="k-epost" placeholder="Email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="k-navn">Navn:</label>
+        <div>
+          <input name="k-navn" type="navn" class="form-control" id="k-navn" placeholder="Navn">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="k-helseregion">Helseregion:</label>
+        <div>
+          <input name="k-helseregion" type="helseregion" class="form-control" id="k-helseregion" placeholder="Helseregion">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="k-helseforetak">Helseforetak:</label>
+        <div>
+          <input name="k-helseforetak" type="Helseforetak" class="form-control" id="k-helseforetak" placeholder="Helseforetak">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="k-sykehus">Institusjon/sykehus:</label>
+        <div>
+          <input name="k-helseforetak" type="Institusjon/sykehus" class="form-control" id="k-helseforetak" placeholder="Institusjon/sykehus">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="k-tlf">Telefonnummer:</label>
+        <div>
+          <input name="k-tlf" type="Telefonnummer" class="form-control" id="k-tlf" placeholder="Telefonnummer">
+        </div>
+      </div>
+      <div class="radio">
+          <label>
+            <input name="k-nymelding" type="radio" id="k-nymelding" value="option2">
+            Ny melding
+          </label>
+      </div>
+      <div class="radio">
+          <label>
+            <input name="k-oppfolging" type="radio" id="k-oppfolging" value="option3">
+            Oppfølgningsmelding
+          </label>
+      </div>
+      <div class="form-group">
+        <label for="k-passord">Passord:</label>
+        <div>
+          <input name="k-passord" type="Passord" class="form-control" id="k-passord" placeholder="Passord">
+        </div>
+      </div>
+		<br/>
+          <button name="avbryt2" type="submit" class="btn btn-default">Avbryt</button>
+          <button name="lukk2" type="submit" class="btn btn-default">Lukk</button>
+          <button name="lagre2" type="submit" class="btn btn-primary">Lagre</button>
+
+</div> <!--slutt på Kontaktinformasjon-->
+  
+    <!-------------------------- Tapping av blodgivere----------------------------------------------->
+    
+<div class="tab-pane" id="tapping">
+  <div class="form-group">
+      <label>Tappested:</label>
+      <select name="tab-tappested" class="form-control">
+          <option name="tab-tappested-1">Blodbank på sykehus</option>
+          <option name="tab-tappested-2">På buss</option>
+      </select>
+  </div>
+ <p>Fortell om giveren og når/hvordan tappingen fant sted.</p> 
+    <div class="form-group">
+      <label>Kjønn:</label>
+      <select name="tab-kjonn" class="form-control">
+          <option name="tab-kjonn-1"></option>
+          <option name="tab-kjonn-2"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Alder:</label>
+      <select name="tab-alder" class="form-control">
+          <option name="tab-alder-1"></option>
+          <option name="tab-alder-2"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Førstegangsgiver:</label>
+      <select name="tab-forstegiver" class="form-control">
+          <option name="tab-forstegiver-1"></option>
+          <option name="tab-forstegiver-2"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Førstegangs afersegiver:</label>
+      <select name="tab-forstegiver-x" class="form-control">
+          <option name="tab-forstegiver-x-1"></option>
+          <option name="tab-forstegiver-x-2"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Måltid innen 3 t før tapping?</label>
+      <select name="tab-maltid" class="form-control">
+          <option name="tab-maltid-1"></option>
+          <option name="tab-maltid-2"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Komplisert venepunksjon:</label>
+      <select name="tab-venepunksjon" class="form-control">
+          <option name="tab-venepunksjon-1"></option>
+          <option name="tab-venepunksjon-2"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Tappedato:</label>
+      <select name="tab-tappedato" class="form-control">
+          <option name="tab-tappedato-1"></option>
+          <option name="tab-tappedato-2"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Tappetid:</label>
+      <select name="tab-tappetid" class="form-control">
+          <option name="tab-tappetid-1"></option>
+          <option name="tab-tappetid-2"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Tidligere reaksjoner ved tapping?</label>
+      <select name="tab-reaksjoner" class="form-control">
+          <option name="tab-reaksjoner-1"></option>
+          <option name="tab-reaksjoner-2"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Type tapping:</label>
+      <select name="tab-type" class="form-control">
+          <option name="tab-type-1"></option>
+          <option name="tab-type-2"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Reaksjon startet:</label>
+      <select name="tab-reaksjon" class="form-control">
+          <option name="tab-reaksjon-1"></option>
+          <option name="tab-reaksjon-2"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Tid fra startet tapping til reaksjon:</label>
+      <select name="tab-tid-tapping" class="form-control">
+          <option name="tab-tid-tapping-1"></option>
+          <option name="tab-tid-tapping-2"></option>
+      </select>
+    </div>
+
+	<!--lokal skade i armen-->
+    <label>Lokal skade i armen</label>
+      <div class="radio">
+          <label>
+          	<input type="radio" name="tab-skade-1" id="tab-skade-ja" value="option2">Ja
+          </label>
+      </div>
+      <div class="radio">
+          <label>
+            <input type="radio" name="tab-skade-2" id="tab-skade-nei" value="option3">Nei
+          </label>
+      </div>
+      <select name="tab-skade" class="form-control">
+          <option name="tab-skade-3"></option>
+          <option name="tab-skade-4"></option>
+      </select>
+  
+  <!--systematisk bivirkning-->
+
+      <label>Systematisk bivirkning</label>
+      <div class="radio">
+          <label>
+            <input type="radio" name="tab-bivirkning-ja" id="tab-bivirkning-ja" value="option2">Ja
+          </label>
+      </div>
+      <div class="radio">
+          <label>
+            <input type="radio" name="tab-bivirkning-nei" id="tab-bivirkning-nei" value="option3">Nei
+          </label>
+      </div>
+      <select name="tab-bivirkning" class="form-control">
+          <option name="tab-bivirkning-1"></option>
+          <option name="tab-bivirkning-2"></option>
+      </select>
+  <!--Annen reaksjon-->
+      <label>Annen reaksjon</label>
+      <div class="radio">
+          <label>
+            <input type="radio" name="tab-reaksjon-ja" id="tab-reaksjon-ja" value="option2">Ja
+          </label>
+      </div>
+      <div class="radio">
+          <label>
+            <input type="radio" name="tab-reaksjon-nei" id="tab-reaksjon-nei" value="option3">Nei
+          </label>
+      </div>
+      <select name="tab-reaksjon" class="form-control">
+          <option name="tab-reaksjon-1"></option>
+          <option name="tab-reaksjon-2"></option>
+      </select>
+  <!--Beskriv ev annen reaksjon her-->
+      <label>Beskriv ev. annen reaksjon her:</label>
+	  <textarea class="form-control" name="tab-reaksjon-beskriv" rows="3"></textarea>
+ <!--Varighet av bivirkning/skade-->
+      <label>Varighet av bivirkning/skade</label>
+	  <textarea class="form-control" name="tab-varighet-skade" rows="3"></textarea>
+  		<br/>
+      <button name="avbryt3" type="submit" class="btn btn-default">Avbryt</button>
+      <button name="lukk3" type="submit" class="btn btn-default">Lukk</button>
+      <button name="lagre3" type="submit" class="btn btn-primary">Lagre</button>
+</div> <!--slutt Tapping av blodgivere-->
+  
+  <!--------------------------------------------Pasientkomplikasjoner--------------------------------------->
+<div class="tab-pane" id="pasientkomplikasjoner">
+    <h3>Pasient</h3>
+    <div class="form-group">
+      <label>Kjent antistoff (ny):</label>
+    </div>
+      <div class="radio">
+          <label>
+            <input type="radio" name="p-antistoff-ja" id="p-antistoff-ja" value="option2">Ja
+          </label>
+      </div>
+      <div class="radio">
+          <label>
+            <input type="radio" name="p-antistoff-nei" id="p-antistoff-nei" value="option3">Nei
+          </label>
+      </div>
+	
+    <b>Hvis ja: Type antistoff:</b>
+    <div class="checkbox">
+    <label>
+      <input name="p-antistoff-erytrocytt" type="checkbox" id="p-antistoff-erytrocytt" value="option1"> Erytrocyttantistoff.
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-antistoff-hla" type="checkbox" id="p-antistoff-hla" value="option2"> HLA-antistoff. 
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-antistoff-trombocytt" type="checkbox" id="p-antistoff-trombocytt" value="option3"> Trombocyttspesifikt antistoff. 
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-antistoff-leukocytt" type="checkbox" id="p-antistoff-leukocytt" value="option4"> Leukocyttspesifikt antistoff.
+    </label>
+    </div>
+    <br/><br/>
+	<div class="form-group">
+      <label>Sykdom av betydning for komplikasjonen (ny)</label>
+            	<input name ="p-antistoff-sykdom" list="icd10gruppe" class="form-control">
+ 
+        		<datalist id="icd10gruppe">
+   	       <#list mainTerms as mainTerms>
+        			<option >${mainTerms}</option>
+			    </#list>  
+        		</datalist>
+
+    
+<!--   Erstattet av linjene over !!    
+      <select name="p-antistoff-sykdom" class="form-control">
+          <option name="p-antistoff-sykdom-1"></option>
+          <option name="p-antistoff-sykdom-2"></option>
+      </select>
+-->       
+    </div>
+    <div class="form-group">
+         <label>Indikasjon for transfusjonen (ny)</label>
+            	<input name ="p-antistoff-transfusjon" list="icd10gruppetrans" class="form-control">
+ 
+        		<datalist id="icd10gruppetrans">
+      	       <#list mainTerms as mainTerms>
+        			<option >${mainTerms}</option>
+			    </#list>  
+        		</datalist>
+<!--    
+      <label>Indikasjon for transfusjonen (ny)</label>
+      <select name="p-antistoff-transfusjon" class="form-control">
+          <option name="p-antistoff-transfusjon-1"></option>
+          <option name="p-antistoff-transfusjon-2"></option>
+      </select>
+-->      
+      
+    </div>
+    <div class="form-group">
+    
+            <label>Tidligere transfusjonskomplikasjon (ny)</label>
+            	<input name ="p-antistoff-tidligeretransfusjon" list="icd10gruppekomp" class="form-control">
+ 
+        		<datalist id="icd10gruppekomp">
+      	       <#list mainTerms as mainTerms>
+        			<option >${mainTerms}</option>
+			    </#list>  
+        		</datalist>
+    
+    <!--  
+      <label>Tidligere transfusjonskomplikasjon (ny)</label>
+      <select name="p-antistoff-tidligeretransfusjon" class="form-control">
+          <option name="p-antistoff-tidligeretransfusjon-1"></option>
+          <option name="p-antistoff-tidligeretransfusjon-2"></option>
+      </select>
+      
+-->      
+    </div>
+	<br/><br/>        
+    <h3>Transfusjon</h3>
+    <b>Hastegrad</b>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-transfusjon-hg-1" id="p-transfusjon-hg-1" value="option1" checked>Planlagt
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-transfusjon-hg-2" id="p-transfusjon-hg-2" value="option2">Øhjelp
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-transfusjon-hg-3" id="p-transfusjon-hg-3" value="option2">Vet ikke
+      </label>
+    </div>
+  
+  <b>Inneliggende/poliklinisk</b>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-transfusjon-ip-1" id="p-transfusjon-ip-1" value="option1" checked>Inneliggende
+      </label>
+  </div>
+  <div class="radio">
+      <label>
+        <input type="radio" name="p-transfusjon-ip-2" id="p-transfusjon-ip-2" value="option2">Poliklinisk
+      </label>
+  </div>
+  <div class="radio">
+      <label>
+        <input type="radio" name="p-transfusjon-ip-3" id="p-transfusjon-ip-3" value="option2">Vet ikke
+      </label>
+  </div>
+	<br/><br/>    
+    
+    <h3>Blodprodukt</h3>
+    <b>Blodprodukt</b>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-erytrocytt" id="p-blod-erytrocytt" value="option2">Erytrocyttkonsentrat
+      </label>
+  	</div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-trombocytt" id="p-blod-trombocytt" value="option2">Trombocyttkonsentrat
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-octaplas" id="p-blod-octaplas" value="option2">Octaplas
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-andre" id="p-blod-andre" value="option2">Andre
+      </label>
+    </div>
+    <b>Spesielle egenskaper</b>
+    <div class="checkbox">
+    <label>
+      <input name="p-blod-kriseblod" type="checkbox" id="p-blod-kriseblod" value="option1">Kriseblod
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-vasket" type="checkbox" id="p-blod-vasket" value="option2">Vasket
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-bestralt" type="checkbox" id="p-blod-bestralt" value="option3">Bestrålt 
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-hla" type="checkbox" id="p-blod-hla" value="option4">HLA-forlikelig
+    </label>
+    </div>
+    <div class="checkbox">
+	<label>
+    	<input name="p-blod-patogening" type="checkbox" id="p-blod-patogening" value="option2">Patogeningaktivert
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-blodvarmer" type="checkbox" id="p-blod-blodvarmer" value="option3">Blodvarmer brukt
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-annet" type="checkbox" id="p-blod-annet" value="option4">Annet
+    </label>
+    </div>
+	<b>Type tapping</b>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-aferese" id="p-blod-aferese" value="option2">Aferese
+      </label>
+  	</div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-fullblod" id="p-blod-fullblod" value="option2">Fullblod
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-vetikke" id="p-blod-vetikke" value="option2">Vet ikke
+      </label>
+    </div>
+    <b>Suspensjonsmedium (gjelder kun ved valg blodprodukt: Trombocyttkonsentrat)</b>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-giverplasma" id="p-blod-giverplasma" value="option2">Giverplasma
+      </label>
+  	</div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-kunstig" id="p-blod-kunstig" value="option2">Kunstig medium
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-sus-vetikke" id="p-blod-sus-vetikke" value="option2">Vet ikke
+      </label>
+    </div>
+    <b>Allogent/autologt produkt</b>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-kunstig" id="p-blod-kunstig" value="option2">Allogen
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-sus-vetikke" id="p-blod-sus-vetikke" value="option2">Autolog
+      </label>
+    </div>
+
+    
+    <h3>Komplikasjon</h3>
+    <b>Symptomer</b>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-temp" id="p-komp-temp" value="option2">Temperaturstigning > 1 grader C (angi temperaturer i fritekst)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-blodfall" id="p-komp-blodfall" value="option2">Blodtrykksfall (syst) > 30 mmHg
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-blodstig" id="p-komp-blodstig" value="option2">Blodtrykksstigning
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-kvalme" id="p-komp-kvalme" value="option2">Kvalme/oppkast
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-frysninger" id="p-komp-frysninger" value="option2">Frysninger /skjelvinger
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-pustebesvar" id="p-komp-pustebesvar" value="option2">Pustebesvær
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-hypoksemi" id="p-komp-hypoksemi" value="option2">Hypoksemi
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-cyanose" id="p-komp-cyanose" value="option2">Cyanose
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-luneodem" id="p-komp-luneodem" value="option2">Akutt lungeødem
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-diare" id="p-komp-diare" value="option2">Diare
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-kloe" id="p-komp-kloe" value="option2">Kløe
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-utslett" id="p-komp-utslett" value="option2">Utslett
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-hevelser" id="p-komp-hevelser" value="option2">Lokaliserte hevelser i ansikt, elpper, tunge og/eller drøvel
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-rodflammet" id="p-komp-rodflammet" value="option2">Rødflammet ansikt (flushing)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-gulsott" id="p-komp-gulsott" value="option2">Gulsott (ikterus)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-nyre" id="p-komp-nyre" value="option2">Smerter i nyreregionen
+      </label>
+    </div>
+        <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-bryst" id="p-komp-bryst" value="option2">Brystsmerter
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-tachykardi" id="p-komp-tachykardi" value="option2">Tachykardi
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-mage" id="p-komp-mage" value="option2">Magesmerter
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-akuttnyre" id="p-komp-akuttnyre" value="option2">Akutt nyresvikt (oliguri, anuri)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-bevisstlos" id="p-komp-bevisstlos" value="option2">Bevisstløshet
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-sjokk" id="p-komp-sjokk" value="option2">Sjokk
+      </label>
+    </div>
+        <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-blodninger" id="p-komp-blodninger" value="option2">Diffuse blødninger
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-urin" id="p-komp-urin" value="option2">Mørk urin (pga. fritt hemoglobin i urinen)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-hudblod" id="p-komp-hudblod" value="option2">Hudblødninger (petekkier)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-annet" id="p-komp-annet" value="option2">Annet
+      </label>
+    </div>
+    
+    <b>Klassifikasjon (kan ICD-10 benyttes?)</b>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-ahtr-1" id="p-komp-ahtr-1" value="option2">Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. ABO uforlikelighet
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-ahtr-2" id="p-komp-ahtr-2" value="option2">Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. annet alloantistoff
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-dhtr" id="p-komp-dhtr" value="option2">Forsinket hemolytisk transfusjonsreaksjon (DHTR)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-fnhtr" id="p-komp-fnhtr" value="option2">Febril non-hemolytisk transfusjonsreaksjon (FNHTR)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-hemolyse" id="p-komp-hemolyse" value="option2">Ikke immunbetinget hemolyse
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-anafylaktisk" id="p-komp-anafylaktisk" value="option2">Anafylaktisk/alvorlig allergisk reaksjon
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-allergisk" id="p-komp-allergisk" value="option2">Annen allergisk reaksjon (mindre alvorlig)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-ta-gvhd" id="p-komp-ta-gvhd" value="option2">Transfusjonsassoosiert transplantat-mot-vert-rekajson (TA-GVHD)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-ptp" id="p-komp-ptp" value="option2">Posttransfusjonspurpura (PTP)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-trali" id="p-komp-trali" value="option2">Transfusjonsrelatert akutt lungeskad (TRALI)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-tad" id="p-komp-tad" value="option2">Transfusjonsassosiert dyspne (TAD)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-taco" id="p-komp-taco" value="option2">Transfusjonsrelatert overbelastning av kretsløpet (TACO)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-hypo" id="p-komp-hypo" value="option2">Hypotensiv transfusjonsreaksjon
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-hemo" id="p-komp-hemo" value="option2">Hemosiderose
+      </label>
+    </div>
+    
+        <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-hyper" id="p-komp-hyper" value="option2">Hyperkalemi
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-bakterie" id="p-komp-bakterie" value="option2">Transfusjonsoverført bakterieinfeksjon
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-virus" id="p-komp-virus" value="option2">Transfusjonsoverført virusinfeksjon
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-smitte" id="p-komp-smitte" value="option2">Annen smitteoverføring
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-aiha" id="p-komp-aiha" value="option2">Transfusjonsutløst autoimmun hemolytisk anemi (AIHA)
+      </label>
+    </div>
+        <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-manglendeeffekt" id="p-komp-manglendeeffekt" value="option2">Manglende effekt av transfusjon
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-uct" id="p-komp-uct" value="option2">Uklassifiserbar transfusjonskomplikasjon (UCT)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-kanikke" id="p-komp-kanikke" value="option2">Kan ikke konkludere (les definisjonene før du velger dette)
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-komp-ingenklinisk" id="p-komp-ingenklinisk" value="option2">Ingen klinisk reaksjon (f.eks. ved feil, men forlikelig blod, skal trolig ikke væremed)
+      </label>
+    </div>
+    
+    <h3>Utredning</h3>
+    <b>Blodtypeserologisk utredning tyder på HTR</b>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-utredning-1" id="p-utredning-1" value="option1" checked>Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-utredning-2" id="p-utredning-2" value="option2">Ja 
+      </label>
+    </div>
+    <label>Hvis ja, beskriv nærmere i fritekst:</label>
+	 <textarea class="form-control" name="p-utredning" rows="3"></textarea>
+     <b>Hemolyseparametere er positive.</b>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemolyse-1" id="p-hemolyse-1" value="option1" checked>Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemolyse-2" id="p-hemolyse-2" value="option2">Ja 
+      </label>
+    </div>
+    <label>Hvis ja, beskriv nærmere i fritekst:</label>
+	 <textarea class="form-control" name="p-hemolyse" rows="3"></textarea>
+     <b>lgA-mangel/anti-lgA</b>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-lga-1" id="p-lga-1" value="option1" checked>Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-lga-2" id="p-lga-2" value="option2">Ja 
+      </label>
+    </div>
+    <label>Hvis ja, beskriv nærmere i fritekst:</label>
+	 <textarea class="form-control" name="p-lga" rows="3"></textarea>
+     <b>Dyrkning fra pose utført</b>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-dyrkning-1" id="p-dyrkning-1" value="option1" checked>Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-dyrkning-2" id="p-dyrkning-2" value="option2">Ja 
+      </label>
+    </div>
+	<p>Hvis ja:Positiv?</p>    
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-positiv-1" id="p-positiv-1" value="option1" checked>Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-positiv-2" id="p-positiv-2" value="option2">Ja 
+      </label>
+    </div>
+    
+    
+      <br/>
+       <button name="avbryt4" type="submit" class="btn btn-default">Avbryt</button>
+      <button name="lukk4" type="submit" class="btn btn-default">Lukk</button>
+      <button name="lagre4" type="submit" class="btn btn-primary">Lagre</button>
+    
+</div><!--slutt pasientkomplikasjon-->
+  
+    <!----------------------------------Kontaktinformasjon------------------------------------>
+    
+<div class="tab-pane" id="kontakt2">
+  <h4>Kontaktinformasjon</h4>
+  <p>Vi ber deg oppgi din kontaktinformasjon slik at vi ved behov kan ta kontakt for å innhente ekstra informasjon, eller gi råd og annen tilbakemelding.</p>
+  <h4>Jeg er</h4>
+          <div class="radio">
+              <label>
+                <input type="radio" name="k-leder" id="k-leder" value="option1">Ansvarlig leder
+              </label>
+          </div>
+          <div class="radio">
+              <label>
+                <input type="radio" name="k-lege" id="k-lege" value="option1">Lege/behandler
+              </label>
+          </div>
+          <div class="radio">
+              <label>
+                <input type="radio" name="k-merkantil" id="k-merkantil" value="option1">Merkantil
+              </label>
+          </div>
+          <div class="radio">
+              <label>
+                <input type="radio" name="k-annet" id="k-annet" value="option1">Annet
+              </label>
+          </div>
+          <div class="radio">
+              <label>
+                <input type="radio" name="k-sykepleier" id="k-sykepleier" value="option1">Sykepleier
+              </label>
+          </div>
+          <div class="radio">
+              <label>
+                <input type="radio" name="k-helsepersonell" id="k-helsepersonell" value="option1">Annet helsepersonell
+              </label>
+          </div>
+          <div class="radio">
+              <label>
+                <input type="radio" name="k-kvalitetsmedarbeider" id="k-kvalitetsmedarbeider" value="option1">Kvalitetsmedarbeider
+              </label>
+          </div>
+    		<br/>
+          <div class="form-group">
+            <label>Navn:</label>
+              <input name="k-navn" type="navn" class="form-control" id="k-navn" placeholder="Navn">
+          </div>
+          <div class="form-group">
+            <label>Telefonnummer:</label>
+              <input name="k-tlf" type="Telefonnummer" class="form-control" id="k-tlf" placeholder="Telefonnummer">
+          </div>
+          <div class="form-group">
+            <label>E-post(arbeid):</label>
+              <input name="k-epost" type="e-post" class="form-control" id="k-epost" placeholder="E-post(arbeid)">
+          </div>
+          <div class="form-group">
+            <label>Gjenta e-post:</label>
+              <input name="k-gjenta-epost" type="gjenta-e-post" class="form-control" id="k-gjenta-epost" placeholder="Gjenta e-post">
+          </div>
+	     <p>Vi vil gjerne ta kontakt med nærmeste leder eller annen person som kan bidra med ytterligere opplysninger. Vi trenger i tilfelle minimum e-postadresse.</p>
+  
+	      <div class="form-group">
+            <label>Navn:</label>
+              <input name="k-ekstra-navn" type="navn" class="form-control" id="k-ekstra-navn" placeholder="Navn">
+          </div>
+          <div class="form-group">
+            <label>Telefonnummer</label>
+              <input name="k-ekstra-tlf" type="Telefonnummer" class="form-control" id="k-ekstra-tlf" placeholder="Telefonnummer">
+          </div>
+          <div class="form-group">
+            <label>E-post(arbeid)</label>
+              <input name="k-ekstra-epost" type="e-post" class="form-control" id="k-ekstra-epost" placeholder="E-post(arbeid)">
+          <div class="form-group">
+            <label>Gjenta e-post</label>
+              <input name="k-ekstra-gjenta-epost" type="gjenta-e-post" class="form-control" id="k-ekstra-gjenta-epost" placeholder="Gjenta e-post">
+          </div>
+
+	  <p>Jeg ønsker at Kunnskapssenteret raskt tar kontakt for råd og veiledning i denne saken. </p>
+      <div class="form-group">
+            <label>
+              <input name="k-tarkontakt" type="checkbox"> Jeg ønsker at Kunnskapssenteret raskt tar kontakt for råd og veiledning
+            i denne saken. 
+            </label>
+      </div>
+      <br/>
+       <button name="avbryt5" type="submit" class="btn btn-default">Avbryt</button>
+      <button name="lukk5" type="submit" class="btn btn-default">Lukk</button>
+      <button name="lagre5" type="submit" class="btn btn-primary">Lagre</button>
+  
+  </div> <!--slutt Kontaktinformasjon-->
+</div><!--slutt tab-content-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<!--<script src="js/bootstrap.min.js"></script>-->
+</form>
+</div> <!--slutt container-->
+</body>
+</html>
+
