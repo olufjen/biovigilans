@@ -20,7 +20,7 @@
     <artifactId>cellerogvev_web</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>biovigilans web</name>
+    <name>Celler og vev web</name>
     <url>http://www.kunnskapssenteret.no</url>
 
     
