@@ -64,7 +64,7 @@ public class SaksbehandlingRealm extends AuthorizingRealm {
 		System.out.println("Saksbehandling realm authentication info check");
 		SimpleAccount endAccount = null;
 		boolean result = false;
-		
+		boolean brukerogpassord = false;
 		sessionAdmin.setSessionObject(request, endAccount, accountKey);
 		for (SimpleAccount account : accounts){
 			result = matcher.doCredentialsMatch(userToken, account);
@@ -80,10 +80,11 @@ public class SaksbehandlingRealm extends AuthorizingRealm {
 				 String principal = (String)userToken.getPrincipal();
   				if (saksbehandler.getBehandlerepost().equalsIgnoreCase(principal) && saksbehandler.getBehandlerpassord().equals(credentials)){
 					loginSaksbehandler = saksbehandler;
+					brukerogpassord = true;
 					break;
 				}
-				 
-				 
+				if (!brukerogpassord) 
+					endAccount= null;
 			}
 		}
 	
