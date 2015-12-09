@@ -137,9 +137,9 @@ public class RapporterteMeldingerServerResourceHTML extends
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
-                 "/hemovigilans");
+                 "/cellerogvev");
 	     
-	   	 String page = "/hemovigilans/rapportert_melding.html";
+	   	 String page = "/cellerogvev/rapportert_melding.html";
 	     SimpleScalar simple = new SimpleScalar(displayPart);
 		 SimpleScalar detaljButton = new SimpleScalar(detaljer);
 		 dataModel.put(detaljerId,detaljButton);
@@ -153,11 +153,11 @@ public class RapporterteMeldingerServerResourceHTML extends
 	    	 Giver giver = (Giver)sessionAdmin.getSessionObject(request,  giverenKey);
 	    	 dataModel.put(giverKey,giverKomplikasjon);
 	    	 dataModel.put(giverenKey, giver);
-	    	 page = "/hemovigilans/rapportert_giver.html";
+	    	 page = "/cellerogvev/rapportert_giver.html";
 	     }
 	     if (pasientKomplikasjon != null){
 	    	 dataModel.put(pasientKey,pasientKomplikasjon);
-	    	 page = "/hemovigilans/rapportert_pasient.html";
+	    	 page = "/cellerogvev/rapportert_pasient.html";
 	    	 
 	     }
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
@@ -192,7 +192,7 @@ public class RapporterteMeldingerServerResourceHTML extends
 	     dataModel.put(meldingsId, melding);
 	     String infoButton = null;
 	     String melder = null;
-	   	 String page = "/hemovigilans/rapportert_melding.html";
+	   	 String page = "/cellerogvev/rapportert_melding.html";
 	     for (Parameter entry : form) {
 	    	 if (entry.getValue() != null && !(entry.getValue().equals(""))){
 	    		 System.out.println(entry.getName() + "=" + entry.getValue());
@@ -208,11 +208,11 @@ public class RapporterteMeldingerServerResourceHTML extends
 	    		 }
 				if (entry.getName().equals("k-melder")){
 						melder = entry.getValue();
-						page =  "../hemovigilans/melder_rapport.html";
+						page =  "../cellerogvev/melder_rapport.html";
 						redirectPermanent(page);
 				}
 	    		 if (entry.getName().equals("oppfolgingandre")){
-	    			  page =  "../hemovigilans/rapporter_andrehendelser.html";
+	    			  page =  "../cellerogvev/rapporter_andrehendelser.html";
 	  //  			  setAndreHendelser(); // Setter opp andreHendelser session objekter
 	    				    // setTransfusjonsObjects(); 
 	  //  			  annenModel.setFormNames(sessionParams);
@@ -240,7 +240,7 @@ public class RapporterteMeldingerServerResourceHTML extends
 	    		 }
 	    		
 	    		 if (entry.getName().equals("oppfolginggiver")){
-	    			  page =  "../hemovigilans/rapporter_giver.html";
+	    			  page =  "../cellerogvev/rapporter_giver.html";
 	    			  setGiverhendelser(); // Setter opp giverHendelser session objekter
 	    				
 	    				 giverModel.setFormNames(sessionParams);
@@ -261,7 +261,7 @@ public class RapporterteMeldingerServerResourceHTML extends
 	    			  redirectPermanent(page);
 	    		 }
 	    		 if (entry.getName().equals("oppfolgingpasient")){
-	    			  page =  "../hemovigilans/rapporter_transfusjon.html";
+	    			  page =  "../cellerogvev/rapporter_transfusjon.html";
 	    			  setTransfusjon(); // Setter opp pasientHendelser session objekter
 	    			  setSessionParams(pasientSessionParams); // Setter opp riktige sessionparametre for pasient/transfusjon
 	    		      transfusjon.setPlasmaEgenskaper(blodProdukt); // Setter plasma produkttyper
@@ -312,7 +312,7 @@ public class RapporterteMeldingerServerResourceHTML extends
 			 SimpleScalar detaljButton = new SimpleScalar(detaljer);
 			 dataModel.put(detaljerId,detaljButton);
 	   	     dataModel.put(displayKey, simple);
-	   	     page =  "/hemovigilans/rapportert_pasient.html";
+	   	     page =  "/cellerogvev/rapportert_pasient.html";
 	     }
 	     if (giverKomplikasjon != null){
 	    	 dataModel.put(giverKey,giverKomplikasjon);
@@ -322,7 +322,7 @@ public class RapporterteMeldingerServerResourceHTML extends
 			 SimpleScalar detaljButton = new SimpleScalar(detaljer);
 			 dataModel.put(detaljerId,detaljButton);
 	   	     dataModel.put(displayKey, simple);
-	   	     page =  "/hemovigilans/rapportert_giver.html";
+	   	     page =  "/cellerogvev/rapportert_giver.html";
 	     }
  	    ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
 

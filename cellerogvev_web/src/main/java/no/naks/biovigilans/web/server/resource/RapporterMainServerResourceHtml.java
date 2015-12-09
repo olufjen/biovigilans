@@ -58,12 +58,12 @@ public class RapporterMainServerResourceHtml extends SessionServerResource {
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
-                 "/hemovigilans");
+                 "/cellerogvev");
 	    
 	     LocalReference localUri = new LocalReference(reference);
 	
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_hendelse_main.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_hendelse_main.html"));
 	     
 	        // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
@@ -95,7 +95,7 @@ public class RapporterMainServerResourceHtml extends SessionServerResource {
 
     		if (logout != null || lukk != null){
  
-	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemivigilans/Logout.html"));
+	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/Logout.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
@@ -114,7 +114,7 @@ public class RapporterMainServerResourceHtml extends SessionServerResource {
  
 //    		System.out.println("Status = "+result.getStatus());
     		// Denne client resource forholder seg til src/main/resource katalogen !!!	
-    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/hemovigilans.html"));
+    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/cellerogvev.html"));
     		Representation pasientkomplikasjonFtl = clres2.get();
     		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
     		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();

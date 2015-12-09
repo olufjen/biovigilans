@@ -40,7 +40,7 @@ import edu.unc.ils.mrc.hive2.api.HiveConcept;
  * Resurser blir instansiert for hver kall fra klient
  * 
  * @author olj
- * Denne resursen er knyttet til hovedsiden /hemovigilans
+ * Denne resursen er knyttet til hovedsiden for celler og vev
  * 
  */
 public class HemovigilansServerResourceHtml extends SessionServerResource {
@@ -106,7 +106,7 @@ public class HemovigilansServerResourceHtml extends SessionServerResource {
 	     LocalReference localUri = new LocalReference(reference);
 //	     sessionAdmin.setSessionObject(getRequest(), result,"pasientkomplikasjon");
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/hemovigilans.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/cellerogvev.html"));
 	     
 	        // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
@@ -175,7 +175,7 @@ public class HemovigilansServerResourceHtml extends SessionServerResource {
 	    		}
 //	    		System.out.println("Status = "+result.getStatus());
 	    		// Denne client resource forholder seg til src/main/resource katalogen !!!	
-	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/hemovigilans.html"));
+	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/cellerogvev.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();

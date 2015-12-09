@@ -122,7 +122,7 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 		 List<Vigilansmelding> meldinger = null;
 	     Reference reference = new Reference(getReference(),"..").getTargetRef();
 	     Request request = getRequest();
-	   	 String page = "/hemovigilans/melder_rapport.html";	   
+	   	 String page = "/cellerogvev/melder_rapport.html";	   
 	     Long melderId = null;
 	 	Map<String, List> alleMeldinger = new HashMap<String,List>();
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -132,11 +132,11 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	        String meldingsText = "Vennligst velg oppfølgingsmelding, og logg inn med din epost adresse";
 	        sessionAdmin.setSessionObject(request,meldingsText, meldeTxtId);
 	        dataModel.put( meldeTxtId, meldingsText);
-	    	 page = "../hemovigilans/startside.html";	
+	    	 page = "../cellerogvev/startside.html";	
 		     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
-	                 "/hemovigilans");
+	                 "/cellerogvev");
 		     LocalReference localUri = new LocalReference(reference);
-		     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
+		     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/startside.html"));
 
 		        Representation pasientkomplikasjonFtl = clres2.get();
 
@@ -201,7 +201,7 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	     dataModel.put(melderNokkel,melder);
 //	     meldingene = (Vigilansmelding) meldinger.toArray();
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
-                 "/hemovigilans");
+                 "/cellerogvev");
 	     LocalReference localUri = new LocalReference(reference);
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
 
@@ -238,7 +238,7 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	    					meldingsNokkel = entry.getValue();
 	    			}
 	    			if (entry.getName().equals("pdf")){
-	    				page = "../hemovigilans/melder_rapport.html";
+	    				page = "../cellerogvev/melder_rapport.html";
 	    				toPDF = true;
 	    		
 	    			}
@@ -376,7 +376,7 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 //	     dataModel.put(melderNokkel,melder);
 	
 		 if (!toPDF)
-			 page =  "../hemovigilans/rapporter_andrehendelser.html";
+			 page =  "../cellerogvev/rapporter_andrehendelser.html";
 		  if (annenKomplikasjon != null && melding != null){
 			  meldeidKey = orgmeldeId.toString();	
 			  setSessionParams(annenSession);
@@ -422,7 +422,7 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 		  }
 		  if (giverKomplikasjon != null && melding != null){
 			  if (!toPDF)
-				  page =  "../hemovigilans/rapporter_giver.html";
+				  page =  "../cellerogvev/rapporter_giver.html";
 			  meldeidKey = orggiverMeldeid.toString();
 			  setSessionParams(giverSession);
 			  setGiverhendelser();
@@ -517,7 +517,7 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 		  }
 		  if (pasientKomplikasjon != null && melding != null){
 			  if (!toPDF)
-				  page =  "../hemovigilans/rapporter_transfusjon.html";
+				  page =  "../cellerogvev/rapporter_transfusjon.html";
 			  meldeidKey = orgpasientMeldeid.toString();
 			  setTransfusjon();
 		      Vigilansmelding minmelding = (Vigilansmelding) pasientKomplikasjon;

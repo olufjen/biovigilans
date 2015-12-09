@@ -218,7 +218,7 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 			}
     	    
     	// invalidateSessionobjects();
-    	 ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/leveranse.html"));
+    	 ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/leveranse.html"));
 	     Representation pasientkomplikasjonFtl = clres2.get();
 	     TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
 	                MediaType.TEXT_HTML);

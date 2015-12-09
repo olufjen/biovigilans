@@ -478,12 +478,12 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
-                 "/hemovigilans");
+                 "/cellerogvev");
 	    
 	     LocalReference localUri = new LocalReference(reference);
 	
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_kontakt.html"));
 	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 	     
 			transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(request,transfusjonId);
@@ -614,7 +614,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     			SaveSkjema();
     			sessionAdmin.setSessionObject(request, melderwebModel, melderId);
         		dataModel.put(melderId, melderwebModel);
-        		String page = getPage();
+        		String page = "/cellerogvev/leveranse.html";
     			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 /*
@@ -645,7 +645,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 */	    	    
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
-	    		redirectPermanent("../hemovigilans/leveranse.html");
+	    		redirectPermanent("../cellerogvev/leveranse.html");
 	    		return templateRep;
     		}else if(hentPassord != null){
     			Melder melder = melderwebModel.getMelder();
@@ -669,7 +669,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 			   	 dataModel.put(displayKey, simpledisp);
 			   	 dataModel.put(foundKey,  melderFound);
 				dataModel.put(melderId, melderwebModel);
-	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_kontakt.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
@@ -689,7 +689,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 			   	 dataModel.put(displayKey, simpledisp);
 			   	 dataModel.put(foundKey,  melderFound);
 				dataModel.put(melderId, melderwebModel);
-	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_kontakt.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
@@ -714,7 +714,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 			   	 dataModel.put(displayKey, simpledisp);
 			   	 dataModel.put(foundKey,  melderFound);
 				dataModel.put(melderId, melderwebModel);
-	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_kontakt.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
@@ -757,7 +757,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 			   	 dataModel.put(foundKey,  melderFound);
 			   	 dataModel.put(extraPassordKey,extraPassord);
 				dataModel.put(melderId, melderwebModel);
-	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_kontakt.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
@@ -779,7 +779,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 			 	 dataModel.put(foundKey,  melderFound);
 			   	 dataModel.put(displayKey, simpledisp);
 			   	dataModel.put(melderId, melderwebModel);
-	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_kontakt.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
@@ -801,7 +801,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 				SimpleScalar melderFound = new SimpleScalar(displayFound);
 		 	 	dataModel.put(foundKey,  melderFound);
 			   	dataModel.put(melderId, melderwebModel);
-	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_kontakt.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
@@ -812,7 +812,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     	 	}else if(lagreAnonymt != null){					// Bruker velger å lagre skjema anonymt.
     	 		boolean ikkeAnonym = checkMelder();
     	 		if (ikkeAnonym){ // Bruker har brukt returtasten !!
-    	 			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+    	 			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_kontakt.html"));
     	    		Representation pasientkomplikasjonFtl = clres2.get();
     	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
     	    				MediaType.TEXT_HTML);
@@ -854,8 +854,8 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
  		 	 	dataModel.put(foundKey,  melderFound);
  			   	dataModel.put(melderId, melderwebModel);
     		   	 dataModel.put(displayKey, simpledisp);
-        		String page = getPage(); //Hent neste side 
-    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+        		String page =  "/cellerogvev/leveranse.html";
+    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_kontakt.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 /*
  * Invalidate session objects kun dersom et meldeskjema er fylt ut	
@@ -874,15 +874,15 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 //	    		sessionAdmin.getSession(getRequest(),melderId).invalidate();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
-	    		redirectPermanent("../hemovigilans/leveranse.html");
+	    		redirectPermanent("../cellerogvev/leveranse.html");
 	    		return templateRep;
     	 	}else if (nyttPassord != null){
-    	 		redirectPermanent("../hemovigilans/passord.html");
+    	 		redirectPermanent("../cellerogvev/passord.html");
     		}else{
 
     			sessionAdmin.setSessionObject(request, melderwebModel, melderId);
         		dataModel.put(melderId, melderwebModel);
-    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_kontakt.html"));
     			invalidateSessionobjects();
     			Representation pasientkomplikasjonFtl = clres2.get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();

@@ -73,12 +73,12 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
-                 "/hemovigilans");
+                 "/cellerogvev");
 	    
 	     LocalReference localUri = new LocalReference(reference);
 	
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_andrehendelser.html"));
 	     setAndreHendelser(); // Setter opp andreHendelser session objekter
 	    // setTransfusjonsObjects(); 
 	     annenModel.setFormNames(sessionParams);
@@ -225,8 +225,8 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     			klassifikasjon.setKlassifikasjonList(hvagikkgaltList);
     			komplikasjonsklassifikasjonWebService.saveKomplikasjonsklassifikasjon(klassifikasjon);
     		//	dataModel.put(melderId, melderwebModel);
-    		//	clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
-    			redirectPermanent("../hemovigilans/rapporter_kontakt.html");
+    		//	clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_kontakt.html"));
+    			redirectPermanent("../cellerogvev/rapporter_kontakt.html");
     			/*
     			Representation andreHendelser = clres2.get();
         		invalidateSessionobjects();
@@ -235,7 +235,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
         		
     		}else{
 	    		//invalidateSessionobjects();
-	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_hendelse_main.html"));
+	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_hendelse_main.html"));
 	    		Representation andreHendelser = clres2.get();
 	       		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
 	    				MediaType.TEXT_HTML);

@@ -148,7 +148,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 	     LocalReference localUri = new LocalReference(reference);
 	
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/startside.html"));
 
 	        Representation pasientkomplikasjonFtl = clres2.get();
 
@@ -202,7 +202,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 
     	Long melderid = null; 
     	Parameter nyttPassord = form.getFirst("nyttpassord");
-        String page = "../hemovigilans/melder_rapport.html"; 
+        String page = "../cellerogvev/melder_rapport.html"; 
     	for (Parameter entry : form) {
 			if (entry.getValue() != null && !(entry.getValue().equals(""))){
 					System.out.println(entry.getName() + "=" + entry.getValue());
@@ -240,14 +240,14 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 				}
 			}
 			if (melderPassord != null && melderPassord.equals(passord)){
-	     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
+	     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/startside.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);	
 				redirectPermanent(page);
 				return templateRep;
 			}else{ // Feil passord går til startside.
-	     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
+	     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/startside.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);	
@@ -255,11 +255,11 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 	    	}
 		}
 		if (nyttPassord != null){
-     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
+     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/startside.html"));
     		Representation pasientkomplikasjonFtl = clres2.get();
     		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
     				MediaType.TEXT_HTML);
-			page = "../hemovigilans/passord.html"; 
+			page = "../cellerogvev/passord.html"; 
 			redirectPermanent(page);
 			return templateRep;
 		}
