@@ -9,11 +9,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta content="Kunnskapssenteret oppsummerer forskning om effekt av helsetiltak, gjør helseøkonomiske analyser, måler kvalitet, og arbeider med kvalitetsforbedring og pasientsikkerhet. " name="description">
 
-  <link href="/biovigilans_web/resources/css/main.css" rel="stylesheet">
+  <link href="/cellerogvev_web/resources/css/main.css" rel="stylesheet">
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <link href="/biovigilans_web/resources/css/biovigilans.css" rel="stylesheet">
+  <link href="/cellerogvev_web/resources/css/biovigilans.css" rel="stylesheet">
   
  
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" />
@@ -31,7 +31,7 @@
           <div class="col-xs-9 col-sm-6 col-sm-push-3 col-vertical-bottom-sm logo-container">
             <div class="bottom">
               <a class="home" href="#" id="home" rel="home" title="">
-                <img class="logo" src="/biovigilans_web/resources/css/logo.png" alt="" />
+                <img class="logo" src="/cellerogvev_web/resources/css/logo.png" alt="" />
               </a>
             </div>
           </div>
@@ -131,13 +131,13 @@
 				function toggleDisplay(id)
 				{    
 					document.getElementById('smitte').style.display = 'none';
-					document.getElementById('feilblod').style.display = 'none';
+		/*  			document.getElementById('feilblod').style.display = 'none';*/
 					document.getElementById('intervju').style.display = 'none';
-					document.getElementById('giveren').style.display = 'none';
+					/* document.getElementById('giveren').style.display = 'none'; */
 					document.getElementById('utstyr').style.display = 'none';
 					document.getElementById('analyser').style.display = 'none';
 					document.getElementById('merking').style.display = 'none';
-					document.getElementById('giver').style.display = 'none';
+					/* document.getElementById('giver').style.display = 'none'; */
 					document.getElementById('transport').style.display = 'none';
 					document.getElementById('merking').style.display = 'none';
 					document.getElementById('annet').style.display = 'none';
@@ -246,7 +246,7 @@
 					}
 				}
 			</script>
-	<h1>Rapporter Andre Hendelser</h1>
+	<h1>Rapport om uønsket hendelse (annet enn uttak eller reaksjon hos mottaker)</h1>
    <ul class="pager">
     <li class="previous" title="Ved startsiden velger du ny melding eller oppfølgingsmelding "><a href="#">Start</a></li>
     <li class="previous" title="Her velger du type melding "><a href="#">Type hendelse</a></li>
@@ -296,7 +296,7 @@
  					</div>
 			</div>					
 				<div class="form-group">
-					<label>Hvilken hovedprosess gjaldt hendelsen?</label>
+					<label>Hvilken prosess gjaldt hendelsen?</label>
 					<select name ="tab-prosess" id="tab-prosess" class="form-control" >
 						<option ></option>
 				       		<#list andreHendelse.hovedprosesslist as hovedprosess>
@@ -338,12 +338,13 @@
 				<div class="form-group">
 					<label>Klassifikasjon av feilen eller avviket</label>
 					<div class="radio">
+					<!--  
 				          <label>
 				          	<input type="radio" name="tab-klassifikasjon" id="k-1"   value="Feil blod transfundert"  onclick="toggleDisplay('feilblod'); checkUncheck();setRequired('pas-kjonn')"   />Feil blod transfundert
 				          </label>
 				          <div id="feilblod" class="bg-warning" style="display: none" >
 				              <div class="radio" >
-					          <!-- tab-feilblod -->
+					         
 					          	 <label>
 					          		<input type="radio" name="tab-klassifikasjon-sub" id="1"    value="Transfudert blod som ikke fyller krav"  />Blodproduktet oppfylte ikke spesifiserte krav 
 					          	 </label>
@@ -458,12 +459,7 @@
 								          		Vet ikke
 								          </label>
 								        </div>
-									<!-- <label>Delprosesser</label>
-									<div class="checkbox">
-								          <label>
-								          	<input type="checkbox" name="tab-delprosess"  value="delprosess"   />Delprosess
-								          </label>
-								    </div> -->
+	
 								        
 								</div>
 						 	 
@@ -489,8 +485,7 @@
 											  <div class="form-group">
 												  
 												      <label>Alder</label>
-												 <!--     <input type="text" name ="pas-alder" id="aldervalg" list="pasalder" size="20" class="form-control">  --> 
-												      <select name ="pas-alder" id="pasalder">
+																	      <select name ="pas-alder" id="pasalder">
 												      	<option  ></option>
 														<#list andreHendelse.aldergruppe as alder>
 												     		<option>${alder} </option>
@@ -499,9 +494,9 @@
 												     </select>
 												  
 											  </div>
-<!-- 						   			<textarea class="form-control"  name="pasientopplysninger" rows="3"  ></textarea>
- -->							   		</div>
-					      </div> <!-- End feilblod -->
+							   		</div>
+					      </div>  End feilblod 
+					      -->
 				    </div>
 				    <div class="radio">
 			          <label>
@@ -523,7 +518,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-3"  value="Ved intervju fremkommer det informasjon" onclick="toggleDisplay('intervju'); checkUncheck();"  />Ved intervju fremkommer det informasjon som hadde påvirket avgjørelsen om forrige og evt tidligere tappinger
+			          	<input type="radio" name="tab-klassifikasjon" id="k-3"  value="Ved intervju fremkommer det informasjon" onclick="toggleDisplay('intervju'); checkUncheck();"  />Ved intervju fremkommer det informasjon som hadde påvirket avgjørelsen om forrige og evt tidligere høstinger
 			          </label>
 			          <div id="intervju" style="display: none" >
 				          <div class="radio">	 
@@ -570,9 +565,9 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-4"  onclick="toggleDisplay('giver'); checkUncheck();"  value="giveren fyller"  />Giveren fyller ikke kravene, men blir likevel tappet
+			          	<input type="radio" name="tab-klassifikasjon" id="k-4"  onclick="toggleDisplay('giver'); checkUncheck();"  value="giveren fyller ikke krav"  />Giveren fyller ikke kravene, men blir likevel høstet
 			          </label>
-				  
+				<!-- 
 				      <div id="giver" style="display: none" >
 				          <div class="radio">	 
 				          	 <label>
@@ -590,11 +585,13 @@
 				          	 </label>
 				          </div>
 				      </div>  
+				   -->      
 				     </div>
 				     <div class="radio">
 			     	  <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-5"   onclick="toggleDisplay('giveren'); checkUncheck();"  value="giver inform"  />Giveren informerer kort tid etter tapping om noe som gjør at blodet ikke skal brukes
+			          	<input type="radio" name="tab-klassifikasjon" id="k-5"   onclick="toggleDisplay('giveren'); checkUncheck();"  value="donor informasjon"  />Etter høsting kommer det informasjon om donor som gjør at celler og vev ikke kan brukes
 			          </label>
+			          <!--  
 				      <div id="giveren" style="display: none" >    
 				          <div class="radio">	 
 				          	 <label>
@@ -623,6 +620,8 @@
 				          </div>
 				        
 				       </div>
+				       -->
+				       
 				    </div>
 				    <div class="radio">
 			          <label>
