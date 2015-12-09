@@ -168,24 +168,24 @@
   -->       
 		</bean>
 <!-- Disse ekstra server resource eksekveres når stylesheet hentes av html  -->
-        <bean name="/hemovigilans/css/bootstrap.css" id="cssServerResource" autowire="byName" scope="prototype"
+        <bean name="/cellerogvev/css/bootstrap.css" id="cssServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.CssServerResource">
         </bean>
-        <bean name="/hemovigilans/scripts/hendelser.js" id="bootstrapServerResource" autowire="byName" scope="prototype"
+        <bean name="/cellerogvev/scripts/hendelser.js" id="bootstrapServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.BootstrapjsServerResource">
         </bean>         
-        <bean name="/hemovigilans/css/default.css" id="defaultServerResource" autowire="byName" scope="prototype"
+        <bean name="/cellerogvev/css/default.css" id="defaultServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.DefaultCssServerResource">
         </bean>         
         
-        <bean name="/hemovigilans/css/reset.css" id="resetServerResource" autowire="byName" scope="prototype"
+        <bean name="/cellerogvev/css/reset.css" id="resetServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.ResetCssServerResource">
         </bean>
-        <bean name="/hemovigilans/css/sitemap.css" id="sitemapServerResource" autowire="byName" scope="prototype"
+        <bean name="/cellerogvev/css/sitemap.css" id="sitemapServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.SitemapCssServerResource">
         </bean> 
  <!-- end ekstra server resource -->
-  <bean name="/hemovigilans/rapporter_hendelse_main.html" id="rapportermainServerResource" autowire="byName" scope="prototype"
+  <bean name="/cellerogvev/rapporter_hendelse_main.html" id="rapportermainServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterMainServerResourceHtml">
                 <property name="sessionAdmin" ref="sessionAdmin"></property>
         <property name="tablewebservice" ref="tableWebService"></property>
@@ -200,7 +200,7 @@
          
   </bean>  
 
-  <bean name="/hemovigilans/leveranse.html" id="rapporterleveranseServerResource" autowire="byName" scope="prototype"
+  <bean name="/cellerogvev/leveranse.html" id="rapporterleveranseServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterLeveranseServerResourceHTML">
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
@@ -217,7 +217,7 @@
         <property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
   </bean>
 
-   <bean name="/hemovigilans/melder_rapport.html" id="melderrapportServerResource" autowire="byName" scope="prototype"
+   <bean name="/cellerogvev/melder_rapport.html" id="melderrapportServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.MelderRapportServerResourceHTML">
         <property name="sessionAdmin" ref="sessionAdmin"></property>
         <property name="tablewebservice" ref="tableWebService"></property>
@@ -234,7 +234,7 @@
                 ${andrehendelser.pasientopplysninger}"></property>
         <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
       ${hovedprosessoption10},${hovedprosessoption11}"></property>
-      <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7,${feilelleravvikoption8}"></property>  
+      <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption8}"></property>  
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
       <property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient3},${aldergruppepasient4},${aldergruppepasient5},
                         ${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}">
@@ -348,7 +348,7 @@
                 </property>                
   </bean>  
     
-   <bean name="/hemovigilans/startside.html" id="rapporterstartServerResource" autowire="byName" scope="prototype"
+   <bean name="/cellerogvev/startside.html" id="rapporterstartServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterStartServerResourceHTML">
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
@@ -368,7 +368,7 @@
         <property name="melderWebService" ref="melderWebService"></property>
   </bean>  
     
-   <bean name="/hemovigilans/rapportert_melding.html" id="rapportertemeldingerServerResource" autowire="byName" scope="prototype"
+   <bean name="/cellerogvev/rapportert_melding.html" id="rapportertemeldingerServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterteMeldingerServerResourceHTML">
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
                 <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
@@ -397,7 +397,7 @@
       <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
       <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
       ${hovedprosessoption10},${hovedprosessoption11}"></property>
-      <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7,${feilelleravvikoption8}"></property>  
+      <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption8}"></property>  
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
       <property name="pasientSessionParams" value="${pasientkomplikasjon.kjonnmann},${pasientkomplikasjon.kjonnkvinne},${pasientkomplikasjon.alder},${pasientkomplikasjon.antistoffja},${pasientkomplikasjon.antistoffnei},
                         ${pasientkomplikasjon.antistoff-erytrocytt},${pasientkomplikasjon.antistoff-hla},${pasientkomplikasjon.antistoff-trombocytt},${pasientkomplikasjon.antistoff-leukocytt},
@@ -509,7 +509,7 @@
   
  
   
-   <bean name="/hemovigilans/rapportert_pasient.html" id="rapportertepasienterServerResource" autowire="byName" scope="prototype"
+   <bean name="/cellerogvev/rapportert_pasient.html" id="rapportertepasienterServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterteMeldingerServerResourceHTML">
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
@@ -619,7 +619,7 @@
   </bean> 
   
    
-   <bean name="/hemovigilans/rapportert_giver.html" id="rapportertegiverServerResource" autowire="byName" scope="prototype"
+   <bean name="/cellerogvev/rapportert_giver.html" id="rapportertegiverServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterteMeldingerServerResourceHTML">
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
@@ -653,7 +653,7 @@
         <property name="komDiagnosegiverWebService" ref="komDiagnosegiverWebService"></property>
         <property name="melderWebService" ref="melderWebService"></property>
   </bean>  
-  <bean name="/hemovigilans/passord.html" id="passordServerResource"  autowire="byName" scope="prototype"
+  <bean name="/cellerogvev/passord.html" id="passordServerResource"  autowire="byName" scope="prototype"
    class="no.naks.biovigilans.web.server.resource.PassordServerResourceHTML">
         <property name="sessionAdmin" ref="sessionAdmin"></property>
         <property name="emailWebService" ref="emailWebService"></property>
@@ -663,7 +663,7 @@
         <property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf},${kontakt.passord}"></property> 
         
   </bean>   
-  <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
+  <bean name="/cellerogvev/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
                 <property name="sessionAdmin" ref="sessionAdmin"></property>
         <property name="emailWebService" ref="emailWebService"></property>
@@ -709,7 +709,7 @@
         <property name="sykehusHFinnl" value="${helseinnlhf1},${helseinnlhf2},${helseinnlhf3},${helseinnlhf4},${helseinnlhf5},${helseinnlhf6}"></property>
         <property name="sykehusHFOpriv" value="${helseprivsorhf1},${helseprivsorhf2},${helseprivsorhf3},${helseprivsorhf4}"></property>
   </bean>       
-  <bean name="/hemovigilans/rapporter_giver.html" id="rapportergiverServerResource" autowire="byName" scope="prototype"
+  <bean name="/cellerogvev/rapporter_giver.html" id="rapportergiverServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterGiverServerResourceHtml">
                 <property name="sessionAdmin" ref="sessionAdmin"></property>
         <property name="tablewebservice" ref="tableWebService"></property>
@@ -738,7 +738,7 @@
                                 ${giver.behandlingspesifiser},${giver.avreg},${giver.forbedringstiltak},${giver.alvormang},${giver.aarsaks},${giver.forebyggbar},${giver.imgarea},${giver.onske},${giver.beskrivelse}">
         </property>
   </bean>   
-  <bean name="/hemovigilans/rapporter_andrehendelser.html" id="rapporterhendelserServerResource" autowire="byName" scope="prototype"
+  <bean name="/cellerogvev/rapporter_andrehendelser.html" id="rapporterhendelserServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterAndreHendelserServerResourceHtml">
         <property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
                 ${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
@@ -753,7 +753,7 @@
       <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
       <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
       ${hovedprosessoption10},${hovedprosessoption11}"></property>
-      <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7},${feilelleravvikoption8}"></property>  
+      <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption8}"></property>  
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
       <property name="icd10WebService" ref="ICD10WebService"></property>
       <!-- 
@@ -764,7 +764,7 @@
 	      <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
       -->
   </bean>
-        <bean name="/hemovigilans/rapporter_transfusjon.html" id="rapporterServerResource" autowire="byName" scope="prototype"
+        <bean name="/cellerogvev/rapporter_transfusjon.html" id="rapporterServerResource" autowire="byName" scope="prototype"
                   class="no.naks.biovigilans.web.server.resource.RapporterHendelseServerResourceHtml">
                         <property name="sessionAdmin" ref="sessionAdmin"></property>
                 <property name="tablewebservice" ref="tableWebService"></property>
@@ -871,7 +871,7 @@
                 </property>
         </bean> 
                 
-        <bean name="/hemovigilans/" id="hemovigilansServerResourceHTML" autowire="byName" scope="prototype"
+        <bean name="/cellerogvev/" id="hemovigilansServerResourceHTML" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.HemovigilansServerResourceHtml">
         <property name="sessionAdmin" ref="sessionAdmin"></property>
         <property name="tablewebservice" ref="tableWebService"></property>
@@ -885,7 +885,7 @@
    		<property name="komplikasjonsklassifikasjonWebService" ref="komplikasjonsklassifikasjonWebService"></property>
         </bean>
         
-		<bean name="/hemovigilans/meldingframelder.html" id="meldingframelderServerResourceHTML" autowire="byName" scope="prototype"
+		<bean name="/cellerogvev/meldingframelder.html" id="meldingframelderServerResourceHTML" autowire="byName" scope="prototype"
 		 class="no.naks.biovigilans.web.server.resource.MeldingfraMelderServerResourceHTML">
 		    <property name="sessionAdmin" ref="sessionAdmin"></property>
 	        <property name="innmeldingWebService" ref="hendelseWebService"></property>
