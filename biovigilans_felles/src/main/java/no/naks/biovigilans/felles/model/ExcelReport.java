@@ -37,7 +37,7 @@ public class ExcelReport {
 
 		this.sessionAdmin = sessionAdmin;
 	}
-	public void createBook(List<Vigilansmelding> meldinger, String annenKey,String giverKey,String pasientKey,Request request) {
+	public String createBook(List<Vigilansmelding> meldinger, String annenKey,String giverKey,String pasientKey,Request request) {
 		annenListe = (List)sessionAdmin.getSessionObject(request,annenKey); 
 		giverListe = (List)sessionAdmin.getSessionObject(request,giverKey); 
 		pasientListe = (List)sessionAdmin.getSessionObject(request,pasientKey); 
@@ -123,7 +123,7 @@ public class ExcelReport {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+	    return path;   
 	     	
 	}
 	protected void createAnnen(List<Vigilansmelding> meldinger,XSSFWorkbook workbook){
