@@ -276,7 +276,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	     sessionAdmin.setSessionObject(request,kvittering, kvitteringsId);
 	     sessionAdmin.setSessionObject(request, melderwebModel,melderId);
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjon.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_transfusjon.html"));
 	     
 	        // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
@@ -391,7 +391,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
  * IKKE I BRUK    	    
 	    	    Parameter hemolyse = form.getFirst("p_hemolyseleggtil");
 	    	    if (hemolyse != null){
-	    	        ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjon.html"));
+	    	        ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_transfusjon.html"));
 	    	        clres2.put(form);
 	    	        Representation pasientkomplikasjonFtl = clres2.get();
 
@@ -441,17 +441,17 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    				melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
 	    				hendelseWebService.saveVigilansMelder(melding);
 	    			}
-	    			///ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjonkvittering.html"));
+	    			///ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_transfusjonkvittering.html"));
 		    		///Representation pasientkomplikasjonFtl = clres2.get();
 		    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 		    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
 		    		
 		    		///templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,MediaType.TEXT_HTML);
-	    			redirectPermanent("../hemovigilans/rapporter_kontakt.html");
+	    			redirectPermanent("../cellerogvev/rapporter_kontakt.html");
 	    		}else{
 	    		
 
-					ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+					ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_kontakt.html"));
 		    		Representation pasientkomplikasjonFtl = clres2.get();
 		    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 		    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
