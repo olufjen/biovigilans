@@ -7,11 +7,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta content="Kunnskapssenteret oppsummerer forskning om effekt av helsetiltak, gjør helseøkonomiske analyser, måler kvalitet, og arbeider med kvalitetsforbedring og pasientsikkerhet. " name="description">
 
-  <link href="/biovigilans_web/resources/css/main.css" rel="stylesheet">
+  <link href="/cellerogvev_web/resources/css/main.css" rel="stylesheet">
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <link href="/biovigilans_web/resources/css/biovigilans.css" rel="stylesheet">
+  <link href="/cellerogvev_web/resources/css/biovigilans.css" rel="stylesheet">
   
  
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" /><!-- Viktig for dato !! -->
@@ -29,7 +29,7 @@
         <button type="button" class="btn btn-default btn-lg" onclick="homePage()">Tilbake</button>        
       </div>
       <figure class="main-logo">        
-        <img alt="Logo Nasjonalt kunnskapssenter for helsetjenesten" src="/biovigilans_web/resources/css/logo.png">        
+        <img alt="Logo Nasjonalt kunnskapssenter for helsetjenesten" src="/cellerogvev_web/resources/css/logo.png">        
       </figure>
     </div>    
   </header>
@@ -365,7 +365,7 @@ function showtext(id,thetext){
     }
     </script>
 
-    <h1>Hemovigilans</h1>
+    <h1>Celler og vev</h1>
     <ul class="pager">
       <li class="previous" title="Ved startsiden velger du ny melding eller oppfølgingsmelding "><a href="#">Start</a></li>
       <li class="previous" title="Her velger du type melding "><a href="#">Type hendelse</a></li>
@@ -373,7 +373,7 @@ function showtext(id,thetext){
       <li class="previous" title="Her fyller du inn kontaktinformasjon "><a href="#">Kontaktinformasjon</a></li>
       <li class="previous" title="Her vises kvitteringen for meldingen "><a href="#">Kvittering</a></li>
     </ul>
-    <h2>Rapporter transfusjon</h2>
+    <h2>Rapport om pasienthendelser</h2>
 
     <form id="rapport" action="?method=PUT" method="post">
     
@@ -723,22 +723,23 @@ function showtext(id,thetext){
     </div>
 
     <div class="form-group" style="display: ${display}">
-      <label>Tidligere oppgitt Indikasjon for transfusjonen: </label>
+      <label>Tidligere oppgitt Type celler eller vev: </label>
       <div>${transfusjon.indikasjon}</div>
     </div>
     
     <div class="form-group">
-      <label>Indikasjon for transfusjonen </label>
-      <input title="Start med å skrive sykdomsdiagnose. Du får forslag på bakgrunn av det du skriver" name ="p-antistoff-transfusjon" list="icd10gruppetrans" class="form-control">
+      <label>Type celler eller vev </label>
+      <input  name ="p-antistoff-transfusjon" list="icd10gruppetrans" class="form-control">
       <datalist id="icd10gruppetrans">
-        <#list pasientkomplikasjon.mainTerms as mainTerms>
-          <option >${mainTerms}</option>
-        </#list>  
-      </datalist> 
+      <#list pasientkomplikasjon.blodProdukt as blodprodukt>
+            <option >${blodprodukt}</option>
+      </#list> 
+ 
+       </datalist> 
     </div>
 
     <!-- Blodprodukt  -->
-    <h3>Blodprodukt </h3>
+<!--     <h3>Blodprodukt </h3>
     <div class="form-group" style="display: ${display}">
       <label>Blodproduktenhet som mest sannsynlig er årsak til komplikasjonen: </label>
       <table border=1>
@@ -754,8 +755,8 @@ function showtext(id,thetext){
         </#list>
       </table> 
     </div>
-
-    <div class="form-group" style="display: ${display}">
+ -->
+ <!--    <div class="form-group" style="display: ${display}">
       <table border=1 >
         <tr>
           <th>Produktegenskaper</th>
@@ -767,9 +768,9 @@ function showtext(id,thetext){
         </#list>
       </table> 
     </div>
-
-    <div class="form-group" id="blodkonsentrat">
-      <!-- Plasma -->
+ -->
+<!--     <div class="form-group" id="blodkonsentrat">
+      Plasma
       <div class="radio">
         <label>
           <input type="radio" name="p-blod-erytrocytt" id="p-blod" value="blod-plasma" 
@@ -793,7 +794,7 @@ function showtext(id,thetext){
         <input type="number" min="0" max="110" name="p-blod-antallplasma" size="80"  value="" class="form-control">
       </div>
      
-      <!-- Erytrocyttkonsentrat -->
+      Erytrocyttkonsentrat
       <div class="radio">
         <label>
           <input type="radio" name="p-blod-erytrocytt" id="p-blod" value="erytrocytt" 
@@ -807,7 +808,7 @@ function showtext(id,thetext){
         <input type="text" name="p-blod-antallerytrocytt" size="80" value="" class="form-control">
       </div>
 
-      <!-- Trombocyttkonsentrat -->
+      Trombocyttkonsentrat
       <div class="radio">
         <label>
           <input type="radio" name="p-blod-erytrocytt" id="p-blod" value="trombocytt" 
@@ -816,13 +817,13 @@ function showtext(id,thetext){
         </label>
       </div>
     </div>
-
-    <div id="trombocyttantall" style="display: none" class="form-group">
+ -->
+ <!--    <div id="trombocyttantall" style="display: none" class="form-group">
       <label>Antall</label> 
       <input type="text" name="p-blod-antalltrombocytt" size="80"  value="" class="form-control">
     </div>
-    
-    <div id="tappingtypetromb" class="form-group" style="display: none">
+     -->
+<!--     <div id="tappingtypetromb" class="form-group" style="display: none">
       <label>Type tapping</label>
       <div class="radio">
         <label>
@@ -843,7 +844,7 @@ function showtext(id,thetext){
         </label>
       </div>
 
-      <!-- Når blir denne synlig? -->
+      Når blir denne synlig?
       <div id="blod-suspensjon" style="display: none" class="form-group">
         <label>Suspensjonsmedium </label>
         <div class="radio">
@@ -865,10 +866,10 @@ function showtext(id,thetext){
           </label>
         </div>
       </div>
-    </div> <!-- End tapping og suspensjon -->
-
+    </div> End tapping og suspensjon
+ -->
     <!-- Spesielle egenskaper trombocyttkonsentrat --> 
-    <div id="blod-egenskapererytrocytt" style="display: none" class="form-group">
+<!--     <div id="blod-egenskapererytrocytt" style="display: none" class="form-group">
       <label>Spesielle egenskaper erytrocyttkonsentrat</label>
       <div class="checkbox">
         <label>
@@ -906,10 +907,10 @@ function showtext(id,thetext){
           Autologt blodprodukt
         </label>
       </div>
-    </div> <!-- end egenskaper erycytt -->
-    
+    </div> end egenskaper erycytt
+ -->    
     <!-- Spesielle egenskaper trombocyttkonsentrat --> 
-    <div id="blod-egenskapertrombocytt" style="display: none" class="form-group">
+<!--     <div id="blod-egenskapertrombocytt" style="display: none" class="form-group">
       <label>Spesielle egenskaper trombocyttkonsentrat</label>
       <div class="checkbox">
         <label>
@@ -954,7 +955,7 @@ function showtext(id,thetext){
         </label>
       </div>
     </div>
-
+ -->
     <!--   <div class="checkbox">
       <label>
         <input type="checkbox" name="p-blod-trauma" id="p-blod-traume" value="p-blod-trauma" onclick="toggleDisplay('blod-traumeantall', this.checked)"/>Akutt transfusjonspakke
@@ -973,7 +974,7 @@ function showtext(id,thetext){
     -->
 
     <!-- pcv, 22.10.2015: Kan ikke se at denne er i bruk? -->
-    <div class="form-group" id="annetblodprodukt">
+<!--     <div class="form-group" id="annetblodprodukt">
       <label>Annet blodprodukt</label> 
       <input type="text" name="p-blod-andre" size="80" value="" onemptied="toggleDisplay('blod-andreantall', 0)" onfocus="toggleDisplay('blod-andreantall', 0)" class="form-control"/>
     </div>
@@ -981,9 +982,9 @@ function showtext(id,thetext){
       <label>Antall</label> 
       <input type="number" min="0" max="110" name="p-blod-antallandre" size="80" value="" class="form-control"/>
     </div> 
-    
+   -->  
     <!-- pcv, 22.10.2015: Kan ikke se at denne er i bruk? -->
-    <div id="blod-egenskaperplasma" style="display: none" class="form-group">
+<!--     <div id="blod-egenskaperplasma" style="display: none" class="form-group">
       <label>Spesielle egenskaper plasma</label>
       <div class="checkbox">
         <label>
@@ -1004,8 +1005,8 @@ function showtext(id,thetext){
         </label>
       </div>
     </div>
-
-    <div class="form-group">
+ -->
+<!--     <div class="form-group">
       <label>Andre blodprodukter gitt siste 24 timer</label>
       <div class="radio">
         <label>
@@ -1053,7 +1054,7 @@ function showtext(id,thetext){
         <input type="number" min="0" max="110" name="p-annenblod-antallplasma" size="80" value="" class="form-control"/>
       </div>
     </div>
-
+ -->
     <!--       
       <div id="annenblod-243" class="checkbox" style="display: none">
         <label>
@@ -1072,7 +1073,7 @@ function showtext(id,thetext){
         <input type="text"  name="p-annenblod-antallplasmaipakke" size="80"  value="" class="form-control"/>
       </div>
     -->
-      
+<!--       
     <div id="annenblod-246" class="form-group" style="display: none">
       <label>Annet blodprodukt</label> 
       <input type="text" name="p-annenblod-andre" size="80" value="" class="form-control" onclick="toggleDisplay('annenblod-andreantall', 0)"/>
@@ -1082,7 +1083,7 @@ function showtext(id,thetext){
       <label>Antall</label> 
       <input type="number" min="0" max="110" name="p-blodannet-antallandre" size="80" value="" class="form-control"/>
     </div> 
-    
+   -->  
     <!--    
       <label>Indikasjon for transfusjonen (ny)</label>
       <select name="p-antistoff-transfusjon" class="form-control">
@@ -3164,8 +3165,8 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
    <textarea class="form-control" name="p-dyrkingpostext" rows="3"></textarea>
   </div> 
   IKKE I BRUK SLUTT ======================================================================================= 
- -->  
-    </div>
+  --> 
+    </div> 
     </div>
 
     <div class="form-group">
