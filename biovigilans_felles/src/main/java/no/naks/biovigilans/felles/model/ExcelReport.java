@@ -19,6 +19,7 @@ import no.naks.biovigilans.felles.control.SessionAdmin;
 import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.Giverkomplikasjon;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
+import no.naks.biovigilans.model.Regionstatistikk;
 import no.naks.biovigilans.model.Vigilansmelding;
 /**
  * Denne klassen benyttes til å lage rapporter til excel
@@ -29,6 +30,7 @@ public class ExcelReport {
 	private  List<Annenkomplikasjon> annenListe;
 	private  List<Pasientkomplikasjon> pasientListe;
 	private List<Giverkomplikasjon> giverListe;
+	private List<Regionstatistikk> statistikk;
 	protected SessionAdmin sessionAdmin = null;
 	
 	public ExcelReport(		
@@ -37,6 +39,19 @@ public class ExcelReport {
 
 		this.sessionAdmin = sessionAdmin;
 	}
+	public void setStatistikk(List<Regionstatistikk> statistikk){
+		this.statistikk = statistikk;
+	}
+	/**
+	 * createBook
+	 * Denne rutinene lager regneark til rapporter
+	 * @param meldinger Liste over meldinger som danner grunnlaget for rapportene
+	 * @param annenKey
+	 * @param giverKey
+	 * @param pasientKey
+	 * @param request
+	 * @return
+	 */
 	public String createBook(List<Vigilansmelding> meldinger, String annenKey,String giverKey,String pasientKey,Request request) {
 		annenListe = (List)sessionAdmin.getSessionObject(request,annenKey); 
 		giverListe = (List)sessionAdmin.getSessionObject(request,giverKey); 
@@ -49,9 +64,10 @@ public class ExcelReport {
 		  XSSFCellStyle cellStyle = workbook.createCellStyle();
 			
 		  XSSFDataFormat celldataFormat =  workbook.createDataFormat();
-		  cellStyle.setDataFormat(celldataFormat.getFormat("mm.dd.yyyy"));
+		  cellStyle.setDataFormat(celldataFormat.getFormat("dd.mm.yyyy"));
 	      int rc = 3;
 	      int teller = 0;
+	      int nTeller = 0;
 	      for (Vigilansmelding melding : meldinger){
 	    	   Row row = sheet.createRow(++rc);
 	           int columnCount = 0;
@@ -68,18 +84,28 @@ public class ExcelReport {
 	           Cell meldtype = row.createCell(++columnCount);
 	           meldtype.setCellValue(melding.getMeldingstype());
 	           Cell meldstatus = row.createCell(++columnCount);
+	           String status = melding.getSjekklistesaksbehandling();
+	           if (status != null && !status.equals("Avvist"))
+	        	   nTeller++;
 	           meldstatus.setCellValue(melding.getSjekklistesaksbehandling());
  	          teller ++;
 	      }
 	      rc++;
+	     
 	      Row srow = sheet.createRow(++rc);
 	      Cell summer = srow.createCell(2);
-	      summer.setCellValue("Antall meldinger");
+	      summer.setCellValue("Antall meldinger totalt");
 	      Cell sumCount = srow.createCell(3);
 	      sumCount.setCellValue(teller);
+	      Row ssrow = sheet.createRow(++rc);
+	      Cell nsummer = ssrow.createCell(2);
+	      nsummer.setCellValue("Antall ikke avviste meldinger");
+	      Cell sumnCount = ssrow.createCell(3);
+	      sumnCount.setCellValue(nTeller);
 	      createAnnen(meldinger, workbook);
 	      createGiver(meldinger, workbook);
 	      createPasient(meldinger, workbook);
+	      createStatistikk(workbook);
 	 	File temp = null;
 	 	File directory = new File("C:\\hemovigilans\\rapporter");
 	 	boolean bdirs = false;
@@ -126,6 +152,26 @@ public class ExcelReport {
 	    return path;   
 	     	
 	}
+	protected void createStatistikk(XSSFWorkbook workbook){
+		  String sheetName = "Statistikk";
+		  String header1 = "";
+		  String header2 = "";
+		  XSSFSheet sheet = createHeader(workbook, sheetName,header1,header2);
+		  XSSFDataFormat celldataFormat =  workbook.createDataFormat();
+		  XSSFCellStyle cellStyle = workbook.createCellStyle();
+		  cellStyle.setDataFormat(celldataFormat.getFormat("dd.mm.yyyy"));
+		  int rc = 3;
+		  int teller = 0;
+		  for (Regionstatistikk region : statistikk){
+			  Row row = sheet.createRow(++rc);
+    		  int columnCount = 0;
+    		  Cell regionNavn = row.createCell(++columnCount);
+    		  regionNavn.setCellValue(region.getRegion());
+    		  Cell regionAntall = row.createCell(++columnCount);
+    		  regionAntall.setCellValue(region.getAntall());
+    		  
+		  }
+	}
 	protected void createAnnen(List<Vigilansmelding> meldinger,XSSFWorkbook workbook){
 		  String sheetName = "Andre hendelser";
 		  String header1 = "Klassifikasjon";
@@ -133,10 +179,10 @@ public class ExcelReport {
 		  XSSFSheet sheet = createHeader(workbook, sheetName,header1,header2);
 		  XSSFDataFormat celldataFormat =  workbook.createDataFormat();
 		  XSSFCellStyle cellStyle = workbook.createCellStyle();
-		  cellStyle.setDataFormat(celldataFormat.getFormat("mm.dd.yyyy"));
+		  cellStyle.setDataFormat(celldataFormat.getFormat("dd.mm.yyyy"));
 	      int rc = 3;
 	      int teller = 0;
-	     
+	      int nTeller = 0;
 	      for (Vigilansmelding melding : meldinger){
 	    	  if (melding.getMeldingstype().equals("Annen hendelse")){
 	    		  Annenkomplikasjon komplikasjonen = null;
@@ -170,6 +216,9 @@ public class ExcelReport {
 	    		  meldtype.setCellValue(delkode);
 	    		  Cell meldstatus = row.createCell(++columnCount);
 	    		  meldstatus.setCellValue(melding.getSjekklistesaksbehandling());
+	              String status = melding.getSjekklistesaksbehandling();
+		           if (status != null && !status.equals("Avvist"))
+		        	   nTeller++;
 	    		  teller ++; 
 	    	  }
 	
@@ -180,6 +229,11 @@ public class ExcelReport {
 	      summer.setCellValue("Antall meldinger");
 	      Cell sumCount = srow.createCell(3);
 	      sumCount.setCellValue(teller);
+	      Row ssrow = sheet.createRow(++rc);
+	      Cell nsummer = ssrow.createCell(2);
+	      nsummer.setCellValue("Antall ikke avviste meldinger");
+	      Cell sumnCount = ssrow.createCell(3);
+	      sumnCount.setCellValue(nTeller);
 	}
 	protected void createGiver(List<Vigilansmelding> meldinger,XSSFWorkbook workbook){
 		  String sheetName = "Giverkomplikasjoner";
@@ -188,9 +242,10 @@ public class ExcelReport {
 		  XSSFSheet sheet = createHeader(workbook, sheetName,header1,header2);
 		  XSSFDataFormat celldataFormat =  workbook.createDataFormat();
 		  XSSFCellStyle cellStyle = workbook.createCellStyle();
-		  cellStyle.setDataFormat(celldataFormat.getFormat("mm.dd.yyyy"));
+		  cellStyle.setDataFormat(celldataFormat.getFormat("dd.mm.yyyy"));
 	      int rc = 3;
 	      int teller = 0;
+	      int nTeller = 0;
 	      for (Vigilansmelding melding : meldinger){
 	    	  if (melding.getMeldingstype().equals("Giverkomplikasjon")){
 	    		 Giverkomplikasjon komplikasjonen = null;
@@ -223,6 +278,9 @@ public class ExcelReport {
 	    		  Cell meldtype = row.createCell(++columnCount);
 	    		  meldtype.setCellValue(delkode);
 	    		  Cell meldstatus = row.createCell(++columnCount);
+	              String status = melding.getSjekklistesaksbehandling();
+		           if (status != null && !status.equals("Avvist"))
+		        	   nTeller++;
 	    		  meldstatus.setCellValue(melding.getSjekklistesaksbehandling());
 	    		  teller ++; 
 	    	  }
@@ -234,17 +292,23 @@ public class ExcelReport {
 	      summer.setCellValue("Antall meldinger");
 	      Cell sumCount = srow.createCell(3);
 	      sumCount.setCellValue(teller);
+	      Row ssrow = sheet.createRow(++rc);
+	      Cell nsummer = ssrow.createCell(2);
+	      nsummer.setCellValue("Antall ikke avviste meldinger");
+	      Cell sumnCount = ssrow.createCell(3);
+	      sumnCount.setCellValue(nTeller);
 	}	
 	protected void createPasient(List<Vigilansmelding> meldinger,XSSFWorkbook workbook){
 		  String sheetName = "Pasientkomplikasjoner";
-		  String header1 = "Klassifikasjon";
-		  String header2 = "Alvorghetsgrad";
+		  String header1 = "Alvorghetsgrad";
+		  String header2 = "Klassifikasjon";
 		  XSSFSheet sheet = createHeader(workbook, sheetName,header1,header2);
 		  XSSFDataFormat celldataFormat =  workbook.createDataFormat();
 		  XSSFCellStyle cellStyle = workbook.createCellStyle();
-		  cellStyle.setDataFormat(celldataFormat.getFormat("mm.dd.yyyy"));
+		  cellStyle.setDataFormat(celldataFormat.getFormat("dd.mm.yyyy"));
 	      int rc = 3;
 	      int teller = 0;
+	      int nTeller = 0;
 	      for (Vigilansmelding melding : meldinger){
 	    	  if (melding.getMeldingstype().equals("Pasientkomplikasjon")){
 	    		  Pasientkomplikasjon komplikasjonen = null;
@@ -278,6 +342,9 @@ public class ExcelReport {
 	    		  meldtype.setCellValue(delkode);
 	    		  Cell meldstatus = row.createCell(++columnCount);
 	    		  meldstatus.setCellValue(melding.getSjekklistesaksbehandling());
+	              String status = melding.getSjekklistesaksbehandling();
+		           if (status != null && !status.equals("Avvist"))
+		        	   nTeller++;
 	    		  teller ++; 
 	    	  }
 	
@@ -288,23 +355,32 @@ public class ExcelReport {
 	      summer.setCellValue("Antall meldinger");
 	      Cell sumCount = srow.createCell(3);
 	      sumCount.setCellValue(teller);
+	      Row ssrow = sheet.createRow(++rc);
+	      Cell nsummer = ssrow.createCell(2);
+	      nsummer.setCellValue("Antall ikke avviste meldinger");
+	      Cell sumnCount = ssrow.createCell(3);
+	      sumnCount.setCellValue(nTeller);
 	}
 	protected XSSFSheet createHeader(XSSFWorkbook workbook,String sheetName, String header1,String header2){
 	
 	      XSSFSheet sheet = workbook.createSheet(sheetName);
 	      Row header = sheet.createRow(2);
 	      Cell hendelse = header.createCell(1);
-	      hendelse.setCellValue("Dato for hendelse");
-	      Cell meldt = header.createCell(2);
-	      meldt.setCellValue("Dato meldt");
-	      Cell nokkel = header.createCell(3);
-	      nokkel.setCellValue("Meldingsnøkkel");
+	      if (!sheetName.equals("Statistikk")){
+	    	  hendelse.setCellValue("Dato for hendelse");
+	    	  Cell meldt = header.createCell(2);
+	  	      meldt.setCellValue("Dato meldt");
+	  	      Cell nokkel = header.createCell(3);
+	  	      nokkel.setCellValue("Meldingsnøkkel");
+	  	      Cell status = header.createCell(6);
+		      status.setCellValue("Status");
+	      }
+	  
 	      Cell opplysninger = header.createCell(4);
 	      opplysninger.setCellValue(header1);
 	      Cell type = header.createCell(5);
 	      type.setCellValue(header2);
-	      Cell status = header.createCell(6);
-	      status.setCellValue("Status");
+	
 	      return sheet;
 	}
 }
