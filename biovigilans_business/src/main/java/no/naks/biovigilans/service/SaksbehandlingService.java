@@ -7,6 +7,7 @@ import no.naks.biovigilans.dao.SakDAO;
 import no.naks.biovigilans.dao.SaksbehandlingDAO;
 import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.Melder;
+import no.naks.biovigilans.model.Regionstatistikk;
 import no.naks.biovigilans.model.Sak;
 import no.naks.biovigilans.model.Vigilansmelding;
 
@@ -33,4 +34,5 @@ public interface SaksbehandlingService {
 	public List collectSaksbehandlere();
 	public Melder collectmelder(Long melderId);
 	public List collectMessagesMarks(String merknad);
+	public List<Regionstatistikk> collectRegionstatistikk();
 }

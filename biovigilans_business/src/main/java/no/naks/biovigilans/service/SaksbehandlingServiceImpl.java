@@ -7,6 +7,7 @@ import no.naks.biovigilans.dao.SakDAO;
 import no.naks.biovigilans.dao.SaksbehandlingDAO;
 import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.Melder;
+import no.naks.biovigilans.model.Regionstatistikk;
 import no.naks.biovigilans.model.Sak;
 import no.naks.biovigilans.model.Vigilansmelding;
 
@@ -81,5 +82,8 @@ public class SaksbehandlingServiceImpl implements SaksbehandlingService {
 	}
 	public List collectMessagesMarks(String merknad){
 		return saksbehandlingDAO.collectMessagesMarks(merknad);
+	}
+	public List<Regionstatistikk> collectRegionstatistikk(){
+		return sakDAO.collectRegionstatistikk();
 	}
 }
