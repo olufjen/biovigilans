@@ -5,6 +5,7 @@ import java.util.Map;
 
 import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.Melder;
+import no.naks.biovigilans.model.Regionstatistikk;
 import no.naks.biovigilans.model.Sak;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.service.MelderTableService;
@@ -29,4 +30,5 @@ public interface SaksbehandlingWebService {
 	public List collectSaksbehandlere();
 	public Melder collectmelder(Long melderId);
 	public List collectMessagesMarks(String merknader);
+	public List<Regionstatistikk> collectRegionstatistikk();
 }
