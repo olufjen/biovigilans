@@ -24,6 +24,7 @@ import no.naks.biovigilans.model.KomplikasjonsklassifikasjonImpl;
 import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.Produktegenskap;
+import no.naks.biovigilans.model.Regionstatistikk;
 import no.naks.biovigilans.model.Saksbehandler;
 import no.naks.biovigilans.model.Sykdom;
 import no.naks.biovigilans.model.Symptomer;
@@ -150,6 +151,7 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
   		String meldtUtvalgetslutt = null;
   		boolean toPDF = false;
   		String page = "";
+  		String path = "";
   		if (excelDoc != null){ // Rapporter utvalg til excel
   			for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals(""))){
@@ -159,8 +161,10 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
     				System.out.println(entry.getName()); 
     			}
   			}
+  			 List<Regionstatistikk> statistikk = saksbehandlingWebservice.collectRegionstatistikk();
   			 ExcelReport excel = new ExcelReport(sessionAdmin);
-  			 excel.createBook(meldinger,reportAndreKey,reportGiverKey,reportPasientKey,request);
+  			 excel.setStatistikk(statistikk);
+  			 path = excel.createBook(meldinger,reportAndreKey,reportGiverKey,reportPasientKey,request);
  		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
  		 	 dataModel.put(merknadlisteKey, merk);
   			
@@ -169,14 +173,17 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
  		    dataModel.put(meldeKey,meldinger);
- 	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapportering.html"));
-
-   		// Load the FreeMarker template
-   		Representation pasientkomplikasjonFtl = clres2.get();
-
-   		TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
-   				MediaType.TEXT_HTML);
-   		return templatemapRep;
+ 			Response response = getResponse(); 
+	         // String path = "C:\\hemovigilans\\rapporter";
+			 FileRepresentation representation = new FileRepresentation(path, MediaType.APPLICATION_EXCEL); 
+		     
+		    Disposition disposition = representation.getDisposition(); 
+		    disposition.setType(disposition.TYPE_ATTACHMENT); 
+		    disposition.setFilename("leveranse" + ".xlsx"); 
+		     
+		    response.setEntity(representation); 
+		    return  representation;
+ 
  		}
   		
   		
@@ -348,9 +355,19 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
     			if (entry.getValue() != null && !(entry.getValue().equals(""))){
     					System.out.println(entry.getName() + "=" + entry.getValue());
     					meldingsID = entry.getValue();
-     					if (entry.getName().equals("pdf")){
+     					if (entry.getName().equals("excel")){
     	    				page = "../hemovigilans/rapportering.html";
     	    				toPDF = true;
+    	    				Response response = getResponse(); 
+    	    		         // String path = "C:\\hemovigilans\\rapporter";
+    	    				 FileRepresentation representation = new FileRepresentation(path, MediaType.APPLICATION_EXCEL); 
+    	    			     
+    	    			    Disposition disposition = representation.getDisposition(); 
+    	    			    disposition.setType(disposition.TYPE_ATTACHMENT); 
+    	    			    disposition.setFilename("leveranse" + ".xls"); 
+    	    			     
+    	    			    response.setEntity(representation); 
+    	    			    return  representation;
    /* 	        			LoginModel newLogin = new LoginModel();
     	        			newLogin.setSaksbehandler(login.getSaksbehandler());
     	        			newLogin.setPassord(login.getSaksbehandler().getBehandlerpassord());
