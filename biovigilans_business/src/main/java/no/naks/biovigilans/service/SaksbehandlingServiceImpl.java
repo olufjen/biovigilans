@@ -5,6 +5,7 @@ import java.util.Map;
 
 import no.naks.biovigilans.dao.SakDAO;
 import no.naks.biovigilans.dao.SaksbehandlingDAO;
+import no.naks.biovigilans.dao.StatistikkDAO;
 import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.Regionstatistikk;
@@ -14,8 +15,17 @@ import no.naks.biovigilans.model.Vigilansmelding;
 public class SaksbehandlingServiceImpl implements SaksbehandlingService {
 	private SaksbehandlingDAO saksbehandlingDAO;
 	private SakDAO sakDAO;
+	private StatistikkDAO statistikkDAO;
+
 	
-	
+	public StatistikkDAO getStatistikkDAO() {
+		return statistikkDAO;
+	}
+
+	public void setStatistikkDAO(StatistikkDAO statistikkDAO) {
+		this.statistikkDAO = statistikkDAO;
+	}
+
 	public SakDAO getSakDAO() {
 		return sakDAO;
 	}
@@ -85,5 +95,17 @@ public class SaksbehandlingServiceImpl implements SaksbehandlingService {
 	}
 	public List<Regionstatistikk> collectRegionstatistikk(){
 		return sakDAO.collectRegionstatistikk();
+	}
+	public List<Regionstatistikk> collectForetakstatistikk(String reg){
+		return statistikkDAO.collectRegionstatistikk(reg);
+	}
+	public List<Regionstatistikk> collectRegionstatistikk(String startperiod,String endperiod,String type){
+		return sakDAO.collectRegionstatistikk(startperiod, endperiod, type);
+	}
+	public List<Regionstatistikk> collectForetakstatistikk(String startperiod,String endperiod,String type){
+		return statistikkDAO.collectRegionstatistikk(startperiod, endperiod, type);
+	}
+	public List<Regionstatistikk> collectsykehusstatistikk(String startperiod,String endperiod,String type){
+		return statistikkDAO.collectsykehusstatistikk(startperiod, endperiod, type);
 	}
 }
