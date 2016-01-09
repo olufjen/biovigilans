@@ -63,4 +63,10 @@ public interface SakDAO {
 	public void setMelderTableDefs(String[] melderTableDefs);
 	public Melder collectMelder(Long melderId);
 	public List<Regionstatistikk> collectRegionstatistikk();
+	public String getStatistikkregionperiodeSQL();
+	public void setStatistikkregionperiodeSQL(String statistikkregionperiodeSQL);
+	public String getStatistikkregionhentperiodeSQL();
+	public void setStatistikkregionhentperiodeSQL(
+			String statistikkregionhentperiodeSQL);
+	public List<Regionstatistikk> collectRegionstatistikk(String startperiod,String endperiod,String type);
 }
