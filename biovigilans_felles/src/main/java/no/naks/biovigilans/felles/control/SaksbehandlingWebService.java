@@ -31,4 +31,8 @@ public interface SaksbehandlingWebService {
 	public Melder collectmelder(Long melderId);
 	public List collectMessagesMarks(String merknader);
 	public List<Regionstatistikk> collectRegionstatistikk();
+	public List<Regionstatistikk> collectForetakstatistikk(String reg);
+	public List<Regionstatistikk> collectRegionstatistikk(String startperiod,String endperiod,String type);
+	public List<Regionstatistikk> collectForetakstatistikk(String startperiod,String endperiod,String type);
+	public List<Regionstatistikk> collectsykehusstatistikk(String startperiod,String endperiod,String type);
 }
