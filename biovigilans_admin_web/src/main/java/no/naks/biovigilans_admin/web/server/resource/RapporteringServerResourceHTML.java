@@ -161,9 +161,29 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
     				System.out.println(entry.getName()); 
     			}
   			}
-  			 List<Regionstatistikk> statistikk = saksbehandlingWebservice.collectRegionstatistikk();
+  			List<Regionstatistikk> statistikk = null;
+  			List<Regionstatistikk> sykehusStatistikk = null;
+  			List<Regionstatistikk> foretakStatistikk = null;
+  			String startPeriod =(String) sessionAdmin.getSessionObject(request, startPeriodKey);
+  			String endPeriod = (String) sessionAdmin.getSessionObject(request, endPeriodKey);
+  			String type = (String)sessionAdmin.getSessionObject(request, "hent");
+  			if (startPeriod == null){
+  	  			statistikk = saksbehandlingWebservice.collectRegionstatistikk();
+  	  			sykehusStatistikk = saksbehandlingWebservice.collectForetakstatistikk("");
+  	  			foretakStatistikk = saksbehandlingWebservice.collectForetakstatistikk("foretak");
+  			}
+  			if (startPeriod != null){
+  				String typeset = "meldt";
+  				if (type != null)
+  					typeset = "";
+  				statistikk = saksbehandlingWebservice.collectRegionstatistikk(startPeriod, endPeriod, typeset);
+  				foretakStatistikk = saksbehandlingWebservice.collectForetakstatistikk(startPeriod, endPeriod, typeset);
+  				sykehusStatistikk = saksbehandlingWebservice.collectsykehusstatistikk(startPeriod, endPeriod, typeset);
+  			}
   			 ExcelReport excel = new ExcelReport(sessionAdmin);
   			 excel.setStatistikk(statistikk);
+  			 excel.setForetakStatistikk(foretakStatistikk);
+  			 excel.setSykehusStatistikk(sykehusStatistikk);
   			 path = excel.createBook(meldinger,reportAndreKey,reportGiverKey,reportPasientKey,request);
  		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
  		 	 dataModel.put(merknadlisteKey, merk);
@@ -187,7 +207,7 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
  		}
   		
   		
- 		if (datoHendt != null){ // Begrense utvalget til en periode av dato meldt
+ 		if (datoHendt != null){ // Begrense utvalget til en periode av dato hendt
   			for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals(""))){
     					System.out.println(entry.getName() + "=" + entry.getValue());
@@ -207,6 +227,9 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
   		 	 dataModel.put(merknadlisteKey, merk);
   			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
   		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request, meldtUtvalgetstart, startPeriodKey);
+  		 	sessionAdmin.setSessionObject(request, meldtUtvalgetslutt, endPeriodKey);
+  		 	sessionAdmin.setSessionObject(request, "hent", "hent");
   		    dataModel.put(meldeKey,meldinger);
   	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapportering.html"));
 
@@ -237,6 +260,8 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
   		 	 dataModel.put(merknadlisteKey, merk);
   			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
   		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+		 	sessionAdmin.setSessionObject(request, meldtUtvalgetstart, startPeriodKey);
+  		 	sessionAdmin.setSessionObject(request, meldtUtvalgetslutt, endPeriodKey);
   		    dataModel.put(meldeKey,meldinger);
   	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapportering.html"));
 

@@ -62,6 +62,9 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	protected String reportGiverKey = "reportgivermeldinger"; // Sesjonsnøkkel for rapporter giver meldinger	
 	protected String reportPasientKey = "reportpasientmeldinger"; // Sesjonsnøkkel for rapporter pasient meldinger
 	
+	protected String startPeriodKey = "startperiod"; //Session nøkler for start og slutt på angitt periode
+	protected String endPeriodKey = "endperiod";
+	
 	public String[] getFlaggNames() {
 		return flaggNames;
 	}
