@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -42,7 +43,9 @@ public class ExcelReport<T> {
 	private List<Regionstatistikk> foretakStatistikk;
 	private List<Regionstatistikk> sykehusStatistikk;
 	private List<List> allclassified;
-	private Map<List<Annenkomplikasjon>,String> classification;
+	private Map<List<T>,String> classification;
+	private Map<List<T>,String> pasientclassification;
+	private Map<List<T>,String> giverclassification;
 	private   XSSFCellStyle cellStyle;
 	
 	protected SessionAdmin sessionAdmin = null;
@@ -51,7 +54,7 @@ public class ExcelReport<T> {
 			SessionAdmin sessionAdmin) {
 		super();
 		allclassified = new ArrayList<>();
-		classification = new HashMap<>();
+//		classification = new HashMap<>();
 		
 		this.sessionAdmin = sessionAdmin;
 	}
@@ -243,16 +246,30 @@ public class ExcelReport<T> {
 		  }
 
 	}
-	protected void classify( List<Annenkomplikasjon> annenListe,Predicate<String> classifyP){
-		List<Annenkomplikasjon> result = new ArrayList<>();
-		String key = "";
-		for (Annenkomplikasjon komp : annenListe){
-			if (classifyP.test(komp.getDelkode())){
-				result.add(komp);
-				key = komp.getDelkode();
+
+	protected void classify(Map<List<T>,String> lclassification,List<T> meldingsListe,List<Vigilansmelding> meldinger, String key,Predicate<T> classifyP){
+		List<T> result = new ArrayList<>();
+
+		for ( T komp : meldingsListe){
+			String flag = "";
+			Vigilansmelding akomp = (Vigilansmelding)komp;
+			for (Vigilansmelding melding:meldinger){
+				if (melding.getMeldeid().equals(akomp.getMeldeid())){
+					flag = melding.getSjekklistesaksbehandling();
+					break;
+				}
 			}
+			if (!flag.equals("Avvist")){
+				if (classifyP.test(komp)){
+					result.add(komp);
+
+				}
+			}
+
 		}
-		classification.put( result,key);
+		if (!result.isEmpty())
+			lclassification.put( result,key);
+	
 	}
 	protected void createAnnen(List<Vigilansmelding> meldinger,XSSFWorkbook workbook){
 		  String sheetName = "Andre hendelser";
@@ -260,12 +277,12 @@ public class ExcelReport<T> {
 		  String header2 = "Delklassifikasjon";
 		  String headers[] = {header1,header2};
 //		  String code = "";
-		  
+			Map<List<T>,String> aclassification = new HashMap();
 		  XSSFSheet sheet = createHeader(workbook, sheetName,headers);
 	      int rc = 3;
 	      int teller = 0;
 	      int nTeller = 0;
-	      Row toprow = sheet.createRow(rc-1);
+//	      Row toprow = sheet.createRow(rc-1);
 	      for (Vigilansmelding melding : meldinger){
 	    	  if (melding.getMeldingstype().equals("Annen hendelse")){
 	    		  Annenkomplikasjon komplikasjonen = null;
@@ -275,8 +292,14 @@ public class ExcelReport<T> {
 	    					  komplikasjonen = komplikasjon;
 	    					  if (!melding.getSjekklistesaksbehandling().equals("Avvist")){
 	    						  String code = komplikasjonen.getDelkode();
-		    					  Predicate<String> classifyP = (String s) -> (s != null && code.equals(s));
-		    					 classify(annenListe,classifyP);
+	    						  Long aId = komplikasjonen.getMeldeid();
+	    						  /*
+	    						   * Finn hvilke andre meldinger som har samme klassifikasjon som denne meldingen.
+	    						   * - Og som ikke er avvist!?
+	    						   */
+
+		    					  Predicate<Annenkomplikasjon> classifyP = (Annenkomplikasjon s) -> (s != null && code.equals(s.getDelkode()));
+		    					  classify(aclassification,(List<T>) annenListe,meldinger,code,(Predicate<T>) classifyP);
 	    					  }
 	    					  break;
 	    				  }
@@ -324,11 +347,12 @@ public class ExcelReport<T> {
 	      nsummer.setCellValue("Antall ikke avviste meldinger");
 	      Cell sumnCount = ssrow.createCell(3);
 	      sumnCount.setCellValue(nTeller);
-	      createclassificationAnnen(workbook);
+	      Function<Annenkomplikasjon,String> classification = (Annenkomplikasjon s) -> s.getDelkode();
+	      createclassificationAnnen(aclassification,"Statistikk klassifikasjoner andre hendelser",workbook,(Function<T, String>) classification);
 	     
     }
-	protected void createclassificationAnnen(XSSFWorkbook workbook){
-		  String sheetName = "Statistikk klassifikasjoner Andre hendelser";
+	protected void createclassificationAnnen(Map<List<T>,String> lclassification,String pageName,XSSFWorkbook workbook, Function<T,String> f){
+		  String sheetName = pageName;
 		  String header1 = "Klassifikasjoner";
 		  String header2 = "Antall";
 		  String headers[] = {header1,header2};
@@ -339,14 +363,14 @@ public class ExcelReport<T> {
 	      Row toprow = sheet.createRow(rc);
 	      int columnct = 4;
 	      Cell klassification = toprow.createCell(columnct);
-	      Set<List<Annenkomplikasjon>> set = classification.keySet();
+	      Set<List<T>> set = lclassification.keySet();
 	      Iterator itr = set.iterator();
 	      while (itr.hasNext()){
 	    	  Row nrow = sheet.createRow(++rc);
-	    	  List<Annenkomplikasjon> kompliste = (List<Annenkomplikasjon>) itr.next();
-	    	  Annenkomplikasjon komp = kompliste.get(0);
+	    	  List<T> kompliste = (List<T>) itr.next();
+	    	  T komp = kompliste.get(0);
 	    	  Cell klassificationName = nrow.createCell(columnct);
-	    	  klassificationName.setCellValue(komp.getDelkode());
+	    	  klassificationName.setCellValue(f.apply(komp));
 	    	  Cell classificationAntall = nrow.createCell(columnct+1);
 	    	  classificationAntall.setCellValue(kompliste.size());
 	      }
@@ -438,6 +462,7 @@ public class ExcelReport<T> {
 		  String header1 = "Alvorghetsgrad";
 		  String header2 = "Klassifikasjon";
 		  String[] headers = {header1,header2};
+			Map<List<T>,String> pclassification = new HashMap();
 		  XSSFSheet sheet = createHeader(workbook, sheetName,headers);
 	      int rc = 3;
 	      int teller = 0;
@@ -449,6 +474,19 @@ public class ExcelReport<T> {
 	    			  for (Pasientkomplikasjon komplikasjon : pasientListe){
 	    				  if (komplikasjon.getMeldeid().equals(melding.getMeldeid())){
 	    					  komplikasjonen = komplikasjon;
+	    					  if (!melding.getSjekklistesaksbehandling().equals("Avvist")){
+	    						  String lcode = komplikasjonen.getKlassifikasjon();
+	    						  if (lcode == null)
+	    							  lcode = "";
+	    						  String code = lcode;
+	    						  Long aId = komplikasjonen.getMeldeid();
+	    						  /*
+	    						   * Finn hvilke andre meldinger som har samme klassifikasjon som denne meldingen.
+	    						   * - Og som ikke er avvist!?
+	    						   */
+	    						  Predicate<Pasientkomplikasjon> classifyP = (Pasientkomplikasjon s) -> (s != null && code.equals(s.getKlassifikasjon()));
+		    					  classify(pclassification,(List<T>) pasientListe,meldinger,code,(Predicate<T>) classifyP);
+	    					  }
 	    					  break;
 	    				  }
 	    			  }
@@ -495,6 +533,8 @@ public class ExcelReport<T> {
 	      nsummer.setCellValue("Antall ikke avviste meldinger");
 	      Cell sumnCount = ssrow.createCell(3);
 	      sumnCount.setCellValue(nTeller);
+	      Function<Pasientkomplikasjon,String> classification = (Pasientkomplikasjon s) -> s.getKlassifikasjon();
+	      createclassificationAnnen(pclassification,"Statistikk klassifikasjoner pasienthendelser",workbook,(Function<T, String>) classification);
 	}
 	protected XSSFSheet createHeader(XSSFWorkbook workbook,String sheetName, String[] headers){
 	
