@@ -3,6 +3,7 @@ package no.naks.biovigilans.felles.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.DiskusjonImpl;
@@ -66,7 +67,7 @@ public class MeldingModel extends VigilansModel {
 		diskusjon.setDiskusjonsFields(userEntries);
 		diskusjon.savetoDiskusjon();
 		if (diskusjon.getTema() == null || diskusjon.getTema().equals(""))
-			diskusjon.setTema("Kommentar");
+			diskusjon.setTema("Svar;Fra melder");
 		String behandlerKeyv = "tab-sakbeh";
 		String behandlerValgt = userEntries.get(behandlerKeyv);
 		if (behandlerValgt != null && !behandlerValgt.isEmpty()){
@@ -108,5 +109,6 @@ public class MeldingModel extends VigilansModel {
 		}
 		return null;
 	}
+
 	
 }	
