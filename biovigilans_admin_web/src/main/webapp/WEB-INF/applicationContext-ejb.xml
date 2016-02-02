@@ -209,6 +209,7 @@
     	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
   		<property name="selectvigilansMeldingSQL" value="${vigilansmeldingall.select}"></property>
   		<property name="selectvigilansMeldingtypesSQL" value="${vigilansmeldingtype.select}"></property>
+  		<property name="selectvigilansMeldingikkeavvistSQL" value="${vigilansmeldingikkeavvist.select}"></property>
   		<property name="selectvigilansMeldingnullSQL" value="${vigilansmeldingnull.select}"></property>
   		<property name="selectannenMeldingSQL" value="${annenMeldingSelect}"></property>
   		<property name="selectvigilansMeldingtimeperiodSQL" value="${vigilansmeldingmeldtdato.select}"></property>
