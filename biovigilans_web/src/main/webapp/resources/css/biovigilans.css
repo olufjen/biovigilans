@@ -7,10 +7,20 @@ body {
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: 30% auto;
-	font-family: 'calibri', sans-serif;
+	font-family: 'Calibri', sans-serif;
 	font-size: 20px;
 	font-weight: lighter;
 	
+}
+
+@font-face {
+font-family: 'SohoGothicStd';
+src: url("fonts/SohoGothicStd-Regular.otf") format("opentype");
+}
+
+@font-face {
+ font-family: 'Calibri';
+ src: url("fonts/Calibri.ttf"); 
 }
 
 /* Tabelldesign */
@@ -49,8 +59,8 @@ header {
 	background-color: #fff;
 }
 
-header .left {
-	display: none;
+.container .left .btn-back {
+	margin-top: 40px;
 }
 
 html {
@@ -67,12 +77,12 @@ html {
 
 
 h1, h2, h3 {
-/*font-family: SohoGothicStd; */
+font-family: 'SohoGothicStd';
 font-weight: 100;
 }
 
 h1 {
-	margin: 35px 0 10px 0;
+	margin: 10px 0 10px 0;
 /*    padding: 20px 0px 20px 0px; */
     font-size: 48px;
     color: #333;
@@ -95,7 +105,7 @@ h3 {
 /* Input, select, skjema++ */
 
 input, select, .form-control {
-font-family: SohoGothicStd;
+font-family: 'SohoGothicStd';
 color: #707070;
 font-size: 16px;
 border: 1px solid #D1D0CF;
