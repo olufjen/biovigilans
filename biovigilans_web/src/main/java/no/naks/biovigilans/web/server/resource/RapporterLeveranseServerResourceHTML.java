@@ -133,8 +133,9 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 	     
 
 	 
-
+    	 String alvorGrad = "";
     	 if (transfusjon != null){
+    		 alvorGrad = transfusjon.getPasientKomplikasjon().getAlvorlighetsgrad();
     		 Vigilansmelding vigilansmelding = (Vigilansmelding) transfusjon.getPasientKomplikasjon();
     		 try {
 				transfusjon.setMeldingLevert(vigilansmelding.getMeldingsdato());
@@ -149,7 +150,7 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	 }
     	 if (giverModel != null){
     		 Vigilansmelding vigilansmelding = (Vigilansmelding) giverModel.getGiverKomplikasjon();
-  
+    		 alvorGrad = giverModel.getGiverKomplikasjon().getAlvorlighetsgrad();
 				try {
 					giverModel.setMeldingLevert(vigilansmelding.getMeldingsdato()); // OBS nullpointer !!
 				} catch (ParseException e) {
@@ -202,7 +203,8 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	    	 emailWebService.sendEmail(meldingsNokkel); //Kommentert bort til stage !!
     	    }
     	   
-    	  
+    	    checkmessagetoAdmin(alvorGrad,meldingsNokkel);
+   
     	    setlinkMap();
     	    
     	    
