@@ -49,6 +49,10 @@ public class SessionAdminImpl implements SessionAdmin {
 	public void setSessionParams(String[] sessionParams) {
 		this.sessionParams = sessionParams;
 	}
-	
+	public void removesessionObject(Request request,String idKey){
+		  HttpServletRequest req = ServletUtils.getRequest(request);
+		  HttpSession session = req.getSession();
+		  session.removeAttribute(idKey);
+	}
 
 }

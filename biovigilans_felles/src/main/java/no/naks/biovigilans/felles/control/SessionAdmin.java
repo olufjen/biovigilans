@@ -17,5 +17,5 @@ public interface SessionAdmin {
 	public HttpSession getSession(Request request,String idKey);
 	public String[] getSessionParams();
 	public void setSessionParams(String[] sessionParams);
-
+	public void removesessionObject(Request request,String idKey);
 }
