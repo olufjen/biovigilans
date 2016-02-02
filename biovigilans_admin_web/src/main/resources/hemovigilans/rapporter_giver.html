@@ -109,6 +109,8 @@
 					document.getElementById('meldstatus').style.color = "green";
 		//			alert(statusflag + " Setter ny farge");
 				}
+				toggleDisplay('type-tapping',1);
+				toggleDisplay('tab-tidligere',1);
 				document.getElementById('tab-kjonn-1').required = false;
 //				document.getElementById('tab-kjonn-2').required = false;
 				document.getElementById('giveralder').required = false;
@@ -417,7 +419,8 @@
   		Starte dialog med melder
   </label>
   <label>
-	<input type="checkbox" name="statusvalg1" id="statusvalg1" onclick="toggleDisplayid('saksbehandlere', 1);" value="Starte dialog i Hemovigilansgruppen" />
+  <!-- onclick="toggleDisplayid('saksbehandlere', 1);" -->
+	<input type="checkbox" name="statusvalg1" id="statusvalg1"  value="Starte dialog i Hemovigilansgruppen" />
   		Starte dialog i Hemovigilansgruppen
   </label>  
   <label>
