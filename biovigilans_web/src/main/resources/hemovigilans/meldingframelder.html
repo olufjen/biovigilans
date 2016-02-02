@@ -25,27 +25,18 @@
 <title>Melding fra melder</title>
 </head>
 <body class="events">
- <header class="master-header" role="navigation">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-9 col-sm-6 col-sm-push-3 col-vertical-bottom-sm logo-container">
-            <div class="bottom">
-              <a class="home" href="#" id="home" rel="home" title="">
-          <img class="logo" src="/biovigilans_web/resources/css/logo.png" alt="" /> 
-              </a>
-            </div>
-          </div>
-          <div class="hidden-xs col-sm-3 col-sm-push-5 col-vertical-bottom-sm">
-       
-          </div>
-          <div class="col-xs-3 col-sm-pull-9 col-vertical-bottom-sm">
-         
-          </div>
-        </div>
-      </div>
-    </header>
+ <header>
+    <div class="container">
+      <figure class="main-logo">        
+        <img alt="Logo Helsedirektoratet" src="/biovigilans_web/resources/css/logo.png">        
+      </figure>
+    </div>    
+  </header>
 
-<div class="container">
+  <div class="container">
+      <div class="left hidden-print">        
+        <button type="button" class="btn btn-default btn-lg btn-back" onclick="homePage()">Tilbake</button>        
+      </div>
 <h1>Biovigilans Dialog om meldinger</h1>
 <h2> Melding fra melder</h2>
 <form name="loginform" action="?method=PUT" method="post">
@@ -58,6 +49,13 @@
 
 <script type="text/javascript">
 var reqFlag =  "${send}";
+function homePage(){
+  	var curAddr = document.location.href;
+  //	 alert(curAddr);
+  	var newAddr = curAddr.replace("meldingframelder.html","");
+  //	alert(newAddr);
+  	document.location = newAddr;
+  }
 </script>
 
     <table align="left" border="0" cellspacing="0" cellpadding="3" class="table-condensed">
