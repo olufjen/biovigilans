@@ -351,6 +351,12 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
     
 	    return hentMeldingstyper(meldinger);
 	}
+	/**
+	 * hentmeldingMerknader
+	 * Denne rutinen henter meldinger basert på en valgt merknad
+	 * @param merknad
+	 * @return
+	 */
 	public List <Vigilansmelding> hentMeldingMerknader(String merknad){
 		List<Vigilansmelding> meldinger = null;
 		meldinger = saksbehandlingWebservice.collectMessagesMarks(merknad);
@@ -413,8 +419,14 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 							 if (diskusjon.getDiskusjonid().longValue() == dId.longValue()){
 								 diskusjon.setSaksbehandler(saksbehandler.getBehandernavn());
 							 }
-							 if (diskusjon.getSaksbehandler() == null)
-								 diskusjon.setSaksbehandler("Ikke satt");
+							 if (diskusjon.getSaksbehandler() == null){
+								 String tema = diskusjon.getTema();
+								 char sep = ';';
+								 tema = extractString(tema, sep, -1);
+								 if (tema == null || tema.equals(""))
+								 	tema = "Ikke satt";
+								 diskusjon.setSaksbehandler(tema);
+							 }
 						 }
 					 }
 				 }

@@ -77,9 +77,9 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 	
 	    Request request = getRequest();
 
-
-// ============	    
-	    List<Vigilansmelding> meldinger = hentMeldingene(null);
+	    List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request, meldingsId); // For å vise tidligere valgt liste
+	    if (meldinger == null)
+	    	meldinger = hentMeldingene(statusflag[0]);
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 		 sessionAdmin.setSessionObject(request, meldinger, meldingsId);
 	 	 sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
