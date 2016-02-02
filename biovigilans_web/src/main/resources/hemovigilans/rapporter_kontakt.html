@@ -26,30 +26,18 @@
 </head>
 
 <body onload="setSelectListValue();">
- <header class="master-header">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-9 col-sm-6 col-sm-push-3 col-vertical-bottom-sm logo-container">
-            <div class="bottom">
-              <a class="home" href="#" id="home" rel="home" title="">
-                <img class="logo" src="/biovigilans_web/resources/css/logo.png" alt="" />
-              </a>
-            </div>
-          </div>
-          <div class="hidden-xs col-sm-3 col-sm-push-5 col-vertical-bottom-sm">
-       
-          </div>
-          <div class="col-xs-3 col-sm-pull-9 col-vertical-bottom-sm">
-            <div class="bottom">
-        <button type="button" onclick="homePage()" class="btn btn-default btn-lg">Tilbake</button>
-      </div>
-          </div>
-        </div>
-      </div>
-    </header>
+ <header>
+    <div class="container">
+      <figure class="main-logo">        
+        <img alt="Logo Helsedirektoratet" src="/biovigilans_web/resources/css/logo.png">        
+      </figure>
+    </div>    
+  </header>
 
-
-<div class="container">
+  <div class="container">
+      <div class="left hidden-print">        
+        <button type="button" class="btn btn-default btn-lg btn-back" onclick="homePage()">Tilbake</button>        
+      </div>
 <form id="rapport" action="?method=PUT" method="post"> 
 <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->  
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
