@@ -247,6 +247,15 @@ public class ExcelReport<T> {
 
 	}
 
+	/**
+	 * classify
+	 * Denne funksjonen klassifiserere meldinger basert på lambda uttrykk classifyP
+	 * @param lclassification
+	 * @param meldingsListe
+	 * @param meldinger
+	 * @param key
+	 * @param classifyP Predicate lambda uttrykk
+	 */
 	protected void classify(Map<List<T>,String> lclassification,List<T> meldingsListe,List<Vigilansmelding> meldinger, String key,Predicate<T> classifyP){
 		List<T> result = new ArrayList<>();
 
