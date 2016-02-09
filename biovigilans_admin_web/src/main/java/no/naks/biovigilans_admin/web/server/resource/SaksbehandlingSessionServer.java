@@ -243,15 +243,42 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 				emailWebService.setSubject(merknader[1]);
 	 	    	emailWebService.setEmailText(mailText);
 		    	 emailWebService.setMailTo(saksbehandler.getBehandlerepost());
-		    	 String msg = String.format(tilsakbehandlereMsg+mId+"&diskid="+diskId
-		    			 );
-		    	 emailWebService.sendEmail(msg); //Kommentert bort til stage !!
+		    	 String msg = String.format(tilsakbehandlereMsg+mId+"&diskid="+diskId);
+		    	 String name = saksbehandler.getBehandernavn();
+		    	 if (!name.equals("Helsedirektoratet"))
+		    		 emailWebService.sendEmail(msg); //Kommentert bort til stage !!
 				
 			}
 
 		}
 		Melder melder = hentMelder(melding);
 	 	sessionAdmin.setSessionObject(request, melder, tilmelderKey);
+	}
+	/**
+	 * tilHelsedirektoratet
+	 * Denne rutinen sender melding til Helsedirektoratet dersom merknad for dette er satt
+	 * @param request
+	 * @param mailText
+	 * @param sakMap
+	 */
+	protected void tilHelsedirektoratet(Request request,String mailText,Map<String,String> sakMap){
+		List<Saksbehandler> saksbehandlere = (List<Saksbehandler>) sessionAdmin.getSessionObject(request,behandlereKey);
+		String loginNavn = login.getSaksbehandler().getBehandernavn();
+
+		if (mailText == null || mailText.equals(""))
+			mailText = " - Ingen kommentar fra saksbehandler";
+		String flaggMerknad = sakMap.get(flaggNames[2]);
+		String msg = String.format("%nTEST - Denne saken er meldt til Helsedirektoratet%n");
+		if (flaggMerknad != null && saksbehandlere != null){
+			for (Saksbehandler saksbehandler : saksbehandlere){
+				emailWebService.setMailTo(saksbehandler.getBehandlerepost());
+				emailWebService.setSubject(merknader[2]);
+	 	    	emailWebService.setEmailText(mailText);
+	 	    	 String name = saksbehandler.getBehandernavn();
+		    	 if (name.equals("Helsedirektoratet") || name.equals(loginNavn))
+		    		 emailWebService.sendEmail(msg); 
+			}
+		}
 	}
 	/**
 	 * checkdiskusjoner

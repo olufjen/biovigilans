@@ -635,7 +635,13 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	     			if (sakModel.isReklassifikasjon()){
 	     				sakModel.setGmlMeldeid(meldeId);
 	      				savetransfusjonReclassifikasjon();
-	    			}   
+	    			}  
+/*
+* En rutine for å sende epost til Helsedirektoratet dersom saksbehandler har valgt "Melde til Helsedirektoratet"
+* olj 03.02.16    			
+*/
+	    			String mailText = (String)sakModel.getFormMap().get("meldingtilhelsedir")+ " Meldingsnummer: "+ melding.getMeldingsnokkel();
+	    			tilHelsedirektoratet(request, mailText, sakModel.getFormMap());	     			
 	       			sakModel.setDiskusjonsMappe(null);
 	    			sakModel.setSaksMappe(null);
 	    			tilMelderPart = "none";

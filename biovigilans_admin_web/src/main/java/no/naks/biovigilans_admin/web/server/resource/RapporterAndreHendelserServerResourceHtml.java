@@ -446,10 +446,11 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     			sakModel.getFormMap().clear();
     			for (Parameter entry : form) {
         			if (entry.getValue() != null && !(entry.getValue().equals(""))){
-        					System.out.println(entry.getName() + "=" + entry.getValue());
+        					System.out.println("Saksmerknader "+entry.getName() + "=" + entry.getValue());
         					sakModel.setValues(entry);
         			}
     			}
+
     			sakModel.saveSaker(melding.getMeldeid());// Setter også saksbehandler navn til merknad
     			saksbehandlingWebservice.saveDiskusjon(sakModel.getDiskusjonsMappe());
     			sakModel.setSakdiskusjon();
@@ -470,6 +471,12 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     				sakModel.setGmlMeldeid(meldeId);
     				saveannenReclassifikasjon();
     			}
+/*
+ * En rutine for å sende epost til Helsedirektoratet dersom saksbehandler har valgt "Melde til Helsedirektoratet"
+ * olj 03.02.16    			
+ */
+    			String mailText = (String)sakModel.getFormMap().get("meldingtilhelsedir")+ " Meldingsnummer: "+ melding.getMeldingsnokkel();
+    			tilHelsedirektoratet(request, mailText, sakModel.getFormMap());
     			sakModel.setDiskusjonsMappe(null);
     			sakModel.setSaksMappe(null);
     			setDiplayvalues(dataModel,melder);
