@@ -34,6 +34,10 @@ import org.restlet.resource.Post;
 
 import freemarker.template.SimpleScalar;
 
+/**
+ * @author olj
+ * Denne resursen er knyttet til siden meldingframelder (I dialog med saksbehandlere)
+ */
 public class MeldingfraMelderServerResourceHTML extends
 		SessionServerResource {
 	protected SaksbehandlingWebService saksbehandlingWebservice;
