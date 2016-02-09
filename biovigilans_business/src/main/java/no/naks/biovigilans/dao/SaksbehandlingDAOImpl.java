@@ -40,6 +40,8 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	private String selectpasientMeldingSQL;
 	private String selectgiverMeldingSQL;
 	private String selectannenMeldingSQL;
+	private String selectvigilansMeldingsaksbehandlerSQL;
+	
 	private boolean timeperiodType = true; // Satt til true dersom forespurt tidsperiode er meldt
 	// satt til false dersom forespurt tidsperiode er når meldingen skjedde.
 	
@@ -141,6 +143,17 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	
 	public String[] getGiverTableDefs() {
 		return giverTableDefs;
+	}
+
+
+	public String getSelectvigilansMeldingsaksbehandlerSQL() {
+		return selectvigilansMeldingsaksbehandlerSQL;
+	}
+
+
+	public void setSelectvigilansMeldingsaksbehandlerSQL(
+			String selectvigilansMeldingsaksbehandlerSQL) {
+		this.selectvigilansMeldingsaksbehandlerSQL = selectvigilansMeldingsaksbehandlerSQL;
 	}
 
 

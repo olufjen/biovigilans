@@ -314,4 +314,11 @@ public interface SaksbehandlingDAO {
 
 	public void setSelectvigilansMeldingikkeavvistSQL(
 			String selectvigilansMeldingikkeavvistSQL);
+
+	public String getSelectvigilansMeldingsaksbehandlerSQL();
+
+
+	public void setSelectvigilansMeldingsaksbehandlerSQL(
+			String selectvigilansMeldingsaksbehandlerSQL);
+
 }
