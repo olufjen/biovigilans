@@ -211,6 +211,7 @@
   		<property name="selectvigilansMeldingtypesSQL" value="${vigilansmeldingtype.select}"></property>
   		<property name="selectvigilansMeldingikkeavvistSQL" value="${vigilansmeldingikkeavvist.select}"></property>
   		<property name="selectvigilansMeldingnullSQL" value="${vigilansmeldingnull.select}"></property>
+  		<property name="selectvigilansMeldingsaksbehandlerSQL" value="${vigilansmelding.saksbehandler}"></property>
   		<property name="selectannenMeldingSQL" value="${annenMeldingSelect}"></property>
   		<property name="selectvigilansMeldingtimeperiodSQL" value="${vigilansmeldingmeldtdato.select}"></property>
   		<property name="selectvigilansMeldinghentperiodSQL" value="${vigilansmeldinghentdato.select}"></property>
