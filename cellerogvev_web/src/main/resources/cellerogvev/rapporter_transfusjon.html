@@ -373,7 +373,7 @@ function showtext(id,thetext){
       <li class="previous" title="Her fyller du inn kontaktinformasjon "><a href="#">Kontaktinformasjon</a></li>
       <li class="previous" title="Her vises kvitteringen for meldingen "><a href="#">Kvittering</a></li>
     </ul>
-    <h2>Rapport om pasienthendelser</h2>
+    <h2>Er dette en uønsket hendelse som førte til betydelig pasientskade eller kunne ha ført til pasientskade?</h2>
 
     <form id="rapport" action="?method=PUT" method="post">
     
@@ -472,13 +472,13 @@ function showtext(id,thetext){
       </div>
 
       <div class="form-group" style="display: ${display}">
-        <label>Tidligere oppgitt transfusjonskomplikasjoner: </label>     
+        <label>Tidligere oppgitt komplikasjoner: </label>     
         <div>${transfusjon.tildigerKomplikasjon}</div>
       </div>
 
       <!--Tidligere transfusjonskomplikasjoner -->
       <div class="form-group" >
-        <label>Tidligere transfusjonskomplikasjoner</label>
+        <label>Tidligere komplikasjoner</label>
         <div class="radio">
           <label>
             <input type="radio" name="p-tidligeretransfusjon" id="p-transfusjon-ip-1" value="tidligeretransfusjon-ja" onclick="toggleDisplay('tidligeretransfusjon', this.checked)">
@@ -487,7 +487,12 @@ function showtext(id,thetext){
 
           <!-- Hvis 'ja', grå bakgrunn -->
           <div class="form-group" id="tidligeretransfusjon" style="display: none">
-            <div class="radio">
+          <div class="form-group" id="beskriv-komplikasjon">
+					<label>Beskriv komplikasjonen</label>
+				  	<textarea class="form-control" name="p-trans-valg" rows="3"></textarea>
+		</div>
+          
+<!--             <div class="radio">
               <label>
                 <input type="radio" name="p-trans-valg"  id="p-komp-ahtr-1" value="ahtr-1">
                 Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. ABO uforlikelighet
@@ -623,7 +628,7 @@ function showtext(id,thetext){
               <label>Hvis annet, beskriv nærmere i fritekst:</label>
               <textarea class="form-control" name="p-transfusjontext" rows="3"></textarea>
             </div>
-          </div>
+          </div> -->
         </div> <!-- Slutt på 'ja', grå bakgrunn -->
 
         <div class="radio">
@@ -669,12 +674,12 @@ function showtext(id,thetext){
       </div>
   
       <div class="form-group" style="display: ${display}">
-        <label>Tidligere oppgitt avdeling: </label>
+        <label>Tidligere oppgitt Institusjon/Virksomhet/Avdeling: </label>
         <div>${pasienten.avdeling}</div>
       </div>
   
       <div id="avdeling" class="form-group">
-        <label>Avdeling</label>
+        <label>Institusjon/Virksomhet/Avdeling</label>
         <input name ="p-avdeling-list" list="avdelinger" id="avdeling" class="form-control">
         <datalist id="avdelinger">
           <#list pasientkomplikasjon.avdelinger as avdeling>
@@ -685,7 +690,7 @@ function showtext(id,thetext){
     
       <!-- Transfusjon  -->      
       <h3>Transfusjon</h3>
-      <div class="form-group" style="display: ${display}">
+<!--       <div class="form-group" style="display: ${display}">
         <label>Tidligere oppgitt transfusjonsdato: </label>
         <div>${transfusjon.transfusionDate?date}</div>
       </div>
@@ -693,7 +698,7 @@ function showtext(id,thetext){
     <div>
       <label>Transfusjondato: </label>
       <input type="date" name="transfusjon-date" id="transfusjon-date">
-    </div>
+    </div> -->
 
     <div class="form-group" style="display: ${display}">
       <label>Tidligere oppgitt Hastegrad: </label>
@@ -1112,7 +1117,8 @@ function showtext(id,thetext){
           </#list>
         </table>
       </div>      
-    
+ 
+<!--     
       <div class="checkbox">
         <label>
           <input type="checkbox" name="p-komp-temp" id="p-komp-temp" value="temperaturstigning" onclick="toggleDisplay('temperaturstigning', this.checked)">
@@ -1125,7 +1131,7 @@ function showtext(id,thetext){
           <label>Temperatur etter transfusjonsreaksjonen</label> 
           <input type="number" step="0.1" min="36.0" max="45.0" name="p-temperaturetterstigning" id="p-temperaturetterstigning" size="10"  value="" class="form-control" oninput="updateOutput('p-temperaturforstigning','p-temperaturetterstigning','p-stigning')" />
           
-          <label>Temperaturstigning</label> <!-- en desimal !!!! -->
+          <label>Temperaturstigning</label> en desimal !!!!
           <output type="number" name="p-stigning" id="p-stigning"></output>          
         </div>
       </div>
@@ -1273,16 +1279,16 @@ function showtext(id,thetext){
           <input type="checkbox" name="p-komp-hudblod" id="p-komp-hudblod" value="hudblodninger">
           Hudblødninger (petekkier)
         </label>
-      </div>
+      </div> -->
       <div class="checkbox">
         <label>
-          <input type="checkbox" name="p-komp-annet" id="p-komp-annet" value="annet" onclick="toggleDisplay('komp-annet-text', this.checked)">
-          Annet
+          <input type="checkbox" title="Velg andre symptomer for å beskrive symptomene. " name="p-komp-annet" id="p-komp-annet" value="annet" onclick="toggleDisplay('komp-annet-text', this.checked)">
+          Andre symptomer
         </label>
       </div>
 
       <div id="komp-annet-text" class="form-group" style="display: none">
-        <label>Hvis annet, beskriv nærmere i fritekst:</label>
+        <label>Beskriv nærmere i fritekst:</label>
         <textarea class="form-control" name="p-komp-annettext" rows="3"></textarea>
       </div>
     
@@ -1312,8 +1318,11 @@ function showtext(id,thetext){
 
 <div class="form-group">    
     <label>Mistenkt årsak til transfusjonsreaksjon </label>
-    
-    <div class="radio">
+   <div id="asmhtr1-valg2" class="form-group" >
+     <label>Mistenkt årsak </label>
+       <textarea class="form-control" name="asm-akutt-text" id="annet" rows="2" ></textarea>
+  </div>        
+ <!--    <div class="radio">
       <label title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse.">
         <input type="radio" name="p-komp-klassifikasjon"  id="p-komp-ahtr-1" value="Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. ABO uforlikelighet"  title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse."
          onclick="displayNone();toggleDisplayarsak('ahtr-valg',6,this.checked);removeChoice()"/>
@@ -1436,7 +1445,7 @@ function showtext(id,thetext){
       </div>  
     </div>
 
-    <!-- Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. annet alloantistoff -->
+    Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. annet alloantistoff
     <div class="radio">
       <label title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse.">
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ahtr-2" value="ahtr-2" title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse."
@@ -1598,7 +1607,7 @@ function showtext(id,thetext){
         </div>
       </div>
 
-      <!-- pcv, 20.12.2015: Er denne i bruk?-->
+      pcv, 20.12.2015: Er denne i bruk?
       <div id="ahtr1-spesifisitet" class="form-group" style="display: none">
         <label>Spesifisitet </label>
         <textarea class="form-control" name="at-spesifisitet-text" id="annet" rows="2" ></textarea>
@@ -1788,7 +1797,7 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
     </div>
   </div>
   <div id="fhtr1-valg1" class="form-group" style="display: none">
-     <label>Positiv dyrkning av rester i blodproduktet?</label>
+     <label>Positiv dyrkning av rester i produktet?</label>
     <div class="radio">
       <label>
         <input type="radio" name="fh-hapto" id="p-lga-2" value="Positivdyrkningavresteriblodproduktetja" onclick="toggleDisplay('fhtr1-spesifisert', this.checked)"/>Ja 
@@ -1867,7 +1876,7 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
      <label>Spesifisitet </label>
        <textarea class="form-control" name="fh-spesifisitet-text" id="annet" rows="2" ></textarea>
   </div> 
-  <!-- pcv, 20.11.2015: Må undersøkes av Oluf  -->
+  pcv, 20.11.2015: Må undersøkes av Oluf 
   <div id="fhtr1-valg5" class="form-group" style="display: none">
      <label>Annet </label>
        <textarea class="form-control" name="fh-annet-hemotext" id="annet" rows="2" ></textarea>
@@ -2636,7 +2645,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
         Transfusjonsoverført bakterieinfeksjon
       </label>
          <div id="bakhtr1-valg0" class="form-group" style="display: none">
-     <label>Positiv dyrkning av rester i blodproduktet</label>
+     <label>Positiv dyrkning av rester i produktet</label>
     <div class="radio">
       <label>
         <input type="radio" name="bak-hemo" id="p-lga-1" value="Positivdyrkningresteriblodproduktetja" onclick="toggleDisplay('bakhtr1-spesifisert', this.checked)"/>Ja 
@@ -2986,7 +2995,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
          Kan ikke konkludere (les definisjonene før du velger dette)
       </label>
     </div>
-    <!--  IKKE i BRUK !!!! OLJ 29.01.15 ======================================================================== 
+     IKKE i BRUK !!!! OLJ 29.01.15 ======================================================================== 
     <div class="radio">
       <label>
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ingenklinisk" value="ingenklinisk" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Ingen klinisk reaksjon (f.eks. ved feil, men forlikelig blod, skal trolig ikke væremed)
@@ -3046,13 +3055,13 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Annet antistoff</label> 
       <input type="text"  name="p-antistoffannet" size="80"  value="" class="form-control"/>
     </div>
-    </div>   -->   
-<!-- Ikke i bruk olj 28.09.14    
+    </div>     
+Ikke i bruk olj 28.09.14    
     <div id="utredningannet-text" class="form-group" style="display: none">
     <label>Hvis ja, beskriv nærmere i fritekst:</label>
    <textarea class="form-control" name="p-utredning" rows="3"></textarea>
-  </div>  -->
-<!-- ***********  Kommentert ut 13.01.15 ref melding basecamp
+  </div> 
+***********  Kommentert ut 13.01.15 ref melding basecamp
      <label>Hemolyseparametere er positive.</label>
      <div class="radio">
       <label>
@@ -3082,8 +3091,8 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
                <#list pasientkomplikasjon.hemolyseParametre as hemolyse>
               <option >${hemolyse}</option>
           </#list>  
-            </datalist> --> 
-    <!--          <button name="p_hemolyseleggtil" type="submit" onclick="addRow()" class="btn btn-primary">Legg til</button>   
+            </datalist> 
+             <button name="p_hemolyseleggtil" type="submit" onclick="addRow()" class="btn btn-primary">Legg til</button>   
           <input type="button" id="hemolyseadd" value="Legg til" onclick="addRow()"  class="btn btn-primary"> 
         </td>   
         </tr>   
@@ -3102,14 +3111,14 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
     </div>  
     
     </div>
--->   
+   
     
-<!-- Ikke i bruk olj 28.09.14       
+Ikke i bruk olj 28.09.14       
     <div id="hemolyse-textxxxx" class="form-group" style="display: none">
     <label>Hvis ja, beskriv nærmere i fritekst:</label>
    <textarea class="form-control" name="p-hemolysetextxxxx" rows="3"></textarea>
-  </div> -->
-<!-- ***********    
+  </div>
+***********    
 
  <div id="lga-valg" class="form-group" style="display: none">
      <label>lgA-mangel/anti-lgA</label>
@@ -3133,8 +3142,8 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
     <label>Hvis ja, beskriv nærmere i fritekst:</label>
    <textarea class="form-control" name="p-lgatext" rows="3"></textarea>
   </div>
---> 
-<!-- Kommentert ut ref melding basecamp 14.01.15  
+ 
+Kommentert ut ref melding basecamp 14.01.15  
      <h4>Dyrkning fra pose utført</h4>
      <div class="radio">
       <label>
@@ -3165,8 +3174,8 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
    <textarea class="form-control" name="p-dyrkingpostext" rows="3"></textarea>
   </div> 
   IKKE I BRUK SLUTT ======================================================================================= 
-  --> 
-    </div> 
+   -->
+  </div> <!-- Slutt mistenkt årsak -->
     </div>
 
     <div class="form-group">
@@ -3339,13 +3348,13 @@ og/eller
   <div class="checkbox">
     <label>
       <input name="p-uforlikeligprodukt" type="checkbox" id="p-forhold"  value="uforlikeligprodukt" 
-      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Uforlikelig blodprodukt  
+      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Uforlikelig produkt  
     </label>
     </div>
   <div class="checkbox">
     <label>
       <input name="p-feilblodtrans" type="checkbox" id="p-forhold" value="feilblodtrans"  
-      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', this.checked);toggleDisplay('blodkrav', this.checked)"/>Feil blod transfundert   
+      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', this.checked);toggleDisplay('blodkrav', this.checked)"/>Feil celle transfundert   
     </label>
     <div id="gikkgalt" class="form-group" style="display: none">
      <label>Hva gikk galt?</label>
@@ -3377,32 +3386,32 @@ og/eller
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-pretransfusjonstesting" id="p-pretransfusjonstesting" value="pretransfusjonstesting" />Pretransfusjonstesting i blodbanken
+        <input type="checkbox" name="p-pretransfusjonstesting" id="p-pretransfusjonstesting" value="pretransfusjonstesting" />Pretransfusjonstesting i ?????blodbanken
       </label>
     </div>    
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-mangelfullbehandlingblod" id="p--mangelfullbehandlingblod" value="-mangelfullbehandlingblod" />Feil/ mangelfull behandling av blodet i blodbanken
+        <input type="checkbox" name="p-mangelfullbehandlingblod" id="p--mangelfullbehandlingblod" value="-mangelfullbehandlingblod" />Feil/ mangelfull behandling av blodet???? i blodbanken
       </label>
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-utleveringblodblodbank" id="p-utleveringblodblodbank" value="utleveringblodblodbank" />Valg/utlevering av blodprodukt (blodbankpersonell)
+        <input type="checkbox" name="p-utleveringblodblodbank" id="p-utleveringblodblodbank" value="utleveringblodblodbank" />Valg/utlevering av blodprodukt???? (blodbankpersonell)
       </label>
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-hentingblodblodbank" id="p-hentingblodblodbank" value="hentingblodblodbank" />Henting av blod i blodbanken (ikke blodbankpersonell)
+        <input type="checkbox" name="p-hentingblodblodbank" id="p-hentingblodblodbank" value="hentingblodblodbank" />Henting av blod???? i blodbanken (ikke blodbankpersonell)
       </label>
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-hentingblodiskap" id="p-hentingblodiskap" value="hentingblodiskap" />Henting av blod i skap/fryser utenfor blodbank
+        <input type="checkbox" name="p-hentingblodiskap" id="p-hentingblodiskap" value="hentingblodiskap" />Henting av blod???? i skap/fryser utenfor blodbank
       </label>
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-hentingblodrorpost" id="p-hentingblodrorpost" value="hentingblodrorpost" />Henting av blod ved rørpoststasjon
+        <input type="checkbox" name="p-hentingblodrorpost" id="p-hentingblodrorpost" value="hentingblodrorpost" />Henting av blod???? ved rørpoststasjon
       </label>
     </div>
   <div class="checkbox">
@@ -3431,22 +3440,22 @@ og/eller
      <label>Besvar også</label>
      <div class="radio">
       <label>
-        <input type="radio" name="p-blodkrav" id="p-blodkrav" value="blodkravikkeoppfylt" />Blodproduktet oppfylte ikke spesifiserte krav
+        <input type="radio" name="p-blodkrav" id="p-blodkrav" value="blodkravikkeoppfylt" />?????????Blodproduktet oppfylte ikke spesifiserte krav
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-blodkrav" id="p-tiltenkt" value="tiltenktannenpasient" />Blodproduktet som ble gitt var tiltenkt annen pasient 
+        <input type="radio" name="p-blodkrav" id="p-tiltenkt" value="tiltenktannenpasient" />???????????Blodproduktet som ble gitt var tiltenkt annen pasient 
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-blodkrav" id="p-feiltype" value="feilblodproduktgitt" />Feil type blodprodukt gitt
+        <input type="radio" name="p-blodkrav" id="p-feiltype" value="feilblodproduktgitt" />?????????Feil type blodprodukt gitt
       </label>
     </div>
       <div class="radio">
       <label>
-        <input type="radio" name="p-blodkrav" id="p-feilindikasjon" value="blodproduktgittfeilindikasjon"  />Blodprodukt gitt på feil indikasjon
+        <input type="radio" name="p-blodkrav" id="p-feilindikasjon" value="blodproduktgittfeilindikasjon"  />?????Blodprodukt gitt på feil indikasjon
       </label>
     </div>
   </div>  
@@ -3461,9 +3470,14 @@ og/eller
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-annetskjedde" type="checkbox" id="p-forhold"  value="annetskjedde" 
-      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0)"/>Annet  
+      <input name="p-annetskjedde" type="checkbox" id="p-forhold1"  value="annetskjedde" 
+      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('p-forhold2', 1)"/>Annet  
     </label>
+   </div>
+   <div class="checkbox" id="p-forhold2" style="display: none">
+      <label >Beskriv andre forhold</label>
+       <textarea class="form-control" name="p-hentingblodrorpost" rows="3"></textarea> 
+      
     </div>
   <div class="checkbox">
     <label>
@@ -3555,7 +3569,7 @@ og/eller
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-forebyggendetiltakblodbank" type="checkbox" id="p-annetskjedde" value="forebyggendetiltakblodbank" />Forebyggende tiltak ved blodbanken  
+      <input name="p-forebyggendetiltakblodbank" type="checkbox" id="p-annetskjedde" value="forebyggendetiltakblodbank" />Forebyggende tiltak ved ????blodbanken  
     </label>
     </div>
   <div class="checkbox">

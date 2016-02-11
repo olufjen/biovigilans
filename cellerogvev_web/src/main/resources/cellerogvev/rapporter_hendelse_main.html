@@ -36,7 +36,7 @@
   </header>
     
   <div class="container">
-    <h1>Hemovigilans</h1>
+    <h1>Celler og vev</h1>
     <ul class="pager">
       <li class="previous" title="Ved startsiden velger du ny melding eller oppfølgingsmelding "><a href="#">Start</a></li>
       <li class="previous" title="Du er ved type hendelse. Her velger du type melding "><a href="#"><strong><span style="color:black">Type hendelse</span></strong></a></li>
@@ -86,7 +86,7 @@
         <div class="tab-pane active" id="meldfra">
 
           <div class="form-group">
-            <label>Er dette en pasientrelatert hendelse?</label>          
+            <label>Er dette en uønsket hendelse som førte til betydelig pasientskade eller kunne ha ført til pasientskade?</label>          
             <div class="radio">
               <label>
                 <input type="radio" name="p-pasient" id="p-pasient-ja" value="pasient-ja" onclick="toggleDisplay('pasient-ja', this.checked);toggleDisplay('pasient-nei', 0)">
@@ -121,7 +121,7 @@
 
           <div id="pasient-nei" style="display: none">
             <div id="giverrelatert" class="form-group">
-              <label>Er dette en donorrelatert hendelse?</label>
+              <label>Er dette en uønsket hendelse og bivirkninger knyttet til overføring av celler og vev?</label>
               <div class="radio">
                 <label>
                   <input type="radio" name="p-giverrelatert" id="p-giverrelatert-ja" value="giverrelatert-ja" onclick="toggleDisplay('giverrelatert-ja', this.checked);">
@@ -139,16 +139,16 @@
 
           <div id="giverrelatert-ja" style="display: none">
             <div id="symptomer" class="form-group">
-              <label>Hadde donor symptomer?</label>
+              <label>Er dette en uønsket hendelse som har skjedd ved uttak, testing,prosessering, oppbevaring og distribusjon som kan ha påvirket kvaliteten og sikkerheten til celler og vev?</label>
               <div class="radio">
                 <label>
-                  <input type="radio" name="p-symptomer" id="p-symptomer-ja" value="symptomer-ja" onclick="document.location='rapporter_giver.html';">
+                  <input type="radio" name="p-symptomer" id="p-symptomer-ja" value="symptomer-ja" onclick="document.location='rapporter_andrehendelser.html';">
                   Ja
                 </label>
               </div>
               <div class="radio">
                 <label>
-                  <input type="radio" name="p-symptomer" id="p-symptomer-nei" value="symptomer-nei" onclick="document.location='rapporter_andrehendelser.html';">
+                  <input type="radio" name="p-symptomer" id="p-symptomer-nei" value="symptomer-nei" onclick="document.location='rapporter_giver.html';">
                   Nei
                 </label>
               </div>

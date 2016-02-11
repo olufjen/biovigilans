@@ -1,7 +1,7 @@
 <html>
 <head>
 
-  <title>Rapporter hendelse - Hemovigilans</title>
+  <title>Rapporter hendelse - Celler og vev</title>
     <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html;">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -246,7 +246,7 @@
 					}
 				}
 			</script>
-	<h1>Rapport om uønsket hendelse (annet enn uttak eller reaksjon hos mottaker)</h1>
+	<h1>Er dette en uønsket hendelse som har skjedd ved uttak, testing,prosessering, oppbevaring og distribusjon som kan ha påvirket kvaliteten og sikkerheten til celler og vev?</h1>
    <ul class="pager">
     <li class="previous" title="Ved startsiden velger du ny melding eller oppfølgingsmelding "><a href="#">Start</a></li>
     <li class="previous" title="Her velger du type melding "><a href="#">Type hendelse</a></li>
@@ -764,7 +764,7 @@
 			          	<input type="radio" name="tab-klassifikasjon" id="k-11"   onclick="toggleDisplay('annet'); checkUncheck();"  value="Annet"  />Annet
 			          </label>
 			          <div id="annet" style="display: none" >
-				          <div class="radio">	 
+<!-- 				          <div class="radio">	 
 				          	 <label>
 				          		<input type="radio" name="tab-klassifikasjon-sub" id="42" value="feilblodprodukt"  />Feil med blodproduktet				          	 </label>
 				          </div>
@@ -802,13 +802,17 @@
 				          	 <label>
 				          		<input type="radio" name="tab-klassifikasjon-sub" id="49"  value="feiltolketbestilling"  />Blodbanken feiltolket bestillingen (pasient eller produkt)
 				          	 </label>
-				          </div>
-				           <div class="radio">	 
+				          </div> -->
+				<div class="form-group">
+				<label>Beskriv kort.</label>
+					<textarea class="form-control"  name="tab-klassifikasjon-sub" rows="3" id="annenkvalifikasjon" ></textarea>
+				</div>
+<!-- 				           <div class="radio">	 
 				          	 <label>
 				          		<input type="radio" name="tab-klassifikasjon-sub" id="50"  value="Annet"  />Annet
 				          	 </label>
-				          </div>
-				        </div>
+				          </div> -->
+	        </div>
 				    </div>
 				   
 					

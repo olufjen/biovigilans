@@ -377,7 +377,7 @@
 	
 	
 	</script>
-	<h1>Rapporter donor Celler og vev</h1>
+	<h1>Er dette en uønsket hendelse og bivirkninger knyttet til overføring av celler og vev?</h1>
 	<h4>Melding om alvorlig bivirkning hos donor som oppstår under eller i 
 forbindelse med uttak og som kan påvirke kvaliteten til celler og vev som 
 uttas.</h4>
@@ -878,6 +878,12 @@ uttas.</h4>
 
 		      <input name ="tab-systemiskbivirkning" list="systemiskbivirkning" class="form-control">
 		    </div> -->
+	<div class="form-group" style="display: ${display}">
+			<label>Tidligere oppgitt eventuelle kommentarer</label>
+			<div>
+				<label>${giverkomplikasjondiagnose.bivirkningbeskrivelse}</label>
+			</div>
+	</div>		
 		    <div class="form-group" id="beskriv-komplikasjon">
 					<label>Eventuelle kommentarer</label>
 				  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
@@ -941,19 +947,19 @@ uttas.</h4>
 			    </div>
 		      	<div class="radio">
 		          <label title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping.">
-		          	<input type="radio"  name="tab-strakstiltak" id="tab-strakstiltak0" onclick="toggleDisplay('behandlingselected', 0);toggleDisplay('behandling', this.checked)" id="tab-strakstiltak1" value="Behandlet av blodbankpersonale" title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping."/>
+		          	<input type="radio"  name="tab-strakstiltak" id="tab-strakstiltak0" onclick="toggleDisplay('behandlingselected', 0);toggleDisplay('behandling', this.checked)" id="tab-strakstiltak1" value="Behandlet av institusjonpersonale" title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping."/>
 		          	Behandlet av institusjonens personale
 		          </label>
 			    </div>
 			    <div class="radio">
-		          <label title="Giver ble behandlet av lege tilknyttet blodbanken.">
-		          	<input type="radio"  name="tab-strakstiltak" id="tab-strakstiltak0" onclick="toggleDisplay('behandlingselected', 0);toggleDisplay('behandling', this.checked)" id="tab-strakstiltak2" value="Behandlet av blodbanklege" title="Giver ble behandlet av lege tilknyttet blodbanken."/>
+		          <label title="Giver ble behandlet av lege tilknyttet institusjonen.">
+		          	<input type="radio"  name="tab-strakstiltak" id="tab-strakstiltak0" onclick="toggleDisplay('behandlingselected', 0);toggleDisplay('behandling', this.checked)" id="tab-strakstiltak2" value="Behandlet av institusjonslege" title="Giver ble behandlet av lege tilknyttet institusjonen."/>
 		          	Behandlet av institusjonens lege
 		          </label>
 			    </div>
 			    <div class="radio">
-		          <label title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). ">
-		          	<input type="radio"  name="tab-strakstiltak" id="tab-strakstiltak0"  value="Behandling på sykehus"  onclick="toggleDisplay('behandlingselected', this.checked);toggleDisplay('behandling', 0)" title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). " />
+		          <label title="Giver ble behandlet av annen sykehuslege enn institusjonens lege (f.eks. ved behov for behandling som ikke kan gis i institusjonen). ">
+		          	<input type="radio"  name="tab-strakstiltak" id="tab-strakstiltak0"  value="Behandling på sykehus"  onclick="toggleDisplay('behandlingselected', this.checked);toggleDisplay('behandling', 0)" title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i institusjonen). " />
 		          		Behandling på sykehus
 		          </label>
 			    </div>
