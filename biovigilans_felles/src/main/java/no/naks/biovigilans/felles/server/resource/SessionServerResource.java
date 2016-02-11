@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.apache.commons.lang.WordUtils;
 import org.restlet.Request;
@@ -39,6 +40,7 @@ import no.naks.biovigilans.model.MelderImpl;
 import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.Produktegenskap;
+import no.naks.biovigilans.model.Saksbehandler;
 import no.naks.biovigilans.model.Sykdom;
 import no.naks.biovigilans.model.Symptomer;
 import no.naks.biovigilans.model.Tiltak;
@@ -83,7 +85,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String andreKey = "annenKomp"; 		// Nøkkel dersom melding er av type annenkomplikasjon
 	protected String pasientKey = "pasientKomp"; // Nøkkel dersom melding er av type pasientkomplikasjon
 	protected String giverKey = "giverkomp"; 	// Nøkkel dersom melding er at type giverkomplikasjon
-	protected String meldingsId = "meldinger";  // Nøkkel til en Vigilansmelding (OBS i adm til en liste vigilansmeldinger)
+	protected String meldingsId = "meldingliste";  // Nøkkel til en Vigilansmelding (OBS i adm til en liste vigilansmeldinger) OBS: Endret fra meldinger !!
 	protected String vigilansmeldinger = "vigilansmeldinger"; // Nøkkel til en liste vigilansmeldinger
 	protected String allemeldingerMap = "allemeldinger"; // Nøkkel til en Map som inneholder alle meldingsdetaljer		
 	protected String[] avdelinger;
@@ -200,6 +202,8 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected SaksbehandlingWebService saksbehandlingWebservice;
     
 	protected String meldingsNokkel = null;   // Meldingsnøkkel benyttet for utskrift til pdf
+	
+	private String[] alvorGrad = {"Grad 2 Alvorlig","Grad 3 Livstruende","Grad 4 Dødsfall"};
 	
 	public String getMeldingsNokkel() {
 		return meldingsNokkel;
@@ -1250,6 +1254,35 @@ public class SessionServerResource extends ProsedyreServerResource {
 		  }		
 	}
 	/**
+	 * checkmessagetoAdmin
+	 * Denne rutinen sjekker om det er nødvendig å sende en melding til saksbehanderne
+	 * @param alvorgrad
+	 * @return
+	 */
+	public void checkmessagetoAdmin(String alvorgrad,String meldingsNokkel){
+		boolean flag = false;
+		for (String grad:alvorGrad ){
+			if (grad.equals(alvorgrad)){
+				flag = true;
+				break;
+			}
+		}
+		if (flag){
+			List<Saksbehandler> saksbehandlere = saksbehandlingWebservice.collectSaksbehandlere();
+			for (Saksbehandler saksbehandler : saksbehandlere){
+				String detalj = "Alvorlighetsgrad: "+alvorgrad+ " Meldingsnummer: "+meldingsNokkel;
+				emailWebService.setSubject("Hemovigilans Alvorlig melding mottatt");
+	 	    	emailWebService.setEmailText(detalj);
+		    	 emailWebService.setMailTo(saksbehandler.getBehandlerepost());
+		    	 String sep = System.lineSeparator();
+		    	 String msg = sep +"TEST! Logg inn til saksbehandling og sjekk meldingen";
+		    	 emailWebService.sendEmail(msg); //Kommentert bort til stage !!
+				
+			}			
+		}
+
+	}
+	/**
 	 * checkMessageType
 	 * Denne rutinen sjekker type melding som er sendt inn
 	 * Brukes av leveransesiden for å vise riktig informasjon
@@ -1800,4 +1833,30 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
         
         return p;
 	}	
+	
+	public  String extract(String s,Function <String,String> f){
+		return f.apply(s);
+	}
+	/**
+	 * extractString
+	 * This routine extracts a substring form a string  using the Function interface
+	 * It finds the last index of a string using separator
+	 * @param line The original string
+	 * @param separator The separator
+	 * @param startindex The startindex
+	 * @return the substring
+	 */
+	public String extractString(String line,char separator,int startindex){
+		int index = line.lastIndexOf(separator);
+		if (index == -1)
+			return null;
+		
+		Function<String,String> f = (String s) -> line.substring(startindex,index);
+		Function<String,String> ef = (String s) -> line.substring(index+1);
+		if (startindex == -1){
+			return extract(line,ef);
+		}else
+			return extract(line,f);
+
+	}
 }

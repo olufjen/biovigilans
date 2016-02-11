@@ -309,4 +309,16 @@ public interface SaksbehandlingDAO {
 	public void setSelectvigilansMeldingmerknaderSQL(
 			String selectvigilansMeldingmerknaderSQL);
 	public List collectMessagesMarks(String merknad);
+	public String getSelectvigilansMeldingikkeavvistSQL();
+
+
+	public void setSelectvigilansMeldingikkeavvistSQL(
+			String selectvigilansMeldingikkeavvistSQL);
+
+	public String getSelectvigilansMeldingsaksbehandlerSQL();
+
+
+	public void setSelectvigilansMeldingsaksbehandlerSQL(
+			String selectvigilansMeldingsaksbehandlerSQL);
+
 }

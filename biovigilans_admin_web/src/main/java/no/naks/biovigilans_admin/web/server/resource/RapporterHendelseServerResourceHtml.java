@@ -309,6 +309,7 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	     sessionAdmin.setSessionObject(getRequest(), transfusjon,transfusjonId);
 	     sessionAdmin.setSessionObject(request,kvittering, kvitteringsId);
 	     sessionAdmin.setSessionObject(getRequest(), melderwebModel,melderId);
+	     List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(getRequest(), meldingsId); // Midlertdig
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjon.html"));
 	     
@@ -528,16 +529,18 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	    			newLogin.setSaksbehandler(login.getSaksbehandler());
 	    			newLogin.setPassord(login.getSaksbehandler().getBehandlerpassord());
 	    			newLogin.setEpostAdresse(login.getSaksbehandler().getBehandlerepost());
+	    		     List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request, meldingsId); // Midlertdig
 	    			 List<Saksbehandler> saksbehandlere = (List<Saksbehandler>) sessionAdmin.getSessionObject(request,behandlereKey);
-	    			invalidateSessionobjects();
-	    			sessionAdmin.getSession(request,diskusjonsKey).invalidate();
-	    			sessionAdmin.getSession(request,sakModelKey).invalidate();
+	    			 /*
+	    			  * Fjerner saksgangen og diskusjonene fra session
+	    			  */
+	    		 	sessionAdmin.removesessionObject(request, diskusjonsKey);
+	    		 	sessionAdmin.removesessionObject(request, sakModelKey);
 	    			 sessionAdmin.setSessionObject(request, newLogin, loginKey);
 	    			 sessionAdmin.setSessionObject(request, saksbehandlere, behandlereKey);
 	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
 	   			 
 	    			Representation giverHendelser = clres2.get();
-//	        		invalidateSessionobjects();
 	        		templateRep = new TemplateRepresentation(giverHendelser, dataModel,
 	        				MediaType.TEXT_HTML);
 	        		redirectPermanent("../hemovigilans/saksbehandling.html");
@@ -632,7 +635,13 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	     			if (sakModel.isReklassifikasjon()){
 	     				sakModel.setGmlMeldeid(meldeId);
 	      				savetransfusjonReclassifikasjon();
-	    			}   
+	    			}  
+/*
+* En rutine for å sende epost til Helsedirektoratet dersom saksbehandler har valgt "Melde til Helsedirektoratet"
+* olj 03.02.16    			
+*/
+	    			String mailText = (String)sakModel.getFormMap().get("meldingtilhelsedir")+ " Meldingsnummer: "+ melding.getMeldingsnokkel();
+	    			tilHelsedirektoratet(request, mailText, sakModel.getFormMap());	     			
 	       			sakModel.setDiskusjonsMappe(null);
 	    			sakModel.setSaksMappe(null);
 	    			tilMelderPart = "none";

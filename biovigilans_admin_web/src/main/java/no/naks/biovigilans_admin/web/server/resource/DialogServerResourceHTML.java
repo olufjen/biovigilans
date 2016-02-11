@@ -102,8 +102,9 @@ public class DialogServerResourceHTML extends
 	     melding = null;
 	     Diskusjon diskusjon = null;
 	     List<Sak> saker = null;
-
-	 	saksbehandlere = this.saksbehandlingWebservice.collectSaksbehandlere();
+	     saksbehandlere = (List)sessionAdmin.getSessionObject(request,behandlereKey);
+	     if (saksbehandlere == null)
+	    	 saksbehandlere = this.saksbehandlingWebservice.collectSaksbehandlere();
 	 	sessionAdmin.setSessionObject(request,saksbehandlere,behandlereKey);
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 	     for (Parameter parameter : form) {

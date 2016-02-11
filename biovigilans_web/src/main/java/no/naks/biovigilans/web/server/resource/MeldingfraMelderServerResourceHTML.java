@@ -34,6 +34,10 @@ import org.restlet.resource.Post;
 
 import freemarker.template.SimpleScalar;
 
+/**
+ * @author olj
+ * Denne resursen er knyttet til siden meldingframelder (I dialog med saksbehandlere)
+ */
 public class MeldingfraMelderServerResourceHTML extends
 		SessionServerResource {
 	protected SaksbehandlingWebService saksbehandlingWebservice;
@@ -156,9 +160,16 @@ public class MeldingfraMelderServerResourceHTML extends
     		 meldingsDiskusjon = new MeldingModel();
     		 sessionAdmin.setSessionObject(request,meldingsDiskusjon, meldingdiskusjonKey);
     	 }
+    	 
     	  meldingsDiskusjon.setFormNames( getSessionParams());
     	  meldingsDiskusjon.setDiskusjon(diskusjon);
-    	  
+   		 String tema = diskusjon.getTema();
+		 char sep = ';';
+		 String deltema = extractString(tema, sep, -1);
+		 String header = extractString(tema, sep,0);
+		 tema = header + " Fra "+ deltema;
+		 diskusjon.setTema(tema);
+//		 diskusjon.setSaksbehandler(tema);   	  
 	   	 SimpleScalar simple = new SimpleScalar(displayPart);
     	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
     	 SimpleScalar sendMessage = new SimpleScalar(sendPart);
@@ -220,9 +231,18 @@ public class MeldingfraMelderServerResourceHTML extends
 	        			}
 
 	        		}
+//		     		meldingsDiskusjon.getDiskusjon().setTema("Fra melder");
 		     		meldingsDiskusjon.saveDiskusjon();
 		     		meldingsDiskusjon.getDiskusjon().setMeldeid(melding.getMeldeid());
 		     		saksbehandlingWebservice.saveDiskusjon(meldingsDiskusjon.getDiskusjon());
+		     		
+		     		 String tema = meldingsDiskusjon.getDiskusjon().getTema();
+					 char sep = ';';
+					 String deltema = extractString(tema, sep, -1);
+					 String header = extractString(tema, sep,0);
+					 tema = header + deltema;
+					 meldingsDiskusjon.getDiskusjon().setTema(tema);					 
+					 
 		     		melding.setSjekklistesaksbehandling("Tilleggsopplysninger mottatt");
 		     		hendelseWebService.updateVigilansmelding(melding);
 		    		 displayPart = "none";

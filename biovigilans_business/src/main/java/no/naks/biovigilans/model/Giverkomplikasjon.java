@@ -58,5 +58,8 @@ public interface Giverkomplikasjon {
 	public void setDonasjonid(Long donasjonid);
 	public Date getDatosymptomer();
 	public void setDatosymptomer(Date datosymptomer);
+	public java.lang.String getSjekklistesaksbehandling();
+	public void setSjekklistesaksbehandling(
+			java.lang.String sjekklistesaksbehandling);
 	
 }

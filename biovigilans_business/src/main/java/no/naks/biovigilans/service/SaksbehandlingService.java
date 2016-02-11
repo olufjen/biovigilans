@@ -5,8 +5,10 @@ import java.util.Map;
 
 import no.naks.biovigilans.dao.SakDAO;
 import no.naks.biovigilans.dao.SaksbehandlingDAO;
+import no.naks.biovigilans.dao.StatistikkDAO;
 import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.Melder;
+import no.naks.biovigilans.model.Regionstatistikk;
 import no.naks.biovigilans.model.Sak;
 import no.naks.biovigilans.model.Vigilansmelding;
 
@@ -33,4 +35,12 @@ public interface SaksbehandlingService {
 	public List collectSaksbehandlere();
 	public Melder collectmelder(Long melderId);
 	public List collectMessagesMarks(String merknad);
+	public List<Regionstatistikk> collectRegionstatistikk();
+	public List<Regionstatistikk> collectForetakstatistikk(String reg);	
+	public StatistikkDAO getStatistikkDAO();
+
+	public void setStatistikkDAO(StatistikkDAO statistikkDAO);
+	public List<Regionstatistikk> collectRegionstatistikk(String startperiod,String endperiod,String type);
+	public List<Regionstatistikk> collectForetakstatistikk(String startperiod,String endperiod,String type);
+	public List<Regionstatistikk> collectsykehusstatistikk(String startperiod,String endperiod,String type);
 }

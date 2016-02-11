@@ -284,9 +284,9 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     public Representation storeHemovigilans(Form form) {
     	TemplateRepresentation  templateRep = null;
     	Request request = getRequest();
-    	if(form == null){
+/*    	if(form == null){
     		invalidateSessionobjects();
-    	}
+    	}*/
     	
     	
 	     login = (LoginModel)sessionAdmin.getSessionObject(request,loginKey);
@@ -365,16 +365,21 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     			newLogin.setSaksbehandler(login.getSaksbehandler());
     			newLogin.setPassord(login.getSaksbehandler().getBehandlerpassord());
     			newLogin.setEpostAdresse(login.getSaksbehandler().getBehandlerepost());
+   		     List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request, meldingsId); // Midlertdig
     		 List<Saksbehandler> saksbehandlere = (List<Saksbehandler>) sessionAdmin.getSessionObject(request,behandlereKey);
-    			invalidateSessionobjects();
-    			sessionAdmin.getSession(request,diskusjonsKey).invalidate();
-    			sessionAdmin.getSession(request,sakModelKey).invalidate();
+//    			invalidateSessionobjects();
+//    			sessionAdmin.getSession(request,diskusjonsKey).invalidate();
+//    			sessionAdmin.getSession(request,sakModelKey).invalidate();
+/*
+ * Fjerner saksgangen og diskusjonene fra session
+*/
+    		 	sessionAdmin.removesessionObject(request, diskusjonsKey);
+    		 	sessionAdmin.removesessionObject(request, sakModelKey);
     			sessionAdmin.setSessionObject(request, newLogin, loginKey);
     			 sessionAdmin.setSessionObject(request, saksbehandlere, behandlereKey);
     			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
    			 
     			Representation andreHendelser = clres2.get();
-//        		invalidateSessionobjects();
         		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
         				MediaType.TEXT_HTML);
         		redirectPermanent("../hemovigilans/saksbehandling.html");
@@ -441,10 +446,11 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     			sakModel.getFormMap().clear();
     			for (Parameter entry : form) {
         			if (entry.getValue() != null && !(entry.getValue().equals(""))){
-        					System.out.println(entry.getName() + "=" + entry.getValue());
+        					System.out.println("Saksmerknader "+entry.getName() + "=" + entry.getValue());
         					sakModel.setValues(entry);
         			}
     			}
+
     			sakModel.saveSaker(melding.getMeldeid());// Setter også saksbehandler navn til merknad
     			saksbehandlingWebservice.saveDiskusjon(sakModel.getDiskusjonsMappe());
     			sakModel.setSakdiskusjon();
@@ -465,6 +471,12 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     				sakModel.setGmlMeldeid(meldeId);
     				saveannenReclassifikasjon();
     			}
+/*
+ * En rutine for å sende epost til Helsedirektoratet dersom saksbehandler har valgt "Melde til Helsedirektoratet"
+ * olj 03.02.16    			
+ */
+    			String mailText = (String)sakModel.getFormMap().get("meldingtilhelsedir")+ " Meldingsnummer: "+ melding.getMeldingsnokkel();
+    			tilHelsedirektoratet(request, mailText, sakModel.getFormMap());
     			sakModel.setDiskusjonsMappe(null);
     			sakModel.setSaksMappe(null);
     			setDiplayvalues(dataModel,melder);

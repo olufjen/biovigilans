@@ -47,6 +47,9 @@ public interface Annenkomplikasjon {
 	public String getPasientopplysninger();
 
 	public void setPasientopplysninger(String pasientopplysninger);
+	public java.lang.String getSjekklistesaksbehandling();
+	public void setSjekklistesaksbehandling(
+			java.lang.String sjekklistesaksbehandling);
 
 	//public String getDatoforhendelseKvittering() ;
 	//public void setDatoforhendelseKvittering(String datoforhendelseKvittering);

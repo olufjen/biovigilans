@@ -444,9 +444,12 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
     			newLogin.setPassord(login.getSaksbehandler().getBehandlerpassord());
     			newLogin.setEpostAdresse(login.getSaksbehandler().getBehandlerepost());
    			    List<Saksbehandler> saksbehandlere = (List<Saksbehandler>) sessionAdmin.getSessionObject(request,behandlereKey);
-    			invalidateSessionobjects();
-    			sessionAdmin.getSession(request,diskusjonsKey).invalidate();
-    			sessionAdmin.getSession(request,sakModelKey).invalidate();
+/*
+ * Fjerner saksgangen og diskusjonene fra session
+ */
+
+    		 	sessionAdmin.removesessionObject(request, diskusjonsKey);
+    		 	sessionAdmin.removesessionObject(request, sakModelKey);
     			sessionAdmin.setSessionObject(request, newLogin, loginKey);
    			    sessionAdmin.setSessionObject(request, saksbehandlere, behandlereKey);
     			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
@@ -536,6 +539,12 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
       				sakModel.setGmlMeldeid(meldeId);
       				savegiverReclassifikasjon();
     			}
+/*
+ * En rutine for å sende epost til Helsedirektoratet dersom saksbehandler har valgt "Melde til Helsedirektoratet"
+ * olj 03.02.16    			
+ */
+    			String mailText = (String)sakModel.getFormMap().get("meldingtilhelsedir")+ " Meldingsnummer: "+ melding.getMeldingsnokkel();
+    			tilHelsedirektoratet(request, mailText, sakModel.getFormMap());      			
        			sakModel.setDiskusjonsMappe(null);
     			sakModel.setSaksMappe(null);
     			tilMelderPart = "none";

@@ -36,9 +36,12 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	private String selectvigilansMeldingtimeperiodSQL;
 	private String selectvigilansMeldinghentperiodSQL;
 	private String selectvigilansMeldingmerknaderSQL;
+	private String selectvigilansMeldingikkeavvistSQL;
 	private String selectpasientMeldingSQL;
 	private String selectgiverMeldingSQL;
 	private String selectannenMeldingSQL;
+	private String selectvigilansMeldingsaksbehandlerSQL;
+	
 	private boolean timeperiodType = true; // Satt til true dersom forespurt tidsperiode er meldt
 	// satt til false dersom forespurt tidsperiode er når meldingen skjedde.
 	
@@ -140,6 +143,28 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	
 	public String[] getGiverTableDefs() {
 		return giverTableDefs;
+	}
+
+
+	public String getSelectvigilansMeldingsaksbehandlerSQL() {
+		return selectvigilansMeldingsaksbehandlerSQL;
+	}
+
+
+	public void setSelectvigilansMeldingsaksbehandlerSQL(
+			String selectvigilansMeldingsaksbehandlerSQL) {
+		this.selectvigilansMeldingsaksbehandlerSQL = selectvigilansMeldingsaksbehandlerSQL;
+	}
+
+
+	public String getSelectvigilansMeldingikkeavvistSQL() {
+		return selectvigilansMeldingikkeavvistSQL;
+	}
+
+
+	public void setSelectvigilansMeldingikkeavvistSQL(
+			String selectvigilansMeldingikkeavvistSQL) {
+		this.selectvigilansMeldingikkeavvistSQL = selectvigilansMeldingikkeavvistSQL;
 	}
 
 
@@ -689,11 +714,16 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 			vigilansSelect = new VigilansSelect(getDataSource(),selectvigilansMeldingnullSQL,vigilandsMeldingTableDefs);
 			meldinger = vigilansSelect.execute();
 		}
-		
-		vigilansSelect = new VigilansSelect(getDataSource(),selectvigilansMeldingtypesSQL,vigilandsMeldingTableDefs);
+		String sql = selectvigilansMeldingtypesSQL;
+		String params = types;
+		if (types.equals("Alle unntatt avviste")){
+			sql = selectvigilansMeldingikkeavvistSQL;
+			params = "Avvist";
+		}
+		vigilansSelect = new VigilansSelect(getDataSource(),sql,vigilandsMeldingTableDefs);
 		int type = Types.VARCHAR;
 		vigilansSelect.declareParameter(new SqlParameter(type));
-		List fleremeldinger = vigilansSelect.execute(types);
+		List fleremeldinger = vigilansSelect.execute(params);
 		if (meldinger == null){
 			meldinger = fleremeldinger;
 		}else

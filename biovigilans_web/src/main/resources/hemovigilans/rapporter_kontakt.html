@@ -26,30 +26,18 @@
 </head>
 
 <body onload="setSelectListValue();">
- <header class="master-header">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-9 col-sm-6 col-sm-push-3 col-vertical-bottom-sm logo-container">
-            <div class="bottom">
-              <a class="home" href="#" id="home" rel="home" title="">
-                <img class="logo" src="/biovigilans_web/resources/css/logo.png" alt="" />
-              </a>
-            </div>
-          </div>
-          <div class="hidden-xs col-sm-3 col-sm-push-5 col-vertical-bottom-sm">
-       
-          </div>
-          <div class="col-xs-3 col-sm-pull-9 col-vertical-bottom-sm">
-            <div class="bottom">
-        <button type="button" onclick="homePage()" class="btn btn-default btn-lg">Tilbake</button>
-      </div>
-          </div>
-        </div>
-      </div>
-    </header>
+ <header>
+    <div class="container">
+      <figure class="main-logo">        
+        <img alt="Logo Helsedirektoratet" src="/biovigilans_web/resources/css/logo.png">        
+      </figure>
+    </div>    
+  </header>
 
-
-<div class="container">
+  <div class="container">
+      <div class="left hidden-print">        
+        <button type="button" class="btn btn-default btn-lg btn-back" onclick="homePage()">Tilbake</button>        
+      </div>
 <form id="rapport" action="?method=PUT" method="post"> 
 <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->  
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -65,8 +53,13 @@ $( document ).ready(function(){
 	if (reqFlag == 'none'){
 	//		alert(reqFlag);
 			document.getElementById('k-passordsjekk').required = false;
+	/* 		document.getElementById('k-helseregion').required = true
+			document.getElementById('k-helseforetak').required = true;
+			document.getElementById('k-helseforetak').required = true;
+			document.getElementById('k-sykehus').required = true; */
 	}
 	if (reqFlag == 'block'){
+	//	alert(reqFlag);
 		document.getElementById('k-passordsjekk').required = false; // Slått av inntil videre (OLJ 15.09.15)
 	}
 	if (kontaktButton == 'disable'){
@@ -192,7 +185,7 @@ function passwordsubmit(){
 	//document.getElementById("k-passord").innerHTML = event.keyCode;
 	 $("#lagrekontakt").prop("disabled", false);
 	 $("#lagreanonymt").prop("disabled", false);
-		
+//	 sjekksykehus();
 }
 function formsubmitnymelder(){
 	$("#btnnymelder").click();
@@ -201,8 +194,17 @@ function regionValgt(){
 	var region = document.getElementById("k-helseregion").value;
 //	document.getElementById("k-passordsjekk").setAttribute("value", newpwd);
 	var tt = document.getElementById("k-passordsjekk").value;
+	document.getElementById('k-helseregion').required = false;
+//	 alert("sjekker region region valgt:"+region);
 //	alert(newpwd+" "+tt);
+	 if (region == ''){
+//		 document.getElementById('k-helseregion').required = true;
+//		 alert("region er tom region valgt");
+	 }
 	if(region != ''){
+		/* document.getElementById('k-helseforetak').required = true;
+		document.getElementById('k-sykehus').required = true; */
+//		alert("Click btnRegion");
 		$("#btnRegion").click();
 	}
 	
@@ -210,10 +212,8 @@ function regionValgt(){
 function foretakValgt(){
 	var foretak = document.getElementById("k-helseforetak").value;
 //	document.getElementById("k-passordsjekk").setAttribute("value", newpwd);
-	var tt = document.getElementById("k-passordsjekk").value;
-
 	 if (foretak == ''){
-		 alert("foretak er tomt");
+//		 alert("foretak er tomt");
 	 }
 
 	 if (foretak != ''){
@@ -227,6 +227,30 @@ function leveranseValgt(){
 //	 alert("Leveranse valgt");
 	//document.location("leveranse.html");
 	$("#btnleveranseb").click();
+}
+function sjekkregion(){
+	var region = document.getElementById("k-helseregion").value;
+//	alert("sjekker region:"+region);
+	document.getElementById('k-helseregion').required = false;
+	 if (region == ''){
+		 document.getElementById('k-helseregion').required = true;
+//		 alert("region er tom");
+	 }
+}
+function sjekkforetak(){
+	var foretak = document.getElementById("k-helseforetak").value;
+//	alert("sjekker foretak:"+foretak);
+	 if (foretak == ''){
+		 document.getElementById('k-helseforetak').required = true;
+//		 alert("foretak er tomt");
+	 }
+}
+function sjekksykehus(){
+	var sykehus = document.getElementById('k-sykehus').value;
+	if (sykehus == ''){
+	 document.getElementById('k-sykehus').required = true;
+//	 alert("foretak er tomt");
+	}
 }
 function anonymKnappen(){
 // Skaper problemer dersom man har en forhåndsutfylt epost adresse i kontaktskjema og ønsker å melde anonymnt!	 
@@ -342,7 +366,7 @@ function homePage(){
       <div class="form-group" id="helseforetak" style="display: none">
         <label for="k-helseforetak">Helseforetak:</label>
         <div>
-        <select name ="k-helseforetak" id="k-helseforetak" class="form-control" onchange="foretakValgt();"  >
+        <select name ="k-helseforetak" id="k-helseforetak" class="form-control"  onchange="foretakValgt();"  >
 						<option selected="selected" >${melder.helseforetak}</option>
 			       		<#list melder.valgtRegion as region>
 			       				<option>${region} </option>
@@ -397,8 +421,9 @@ function homePage(){
 		<!--
           <button name="avbrytkontakt" type="submit" class="btn btn-default"  onclick="homePage()">Avbryt</button>
    -->     
-          <button name="lagrekontakt" type="submit" id="lagrekontakt" class="btn btn-primary"  >Send inn</button>
+          <button name="lagrekontakt" type="submit" id="lagrekontakt" class="btn btn-primary" onclick="sjekkregion();sjekkforetak();" >Send inn</button>
           <button name="nyttpassord" type="submit" id="nyttpassord" class="btn btn-primary" style="display: none" >Glemt passord?</button>
+          
  		  <button type="submit" id="btnprovny" value="provny"  name="provnytt" class="btn btn-primary btn-lg" style="display: none" > getValue </button>
  		  <button type="submit" id="btnhentpassord" value="passord"  name="hentpassord" class="btn btn-primary btn-lg" style="display: none" > getValue </button>
  		  <button type="submit" id="btnnymelder" value="nymelder"  name="nymelder" class="btn btn-primary btn-lg" style="display: none" > getValue </button>

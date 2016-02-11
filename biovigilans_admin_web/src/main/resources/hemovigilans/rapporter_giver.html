@@ -109,6 +109,8 @@
 					document.getElementById('meldstatus').style.color = "green";
 		//			alert(statusflag + " Setter ny farge");
 				}
+				toggleDisplay('type-tapping',1);
+				toggleDisplay('tab-tidligere',1);
 				document.getElementById('tab-kjonn-1').required = false;
 //				document.getElementById('tab-kjonn-2').required = false;
 				document.getElementById('giveralder').required = false;
@@ -306,6 +308,8 @@
 					$("#avbrytTxt").html('Avbryt');
 					$("#btnAvbryt").val('ikkeGodkjent');
 					$("#btnSendinn").val('godkjent');
+					$("#meldingtilhelsedir").attr('disabled',false);
+					$("#meldingtilhelsedir").attr('readonly',false);
 					return false;
 				}else if(btnValue == "godkjent"){
 					$("input[type=radio]").attr('disabled', false);
@@ -417,11 +421,12 @@
   		Starte dialog med melder
   </label>
   <label>
-	<input type="checkbox" name="statusvalg1" id="statusvalg1" onclick="toggleDisplayid('saksbehandlere', 1);" value="Starte dialog i Hemovigilansgruppen" />
+  <!-- onclick="toggleDisplayid('saksbehandlere', 1);" -->
+	<input type="checkbox" name="statusvalg1" id="statusvalg1"  value="Starte dialog i Hemovigilansgruppen" />
   		Starte dialog i Hemovigilansgruppen
   </label>  
   <label>
-	<input type="checkbox" name="statusvalg2" id="statusvalg2" value="Melde til Helsedirektoratet" />
+	<input type="checkbox" name="statusvalg2" id="statusvalg2" onclick="toggleDisplayid('saksbehandlere', 1);" value="Melde til Helsedirektoratet" />
   		Melde til Helsedirektoratet
   </label>
    <label>
@@ -440,8 +445,12 @@
   	<input title="Husk å gjøre reklassifisering!" type="checkbox" name="statusvalg6" id="statusvalg6" onchange="enableReclassification();" value="Reklassifisering av melding" />
   		Reklassifisering av melding
   </label>
-  <label id="saksbehandlere" class="text-danger" style="display: none">Melding blir sendt til alle saksbehandlere. Vent... !!</label>
-  
+ <div id="saksbehandlere" class="form-group" style="display: none">
+	<label>Melding til Helsedirektoratet</label>
+  	<textarea id="meldingtilhelsedir" class="form-control" name="meldingtilhelsedir" rows="2" ></textarea>
+  </div>
+ <!--  <label id="saksbehandlere" class="text-danger" style="display: none">Melding blir sendt til alle saksbehandlere. Vent... !!</label>
+ -->  
   	<button type="submit" name="btnlagreflagg" id="btnlagreflagg" value="lagreflagg" class="btn btn-primary"   > <span id="sendinnflag">Lagre merknader</span></button>
  	<br>
 	<button type="submit" name="btnsend" id="btnsend" value="sendemelding" class="btn btn-warning" style="display: ${tilmelder}"  > <span id="sendinnflag">Send melding til melder</span></button>

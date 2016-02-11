@@ -209,7 +209,9 @@
     	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
   		<property name="selectvigilansMeldingSQL" value="${vigilansmeldingall.select}"></property>
   		<property name="selectvigilansMeldingtypesSQL" value="${vigilansmeldingtype.select}"></property>
+  		<property name="selectvigilansMeldingikkeavvistSQL" value="${vigilansmeldingikkeavvist.select}"></property>
   		<property name="selectvigilansMeldingnullSQL" value="${vigilansmeldingnull.select}"></property>
+  		<property name="selectvigilansMeldingsaksbehandlerSQL" value="${vigilansmelding.saksbehandler}"></property>
   		<property name="selectannenMeldingSQL" value="${annenMeldingSelect}"></property>
   		<property name="selectvigilansMeldingtimeperiodSQL" value="${vigilansmeldingmeldtdato.select}"></property>
   		<property name="selectvigilansMeldinghentperiodSQL" value="${vigilansmeldinghentdato.select}"></property>
@@ -294,11 +296,27 @@
   	<property name="saksbehandlerSQL" value="${behandler.select}"></property>
   	<property name="saksbehandlerTableDefs" value="${behandler.behandlerid},${behandler.behandlernavn},${behandler.behandlerepost},${behandler.behandlertlf},${behandler.behandlerpassord}"></property>
   	<property name="selectmelderSQL" value="${melder.selectmelderfrasak}"></property>
+  	<property name="statistikkregion" value="${statistikk.prregion}"></property>
+  	<property name="statistikkregionperiodeSQL" value="${statistikk.prregionperiode}"></property>
+  	<property name="statistikkregionhentperiodeSQL" value="${statistikk.prregionhentperiode}"></property>
+  	<property name="statistikkTableDefs" value="${statistikk.region},${statistikk.antall}"></property>
   	<property name="melderTableDefs" value="${melder.melderid},${melder.meldernavn},${melder.melderepost},${melder.meldertlf},${melder.melderpassord},${melder.helseregion},${melder.foretak},${melder.sykehus}"></property>
+  </bean>
+  <bean id="statistikkDAO" class="no.naks.biovigilans.dao.StatistikkDAOImpl">
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+    <property name="statistikkregionSQL" value="${statistikk.prforetak}"></property>
+    <property name="statistikksykehusSQL" value="${statistikk.prsykehus}"></property>
+    <property name="statistikkregionperiodeSQL" value="${statistikk.prforetakperiode}"></property>
+    <property name="statistikksykehusperiodeSQL" value="${statistikk.prsykehusperiode}"></property>
+    <property name="statistikkregionhentperiodeSQL" value="${statistikk.prforetakhentperiode}"></property>
+    <property name="statistikksykehushentperiodeSQL" value="${statistikk.prsykehushentperiode}"></property>
+  	<property name="statistikkTableDefs" value="${statistikk.region},${statistikk.antall}"></property>
+  
   </bean>
   <bean id="saksbehandlingService"  class="no.naks.biovigilans.service.SaksbehandlingServiceImpl">
   		<property name="saksbehandlingDAO" ref="saksbehandlingDAO"></property>
   		<property name="sakDAO" ref="sakDAO"></property>
+  		<property name="statistikkDAO" ref="statistikkDAO"></property>
   </bean>
  	
 

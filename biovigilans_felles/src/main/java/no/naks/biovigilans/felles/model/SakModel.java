@@ -168,6 +168,9 @@ public class SakModel extends VigilansModel {
 	 */
 	public void saveSaker(Long meldeId){
 		Map<String,String> saksMap = getFormMap();
+		String meldingsText = saksMap.get("meldingtilhelsedir");
+		if (meldingsText == null || meldingsText.equals(""))
+			meldingsText = "Sak opprettet";
 		if (saksMappe == null)
 			saksMappe = new HashMap<String,Sak>(); 
 		if (diskusjonsMappe == null)
@@ -180,7 +183,7 @@ public class SakModel extends VigilansModel {
 				Diskusjon diskusjon = new DiskusjonImpl();
 				sak = new SakImpl();
 				diskusjon.setKommentar(flagg);
-				diskusjon.setTema("Sak opprettet");
+				diskusjon.setTema(meldingsText);
 				String name = "Ikke kjent";
 				if (loginSaksbehandler != null && loginSaksbehandler.getBehandernavn() != null)
 					name = loginSaksbehandler.getBehandernavn();
@@ -201,6 +204,7 @@ public class SakModel extends VigilansModel {
 	/**
 	 * setSakdiskusjon
 	 * Denne funksjonen setter fremmednøkkel til sak etter at riktig antall poster for diskusjoner er opprettet 
+	 * Den setter også flagg dersom man setter merknader for dialog i hemovigilansgruppen eller reklassifisering
 	 * Den kalles fra rapporterSrverResource når saksbehandler har valgt å sette saksmerknader
 	 */
 	public void setSakdiskusjon(){

@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.SqlParameter;
 
 import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.Melder;
+import no.naks.biovigilans.model.Regionstatistikk;
 import no.naks.biovigilans.model.Sak;
 import no.naks.biovigilans.model.Saksbehandler;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
@@ -41,7 +42,10 @@ public class SakDAOImpl extends AbstractAdmintablesDAO implements SakDAO{
 	private String diskusjonPrimaryKey;
 	private String[] diskusjonprimarykeyTableDefs;
 	private String[] flaggNames;
-
+	private String statistikkregion;
+	private String[] statistikkTableDefs;
+	private String statistikkregionperiodeSQL;
+	private String statistikkregionhentperiodeSQL;
 	private Tablesupdate tablesUpdate = null;
 	/**
 	 * saveDiskusjon
@@ -190,7 +194,41 @@ public class SakDAOImpl extends AbstractAdmintablesDAO implements SakDAO{
 		saksbehandlere = behandlerSelect.execute();
 		return saksbehandlere;
 	}
+	public List<Regionstatistikk> collectRegionstatistikk(){
+		List statistikk = new ArrayList<Regionstatistikk>();
+		StatistikkSelect regionSelect = new StatistikkSelect(getDataSource(),statistikkregion,statistikkTableDefs);
+		statistikk = regionSelect.execute();
+		return statistikk;
+	}
+	public List<Regionstatistikk> collectRegionstatistikk(String startperiod,String endperiod,String type){
+		List statistikk = new ArrayList<Regionstatistikk>();
+		int stype = Types.DATE;
+		int etype = Types.DATE;
+		SqlParameter param = new SqlParameter(stype);
+		SqlParameter param1 = new SqlParameter(etype);
+		String sql = statistikkregionhentperiodeSQL;
+		if (type.equals("meldt"))
+			sql = statistikkregionperiodeSQL;
+		StatistikkSelect regionSelect = new StatistikkSelect(getDataSource(),sql,statistikkTableDefs);
+		regionSelect.declareParameter(param);
+		regionSelect.declareParameter(param1);
+		statistikk = regionSelect.execute(startperiod,endperiod);
+		return statistikk;
+	}
 	
+	public String getStatistikkregionperiodeSQL() {
+		return statistikkregionperiodeSQL;
+	}
+	public void setStatistikkregionperiodeSQL(String statistikkregionperiodeSQL) {
+		this.statistikkregionperiodeSQL = statistikkregionperiodeSQL;
+	}
+	public String getStatistikkregionhentperiodeSQL() {
+		return statistikkregionhentperiodeSQL;
+	}
+	public void setStatistikkregionhentperiodeSQL(
+			String statistikkregionhentperiodeSQL) {
+		this.statistikkregionhentperiodeSQL = statistikkregionhentperiodeSQL;
+	}
 	public String getSelectenDiskusjonSQL() {
 		return selectenDiskusjonSQL;
 	}
@@ -310,5 +348,18 @@ public class SakDAOImpl extends AbstractAdmintablesDAO implements SakDAO{
 	public void setSaksbehandlerTableDefs(String[] saksbehandlerTableDefs) {
 		this.saksbehandlerTableDefs = saksbehandlerTableDefs;
 	}
+	public String getStatistikkregion() {
+		return statistikkregion;
+	}
+	public void setStatistikkregion(String statistikkregion) {
+		this.statistikkregion = statistikkregion;
+	}
+	public String[] getStatistikkTableDefs() {
+		return statistikkTableDefs;
+	}
+	public void setStatistikkTableDefs(String[] statistikkTableDefs) {
+		this.statistikkTableDefs = statistikkTableDefs;
+	}
+	
 	
 }

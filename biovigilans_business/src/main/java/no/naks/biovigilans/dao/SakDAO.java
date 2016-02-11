@@ -5,6 +5,7 @@ import java.util.Map;
 
 import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.Melder;
+import no.naks.biovigilans.model.Regionstatistikk;
 import no.naks.biovigilans.model.Sak;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 
@@ -38,7 +39,10 @@ public interface SakDAO {
 	public void setSakPrimaryKey(String sakPrimaryKey);
 	public String[] getSakprimarykeyTableDefs();
 	public void setSakprimarykeyTableDefs(String[] sakprimarykeyTableDefs);
-
+	public String getStatistikkregion();
+	public void setStatistikkregion(String statistikkregion);
+	public String[] getStatistikkTableDefs();
+	public void setStatistikkTableDefs(String[] statistikkTableDefs);
 	public String[] getFlaggNames();
 
 	public void setFlaggNames(String[] flaggNames);
@@ -58,4 +62,11 @@ public interface SakDAO {
 	public String[] getMelderTableDefs();
 	public void setMelderTableDefs(String[] melderTableDefs);
 	public Melder collectMelder(Long melderId);
+	public List<Regionstatistikk> collectRegionstatistikk();
+	public String getStatistikkregionperiodeSQL();
+	public void setStatistikkregionperiodeSQL(String statistikkregionperiodeSQL);
+	public String getStatistikkregionhentperiodeSQL();
+	public void setStatistikkregionhentperiodeSQL(
+			String statistikkregionhentperiodeSQL);
+	public List<Regionstatistikk> collectRegionstatistikk(String startperiod,String endperiod,String type);
 }

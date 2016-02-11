@@ -56,5 +56,8 @@ public interface Pasientkomplikasjon {
 	public Object[] getParams();
 	public int[] getUtypes();
 	public void setKomplikasjonstypes();
+	public java.lang.String getSjekklistesaksbehandling();
+	public void setSjekklistesaksbehandling(
+			java.lang.String sjekklistesaksbehandling);
 	
 }

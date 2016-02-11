@@ -73,6 +73,8 @@ public class MeldingtilMelderServerResourceHTML extends
     	 Melder melder = null;
     	 if (melding.getMelderId() != null && melding.getMelderId().longValue() != 0)
     			 melder = saksbehandlingWebservice.collectmelder(melding.getMelderId());
+	     login = (LoginModel)sessionAdmin.getSessionObject(request,loginKey);
+
     	 sessionAdmin.setSessionObject(request, melder, tilmelderKey);
     	 sessionAdmin.setSessionObject(request, melding, meldingtilMelderKey);
     	 meldingsDiskusjon = (MeldingModel) sessionAdmin.getSessionObject(request,meldingdiskusjonKey); 
@@ -112,21 +114,18 @@ public class MeldingtilMelderServerResourceHTML extends
 	   @Post
 	    public Representation storeHemovigilans(Form form) {
 	    	
-	    	Request request = getRequest();
-	    	 findMessageType(request);
-	    	TemplateRepresentation  templateRep = null;
-	    	if(form == null){
-	    		invalidateSessionobjects();
-	    	}
-	    	  login = (LoginModel)sessionAdmin.getSessionObject(request,loginKey);
-	    	Map<String, Object> dataModel = new HashMap<String, Object>();
-	   	 meldingsDiskusjon = (MeldingModel) sessionAdmin.getSessionObject(request,meldingdiskusjonKey); 
-    	 if (meldingsDiskusjon == null){
-    		 meldingsDiskusjon = new MeldingModel();
-    		 sessionAdmin.setSessionObject(request,meldingsDiskusjon, meldingdiskusjonKey);
-    	 }
-    	   meldingsDiskusjon.setFormNames( getSessionParams());
-	    	if (form != null){
+		   Request request = getRequest();
+		   findMessageType(request);
+		   TemplateRepresentation  templateRep = null;
+		   login = (LoginModel)sessionAdmin.getSessionObject(request,loginKey);
+		   Map<String, Object> dataModel = new HashMap<String, Object>();
+		   meldingsDiskusjon = (MeldingModel) sessionAdmin.getSessionObject(request,meldingdiskusjonKey); 
+		   if (meldingsDiskusjon == null){
+			   meldingsDiskusjon = new MeldingModel();
+			   sessionAdmin.setSessionObject(request,meldingsDiskusjon, meldingdiskusjonKey);
+		   }
+		   meldingsDiskusjon.setFormNames( getSessionParams());
+		   if (form != null){
 	    		Parameter sendMelding = form.getFirst("btnsendmelding");
 	    		Parameter avslutt = form.getFirst("btnavslutt");
 	    		if (sendMelding != null){ // Bruker velger å sende melding
@@ -137,18 +136,22 @@ public class MeldingtilMelderServerResourceHTML extends
 	        			}
 
 	        		}
+		     		String saksNavn = login.getSaksbehandler().getBehandernavn();
 		     		meldingsDiskusjon.saveDiskusjon();
+		     		String sakTema = meldingsDiskusjon.getDiskusjon().getTema();
+		     		sakTema = sakTema + ";"+saksNavn;
+		     		meldingsDiskusjon.getDiskusjon().setTema(sakTema);
 		     		meldingsDiskusjon.getDiskusjon().setMeldeid(melding.getMeldeid());
 		     		saksbehandlingWebservice.saveDiskusjon(meldingsDiskusjon.getDiskusjon());
-		    		 displayPart = "none";
-		        	 datePart = "none";
-		        	 String meldingsId = String.valueOf(melding.getMeldeid().longValue());
-		        	 String diskId = String.valueOf(meldingsDiskusjon.getDiskusjon().getDiskusjonid().longValue());
-		        	 Melder melder = (Melder) sessionAdmin.getSessionObject(request, tilmelderKey);
-		        	 Vigilansmelding melding = (Vigilansmelding) sessionAdmin.getSessionObject(request, meldingtilMelderKey);
-		    	   	 SimpleScalar simple = new SimpleScalar(displayPart);
-		        	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
-		        	 System.out.println("Sender melding til melder - sjekker epost adresse");
+		     		displayPart = "none";
+		     		datePart = "none";
+		     		String meldingsId = String.valueOf(melding.getMeldeid().longValue());
+		     		String diskId = String.valueOf(meldingsDiskusjon.getDiskusjon().getDiskusjonid().longValue());
+		     		Melder melder = (Melder) sessionAdmin.getSessionObject(request, tilmelderKey);
+		     		Vigilansmelding melding = (Vigilansmelding) sessionAdmin.getSessionObject(request, meldingtilMelderKey);
+		     		SimpleScalar simple = new SimpleScalar(displayPart);
+		     		SimpleScalar hendelseDate = new SimpleScalar(datePart);
+		     		System.out.println("Sender melding til melder - sjekker epost adresse");
 		     	    if(melder.getMelderepost() != null || !melder.getMelderepost().equals("")){
 		     	    	System.out.println("Sender melding til melder: " +melder.getMelderepost()+ " Om "+meldingsDiskusjon.getDiskusjon().getTema());
 		     	    	emailWebService.setSubject(meldingsDiskusjon.getDiskusjon().getTema());
@@ -170,14 +173,16 @@ public class MeldingtilMelderServerResourceHTML extends
 		    				MediaType.TEXT_HTML);		        	 
 	    		}
 	    		if (avslutt != null){
-	    			//invalidateSessionobjects();
 	    			LoginModel newLogin = new LoginModel();
 	    			newLogin.setSaksbehandler(login.getSaksbehandler());
 	    			newLogin.setPassord(login.getSaksbehandler().getBehandlerpassord());
 	    			newLogin.setEpostAdresse(login.getSaksbehandler().getBehandlerepost());
 	    			
-	    			sessionAdmin.getSession(request,diskusjonsKey).invalidate();
+/*	    			sessionAdmin.getSession(request,diskusjonsKey).invalidate();
 	    			sessionAdmin.getSession(request,sakModelKey).invalidate();
+*/	
+	    		 	sessionAdmin.removesessionObject(request, diskusjonsKey);
+	    		 	sessionAdmin.removesessionObject(request, sakModelKey);
 	    			sessionAdmin.setSessionObject(request, newLogin, loginKey);
 	    		   	 SimpleScalar simple = new SimpleScalar(displayPart);
 		        	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
@@ -187,7 +192,6 @@ public class MeldingtilMelderServerResourceHTML extends
 	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
 	   			 
 	    			Representation meldingHendelser = clres2.get();
-//	        		invalidateSessionobjects();
 	        		templateRep = new TemplateRepresentation(meldingHendelser, dataModel,
 	        				MediaType.TEXT_HTML);
 	        		redirectPermanent("../hemovigilans/saksbehandling.html");
