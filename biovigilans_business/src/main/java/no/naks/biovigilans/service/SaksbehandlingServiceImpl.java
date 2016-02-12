@@ -93,6 +93,9 @@ public class SaksbehandlingServiceImpl implements SaksbehandlingService {
 	public List collectMessagesMarks(String merknad){
 		return saksbehandlingDAO.collectMessagesMarks(merknad);
 	}
+	public List collectMessagesSaksbehandler(Long saksbehandlerid){
+		return saksbehandlingDAO.collectMessagessaksbehandler(saksbehandlerid);
+	}
 	public List<Regionstatistikk> collectRegionstatistikk(){
 		return sakDAO.collectRegionstatistikk();
 	}
