@@ -21,7 +21,8 @@ public interface SaksbehandlingWebService {
 	public void setMelderTableService(MelderTableService melderTableService);
 	public Map collectAnnenMeldinger(List<Vigilansmelding>meldinger);
 	public List collectMessages(String types);
-	public List collectMessages(String start,String end);	
+	public List collectMessages(String start,String end);
+	public List collectMessagesSaksbehandler(Long saksbehandlerid);
 	public void setTimeperiodType(boolean timeperiodType);
 	public void saveDiskusjon(Map<String,Diskusjon> diskusjonsMappe);
 	public void saveDiskusjon(Diskusjon diskusjon);

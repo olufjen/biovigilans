@@ -24,6 +24,7 @@ public interface SaksbehandlingService {
 	public List collectPasientMeldinger(List<Vigilansmelding>meldinger);
 	public List collectGiverMeldinger(List<Vigilansmelding>meldinger);
 	public Map collectAnnenMeldinger(List<Vigilansmelding>meldinger);
+	public List collectMessagesSaksbehandler(Long saksbehandlerid);
 	public Map<String,List> selectMeldinger(String meldingsNokkel);
 	public List collectMessages(String start,String end);	
 	public SakDAO getSakDAO();

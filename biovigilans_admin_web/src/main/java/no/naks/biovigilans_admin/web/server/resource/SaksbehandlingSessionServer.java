@@ -359,6 +359,24 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	}
 	/**
 	 * hentMeldingene
+	 * Denne rutinen henter meldinger til saksbehandler
+	 * @param Long saksbehandlerid id til pålogget saksbehandler
+	 * @return Liste over saksbehandlers meldinger
+	 */
+	public List<Vigilansmelding> hentMineMeldinger(Long saksbehandlerid){
+		 List<Vigilansmelding> meldinger = null;
+		 meldinger = saksbehandlingWebservice.collectMessagesSaksbehandler(saksbehandlerid);
+		    for (Vigilansmelding melding: meldinger){
+		    	if (melding.getSjekklistesaksbehandling() == null){
+		    		melding.setSjekklistesaksbehandling("Levert");
+		    	}
+		    }
+	    
+		 return hentMeldingstyper(meldinger);
+
+	}
+	/**
+	 * hentMeldingene
 	 * Denne rutinen henter meldinger basert på definert utvalg
 	 * @param status Utvalg status for meldingene eller null
 	 * @return

@@ -277,7 +277,7 @@ public interface SaksbehandlingDAO {
 	public Map<String,List> selectMeldinger (String meldeid);
 	public String getSelectvigilansMeldingidSQL();
 
-
+	public List collectMessagessaksbehandler(Long behandlerid);
 	public void setSelectvigilansMeldingidSQL(String selectvigilansMeldingidSQL);
 	public List collectMessagesbytypes(String types);
 	public List collectMessages(String start,String end);	

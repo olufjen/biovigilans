@@ -703,6 +703,20 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 		return meldinger;
 	}
 	/**
+	 * collectMessagessaksbehandler
+	 * Denne rutinen henter alle vigilansmeldingermeldinger til en gitt saksbehandler
+	 * @param Long saksbehandlerid
+	 * @return List en liste over meldinger
+	 */
+	public List collectMessagessaksbehandler(Long behandlerid){
+		List meldinger = null;
+		vigilansSelect = new VigilansSelect(getDataSource(),selectvigilansMeldingsaksbehandlerSQL,vigilandsMeldingTableDefs);
+		int type = Types.INTEGER;
+		vigilansSelect.declareParameter(new SqlParameter(type));
+		meldinger = vigilansSelect.execute(behandlerid);
+		return meldinger;
+	}	
+	/**
 	 * collectMessagesbytypes
 	 * Denne rutinen henter alle vigilansmeldingermeldinger med en gitt status
 	 * @param types
