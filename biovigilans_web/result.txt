@@ -4,11 +4,9 @@
 [INFO] ------------------------------------------------------------------------
 [INFO] Building biovigilans web 1.0-SNAPSHOT
 [INFO] ------------------------------------------------------------------------
-Downloading: http://repository.apache.org/snapshots/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
-[WARNING] The POM for opensymphony:quartz:jar:1.6.0 is missing, no dependency information available
+[WARNING] The POM for opensymphony:quartz:jar:1.6.0 is missing, no dependency information available
 [INFO] 
 [INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ biovigilans_web ---
-[INFO] Deleting C:\svnroot2\nokc\biovigilans\trunk\biovigilans_web\target
 [INFO] 
 [INFO] --- maven-resources-plugin:2.2:resources (default-resources) @ biovigilans_web ---
 [INFO] Using encoding: 'utf-8' to copy filtered resources.
@@ -35,7 +33,7 @@ Downloading: http://repository.apache.org/snapshots/opensymphony/quartz/1.6.0/qu
 [INFO] Assembling webapp [biovigilans_web] in [C:\svnroot2\nokc\biovigilans\trunk\biovigilans_web\target\biovigilans_web]
 [INFO] Processing war project
 [INFO] Copying webapp resources [C:\svnroot2\nokc\biovigilans\trunk\biovigilans_web\src\main\webapp]
-[INFO] Webapp assembled in [7292 msecs]
+[INFO] Webapp assembled in [6638 msecs]
 [INFO] Building war: C:\svnroot2\nokc\biovigilans\trunk\biovigilans_web\target\biovigilans_web.war
 [INFO] WEB-INF\web.xml already added, skipping
 [INFO] 
@@ -45,7 +43,7 @@ Downloading: http://repository.apache.org/snapshots/opensymphony/quartz/1.6.0/qu
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 23.835s
-[INFO] Finished at: Thu Feb 04 08:53:55 CET 2016
-[INFO] Final Memory: 43M/282M
+[INFO] Total time: 19.743s
+[INFO] Finished at: Mon Feb 15 09:02:27 CET 2016
+[INFO] Final Memory: 43M/393M
 [INFO] ------------------------------------------------------------------------
