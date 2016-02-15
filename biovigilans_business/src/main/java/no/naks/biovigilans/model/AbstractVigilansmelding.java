@@ -268,6 +268,7 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 			date = date + Integer.toString(year);
 			
 			meldingsnokkel = "Hem" + getMeldeid() + date ;
+			formatNokkel = "Hem"+ " "+ getMeldeid() + " " + String.valueOf(day) + " " + String.valueOf(month)+ String.valueOf(year);
 		}
 		this.meldingsnokkel = meldingsnokkel;
 	}
