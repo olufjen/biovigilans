@@ -8,6 +8,8 @@ import java.util.Map;
 
 public interface Vigilansmelding {
 
+	public String getFormatNokkel();
+	public void setFormatNokkel(String formatNokkel);
 	public Long getMeldeid();
 	public void setMeldeid(Long meldeid);
 	public String getMeldingstype();

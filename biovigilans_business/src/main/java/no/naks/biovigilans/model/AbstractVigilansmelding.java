@@ -72,7 +72,7 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	private Date meldingsdato;
 
 	private String meldingsnokkel;
-	
+	private String formatNokkel; // Formattert meldingsnøkkel 
 	private String kladd; // Om denne meldingen er en kladd
 	private String godkjent; // Om denne meldingen er godkjent
 	private String meldingstype = "";
@@ -81,6 +81,12 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	protected Map<String,String>vigilansFields;
 
 	
+	public String getFormatNokkel() {
+		return formatNokkel;
+	}
+	public void setFormatNokkel(String formatNokkel) {
+		this.formatNokkel = formatNokkel;
+	}
 	public String getMeldingstype() {
 		return meldingstype;
 	}
