@@ -257,20 +257,24 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 		return meldingsnokkel;
 	}
 	public void setMeldingsnokkel(String meldingsnokkel) {
+		 Calendar cal = Calendar.getInstance();
+		cal.setTime(getMeldingsdato());
+		int day =  cal.get(Calendar.DAY_OF_MONTH) ;
+		int month= cal.get(Calendar.MONTH)+1;
+		int year = cal.get(Calendar.YEAR);
+		String date= Integer.toString(day);
+		date = date + Integer.toString(month);
+		date = date + Integer.toString(year);
+		String fNokkel = "";
 		if(meldingsnokkel == null){
-			 Calendar cal = Calendar.getInstance();
-			    cal.setTime(getMeldingsdato());
-			int day =  cal.get(Calendar.DAY_OF_MONTH) ;
-			int month= cal.get(Calendar.MONTH)+1;
-			int year = cal.get(Calendar.YEAR);
-			String date= Integer.toString(day);
-			date = date + Integer.toString(month);
-			date = date + Integer.toString(year);
-			
+	
 			meldingsnokkel = "Hem" + getMeldeid() + date ;
-			formatNokkel = "Hem"+ " "+ getMeldeid() + " " + String.valueOf(day) + " " + String.valueOf(month)+ String.valueOf(year);
+			
 		}
+
+		fNokkel = "Hem"+ " "+ getMeldeid() + " " + String.valueOf(day) + " " + String.valueOf(month)+ String.valueOf(year);
 		this.meldingsnokkel = meldingsnokkel;
+		this.formatNokkel = fNokkel;
 	}
 
 	public Date getMeldingsdato() {
