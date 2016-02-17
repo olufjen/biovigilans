@@ -256,24 +256,53 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	public String getMeldingsnokkel() {
 		return meldingsnokkel;
 	}
-	public void setMeldingsnokkel(String meldingsnokkel) {
-		 Calendar cal = Calendar.getInstance();
+	/**
+	 * formatNokkel
+	 * Denne rutinen formatterer Meldingsnøkkel til formatet:
+	 * f. eks: Hem 132 29 01 2016 (id + dato + Måned + År)
+	 * @return
+	 */
+	private String formatNokkel(){
+		Calendar cal = Calendar.getInstance();
 		cal.setTime(getMeldingsdato());
 		int day =  cal.get(Calendar.DAY_OF_MONTH) ;
 		int month= cal.get(Calendar.MONTH)+1;
 		int year = cal.get(Calendar.YEAR);
-		String date= Integer.toString(day);
-		date = date + Integer.toString(month);
-		date = date + Integer.toString(year);
+		String mId = String.valueOf(meldeid.longValue());
+		int lm = mId.length();
+		String hemId = "Hem"+mId;
+		int index = -1;
+		index = this.meldingsnokkel.indexOf(hemId);
+		if (index > -1){
+			return "Hem"+ " "+ getMeldeid() + " " + String.valueOf(day) + " " + String.valueOf(month) + " " + String.valueOf(year);
+		}
+		else
+			return this.meldingsnokkel;
+
+	}
+	public void setMeldingsnokkel(String meldingsnokkel) {
+/*		if(meldingsdato==null){
+			setMeldingsdato(datooppdaget);
+		}*/
+
 		String fNokkel = "";
 		if(meldingsnokkel == null){
-	
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(getMeldingsdato());
+			int day =  cal.get(Calendar.DAY_OF_MONTH) ;
+			int month= cal.get(Calendar.MONTH)+1;
+			int year = cal.get(Calendar.YEAR);
+			String date= Integer.toString(day);
+			date = date + Integer.toString(month);
+			date = date + Integer.toString(year);
 			meldingsnokkel = "Hem" + getMeldeid() + date ;
-			
-		}
 
-		fNokkel = "Hem"+ " "+ getMeldeid() + " " + String.valueOf(day) + " " + String.valueOf(month)+ String.valueOf(year);
+			fNokkel = "Hem"+ " "+ getMeldeid() + " " + String.valueOf(day) + " " + String.valueOf(month)+ String.valueOf(year);
+		}
 		this.meldingsnokkel = meldingsnokkel;
+		if (fNokkel.equals(""))
+			fNokkel = formatNokkel();
+
 		this.formatNokkel = fNokkel;
 	}
 

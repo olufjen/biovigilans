@@ -429,6 +429,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 				String orgMkey = orgmeldeId.toString();
 				if (mId.longValue() != orgmeldeId.longValue()){
 					histMeldingsdetaljer = (Map<String,List>)saksbehandlingWebservice.selectMeldinger(orgMkey); // Hent historikk
+					Vigilansmelding histmelding = (Vigilansmelding) histMeldingsdetaljer.get(orgMkey).get(0);
 				    histannenListe = (List) histMeldingsdetaljer.get(andreKey);
 		    	    histpasientListe = (List) histMeldingsdetaljer.get(pasientKey);
 		    	    histgiverListe = (List)  histMeldingsdetaljer.get(giverKey);
@@ -559,10 +560,10 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 			    	  sessionAdmin.setSessionObject(request, klassifikasjoner,klassifikasjonKey);
 			     }
 			     Vigilansmelding minmelding = (Vigilansmelding) annenKomplikasjon;
-			     minmelding.setMeldingsnokkel(melding.getMeldingsnokkel());
 			     minmelding.setMeldingsdato(melding.getMeldingsdato());
 			     minmelding.setDatoforhendelse(melding.getDatoforhendelse());
 			     minmelding.setDatooppdaget(melding.getDatooppdaget());
+			     minmelding.setMeldingsnokkel(melding.getMeldingsnokkel());
 			     minmelding.setKladd(melding.getKladd());
 				 annenModel.setFormNames(sessionParams);
 				 annenModel.distributeTerms();
@@ -647,10 +648,10 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
    			 	transfusjon.setPasientKomplikasjon(pasientKomplikasjon);
    			 	transfusjon.setTransfusjon(transfusjonen);
 	   	     	Vigilansmelding minmelding = (Vigilansmelding) pasientKomplikasjon;
-	   	     	minmelding.setMeldingsnokkel(melding.getMeldingsnokkel());
 	   	     	minmelding.setMeldingsdato(melding.getMeldingsdato());
 	   	     	minmelding.setDatoforhendelse(melding.getDatoforhendelse());
 	   	     	minmelding.setDatooppdaget(melding.getDatooppdaget());
+	   	     	minmelding.setMeldingsnokkel(melding.getMeldingsnokkel());
 	   	     	minmelding.setKladd(melding.getKladd());
 	    	    dataModel.put(pasientkomplikasjonId, result);
 	    	    dataModel.put(transfusjonId,transfusjon);
@@ -672,10 +673,10 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 		    	 giverModel.setReaksjonengruppe(reaksjonengruppe);
 		    	 giverModel.setUtenforBlodbankengruppe(utenforBlodbankengruppe);
     			Vigilansmelding lokalMelding = (Vigilansmelding) giverKomplikasjon;
-     			lokalMelding.setMeldingsnokkel(melding.getMeldingsnokkel());
-     			lokalMelding.setMeldingsdato(melding.getMeldingsdato());
+      			lokalMelding.setMeldingsdato(melding.getMeldingsdato());
      			lokalMelding.setDatoforhendelse(melding.getDatoforhendelse());
      			lokalMelding.setDatooppdaget(melding.getDatooppdaget());
+    			lokalMelding.setMeldingsnokkel(melding.getMeldingsnokkel());
      			lokalMelding.setKladd(melding.getKladd());
 //     			sessionAdmin.setSessionObject(request, lokalMelding, meldingsId);  // OBS Feil ID!!
      			 sessionAdmin.setSessionObject(request, giverModel,giverkomplikasjonId);	    			  
