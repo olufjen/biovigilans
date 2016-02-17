@@ -430,6 +430,8 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 				if (mId.longValue() != orgmeldeId.longValue()){
 					histMeldingsdetaljer = (Map<String,List>)saksbehandlingWebservice.selectMeldinger(orgMkey); // Hent historikk
 					Vigilansmelding histmelding = (Vigilansmelding) histMeldingsdetaljer.get(orgMkey).get(0);
+					histmelding.setMeldingsnokkel(histmelding.getMeldingsnokkel());
+					melding.setFormatNokkel(histmelding.getFormatNokkel());
 				    histannenListe = (List) histMeldingsdetaljer.get(andreKey);
 		    	    histpasientListe = (List) histMeldingsdetaljer.get(pasientKey);
 		    	    histgiverListe = (List)  histMeldingsdetaljer.get(giverKey);

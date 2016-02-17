@@ -72,7 +72,7 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	private Date meldingsdato;
 
 	private String meldingsnokkel;
-	private String formatNokkel; // Formattert meldingsnøkkel 
+	private String formatNokkel = ""; // Formattert meldingsnøkkel 
 	private String kladd; // Om denne meldingen er en kladd
 	private String godkjent; // Om denne meldingen er godkjent
 	private String meldingstype = "";
@@ -285,7 +285,7 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 			setMeldingsdato(datooppdaget);
 		}*/
 
-		String fNokkel = "";
+		String fNokkel = formatNokkel;
 		if(meldingsnokkel == null){
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(getMeldingsdato());
