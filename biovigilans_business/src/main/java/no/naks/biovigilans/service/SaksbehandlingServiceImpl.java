@@ -72,6 +72,9 @@ public class SaksbehandlingServiceImpl implements SaksbehandlingService {
 		return saksbehandlingDAO.selectMeldinger(meldingsNokkel);
 				
 	}
+	public Map<String,List> selectMeldingetternokkel (String meldeid){
+		return saksbehandlingDAO.selectMeldingetternokkel(meldeid);
+	}
 	public void saveDiskusjon(Map<String,Diskusjon> diskusjonsMappe){
 		sakDAO.saveDiskusjon(diskusjonsMappe);
 	}
