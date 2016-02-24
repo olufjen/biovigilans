@@ -144,11 +144,51 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
   		Parameter datoHSort   = form.getFirst("sorteringdatohendt");
 		Parameter datoMSort   = form.getFirst("sorteringdatomeldt"); 
 		Parameter formMinesaker  = form.getFirst("minesaker"); // Bruker etterspør sine saker
+		Parameter sokMelding = form.getFirst("meldingsnokkelsok"); // Bruker etterspør en gitt melding
   		String meldtUtvalgetstart = null;
   		String meldtUtvalgetslutt = null;
   		boolean toPDF = false;
   		String page = "";
-  		if (formMinesaker != null){
+  		if (sokMelding != null){
+  			meldingsID = null;
+ 			Long saksbehandlerid = login.getSaksbehandler().getSakbehandlerid();
+ 			for (Parameter entry : form) {
+    			if (entry.getValue() != null && !(entry.getValue().equals(""))){
+    					System.out.println(entry.getName() + "=" + entry.getValue());
+    				
+     					if (entry.getName().equals("meldingsnokkel")){
+     						meldingsID = entry.getValue();
+
+    	    			}
+    			}
+    		}
+  
+    
+ 			Map<String,List> meldingDetaljene = null;
+ 			if (meldingsID != null){
+ 	    		 meldingDetaljene = (Map<String,List>)saksbehandlingWebservice.selectMeldingetternokkel(meldingsID);
+ 	    	}
+ 			if (meldingDetaljene != null){
+ 	    		meldinger = (List) meldingDetaljene.get(meldingsID);
+ 	    		meldinger = hentMeldingstyper(meldinger);
+ 			}
+ 			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+ 		 	SimpleScalar simple = new SimpleScalar(utvalg);
+  		 	dataModel.put(utvalgKey, simple);
+  		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
+  		 	 dataModel.put(merknadlisteKey, merk);
+  		    dataModel.put(meldeKey,meldinger);
+  	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
+
+    		// Load the FreeMarker template
+    		Representation pasientkomplikasjonFtl = clres2.get();
+
+    		TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+    				MediaType.TEXT_HTML);
+    		return templatemapRep;  			
+  		}
+  		if (formMinesaker != null){ // Søker frem saksbehandlers saker
   			Long saksbehandlerid = login.getSaksbehandler().getSakbehandlerid();
   			meldinger = hentMineMeldinger(saksbehandlerid);
  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
@@ -209,7 +249,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     			}
   
     		}
-  			saksbehandlingWebservice.setTimeperiodType(true);// Flagg for dato medt til true
+  			saksbehandlingWebservice.setTimeperiodType(true);// Flagg for dato meldt til true
   			meldinger = hentMeldingene(meldtUtvalgetstart, meldtUtvalgetslutt);
    		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
@@ -338,15 +378,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
      					if (entry.getName().equals("pdf")){
     	    				page = "../hemovigilans/saksbehandling.html";
     	    				toPDF = true;
-   /* 	        			LoginModel newLogin = new LoginModel();
-    	        			newLogin.setSaksbehandler(login.getSaksbehandler());
-    	        			newLogin.setPassord(login.getSaksbehandler().getBehandlerpassord());
-    	        			newLogin.setEpostAdresse(login.getSaksbehandler().getBehandlerepost());
-    	        			List<Saksbehandler> saksbehandlere = (List<Saksbehandler>) sessionAdmin.getSessionObject(request,behandlereKey);
-    	    				invalidateSessionobjects();
-    	    				sessionAdmin.setSessionObject(request, newLogin, loginKey);
-    	       			    sessionAdmin.setSessionObject(request, saksbehandlere, behandlereKey);
-    */
+
     	    			}
     			}
     		}

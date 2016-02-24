@@ -431,7 +431,7 @@
 					<table class="table table-hover" border=1 >
 					<tr><th>Dato</th><th>Saksmerknader</th><th>Satt av</th></tr>
 					<#list flaggliste as flagg>
-					<tr id="flagg"><td id="flaggene">${flagg.datoforkommentar?date}</td><td id="flaggene">${flagg.kommentar}</td><td id="flaggenes">${flagg.saksbehandler}</td></tr> 
+					<tr id="flagg"><td id="flaggene">${flagg.datoforkommentar?date}</td><td id="flaggene" title="${flagg.tema}">${flagg.kommentar}</td><td id="flaggenes">${flagg.saksbehandler}</td></tr> 
 					</#list>
 					</table> 
 		</div>	

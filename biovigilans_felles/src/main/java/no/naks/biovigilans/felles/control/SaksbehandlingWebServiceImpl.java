@@ -69,6 +69,10 @@ public class SaksbehandlingWebServiceImpl extends MasterWebServiceImpl
 		Map<String,List> meldinger = saksbehandlingService.selectMeldinger(meldingsNokkel);
 		return meldinger;
 	}
+	public Map<String,List> selectMeldingetternokkel(String meldingsNokkel){
+		Map<String,List> meldinger = saksbehandlingService.selectMeldingetternokkel(meldingsNokkel);
+		return meldinger;
+	}
 	public List collectMessagesSaksbehandler(Long saksbehandlerid){
 		return saksbehandlingService.collectMessagesSaksbehandler(saksbehandlerid);
 	}

@@ -257,6 +257,7 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	/**
 	 * tilHelsedirektoratet
 	 * Denne rutinen sender melding til Helsedirektoratet dersom merknad for dette er satt
+	 * Rutinen sender også meldingen til saksbehander
 	 * @param request
 	 * @param mailText
 	 * @param sakMap

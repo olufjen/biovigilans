@@ -321,4 +321,11 @@ public interface SaksbehandlingDAO {
 	public void setSelectvigilansMeldingsaksbehandlerSQL(
 			String selectvigilansMeldingsaksbehandlerSQL);
 
+	public String getSelectvigilansMeldingnokkelSQL();
+
+
+	public void setSelectvigilansMeldingnokkelSQL(
+			String selectvigilansMeldingnokkelSQL);
+
+	public Map<String,List> selectMeldingetternokkel (String meldeid);
 }

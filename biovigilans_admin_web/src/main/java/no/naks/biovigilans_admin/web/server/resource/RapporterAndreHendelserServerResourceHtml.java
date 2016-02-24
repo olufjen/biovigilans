@@ -346,7 +346,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     		Parameter avslutt = form.getFirst("btnavslutt");
     		
     		Parameter sendTilmelder = form.getFirst("btnsend");
-    		if (sendTilmelder != null){
+    		if (sendTilmelder != null){ // Ønsker å sende melding til melder
     			setDiplayvalues(dataModel,melder);
     			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
     			meldingsType = "annen";
@@ -420,7 +420,6 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
            			sakModel.setDiskusjonsMappe(null);
         			sakModel.setSaksMappe(null);
     			}
-    		
     			setDiplayvalues(dataModel,melder);
     			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
     			 

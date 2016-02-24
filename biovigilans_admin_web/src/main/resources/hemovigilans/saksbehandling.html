@@ -176,7 +176,12 @@
   					<div for="minesaker" title="Dette er meldinger som du har satt en merknad på eller har endret status på"><b> Mine saker:</b></div>
                       <div class="input-group">
                       <input type="checkbox" name="minesaker" onclick="formSubmit('btnminesaker');"><font size="2">Hent mine saker</font>
+                      </div>
  
+                      </div>                     
+   					<div for="nokkelsok" title="Her kan søke etter en melding med gitt meldingsnøkkel. Skriv meldingsnøkkelen uten mellomrom."><b> Søk meldingsnøkkel:</b>
+                      <div class="input-group">
+ 						<input type="text" size="16" class="date-input-large" name="meldingsnokkel" id="meldingsnokkel" onchange="formSubmit('btnmeldingsnokkelsok');" >
                       </div>                     
  
                     </div>                    
@@ -254,6 +259,7 @@
  	 <button type="submit" id="btnutvalg" name="utvalg" value="utvalg" style="display: none" >getValue</button> 
  	  <button type="submit" id="btnmerknad" name="merknad" value="merknad" style="display: none" >getValue</button>
  	  <button type="submit" id="btnminesaker" name="minesaker" value="minesaker" style="display: none" >getValue</button>
+   	  <button type="submit" id="btnmeldingsnokkelsok" name="meldingsnokkelsok" value="meldingsnokkelsok" style="display: none" >getValue</button>
   <button type="submit" id="btndatomeldt" value="datomeldt"  name="datomeldt" class="btn btn-primary" style="display: none" > getValue </button>
   <button type="submit" id="btndatohendt" value="datohendt"  name="datohendt" class="btn btn-primary" style="display: none" > getValue </button>
   <button type="submit" id="btnsorteringdatohendt" value="sorteringdatohendt"  name="sorteringdatohendt" class="btn btn-primary" style="display: none" > getValue </button>

@@ -277,7 +277,8 @@
     <property name="forebyggendetiltakSQL" value="${forebyggendetiltak.select}"></property>
     <property name="forebyggendetiltakTableDefs" value="${forebyggendetiltak.forebyggendetiltakid},${forebyggendetiltak.tiltakvalg},${forebyggendetiltak.tiltakbeskrivelse},${forebyggendetiltak.tiltakid}"></property>
   	<property name="selectvigilansMeldingidSQL" value="${saksbehandlingmelding.select}"></property>	 	 
-  	<property name="selectvigilansMeldingmerknaderSQL" value="${vigilansmeldinghentmerknad.select}"></property> 	 	
+  	<property name="selectvigilansMeldingmerknaderSQL" value="${vigilansmeldinghentmerknad.select}"></property>
+  	<property name="selectvigilansMeldingnokkelSQL" value="${vigilansmeldingnokkel.select}"></property> 	 	
   </bean>
   <bean id="sakDAO" class="no.naks.biovigilans.dao.SakDAOImpl">
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>

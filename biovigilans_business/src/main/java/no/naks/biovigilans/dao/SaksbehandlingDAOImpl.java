@@ -41,6 +41,7 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	private String selectgiverMeldingSQL;
 	private String selectannenMeldingSQL;
 	private String selectvigilansMeldingsaksbehandlerSQL;
+	private String selectvigilansMeldingnokkelSQL;
 	
 	private boolean timeperiodType = true; // Satt til true dersom forespurt tidsperiode er meldt
 	// satt til false dersom forespurt tidsperiode er når meldingen skjedde.
@@ -143,6 +144,17 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	
 	public String[] getGiverTableDefs() {
 		return giverTableDefs;
+	}
+
+
+	public String getSelectvigilansMeldingnokkelSQL() {
+		return selectvigilansMeldingnokkelSQL;
+	}
+
+
+	public void setSelectvigilansMeldingnokkelSQL(
+			String selectvigilansMeldingnokkelSQL) {
+		this.selectvigilansMeldingnokkelSQL = selectvigilansMeldingnokkelSQL;
 	}
 
 
@@ -808,7 +820,29 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 		alleMeldinger.put(giverKey, giverMeldinger);
 		return alleMeldinger;
 	}
-	
+	/**
+	 * selectMeldingetternokkel
+	 * Denne rutinen henter alle meldinger til en melder basert på en meldingsnøkkel
+	 * @param meldingsNokkel
+	 * @return
+	 */
+	public Map<String,List> selectMeldingetternokkel (String meldeid){
+		
+		int type = Types.VARCHAR;
+		alleMeldinger = new HashMap<String,List>();
+		vigilansSelect = new VigilansSelect(getDataSource(),selectvigilansMeldingnokkelSQL,vigilandsMeldingTableDefs);
+		vigilansSelect.declareParameter(new SqlParameter(type));
+		List meldinger = vigilansSelect.execute(meldeid);
+		alleMeldinger.put(meldeid, meldinger);
+		if (!meldinger.isEmpty()){
+			Vigilansmelding melding = (Vigilansmelding)meldinger.get(0);
+			Long mId = melding.getMeldeid();
+			int nType = Types.INTEGER;
+			List delMelding = velgMeldinger(mId,nType);
+			alleMeldinger.put(delMeldingKey, delMelding);
+		}
+		return alleMeldinger;
+	}	
 	/**
 	 * selectMeldinger
 	 * Denne rutinen henter alle meldinger til en melder basert på en meldingsid

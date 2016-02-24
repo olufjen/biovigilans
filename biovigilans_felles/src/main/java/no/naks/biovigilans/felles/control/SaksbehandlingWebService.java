@@ -17,6 +17,7 @@ public interface SaksbehandlingWebService {
 	public SaksbehandlingService getSaksbehandlingService();
 	public void setSaksbehandlingService(SaksbehandlingService saksbehandlingService);	
 	public Map<String,List> selectMeldinger(String meldingsNokkel);
+	public Map<String,List> selectMeldingetternokkel(String meldingsNokkel);
 	public MelderTableService getMelderTableService();
 	public void setMelderTableService(MelderTableService melderTableService);
 	public Map collectAnnenMeldinger(List<Vigilansmelding>meldinger);
