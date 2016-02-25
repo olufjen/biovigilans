@@ -23,6 +23,11 @@ import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
+/**
+ * Denne klassen administrerer meldertabellen og meldinger knyttet til en melder
+ * @author olj
+ *
+ */
 public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO {
 	
 	private String insertMelderSQL;
@@ -69,7 +74,7 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	private String[] tiltakTableDefs;
 	private String forebyggendetiltakSQL;
 	private String[] forebyggendetiltakTableDefs;
-	
+	private String vigilansmelderSQL = "SELECT meldeid,datoforhendelse,datooppdaget,donasjonoverforing,sjekklistesaksbehandling,supplerendeopplysninger,meldingsdato,meldingsnokkel,melderid,kladd,godkjent from vigilansmelding where melderid in (24,64,65,66)";
 		
 	private String pasientKey = "pasientKomp"; // Nøkkel dersom melding er av type pasientkomplikasjon
 	private String giverKey = "giverkomp"; 	// Nøkkel dersom melding er at type giverkomplikasjon
@@ -120,7 +125,12 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	private ForebyggendetiltakSelect forebyggendetiltakSelect = null;
 	
 	private Map alleMeldinger = null;
-
+	
+	private MelderSelect melderSelect = null;
+	private String meldereSQL;
+	private String[] meldertableDefs;
+	
+	
 	
 	public String getTiltakSQL() {
 		return tiltakSQL;
@@ -416,7 +426,29 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 		return rows;
 	}
 
-	
+	public String getMeldereSQL() {
+		return meldereSQL;
+	}
+	public void setMeldereSQL(String meldereSQL) {
+		this.meldereSQL = meldereSQL;
+	}
+	public String[] getMeldertableDefs() {
+		return meldertableDefs;
+	}
+	public void setMeldertableDefs(String[] meldertableDefs) {
+		this.meldertableDefs = meldertableDefs;
+	}
+	/**
+	 * hentMeldere 
+	 * Denne rutinen henter alle meldere
+	 * @return
+	 */
+	public List<Melder> hentMeldere(){
+		List melderne = null;
+		melderSelect = new MelderSelect(getDataSource(),meldereSQL,meldertableDefs);
+		melderne = melderSelect.execute();
+		return melderne;
+	}
 	/**
 	 * collectAnnenMeldinger
 	 * Denne rutinen henter all informasjon om alle meldinger gitt en liste over vigilansmeldinger
@@ -777,5 +809,15 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 		List forebyggendetiltak = forebyggendetiltakSelect.execute(dId);
 		return forebyggendetiltak;
 	}		
-	
+	/**
+	 * meldersMeldinger
+	 * Denne rutinen henter alle meldinger til en melder basert på flere melderid
+	 * @return
+	 */
+	public List<Vigilansmelding> meldersMeldinger (String melderIDs){
+
+		vigilansSelect = new VigilansSelect(getDataSource(), vigilansmelderSQL,vigilandsMeldingTableDefs);
+		List meldinger = vigilansSelect .execute();
+		return meldinger;
+	}	
 }	

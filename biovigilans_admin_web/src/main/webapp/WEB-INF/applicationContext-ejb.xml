@@ -202,8 +202,9 @@
     <property name="tiltakTableDefs" value="${tiltak.tiltakid},${tiltak.tiltaksdato},${tiltak.gjennomfortdato},${tiltak.beskrivelse},${tiltak.pasientid}"></property>
     <property name="forebyggendetiltakSQL" value="${forebyggendetiltak.select}"></property>
     <property name="forebyggendetiltakTableDefs" value="${forebyggendetiltak.forebyggendetiltakid},${forebyggendetiltak.tiltakvalg},${forebyggendetiltak.tiltakbeskrivelse},${forebyggendetiltak.tiltakid}"></property>
-  	
-  	
+  	<property name="meldereSQL" value="${melder.selectmeldere}"></property>
+   	<property name="meldertableDefs" value="${melder.melderid},${melder.meldernavn},${melder.melderepost},${melder.meldertlf},${melder.melderpassord},${melder.helseregion},${melder.foretak},${melder.sykehus}"></property>
+
   </bean>
   <bean id="saksbehandlingDAO" class="no.naks.biovigilans.dao.SaksbehandlingDAOImpl">
     	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>

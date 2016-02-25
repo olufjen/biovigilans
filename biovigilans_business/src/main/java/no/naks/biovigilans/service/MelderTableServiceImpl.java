@@ -36,4 +36,10 @@ public class MelderTableServiceImpl implements MelderTableService {
 	public Map collectAnnenMeldinger(List<Vigilansmelding>meldinger){
 		return melderDAO.collectAnnenMeldinger(meldinger);
 	}
+	public List<Melder> collectMeldere(){
+		return melderDAO.hentMeldere();
+	}
+	public List<Vigilansmelding> collectMeldersmeldinger(String melderIds){
+		return melderDAO.meldersMeldinger(melderIds);
+	}
 }

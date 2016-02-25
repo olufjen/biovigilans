@@ -99,5 +99,11 @@ import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 	public String[] getForebyggendetiltakTableDefs();
 	public void setForebyggendetiltakTableDefs(String[] forebyggendetiltakTableDefs);
 	public Map collectAnnenMeldinger(List<Vigilansmelding>meldinger);
-	
+	public String getMeldereSQL();
+	public void setMeldereSQL(String meldereSQL);
+	public String[] getMeldertableDefs();
+	public void setMeldertableDefs(String[] meldertableDefs);
+
+	public List<Melder> hentMeldere();
+	public List<Vigilansmelding> meldersMeldinger (String melderIDs);
 }

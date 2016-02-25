@@ -12,4 +12,6 @@ public interface MelderTableService {
 	public List selectMelder(String epost);
 	public Map<String,List> selectMeldinger(String meldingsNokkel);
 	public Map collectAnnenMeldinger(List<Vigilansmelding>meldinger);
+	public List<Melder> collectMeldere();
+	public List<Vigilansmelding> collectMeldersmeldinger(String melderIds);
 }

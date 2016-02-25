@@ -173,7 +173,15 @@
 	        </property>
              <property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
  		</bean>  
-
+		<bean name="/hemovigilans/meldere.html" id="meldereServerResourceHTML" autowire="byName" scope="prototype"
+		 class="no.naks.biovigilans_admin.web.server.resource.MeldereServerResourceHTML">
+		    <property name="sessionAdmin" ref="sessionAdmin"></property>
+	        <property name="innmeldingWebService" ref="hendelseWebService"></property>
+	         <property name="sessionParams" value="${diskusjon.text}"></property>
+             <property name="flaggNames" value="${flagg.statusvalg},${flagg.statusvalg1},${flagg.statusvalg2},${flagg.statusvalg3},${flagg.statusvalg4},${flagg.statusvalg5},${flagg.statusvalg6}">
+	        </property>
+             <property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
+ 		</bean>  
         <bean name="/hemovigilans/rapportering.html" id="rapportServerResourceHTML" autowire="byName" scope="prototype"
             class="no.naks.biovigilans_admin.web.server.resource.RapporteringServerResourceHTML">
         	<property name="sessionAdmin" ref="sessionAdmin"></property>
