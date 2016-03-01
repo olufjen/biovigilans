@@ -815,7 +815,8 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	 * @return
 	 */
 	public List<Vigilansmelding> meldersMeldinger (String melderIDs){
-
+		if (melderIDs != null && !melderIDs.isEmpty())
+			vigilansmelderSQL = melderIDs;
 		vigilansSelect = new VigilansSelect(getDataSource(), vigilansmelderSQL,vigilandsMeldingTableDefs);
 		List meldinger = vigilansSelect .execute();
 		return meldinger;

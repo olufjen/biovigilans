@@ -30,6 +30,8 @@ public class MeldereServerResourceHTML extends SaksbehandlingSessionServer {
 	private String merknadKey = "merknader";
 	private String merknadlisteKey = "merknadvalgt";
 	private String meldereKey = "meldere";
+	private String melderSQLkey = "sql";
+	private String vigilansmelderSQL = "SELECT meldeid,datoforhendelse,datooppdaget,donasjonoverforing,sjekklistesaksbehandling,supplerendeopplysninger,meldingsdato,meldingsnokkel,melderid,kladd,godkjent from vigilansmelding where melderid in (24,64,65,66)";
 
 	@Get
 	public Representation getHemovigilans() {
@@ -58,6 +60,7 @@ public class MeldereServerResourceHTML extends SaksbehandlingSessionServer {
  		 dataModel.put(statusflagKey,statusflag);
  		 dataModel.put(merknadKey, merknader);
  		 dataModel.put(meldereKey, meldere);
+ 		 dataModel.put(melderSQLkey, vigilansmelderSQL);
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
 	    
@@ -90,10 +93,13 @@ public class MeldereServerResourceHTML extends SaksbehandlingSessionServer {
         Map<String, Object> dataModel = new HashMap<String, Object>();
         Reference reference = new Reference(getReference(),"..").getTargetRef();
         Request request = getRequest();
-  	    List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(getRequest(), meldingsId);
+
+	    List<Melder>  meldere = saksbehandlingWebservice.collectMeldere();
+	    
+  	    List<Vigilansmelding> meldinger = saksbehandlingWebservice.collectmeldersmeldinger("");
   	    dobleMeldingene = (List)sessionAdmin.getSessionObject(request,dobleMeldingKey);
   	    login = (LoginModel) sessionAdmin.getSessionObject(request, loginKey);
-  	    dataModel.put(meldeKey,meldinger);
+
   	    dataModel.put(statusflagKey,statusflag);
 		 dataModel.put(merknadKey, merknader);
   		 SimpleScalar simpleDisplay = new SimpleScalar(displayPart);
@@ -102,29 +108,55 @@ public class MeldereServerResourceHTML extends SaksbehandlingSessionServer {
   	    String meldingsID = null;
   	    String utvalget = null;
   		Map<String,List> meldingDetaljene = null;
+		 dataModel.put(meldereKey, meldere);
 		Parameter sokMelding = form.getFirst("meldingsnokkelsok"); // Søk etter meldinger tilet gitt utvalg meldere
-			if (meldingsID != null){
-	    		 meldingDetaljene = (Map<String,List>)saksbehandlingWebservice.selectMeldingetternokkel(meldingsID);
-	    	}
-			if (meldingDetaljene != null){
-	    		meldinger = (List) meldingDetaljene.get(meldingsID);
-	    		meldinger = hentMeldingstyper(meldinger);
+		if (sokMelding != null){
+			for (Parameter entry : form) {
+				if (entry.getValue() != null && !(entry.getValue().equals(""))){
+						System.out.println(entry.getName() + "=" + entry.getValue());
+					
+	 					if (entry.getName().equals("meldingsql")){
+	 						meldingsID = entry.getValue();
+
+		    			}
+				}
 			}
-			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
- 		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
-		 	SimpleScalar simple = new SimpleScalar(utvalg);
- 		 	dataModel.put(utvalgKey, simple);
- 		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
- 		 	 dataModel.put(merknadlisteKey, merk);
- 		    dataModel.put(meldeKey,meldinger);
- 	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
+				sessionAdmin.setSessionObject(request, meldinger, meldingsId);
+	 		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+	 		    meldinger = saksbehandlingWebservice.collectmeldersmeldinger(meldingsID);
+			 	SimpleScalar simple = new SimpleScalar(utvalg);
+	 		 	dataModel.put(utvalgKey, simple);
+	 		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
+	 		 	 dataModel.put(merknadlisteKey, merk);
+	 		    dataModel.put(meldeKey,meldinger);
+	 			 dataModel.put(melderSQLkey, meldingsID);
+	 	  	    dataModel.put(meldeKey,meldinger);
+	 	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/meldere.html"));
 
-   		// Load the FreeMarker template
-   		Representation pasientkomplikasjonFtl = clres2.get();
+	   		// Load the FreeMarker template
+	   		Representation pasientkomplikasjonFtl = clres2.get();
 
-   		TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
-   				MediaType.TEXT_HTML);
-   		return templatemapRep;  			
+	   		TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+	   				MediaType.TEXT_HTML);
+	   		return templatemapRep;  			
+		}
+		sessionAdmin.setSessionObject(request, meldinger, meldingsId);
+		sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+		SimpleScalar simple = new SimpleScalar(utvalg);
+		dataModel.put(utvalgKey, simple);
+		SimpleScalar merk = new SimpleScalar(merknadValg);
+		dataModel.put(merknadlisteKey, merk);
+		dataModel.put(meldeKey,meldinger);
+		dataModel.put(melderSQLkey, vigilansmelderSQL);
+		dataModel.put(meldeKey,meldinger);
+		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/meldere.html"));
+
+		// Load the FreeMarker template
+		Representation pasientkomplikasjonFtl = clres2.get();
+
+		TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+				MediaType.TEXT_HTML);
+		return templatemapRep;  				
  		}
     }
     

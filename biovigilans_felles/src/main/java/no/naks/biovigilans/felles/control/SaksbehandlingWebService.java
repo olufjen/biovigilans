@@ -37,4 +37,7 @@ public interface SaksbehandlingWebService {
 	public List<Regionstatistikk> collectRegionstatistikk(String startperiod,String endperiod,String type);
 	public List<Regionstatistikk> collectForetakstatistikk(String startperiod,String endperiod,String type);
 	public List<Regionstatistikk> collectsykehusstatistikk(String startperiod,String endperiod,String type);
+	public List<Melder> collectMeldere();
+	public List<Vigilansmelding> collectmeldersmeldinger(String melderIds);
+	
 }

@@ -113,4 +113,10 @@ public class SaksbehandlingWebServiceImpl extends MasterWebServiceImpl
 	public List<Regionstatistikk> collectsykehusstatistikk(String startperiod,String endperiod,String type){
 		return saksbehandlingService.collectsykehusstatistikk(startperiod, endperiod, type);
 	}
+	public List<Melder> collectMeldere(){
+		return melderTableService.collectMeldere();
+	}
+	public List<Vigilansmelding> collectmeldersmeldinger(String melderIds){
+		return melderTableService.collectMeldersmeldinger(melderIds);
+	}
 }

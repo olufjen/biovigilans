@@ -129,6 +129,17 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String datePart = "block";
 	protected String dobleKey = "doblemeldinger";
 
+	/*
+	 * Variabler som definerer hva som er alvorlige hendelser
+	 * OLJ 29.02.16	
+	 */
+	protected String alvorligAnnenhendelse;
+	protected String[] alvorligGiverhendelse;
+	protected String[] alvorligGivervarighet;
+	protected String[] alvorligHendelsegiver; //Behandlet på sykehus, Videre behandling oppfølging JA
+	protected String[] alvorligHendelsegivergrad;
+	protected String[] alvorligHendelsegiverutfall;
+
 	protected List<String> hvagikkgaltList = new ArrayList<String>();
 /*
  * Session objekter for giver	
@@ -1253,35 +1264,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  formLinkHashmap.put("Godkjent",godkjent);
 		  }		
 	}
-	/**
-	 * checkmessagetoAdmin
-	 * Denne rutinen sjekker om det er nødvendig å sende en melding til saksbehanderne
-	 * @param alvorgrad
-	 * @return
-	 */
-	public void checkmessagetoAdmin(String alvorgrad,String meldingsNokkel){
-		boolean flag = false;
-		for (String grad:alvorGrad ){
-			if (grad.equals(alvorgrad)){
-				flag = true;
-				break;
-			}
-		}
-		if (flag){
-			List<Saksbehandler> saksbehandlere = saksbehandlingWebservice.collectSaksbehandlere();
-			for (Saksbehandler saksbehandler : saksbehandlere){
-				String detalj = "Alvorlighetsgrad: "+alvorgrad+ " Meldingsnummer: "+meldingsNokkel;
-				emailWebService.setSubject("Hemovigilans Alvorlig melding mottatt");
-	 	    	emailWebService.setEmailText(detalj);
-		    	 emailWebService.setMailTo(saksbehandler.getBehandlerepost());
-		    	 String sep = System.lineSeparator();
-		    	 String msg = sep +"TEST! Logg inn til saksbehandling og sjekk meldingen";
-		    	 emailWebService.sendEmail(msg); //Kommentert bort til stage !!
-				
-			}			
-		}
 
-	}
 	/**
 	 * checkMessageType
 	 * Denne rutinen sjekker type melding som er sendt inn
@@ -1858,5 +1841,117 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 		}else
 			return extract(line,f);
 
+	}
+	/**
+	 * sjekkannenalvorligMelding
+	 * Denne rutinen sjekker meldingens alvorlighetsgrad, og sender epost til saksbehandlere
+	 * dersom meldingen er definert som alvorlig.
+	 * 
+	 */
+	public void sjekkannenalvorligMelding(Annenkomplikasjon annenKomplikasjon, String meldingsNokkel,String klassifikasjon){
+		String meldingsKlassifikasjon = annenKomplikasjon.getKlassifikasjon();
+		if (meldingsKlassifikasjon != null && meldingsKlassifikasjon.equals(klassifikasjon)){
+			sendMeldingtilsaksbehandlere("TEST: Alvorlig melding type Andre hendelser", "Det er mottatt en alvorlig melding meldingsNøkkel: "+meldingsNokkel);
+		}
+	}
+	/**
+	 * sjekkgiveralvorligMelding
+	 * Denne rutinen sjekker om det er mottatt en alvorlig givermelding, og sender melding til saksbehandlere om det
+	 * @param giverKomplikasjon
+	 * @param komplikasjonsDiagnose
+	 * @param giverOppfolging
+	 * @param meldingsNokkel
+	 */
+	public void sjekkgiveralvorligMelding(Giverkomplikasjon giverKomplikasjon, Komplikasjonsdiagnosegiver komplikasjonsDiagnose, Giveroppfolging giverOppfolging, String meldingsNokkel){
+		boolean alvorlig = false;
+		String arsak = "";
+		for (String alvorlighet : alvorligHendelsegivergrad){
+			if (giverKomplikasjon.getAlvorlighetsgrad() != null && alvorlighet.equals(giverKomplikasjon.getAlvorlighetsgrad())){
+				alvorlig = true;
+				arsak = giverKomplikasjon.getAlvorlighetsgrad();
+				break;
+			}	
+		}
+		if (!alvorlig){
+			for (String alvorlighet : alvorligGivervarighet){
+				if (giverKomplikasjon.getVarighetkomplikasjon() != null && alvorlighet.equals(giverKomplikasjon.getVarighetkomplikasjon())){
+					alvorlig = true;
+					arsak = giverKomplikasjon.getVarighetkomplikasjon();
+					break;
+				}
+			}
+		}
+		String typeKompl = komplikasjonsDiagnose.getSystemiskbivirkning();
+		char sep = ';';
+		String systemiskKompl = extractString(typeKompl, sep, -1);
+		if (!alvorlig && systemiskKompl != null){
+			for (String alvorlighet : alvorligGiverhendelse){
+				if (systemiskKompl.equals(alvorlighet)){
+					alvorlig = true;
+					arsak = systemiskKompl;
+					break;
+				}
+			}
+		}
+		if (!alvorlig){
+			for (String alvorlighet : alvorligHendelsegiverutfall){
+				if (giverKomplikasjon.getKliniskresultat() != null && alvorlighet.equals(giverKomplikasjon.getKliniskresultat())){
+					alvorlig = true;
+					arsak = giverKomplikasjon.getKliniskresultat();
+					break;
+				}
+			}
+		}
+		String oppfolgJa = giverOppfolging.getVidereoppfolging();
+		String straksTiltak = giverOppfolging.getStrakstiltak();
+		String oppfJa = extractString(oppfolgJa, sep, 0);
+		String straxTiltak = extractString(straksTiltak, sep, 0);
+		if (!alvorlig){
+			for (String alvorlighet : alvorligHendelsegiver){
+				if (straxTiltak != null && straxTiltak.equals(alvorlighet)){
+					alvorlig = true;
+					arsak = straxTiltak;
+					break;
+				}
+			}
+		}
+		if (!alvorlig){
+			for (String alvorlighet : alvorligHendelsegiver){
+				if (oppfJa != null && oppfJa.equals(alvorlighet)){
+					alvorlig = true;
+					arsak = oppfJa;
+					break;
+				}
+			}
+		}	
+		if (alvorlig){
+			sendMeldingtilsaksbehandlere("TEST: Alvorlig melding type Giverhendelse", "Det er mottatt en alvorlig givermelding årsak: "+arsak+" Meldingsnøkkel "+meldingsNokkel);
+
+		}
+	}
+	/**
+	 * sendMeldingtilsaksbehandlere
+	 * Denne rutinen sender meldinger til saksbehandlere
+	 * Den benyttes dersom meldingen som er mottatt er klassfisert som alvorlig
+	 * @param subject
+	 * @param text
+	 */
+	/**
+	 * @param subject
+	 * @param text
+	 */
+	protected void sendMeldingtilsaksbehandlere(String subject,String text){
+		List<Saksbehandler> saksbehandlere = null;
+		saksbehandlere = this.saksbehandlingWebservice.collectSaksbehandlere();
+		for (Saksbehandler saksbehandler : saksbehandlere){
+			emailWebService.setSubject(subject);
+			emailWebService.setEmailText(text);
+			emailWebService.setMailTo(saksbehandler.getBehandlerepost());
+			//	    	 String msg = String.format(tilsakbehandlereMsg+mId+"&diskid="+diskId);
+			String name = saksbehandler.getBehandernavn();
+			if (!name.equals("Helsedirektoratet"))
+				emailWebService.sendEmail(""); //Kommentert bort til stage !!
+
+		}
 	}
 }

@@ -70,10 +70,71 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 
 	private String meldingsId = "melding";
 
+	
 	private Date dato = null;
 	private String datoStr = "";
 	private String path = "";
 
+
+
+	public String[] getAlvorligHendelsegiver() {
+		return alvorligHendelsegiver;
+	}
+
+
+	public void setAlvorligHendelsegiver(String[] alvorligHendelsegiver) {
+		this.alvorligHendelsegiver = alvorligHendelsegiver;
+	}
+
+
+	public String[] getAlvorligHendelsegivergrad() {
+		return alvorligHendelsegivergrad;
+	}
+
+
+	public void setAlvorligHendelsegivergrad(String[] alvorligHendelsegivergrad) {
+		this.alvorligHendelsegivergrad = alvorligHendelsegivergrad;
+	}
+
+
+	public String[] getAlvorligHendelsegiverutfall() {
+		return alvorligHendelsegiverutfall;
+	}
+
+
+	public void setAlvorligHendelsegiverutfall(String[] alvorligHendelsegiverutfall) {
+		this.alvorligHendelsegiverutfall = alvorligHendelsegiverutfall;
+	}
+
+
+	public String[] getAlvorligGivervarighet() {
+		return alvorligGivervarighet;
+	}
+
+
+	public void setAlvorligGivervarighet(String[] alvorligGivervarighet) {
+		this.alvorligGivervarighet = alvorligGivervarighet;
+	}
+
+
+	public String[] getAlvorligGiverhendelse() {
+		return alvorligGiverhendelse;
+	}
+
+
+	public void setAlvorligGiverhendelse(String[] alvorligGiverhendelse) {
+		this.alvorligGiverhendelse = alvorligGiverhendelse;
+	}
+
+
+	public String getAlvorligAnnenhendelse() {
+		return alvorligAnnenhendelse;
+	}
+
+
+	public void setAlvorligAnnenhendelse(String alvorligAnnenhendelse) {
+		this.alvorligAnnenhendelse = alvorligAnnenhendelse;
+	}
 
 
 	public String getDatoStr() {
@@ -157,11 +218,11 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	
-    		 giverModel.setMeldingsNokkel(vigilansmelding.getMeldingsnokkel());
+			 giverModel.setMeldingsNokkel(vigilansmelding.getMeldingsnokkel());
     		 meldingsNokkel = vigilansmelding.getMeldingsnokkel();
     		 datoLevert = giverModel.getMeldLevert();
     		 dataModel.put(meldingsId, giverModel);
+    		 sjekkgiveralvorligMelding(giverModel.getGiverKomplikasjon(),  giverModel.getKomplikasjonsdiagnoseGiver(), giverModel.getGiveroppfolging(),meldingsNokkel);
     	 }
     	 if (annenModel != null){
     		 Vigilansmelding vigilansmelding = (Vigilansmelding) annenModel.getAnnenKomplikasjon();
@@ -176,6 +237,7 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     		 meldingsNokkel = vigilansmelding.getMeldingsnokkel();
     		 datoLevert = annenModel.getMeldLevert();
     		 dataModel.put(meldingsId, annenModel);
+    		 sjekkannenalvorligMelding(annenModel.getAnnenKomplikasjon(), meldingsNokkel, alvorligAnnenhendelse);
     	 }
     	 
          VigilansModel melding = checkMessageType();
@@ -202,9 +264,9 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	    	 emailWebService.setMailTo(melderEpost);
     	    	 emailWebService.sendEmail(meldingsNokkel); //Kommentert bort til stage !!
     	    }
-    	   
-    	    checkmessagetoAdmin(alvorGrad,meldingsNokkel);
-   
+/*    	   
+    	    checkmessagetoAdmin(alvorGrad,meldingsNokkel); 
+ */  
     	    setlinkMap();
     	    
     	    
