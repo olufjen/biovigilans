@@ -269,7 +269,7 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	    	 emailWebService.sendEmail(meldingsNokkel); //Kommentert bort til stage !!
     	    }
 /*    	   
-    	    checkmessagetoAdmin(alvorGrad,meldingsNokkel); 
+     	    checkmessagetoAdmin(alvorGrad,meldingsNokkel); 
  */  
     	    setlinkMap();
     	    
