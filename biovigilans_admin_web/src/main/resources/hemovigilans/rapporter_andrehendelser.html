@@ -53,7 +53,7 @@
 		var tilmelder = "${tilmelder}";
 		var statusflag = "${andreHendelse.vigilansmelding.sjekklistesaksbehandling}";
 		var reclasflag = false;
-
+		var reclasflagtemp = true;
 			/**
 			This  function set the calender for date to the browsers those doesn't support html5 input type date.
 			
@@ -275,7 +275,26 @@
 				 //   alert("step 4");
 				}
 				function enableReclassification(){
-				
+/*
+ * Alle felt skal være redigerbare olj 5.03.16
+ */
+// 					alert("reklass "+reclasflag);
+// 					$('.inputbox').attr('disabled',reclasflag);
+					$('div').find('input, textarea, select').attr('readonly', reclasflag);
+					$('div').find('select').attr('disabled', reclasflag);
+//					$("#hendelse_beskrivelse").attr('readonly',reclasflag);
+// 					$("#tabprosessselect").attr('disabled',reclasflag);
+/*  					$("#tab-kvalitetskrav").attr('readonly',reclasflag);
+ 					$("#klaslr").attr('readonly',reclasflag);
+ 					$("#pas-kjonn-1").attr('readonly',reclasflag);
+ 					$("#pas-kjonn-2").attr('readonly',reclasflag);
+ 					$("#pasalder").attr('readonly',reclasflag);
+ 					$("#tab-hendelse").attr('readonly',reclasflag);
+ 					$("#hendelseoppdaget").attr('readonly',reclasflag);
+ 					$("#planlagtetiltak").attr('readonly',reclasflag);
+ 					$("#hendelsekommentar").attr('readonly',reclasflag); */
+ 					
+					
 					$("#k-1").attr('disabled',reclasflag);
 					$("#1").attr('disabled',reclasflag);
 					$("#2").attr('disabled',reclasflag);
@@ -351,8 +370,9 @@
 					$("#48").attr('disabled',reclasflag);
 					$("#49").attr('disabled',reclasflag);
 					$("#50").attr('disabled',reclasflag);
-					if (reclasflag == false)
-						reclasflag = true;
+					var xtemp = reclasflag
+					reclasflag = reclasflagtemp
+					reclasflagtemp = xtemp;
 				}
 /* 				function enabletilHDIR(){
 					alert("enable");
@@ -493,7 +513,7 @@
 					<select name ="tab-prosess" id="tab-prosess" class="form-control" >
 						<option ></option>
 				       		<#list andreHendelse.hovedprosesslist as hovedprosess>
-				       			<option>${hovedprosess} </option>
+				       			<option id="tabprosessselect">${hovedprosess} </option>
 				       		 </#list>
 	     		   	</select>
 				</div>
@@ -1055,7 +1075,7 @@
 			</div>		
 				<div class="form-group">
 				<label>Kommentar</label>
-					<textarea class="form-control" name="hendelsekommentar" rows="3" ></textarea>
+					<textarea class="form-control" name="hendelsekommentar" id="hendelsekommentar" rows="3" ></textarea>
 				</div>
 
 			<div class="form-group">

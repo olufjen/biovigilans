@@ -221,7 +221,15 @@
   		<property name="alvorligHendelsegiver" value="${alvorlighendelsegiver},${alvorlighendelsegiverja}"></property>
   		<property name="alvorligHendelsegivergrad" value="${alvorlighendelsegivergrad1},${alvorlighendelsegivergrad2},${alvorlighendelsegivergrad3}"></property>
   		<property name="alvorligHendelsegiverutfall" value="${alvorlighendelsegiverutfall1},${alvorlighendelsegiverutfall2},${alvorlighendelsegiverutfall3}"></property>
-  		
+  		<property name="alvorligHendelsepasientgrad" value="${alvorlighendelsegivergrad1},${alvorlighendelsegivergrad2},${alvorlighendelsegivergrad3}"></property>
+  		<property name="alvorligHendelsepasientutfall" value="${alvorlighendelsegiverutfall1},${alvorlighendelsegiverutfall2},${alvorlighendelsepasientutfall3}"></property>
+  		<property name="alvorligHendelsepasientsymptom" value="${alvorlighendelsepasientsymptom1},${alvorlighendelsepasientsymptom2},${alvorlighendelsepasientsymptom3},
+  		${alvorlighendelsepasientsymptom4},${alvorlighendelsepasientsymptom5},${alvorlighendelsepasientsymptom6},${alvorlighendelsepasientsymptom7},
+  		${alvorlighendelsepasientsymptom8},${alvorlighendelsepasientsymptom9},${alvorlighendelsepasientsymptom10}"></property>
+  		<property name="alvorligHendelsepasientarsak" value="${alvorlighendelsepasientarsak1},${alvorlighendelsepasientarsak2},${alvorlighendelsepasientarsak3},
+  		${alvorlighendelsepasientarsak4},${alvorlighendelsepasientarsak5},${alvorlighendelsepasientarsak6},${alvorlighendelsepasientarsak7},${alvorlighendelsepasientarsak8},
+  		${alvorlighendelsepasientarsak9},${alvorlighendelsepasientarsak10},${alvorlighendelsepasientarsak11},${alvorlighendelsepasientarsak12}"></property>
+  		<property name="alvorligHendelsepasienthvorfor" value="${alvorlighendelsepasienthvorfor1},${alvorlighendelsepasienthvorfor2}"></property>
   </bean>
 
    <bean name="/hemovigilans/melder_rapport.html" id="melderrapportServerResource" autowire="byName" scope="prototype"

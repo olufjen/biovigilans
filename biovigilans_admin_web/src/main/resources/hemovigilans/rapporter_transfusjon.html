@@ -48,6 +48,7 @@ This  function set the calender for date to the browsers those doesn't support h
 var reqFlag =  "${display}";
 var statusflag = "${transfusjonwebID.vigilansmelding.sjekklistesaksbehandling}";
 var reclasflag = false;
+var reclasflagtemp = true;
 var initDatepicker = function() {
 	  $('input[type=date]').each(function() {
         var $input = $(this);
@@ -401,6 +402,13 @@ function showtext(id,thetext){
 	 //   alert("step 4");
 	}
 	function enableReclassification(){
+		$('div').find('input, textarea, select').attr('readonly', reclasflag);
+		$('div').find('select').attr('disabled', reclasflag);
+		$("input[type=radio]").attr('disabled', reclasflag);
+		$("input[type=checkbox]").attr('disabled', reclasflag);	
+		
+		
+		
 		$("#grad1").attr('disabled',reclasflag);
 		$("#grad2").attr('disabled',reclasflag);
 		$("#grad3").attr('disabled',reclasflag);
@@ -666,10 +674,10 @@ function showtext(id,thetext){
 		$("#aihaannetb").attr('disabled',reclasflag);
 		$("#p-komp-manglendeeffektx").attr('disabled',reclasflag);
 		$("#p-komp-uctx").attr('disabled',reclasflag);
+		var xtemp = reclasflag
+		reclasflag = reclasflagtemp
+		reclasflagtemp = xtemp;
 
-		
-		if (reclasflag == false)
-			reclasflag = true;
 	}
 </script>
 

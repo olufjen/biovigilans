@@ -139,7 +139,12 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String[] alvorligHendelsegiver; //Behandlet på sykehus, Videre behandling oppfølging JA
 	protected String[] alvorligHendelsegivergrad;
 	protected String[] alvorligHendelsegiverutfall;
-
+	protected String[] alvorligHendelsepasientgrad;
+	protected String[] alvorligHendelsepasientutfall;
+	protected String[] alvorligHendelsepasientsymptom;
+	protected String[] alvorligHendelsepasientarsak;
+	protected String[] alvorligHendelsepasienthvorfor;
+	
 	protected List<String> hvagikkgaltList = new ArrayList<String>();
 /*
  * Session objekter for giver	
@@ -215,6 +220,56 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String meldingsNokkel = null;   // Meldingsnøkkel benyttet for utskrift til pdf
 	
 	private String[] alvorGrad = {"Grad 2 Alvorlig","Grad 3 Livstruende","Grad 4 Dødsfall"};
+	
+/*
+ * 	For alvorlige pasienthendelser
+ */
+	
+	public String[] getAlvorligHendelsepasientgrad() {
+		return alvorligHendelsepasientgrad;
+	}
+
+	public String[] getAlvorligHendelsepasientsymptom() {
+		return alvorligHendelsepasientsymptom;
+	}
+
+	public void setAlvorligHendelsepasientsymptom(
+			String[] alvorligHendelsepasientsymptom) {
+		this.alvorligHendelsepasientsymptom = alvorligHendelsepasientsymptom;
+	}
+
+	public String[] getAlvorligHendelsepasientarsak() {
+		return alvorligHendelsepasientarsak;
+	}
+
+	public void setAlvorligHendelsepasientarsak(
+			String[] alvorligHendelsepasientarsak) {
+		this.alvorligHendelsepasientarsak = alvorligHendelsepasientarsak;
+	}
+
+	public String[] getAlvorligHendelsepasienthvorfor() {
+		return alvorligHendelsepasienthvorfor;
+	}
+
+	public void setAlvorligHendelsepasienthvorfor(
+			String[] alvorligHendelsepasienthvorfor) {
+		this.alvorligHendelsepasienthvorfor = alvorligHendelsepasienthvorfor;
+	}
+
+	public void setAlvorligHendelsepasientgrad(String[] alvorligHendelsepasientgrad) {
+		this.alvorligHendelsepasientgrad = alvorligHendelsepasientgrad;
+	}
+
+	public String[] getAlvorligHendelsepasientutfall() {
+		return alvorligHendelsepasientutfall;
+	}
+
+	public void setAlvorligHendelsepasientutfall(
+			String[] alvorligHendelsepasientutfall) {
+		this.alvorligHendelsepasientutfall = alvorligHendelsepasientutfall;
+	}
+
+	
 	
 	public String getMeldingsNokkel() {
 		return meldingsNokkel;
@@ -1852,6 +1907,79 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 		String meldingsKlassifikasjon = annenKomplikasjon.getKlassifikasjon();
 		if (meldingsKlassifikasjon != null && meldingsKlassifikasjon.equals(klassifikasjon)){
 			sendMeldingtilsaksbehandlere("TEST: Alvorlig melding type Andre hendelser", "Det er mottatt en alvorlig melding meldingsNøkkel: "+meldingsNokkel);
+		}
+	}
+	/**
+	 * sjekkpasientalvorligMelding
+	 * Denne rutinen sjekker om det er mottatt en alvorlig pasientmelding, og sender melding til saksbehandlere om det
+	 * @param pasientkomplikasjon
+	 * @param symptomer
+	 * @param klassifikasjon
+	 * @param String meldingsNokkel
+	 */
+	/**
+	 * @param pasientkomplikasjon
+	 * @param symptomer
+	 * @param klassifikasjon
+	 * @param meldingsNokkel
+	 */
+	/**
+	 * @param pasientkomplikasjon
+	 * @param symptomer
+	 * @param klassifikasjon
+	 * @param meldingsNokkel
+	 */
+	public void sjekkpasientalvorligMelding(Pasientkomplikasjon pasientkomplikasjon,Map<String,Symptomer> symptomer,Komplikasjonsklassifikasjon klassifikasjon,String meldingsNokkel){
+		boolean alvorlig = false;
+		String arsak = "";
+		for (String alvorlighet : alvorligHendelsepasientgrad){
+			if (pasientkomplikasjon.getAlvorlighetsgrad() != null && alvorlighet.equals(pasientkomplikasjon.getAlvorlighetsgrad())){
+				alvorlig = true;
+				arsak = pasientkomplikasjon.getAlvorlighetsgrad();
+				break;
+			}	
+		}
+		if (!alvorlig){
+			for (String alvorlighet : alvorligHendelsepasientutfall){
+				if (pasientkomplikasjon.getKliniskresultat() != null && alvorlighet.equals(pasientkomplikasjon.getKliniskresultat())){
+					alvorlig = true;
+					arsak = giverKomplikasjon.getVarighetkomplikasjon();
+					break;
+				}
+			}
+		}
+
+		if (!alvorlig){
+			for (String alvorlighet :  alvorligHendelsepasientarsak){
+				if (pasientkomplikasjon.getKlassifikasjon() != null && alvorlighet.equals(pasientkomplikasjon.getKlassifikasjon())){
+					alvorlig = true;
+					arsak = pasientkomplikasjon.getKlassifikasjon();
+					break;
+				}
+			}
+		}
+		if (!alvorlig){
+			for (String alvorlighet : alvorligHendelsepasientsymptom){
+				if (symptomer != null && symptomer.get(alvorlighet)!= null){
+					Symptomer symptom = (Symptomer)symptomer.get(alvorlighet);
+					alvorlig = true;
+					arsak = symptom.getSymptomklassifikasjon();
+					break;
+				}
+			}
+		}
+		if (!alvorlig){
+			for (String alvorlighet : alvorligHendelsepasienthvorfor){
+				if (klassifikasjon.getKlassifikasjon() != null && alvorlighet.equals(klassifikasjon.getKlassifikasjon())){
+					alvorlig = true;
+					arsak = klassifikasjon.getKlassifikasjon();
+					break;
+				}
+			}
+		}
+		if (alvorlig){
+			sendMeldingtilsaksbehandlere("TEST: Alvorlig melding type Pasienthendelse", "Det er mottatt en alvorlig pasientmelding årsak: "+arsak+" Meldingsnøkkel "+meldingsNokkel);
+
 		}
 	}
 	/**

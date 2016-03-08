@@ -49,6 +49,7 @@
 	var reqFlag =  "${display}";
 	var statusflag = "${giverkomplikasjon.vigilansmelding.sjekklistesaksbehandling}";
 	var reclasflag = false;
+	var reclasflagtemp = true;
 	var initDatepicker = function() {
 		  $('input[type=date]').each(function() {
 	        var $input = $(this);
@@ -366,6 +367,11 @@
 	 //   alert("step 4");
 	}
 	function enableReclassification(){
+		$('div').find('input, textarea, select').attr('readonly', reclasflag);
+		$('div').find('select').attr('disabled', reclasflag);
+		$("input[type=radio]").attr('disabled', reclasflag);
+		$("input[type=checkbox]").attr('disabled', reclasflag);	
+		
 		$("#grad1").attr('disabled',reclasflag);
 		$("#grad2").attr('disabled',reclasflag);
 		$("#grad3").attr('disabled',reclasflag);
@@ -376,8 +382,10 @@
 		$("#tab-klinisk2").attr('disabled',reclasflag);
 		$("#tab-klinisk3").attr('disabled',reclasflag);
 		$("#tab-klinisk4").attr('disabled',reclasflag);
-		if (reclasflag == false)
-			reclasflag = true;
+		var xtemp = reclasflag
+		reclasflag = reclasflagtemp
+		reclasflagtemp = xtemp;
+
 	}
 	</script>
 

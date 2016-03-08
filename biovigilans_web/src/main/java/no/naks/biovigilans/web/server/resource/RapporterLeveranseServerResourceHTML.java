@@ -206,8 +206,10 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 			}
     		 transfusjon.setMeldingsNokkel(vigilansmelding.getMeldingsnokkel());
     		 meldingsNokkel = vigilansmelding.getMeldingsnokkel();
+    		 
     		 datoLevert = transfusjon.getMeldLevert();
     		 dataModel.put(meldingsId, transfusjon);
+    		 sjekkpasientalvorligMelding(transfusjon.getPasientKomplikasjon(),transfusjon.getPasientKomplikasjon().getSymptomer(), transfusjon.getKomplikasjonsklassifikasjon(), meldingsNokkel);
     	 }
     	 if (giverModel != null){
     		 Vigilansmelding vigilansmelding = (Vigilansmelding) giverModel.getGiverKomplikasjon();
@@ -262,6 +264,8 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	    String melderEpost = melderwebModel.getMelder().getMelderepost();
     	    if(melderEpost != null || !melderEpost.equals("")){
     	    	 emailWebService.setMailTo(melderEpost);
+    	    	 emailWebService.setSubject("Hemovigilans Meldeordningen");
+    	    	 emailWebService.setEmailText("Takk for meldingen. Ditt meldingsnummer er: ");
     	    	 emailWebService.sendEmail(meldingsNokkel); //Kommentert bort til stage !!
     	    }
 /*    	   
