@@ -76,11 +76,25 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	private String kladd; // Om denne meldingen er en kladd
 	private String godkjent; // Om denne meldingen er godkjent
 	private String meldingstype = "";
+	private String color = "green";	//Farge - en indikasjon på status for meldingen;
+	private String meldingTitle = "Ordinær melding";
 	
 	protected String[]vigilansKeys;	
 	protected Map<String,String>vigilansFields;
 
 	
+	public String getMeldingTitle() {
+		return meldingTitle;
+	}
+	public void setMeldingTitle(String meldingTitle) {
+		this.meldingTitle = meldingTitle;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
 	public String getFormatNokkel() {
 		return formatNokkel;
 	}
@@ -276,8 +290,11 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 		if (index > -1){
 			return "Hem"+ " "+ getMeldeid() + " " + String.valueOf(day) + " " + String.valueOf(month) + " " + String.valueOf(year);
 		}
-		else
+		else{
+			meldingTitle = "Oppfølgingsmelding";
+			color = "yellow";
 			return this.meldingsnokkel;
+		}
 
 	}
 	public void setMeldingsnokkel(String meldingsnokkel) {

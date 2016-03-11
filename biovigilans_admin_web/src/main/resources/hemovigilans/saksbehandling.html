@@ -28,7 +28,7 @@
       <div class="left hidden-print">        
         <button type="button" onclick="homePage()" class="btn btn-default btn-lg">Tilbake</button>        
       </div>
-      <figure class="main-logo" title="Version 1.0 November 2015">        
+      <figure class="main-logo" title="Version 1.1 Mars 2016">        
        <img class="logo" src="/biovigilans_admin_web/resources/css/logo.png" alt="" />
        </figure>
     </div>
@@ -181,7 +181,7 @@
                       </div>                     
    					<div for="nokkelsok" title="Her kan søke etter en melding med gitt meldingsnøkkel. Skriv meldingsnøkkelen uten mellomrom."><b> Søk meldingsnøkkel:</b>
                       <div class="input-group">
- 						<input type="text" size="16" class="date-input-large" name="meldingsnokkel" id="meldingsnokkel" onchange="formSubmit('btnmeldingsnokkelsok');" >
+ 						<input type="text" size="16" class="date-input-large" name="meldingsnokkel" id="meldingsnokkel" onblur="formSubmit('btnmeldingsnokkelsok');" >
                       </div>                     
  
                     </div>                    
@@ -249,7 +249,7 @@
      	<table class="table table-hover" border=1>
   		<tr><th>Til PDF</th><th>Detaljer</th><th >Meldingsnøkkel</th><th><a href="javascript:formSubmit('btnsorteringdatohendt');">Dato for hendelse</a> </th><th><a href="javascript:formSubmit('btnsorteringdatomeldt');">Meldingsdato</a></th><th>Meldingstype</th><th>Status</th>
   			<#list meldinger as melding>
-  			<tr id="nokkelr"><td><button type="submit" id="btnpdf" name="pdf" value="${melding.meldeid}"  class="btn btn-success btn-lg">Til PDF</button></td><td><button type="submit" id="btnleveranse" name="lukk1" value="${melding.meldeid}"  class="btn btn-default">Velg</button></td><td id="nokkel">${melding.formatNokkel}</td><td>${melding.datoforhendelse?date}</td><td>${melding.meldingsdato?date}</td><td>${melding.meldingstype}</td><td id="tabstatus" bgcolor="green">${melding.sjekklistesaksbehandling}</td> 
+  			<tr id="nokkelr"><td><button type="submit" id="btnpdf" name="pdf" value="${melding.meldeid}"  class="btn btn-success btn-lg">Til PDF</button></td><td><button type="submit" id="btnleveranse" name="lukk1" value="${melding.meldeid}"  class="btn btn-default">Velg</button></td><td id="nokkel">${melding.formatNokkel}</td><td>${melding.datoforhendelse?date}</td><td>${melding.meldingsdato?date}</td><td>${melding.meldingstype}</td><td id="tabstatus" title=${melding.meldingTitle} bgcolor=${melding.color}>${melding.sjekklistesaksbehandling}</td> 
   			</#list>
 		</table>  
      </div>

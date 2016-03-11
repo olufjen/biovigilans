@@ -52,6 +52,9 @@ public interface Vigilansmelding {
 	public void setVigilansFields(Map<String, String> vigilansFields) ;
 	public void setsakbehandlerTypes();
 	public void setsaksbehandlerParams();
-	
+	public String getColor();
+	public void setColor(String color);	
+	public String getMeldingTitle();
+	public void setMeldingTitle(String meldingTitle);
 
 }
