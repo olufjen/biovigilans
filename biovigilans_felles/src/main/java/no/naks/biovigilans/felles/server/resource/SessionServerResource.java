@@ -1906,7 +1906,7 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 	public void sjekkannenalvorligMelding(Annenkomplikasjon annenKomplikasjon, String meldingsNokkel,String klassifikasjon){
 		String meldingsKlassifikasjon = annenKomplikasjon.getKlassifikasjon();
 		if (meldingsKlassifikasjon != null && meldingsKlassifikasjon.equals(klassifikasjon)){
-			sendMeldingtilsaksbehandlere("TEST: Alvorlig melding type Andre hendelser", "Det er mottatt en alvorlig melding meldingsNøkkel: "+meldingsNokkel);
+			sendMeldingtilsaksbehandlere("Alvorlig melding type Andre hendelser", "Det er mottatt en alvorlig melding meldingsNøkkel: "+meldingsNokkel);
 		}
 	}
 	/**
@@ -1978,7 +1978,7 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 			}
 		}
 		if (alvorlig){
-			sendMeldingtilsaksbehandlere("TEST: Alvorlig melding type Pasienthendelse", "Det er mottatt en alvorlig pasientmelding årsak: "+arsak+" Meldingsnøkkel "+meldingsNokkel);
+			sendMeldingtilsaksbehandlere("Alvorlig melding type Pasienthendelse", "Det er mottatt en alvorlig pasientmelding årsak: "+arsak+" Meldingsnøkkel "+meldingsNokkel);
 
 		}
 	}
@@ -2053,7 +2053,7 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 			}
 		}	
 		if (alvorlig){
-			sendMeldingtilsaksbehandlere("TEST: Alvorlig melding type Giverhendelse", "Det er mottatt en alvorlig givermelding årsak: "+arsak+" Meldingsnøkkel "+meldingsNokkel);
+			sendMeldingtilsaksbehandlere("Alvorlig melding type Giverhendelse", "Det er mottatt en alvorlig givermelding årsak: "+arsak+" Meldingsnøkkel "+meldingsNokkel);
 
 		}
 	}

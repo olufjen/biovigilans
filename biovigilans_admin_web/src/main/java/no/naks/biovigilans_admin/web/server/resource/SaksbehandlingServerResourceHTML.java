@@ -145,10 +145,30 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 		Parameter datoMSort   = form.getFirst("sorteringdatomeldt"); 
 		Parameter formMinesaker  = form.getFirst("minesaker"); // Bruker etterspør sine saker
 		Parameter sokMelding = form.getFirst("meldingsnokkelsok"); // Bruker etterspør en gitt melding
+		Parameter formAnonymesaker  = form.getFirst("anonymesaker"); // Bruker etterspør anonyme meldinger
   		String meldtUtvalgetstart = null;
   		String meldtUtvalgetslutt = null;
   		boolean toPDF = false;
   		String page = "";
+  		if (formAnonymesaker != null){
+  			Long saksbehandlerid = login.getSaksbehandler().getSakbehandlerid();
+  			meldinger = hentanonymeMeldinger();
+ 			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+ 		 	SimpleScalar simple = new SimpleScalar(utvalg);
+  		 	dataModel.put(utvalgKey, simple);
+  		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
+  		 	 dataModel.put(merknadlisteKey, merk);
+  		    dataModel.put(meldeKey,meldinger);
+  	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
+
+    		// Load the FreeMarker template
+    		Representation pasientkomplikasjonFtl = clres2.get();
+
+    		TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+    				MediaType.TEXT_HTML);
+    		return templatemapRep;
+  		}
   		if (sokMelding != null){
   			meldingsID = null;
  			Long saksbehandlerid = login.getSaksbehandler().getSakbehandlerid();

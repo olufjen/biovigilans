@@ -42,6 +42,7 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	private String selectannenMeldingSQL;
 	private String selectvigilansMeldingsaksbehandlerSQL;
 	private String selectvigilansMeldingnokkelSQL;
+	private String selectvigilansMeldinganonymSQL;
 	
 	private boolean timeperiodType = true; // Satt til true dersom forespurt tidsperiode er meldt
 	// satt til false dersom forespurt tidsperiode er når meldingen skjedde.
@@ -144,6 +145,17 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	
 	public String[] getGiverTableDefs() {
 		return giverTableDefs;
+	}
+
+
+	public String getSelectvigilansMeldinganonymSQL() {
+		return selectvigilansMeldinganonymSQL;
+	}
+
+
+	public void setSelectvigilansMeldinganonymSQL(
+			String selectvigilansMeldinganonymSQL) {
+		this.selectvigilansMeldinganonymSQL = selectvigilansMeldinganonymSQL;
 	}
 
 
@@ -714,6 +726,19 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 		meldinger = vigilansSelect.execute(merknad);
 		return meldinger;
 	}
+	
+	/**
+	 * collectMessagesanonyme
+	 * Denne rutinen henter alle vigilansmeldingermeldinger som ikke har en defirt melder eller er meldt anonymt
+	 * @return List en liste over meldinger
+	 */
+	public List collectMessagesanonyme(){
+		List meldinger = null;
+		vigilansSelect = new VigilansSelect(getDataSource(),selectvigilansMeldinganonymSQL,vigilandsMeldingTableDefs);
+
+		meldinger = vigilansSelect.execute();
+		return meldinger;
+	}		
 	/**
 	 * collectMessagessaksbehandler
 	 * Denne rutinen henter alle vigilansmeldingermeldinger til en gitt saksbehandler

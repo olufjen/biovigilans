@@ -114,4 +114,7 @@ public class SaksbehandlingServiceImpl implements SaksbehandlingService {
 	public List<Regionstatistikk> collectsykehusstatistikk(String startperiod,String endperiod,String type){
 		return statistikkDAO.collectsykehusstatistikk(startperiod, endperiod, type);
 	}
+	public List collectMessagesanonyme(){
+		return saksbehandlingDAO.collectMessagesanonyme();
+	}
 }

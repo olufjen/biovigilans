@@ -269,7 +269,7 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 		if (mailText == null || mailText.equals(""))
 			mailText = " - Ingen kommentar fra saksbehandler";
 		String flaggMerknad = sakMap.get(flaggNames[2]);
-		String msg = String.format("%nTEST - Denne saken er meldt til Helsedirektoratet%n");
+		String msg = String.format("%nDenne saken er meldt til Helsedirektoratet%n");
 		if (flaggMerknad != null && saksbehandlere != null){
 			for (Saksbehandler saksbehandler : saksbehandlere){
 				emailWebService.setMailTo(saksbehandler.getBehandlerepost());
@@ -359,7 +359,24 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 		return hentMeldingstyper(meldinger);
 	}
 	/**
-	 * hentMeldingene
+	 * hentanonymeMeldinger
+	 * Denne rutinen henter meldinger som er meldt anonymt eller som mangler melderid
+	 * @return Liste over saksbehandlers meldinger
+	 */
+	public List<Vigilansmelding> hentanonymeMeldinger(){
+		 List<Vigilansmelding> meldinger = null;
+		 meldinger = saksbehandlingWebservice.collectanonymemeldinger();
+		    for (Vigilansmelding melding: meldinger){
+		    	if (melding.getSjekklistesaksbehandling() == null){
+		    		melding.setSjekklistesaksbehandling("Levert");
+		    	}
+		    }
+	    
+		 return hentMeldingstyper(meldinger);
+
+	}
+	/**
+	 * hentMineMeldinger
 	 * Denne rutinen henter meldinger til saksbehandler
 	 * @param Long saksbehandlerid id til pålogget saksbehandler
 	 * @return Liste over saksbehandlers meldinger

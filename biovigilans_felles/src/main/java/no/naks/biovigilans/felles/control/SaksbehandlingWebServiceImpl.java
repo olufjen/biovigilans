@@ -119,4 +119,7 @@ public class SaksbehandlingWebServiceImpl extends MasterWebServiceImpl
 	public List<Vigilansmelding> collectmeldersmeldinger(String melderIds){
 		return melderTableService.collectMeldersmeldinger(melderIds);
 	}
+	public List<Vigilansmelding> collectanonymemeldinger(){
+		return saksbehandlingService.collectMessagesanonyme();
+	}
 }

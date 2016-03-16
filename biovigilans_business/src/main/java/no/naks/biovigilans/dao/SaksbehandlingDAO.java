@@ -326,6 +326,12 @@ public interface SaksbehandlingDAO {
 
 	public void setSelectvigilansMeldingnokkelSQL(
 			String selectvigilansMeldingnokkelSQL);
+	public String getSelectvigilansMeldinganonymSQL();
+
+
+	public void setSelectvigilansMeldinganonymSQL(
+			String selectvigilansMeldinganonymSQL);
+	public List collectMessagesanonyme();
 
 	public Map<String,List> selectMeldingetternokkel (String meldeid);
 }

@@ -365,8 +365,10 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     			newLogin.setSaksbehandler(login.getSaksbehandler());
     			newLogin.setPassord(login.getSaksbehandler().getBehandlerpassord());
     			newLogin.setEpostAdresse(login.getSaksbehandler().getBehandlerepost());
-   		     List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request, meldingsId); // Midlertdig
-    		 List<Saksbehandler> saksbehandlere = (List<Saksbehandler>) sessionAdmin.getSessionObject(request,behandlereKey);
+    			List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request, meldingsId); // Midlertidig
+//    			meldinger = null;
+//    			sessionAdmin.setSessionObject(request, meldinger, meldingsId); 
+    			List<Saksbehandler> saksbehandlere = (List<Saksbehandler>) sessionAdmin.getSessionObject(request,behandlereKey);
 //    			invalidateSessionobjects();
 //    			sessionAdmin.getSession(request,diskusjonsKey).invalidate();
 //    			sessionAdmin.getSession(request,sakModelKey).invalidate();
