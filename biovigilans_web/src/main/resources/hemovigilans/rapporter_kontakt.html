@@ -269,7 +269,10 @@ function homePage(){
 	document.location = newAddr;
 
 }
-
+function setanonymDefault(){
+	document.getElementById("k-anonym").checked = 0;
+	document.getElementById("k-ikkeanonym").checked = 1;
+}
 //window.onload=initialize();
 </script>
 
@@ -292,19 +295,7 @@ function homePage(){
   <li><a href="rapporter_andrehendelser.html" data-toggle="tab">Andre uønskede hendelser</a></li>
  
 </ul>  -->
- <div class="radio">
-          <label>
-            <input name="k-anonym" type="radio" id="k-anonym" value="k-anonym" onclick="toggleDisplay('kontakt1',0);toggleDisplay('anonymbutton',this.checked);passwordsubmit();"/>
-            Ønsker å melde anonymt
-          </label>
- </div>
- <div id="anonymbutton" style="display:none" >
-   <label>
-            <input name="k-anonym" type="radio" id="k-ikkeanonym" value="k-ikkeanonym" onclick="toggleDisplay('kontakt1',this.checked);toggleDisplay('anonymbutton',0)"/>
-            Ønsker å melde normalt
-   </label><br>
- 	 <button name="lagreanonymt" id="lagreanonymt" type="submit" onclick="anonymKnappen();" class="btn btn-primary btn-lg" >Lagre</button>
-</div>
+
    
 <div  class="tab-pane" id="kontakt1">
 <div id="funnet" style="display: ${funnet}">
@@ -433,6 +424,19 @@ function homePage(){
 		  <button name="lagrekontakt" id="btnleveranse" type="submit"  class="btn btn-primary btn-lg" style="display: none" >getValue</button>
 		  <button name="lagrekontaktb" id="btnleveranseb" type="button" onclick="document.location='leveranse.html';" style="display: none" class="btn btn-primary btn-lg" >getValue</button>
 </div> <!--slutt på Kontaktinformasjon-->
+ <div class="radio">
+          <label >
+            <input name="k-anonym" type="radio" id="k-anonym" value="k-anonym" onclick="toggleDisplay('kontakt1',0);toggleDisplay('anonymbutton',this.checked);passwordsubmit();"/>
+            Ønsker å melde anonymt
+          </label>
+ </div>
+ <div id="anonymbutton" style="display:none" >
+   <label><b>Når du melder anonymt, mister du muligheten til å se meldingen i ettertid og til å få tilbakemelding fra Hemovigilansgruppen.</b><br><br>
+            <input name="k-anonym" type="radio" id="k-ikkeanonym" value="k-ikkeanonym" checked onclick="toggleDisplay('kontakt1',this.checked);toggleDisplay('anonymbutton',0)"/>
+            Ønsker å melde normalt
+   </label><br>
+ 	 <button name="lagreanonymt" id="lagreanonymt" type="submit" onclick="anonymKnappen();" class="btn btn-primary btn-lg" >Lagre</button>
+</div>
 </form>
 </div>
 </body>

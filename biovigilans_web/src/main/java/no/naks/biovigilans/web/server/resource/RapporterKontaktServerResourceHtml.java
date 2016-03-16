@@ -53,7 +53,7 @@ import freemarker.template.SimpleScalar;
  *  Denne resursen er knyttet til kontaksiden. Her rapporterer man kontaktinformasjon
  */
 public class RapporterKontaktServerResourceHtml extends SessionServerResource {
-	private String anonymEpost = "meldeordningen@kunnskapssenteret.no";
+	private String anonymEpost = "hemovigilans@helsedir.no";
 	private String[] helseRegioner;
 	private String[] hfeneNord;
 	private String[]hfeneMidt;
@@ -811,7 +811,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     	
     	 	}else if(lagreAnonymt != null){					// Bruker velger å lagre skjema anonymt.
     	 		boolean ikkeAnonym = checkMelder();
-    	 		if (ikkeAnonym){ // Bruker har brukt returtasten !!
+    	 		if (ikkeAnonym){ // Bruker har brukt returtasten eller har et forhåndsutfylt epost felt!!
     	 			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
     	    		Representation pasientkomplikasjonFtl = clres2.get();
     	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
@@ -928,11 +928,19 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     	 melderwebModel.setSykehusHFVpriv(sykehusHFVpriv);
     	 melderwebModel.setSykehusHFvviken(sykehusHFvviken);
     }
+    /**
+     * checkMelder
+     * Denne rutinen sjekker om melderinformasjon er fylt ut ved en anonym melding.
+     * @return
+     */
     private boolean checkMelder(){
     	String lokalnavn = melderwebModel.getMeldernavn();
     	String lokalepost = melderwebModel.getMelderepost();
-    	if (lokalepost != null && !lokalepost.isEmpty())
-    		return true;
+    	if (lokalepost != null && !lokalepost.isEmpty()){
+    		melderwebModel.setMeldernavn("");
+    		melderwebModel.setMelderepost("");
+ //   		return true; Dette er kommentert bort olj 16.03.16
+    	}
     	return false;
     }
 }
