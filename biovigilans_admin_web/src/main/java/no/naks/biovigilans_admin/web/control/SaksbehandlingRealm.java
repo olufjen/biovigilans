@@ -83,12 +83,11 @@ public class SaksbehandlingRealm extends AuthorizingRealm {
 					brukerogpassord = true;
 					break;
 				}
-				if (!brukerogpassord) 
-					endAccount= null;
+
 			}
 		}
-	
-
+		if (!brukerogpassord)
+			return null;
 		return endAccount;
 	}
 	
