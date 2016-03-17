@@ -360,6 +360,14 @@ public class ExcelReport<T> {
 	      createclassificationAnnen(aclassification,"Statistikk klassifikasjoner andre hendelser",workbook,(Function<T, String>) classification);
 	     
     }
+	/**
+	 * creatClassificationAnnen
+	 * Denne rutinen samler statistikk over klassifikasjoner for en type meldingo
+	 * @param lclassification En Hashmap av lister over klassifikasjoner
+	 * @param pageName
+	 * @param workbook
+	 * @param f
+	 */
 	protected void createclassificationAnnen(Map<List<T>,String> lclassification,String pageName,XSSFWorkbook workbook, Function<T,String> f){
 		  String sheetName = pageName;
 		  String header1 = "Klassifikasjoner";
