@@ -401,7 +401,7 @@ uttas.</h4>
 <!-------------------------- Komplikasjon ved tapping av blodgivere----------------------------------------------->
     
 	<div class="tab-pane" id="tapping">
-		<h3>Donor</h3>
+<!-- 		<h3>Donor</h3> -->
 			<div class="form-group" style="display: ${display}">
 				<label>Meldingsnøkkel </label>
 					<div>
@@ -552,8 +552,9 @@ uttas.</h4>
 			<div>
 				<label>${donasjonen.tappetype}</label>
 			</div>
-		</div>	      
-	     <div class="form-group">
+	</div>	
+ 
+	<div class="form-group">
 	   
 	      <select name="type-tapping" id="type-tapping" class="form-control">
 	       	 <option ></option>
@@ -562,8 +563,20 @@ uttas.</h4>
 			   </#list>
 
 	     </select>
-	    </div>
-	      
+    </div>
+	<div class="form-group">
+	<label>Er celler og vev til autolog eller alogent bruk</label>
+		<div class="radio" >
+			          <label>
+			          	<input type="radio" name="tab-vene" id="fullblod-ja"  value="Autolog"/>Autolog
+			          </label>
+		</div>
+		<div class="radio">
+		<label>
+		 	<input type="radio" name="tab-vene" id="fullblod-nei" value="Alogen"/>Alogen
+		 </label>
+		</div>
+	</div>     	      
 <!-- 	      	<div class="radio">
 		      	<label>
 		      		<input type="radio" name="type-tapping"  id="type-tapping" value="fullblod"   onclick="toggleDisplay('fullblod-options',this.checked); toggleDisplay('aferese-options',0)" /> Fullblod 
@@ -697,7 +710,7 @@ uttas.</h4>
 	          </label>
 		    </div>
 	    </div> -->
-	    <h3>DONOR</h3>
+<!-- 	    <h3>DONOR</h3> -->
 	 <div class="form-group" style="display: ${display}">
 			<label>Tidligere oppgitt Hvor startet reaksjonen</label>
 			<div>
@@ -705,7 +718,7 @@ uttas.</h4>
 			</div>
 	</div>		    
 	    <div class="form-group">
-	      <label>Beskriv reaksjonen</label>
+	      <label>Beskriv reaksjon hos donor</label>
 	      <textarea class="form-control" name ="tab-hvor" id="tab-hvor" rows="3"></textarea>
 	 
 
@@ -1130,7 +1143,7 @@ uttas.</h4>
 	    
 	<div class="form-group">
 	   
-	      <h3>Endelig utfall av skaden</h3>
+	      <h3>Klinisk resultat (hvis det er kjent)</h3>
 	 <div class="form-group" style="display: ${display}">
 			<label>Tidligere oppgitt endelig utfall av skaden</label>
 			<div>
@@ -1141,13 +1154,13 @@ uttas.</h4>
 	      <div class="radio">
 	          <label title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
 	          	<input type="radio"  name="tab-klinisk" id="tab-klinisk"  value="ingen-sekvele" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse."/>
-	          	Ingen sekvele
+	          	Fullstendig helbredelse
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet">
 	          	<input type="radio" name="tab-klinisk" id="tab-klinisk"  value="mindrealvorlig-sekvele" title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet"/>
-	          	Mindre alvorlig sekvele
+	          	Lette sekvele
 	          </label>
 		    </div>
 	        <div class="radio">
@@ -1158,7 +1171,7 @@ uttas.</h4>
 		    </div>
 		     <div class="radio">
 	          <label title="Død som følge av skaden.">
-	          	<input type="radio"  name="tab-klinisk" id="tab-klinisk"  value="død" title="Død som følge av skaden."/>Død
+	          	<input type="radio"  name="tab-klinisk" id="tab-klinisk"  value="død" title="Død som følge av skaden."/>Dødsfall
 	          </label>
 		    </div>
 		     <div class="radio">

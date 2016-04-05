@@ -689,8 +689,8 @@ function showtext(id,thetext){
       </div>
     
       <!-- Transfusjon  -->      
-      <h3>Transfusjon</h3>
-<!--       <div class="form-group" style="display: ${display}">
+<!--      <h3>Anvendelse/Transfusjon</h3>
+       <div class="form-group" style="display: ${display}">
         <label>Tidligere oppgitt transfusjonsdato: </label>
         <div>${transfusjon.transfusionDate?date}</div>
       </div>
@@ -1096,7 +1096,19 @@ function showtext(id,thetext){
           <option name="p-antistoff-transfusjon-2"></option>
       </select>
     -->
-    
+ 	<div class="form-group">
+	<label>Var det til autolog eller alogent bruk</label>
+		<div class="radio" >
+			          <label>
+			          	<input type="radio" name="p-transfusjontext" id="fullblod-ja"  value="Autolog"/>Autolog
+			          </label>
+		</div>
+		<div class="radio">
+		<label>
+		 	<input type="radio" name="p-transfusjontext" id="fullblod-nei" value="Alogen"/>Alogen
+		 </label>
+		</div>
+	</div>   
     <!-- Komplikasjon -->
     <h3>Komplikasjon</h3>
     <div class="form-group">
@@ -1280,15 +1292,15 @@ function showtext(id,thetext){
           Hudblødninger (petekkier)
         </label>
       </div> -->
-      <div class="checkbox">
+<!--       <div class="checkbox">
         <label>
           <input type="checkbox" title="Velg andre symptomer for å beskrive symptomene. " name="p-komp-annet" id="p-komp-annet" value="annet" onclick="toggleDisplay('komp-annet-text', this.checked)">
           Andre symptomer
         </label>
-      </div>
+      </div> -->
 
-      <div id="komp-annet-text" class="form-group" style="display: none">
-        <label>Beskriv nærmere i fritekst:</label>
+      <div id="komp-annet-text" class="form-group" >
+        <label>Beskriv:</label>
         <textarea class="form-control" name="p-komp-annettext" rows="3"></textarea>
       </div>
     
@@ -1309,17 +1321,10 @@ function showtext(id,thetext){
       </div>
 
 
-
-
-
-
-
-
-
 <div class="form-group">    
-    <label>Mistenkt årsak til transfusjonsreaksjon </label>
+    <label>Mistenkt årsak til reaksjon</label>
    <div id="asmhtr1-valg2" class="form-group" >
-     <label>Mistenkt årsak </label>
+     <label>Beskriv: </label>
        <textarea class="form-control" name="asm-akutt-text" id="annet" rows="2" ></textarea>
   </div>        
  <!--    <div class="radio">
@@ -3231,9 +3236,9 @@ og/eller
     </div>
 
     <div class="form-group">
-      <h3>Endelig utfall av skaden</h3>    
+      <h3>Klinisk resultat (hvis det er kjent)</h3>    
       <div class="form-group" style="display: ${display}">
-        <label>Tidligere oppgitt utfall av skaden</label>
+        <label>Tidligere oppgitt Klinisk resultat</label>
         <div>${pasientKomp.kliniskresultat}</div>
     </div>
 
@@ -3241,13 +3246,13 @@ og/eller
       <div class="radio">
         <label title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
           <input type="radio" name="klinisk-res"  id="utfall" value="ingensekvele" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
-          Ingen sekvele
+          Fullstendig helbredelse
         </label>
       </div>
       <div class="radio">
         <label title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet">
           <input type="radio" name="klinisk-res"  id="utfall" value="mindre alvorlig sekvele" title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet"/>
-          Mindre alvorlig sekvele
+          Lette sekvele
         </label>
       </div>
       <div class="radio">
@@ -3258,7 +3263,7 @@ og/eller
       </div>
       <div class="radio">
         <label title="Død som følge av skaden.">
-          <input type="radio" name="klinisk-res" id="utfall" value="dod" title="Død som følge av skaden."/>Død
+          <input type="radio" name="klinisk-res" id="utfall" value="dod" title="Død som følge av skaden."/>Dødsfall
         </label>
       </div>
       <div class="radio">
@@ -3342,19 +3347,19 @@ og/eller
   <div class="checkbox">
     <label>
       <input name="p-forholdutstyr" type="checkbox" id="p-forhold"  value="forholdutstyr" 
-      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Forhold ved utstyr  
+      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Vev og cellefeil  
     </label>
     </div>
   <div class="checkbox">
     <label>
       <input name="p-uforlikeligprodukt" type="checkbox" id="p-forhold"  value="uforlikeligprodukt" 
-      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Uforlikelig produkt  
+      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Feil ved utstyret  
     </label>
     </div>
   <div class="checkbox">
     <label>
       <input name="p-feilblodtrans" type="checkbox" id="p-forhold" value="feilblodtrans"  
-      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', this.checked);toggleDisplay('blodkrav', this.checked)"/>Feil celle transfundert   
+      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', this.checked);toggleDisplay('blodkrav', this.checked)"/>Menneskelig feil   
     </label>
     <div id="gikkgalt" class="form-group" style="display: none">
      <label>Hva gikk galt?</label>
@@ -3386,7 +3391,7 @@ og/eller
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-pretransfusjonstesting" id="p-pretransfusjonstesting" value="pretransfusjonstesting" />Pretransfusjonstesting i ?????blodbanken
+        <input type="checkbox" name="p-pretransfusjonstesting" id="p-pretransfusjonstesting" value="pretransfusjonstesting" />Pretransfusjonstesting i institusjon
       </label>
     </div>    
   <div class="checkbox">
@@ -3462,12 +3467,12 @@ og/eller
  
 
   </div>
-  <div class="checkbox">
+<!--   <div class="checkbox">
     <label>
       <input name="p-paregnelig" type="checkbox" id="p-forhold" value="paregnelig" 
       onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0)"/>Påregnelig risiko  
     </label>
-    </div>
+    </div> -->
   <div class="checkbox">
     <label>
       <input name="p-annetskjedde" type="checkbox" id="p-forhold1"  value="annetskjedde" 
@@ -3569,7 +3574,7 @@ og/eller
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-forebyggendetiltakblodbank" type="checkbox" id="p-annetskjedde" value="forebyggendetiltakblodbank" />Forebyggende tiltak ved ????blodbanken  
+      <input name="p-forebyggendetiltakblodbank" type="checkbox" id="p-annetskjedde" value="forebyggendetiltakblodbank" />Forebyggende tiltak ved institusjon  
     </label>
     </div>
   <div class="checkbox">
