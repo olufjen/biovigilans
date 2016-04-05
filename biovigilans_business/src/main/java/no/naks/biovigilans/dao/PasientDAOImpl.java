@@ -286,4 +286,7 @@ public class PasientDAOImpl extends AbstractAdmintablesDAO implements
 			
 		}
 	}
+	public void setdb(){
+	//	setJdbcTemplate(jdbcTemplate);
+	}
 }
