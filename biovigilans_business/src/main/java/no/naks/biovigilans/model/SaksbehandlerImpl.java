@@ -21,5 +21,6 @@ public class SaksbehandlerImpl extends AbstractSaksbehandler implements Saksbeha
 	public void savetoSaksbehandler(){
 		setBehandlerepost(null);
 		setBehandlerpassord(null);
+		setDbChoice(null);
 	}
 }

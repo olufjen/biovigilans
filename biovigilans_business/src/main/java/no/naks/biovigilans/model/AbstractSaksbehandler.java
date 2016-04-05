@@ -20,6 +20,9 @@ public abstract class AbstractSaksbehandler extends AbstractModel {
 	private String behandlertlf;
 	private String behandlerpassord;
 	
+	private String dbChoice;
+	
+	
 	protected Map<String,String> behandlerFields;
 	
 	public Map<String, String> getBehandlerFields() {
@@ -71,6 +74,19 @@ public abstract class AbstractSaksbehandler extends AbstractModel {
 				behandlerpassord = "";
 		}
 		this.behandlerpassord = behandlerpassord;
+	}
+	public String getDbChoice() {
+		return dbChoice;
+	}
+	public void setDbChoice(String dbChoice) {
+		if(dbChoice == null){
+			Map<String,String> userEntries = getBehandlerFields();
+			String field = "dbvalg";
+			dbChoice =  userEntries.get(field);
+			if (dbChoice == null)
+				dbChoice = "";
+		}
+		this.dbChoice = dbChoice;
 	}
 	
 	

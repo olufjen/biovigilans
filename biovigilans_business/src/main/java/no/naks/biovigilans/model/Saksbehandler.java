@@ -21,5 +21,7 @@ public interface Saksbehandler {
 	public Map<String, String> getBehandlerFields();
 	public void setBehandlerFields(Map<String, String> behandlerFields);
 	public void savetoSaksbehandler();
+	public String getDbChoice();
+	public void setDbChoice(String dbChoice);
 	
 }
