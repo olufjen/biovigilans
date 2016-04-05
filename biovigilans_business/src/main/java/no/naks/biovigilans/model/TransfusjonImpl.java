@@ -82,6 +82,9 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 	/**
 	 * savetoTransfusjon()
 	 * Denne rutinen lagrer verdier fra skjermbildet til riktig felt
+	 * @since 05.04.16
+	 * Lagrer også verdier i feltet feiltranfudert
+	 * For hemovigilans : Tidligere reaksjoner blir også satt i feiltranfudert
 	 */
 	public void savetoTransfusjon(){
 		if (getTransfusjonsId() == null){
@@ -90,12 +93,14 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 			setTransDato(null);
 //			transfusjon.setTransfusjonsklokkeslett(null); Fjernet fra skjema olj 10.02.15
 			setTildigerKomplikasjon(null);
+			setFeiltranfudert(null); // OBS Rekkefølgen på disse to kall er viktig !! 
 		}
 		if (getTransfusjonsId() != null){
 			String hastegrad = new String (getHastegrad());
 			String indikasjon = new String(getIndikasjon());
 			String tidligere = new String(getTildigerKomplikasjon());
 			Date transDato = getTransfusionDate();
+			String feiltrans = getFeiltranfudert();
 			if (transDato != null){
 				SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd" );
 				setTransDato(df.format(transDato));
@@ -118,7 +123,8 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 				setTildigerKomplikasjon(tidligere);
 			if (getTransDato() == null ||  getTransDato().isEmpty()) 
 				setTransDato(transdato);
-			
+			if (getFeiltranfudert() == null || getFeiltranfudert().isEmpty())
+				setFeiltranfudert(feiltrans);
 		}
 	}
 	/**

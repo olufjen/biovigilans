@@ -178,7 +178,22 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 		return feiltranfudert;
 	}
 
+	/* 
+	 * Feltet benyttes til celler og vev autologt alogent bruk
+	 */
 	public void setFeiltranfudert(String feiltranfudert) {
+		if (feiltranfudert == null){
+			String aProd = null;
+			for (int i=33;i<35;i++){
+				String vt = keys[i];
+				if ( vt != null)
+						aProd = transfusjonsFields.get(keys[i]);
+				if (aProd != null){
+					feiltranfudert = aProd;
+					break;
+				}
+			}
+		}
 		this.feiltranfudert = feiltranfudert;
 	}
 
