@@ -12,8 +12,9 @@ import no.naks.biovigilans.model.Symptomer;
 import no.naks.biovigilans.model.Tiltak;
 import no.naks.biovigilans.model.Transfusjon;
 import no.naks.biovigilans.model.Utredning;
+import no.naks.rammeverk.kildelag.service.BusinessService;
 
-public class PasientTableServiceImpl implements PasientTableService {
+public class PasientTableServiceImpl extends BusinessService implements PasientTableService {
 
 	private PasientDAO pasientDAO;
 	private TransfusjonDAO transfusjonDAO;

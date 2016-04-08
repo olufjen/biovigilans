@@ -11,8 +11,9 @@ import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.Regionstatistikk;
 import no.naks.biovigilans.model.Sak;
 import no.naks.biovigilans.model.Vigilansmelding;
+import no.naks.rammeverk.kildelag.service.BusinessService;
 
-public class SaksbehandlingServiceImpl implements SaksbehandlingService {
+public class SaksbehandlingServiceImpl extends BusinessService implements SaksbehandlingService {
 	private SaksbehandlingDAO saksbehandlingDAO;
 	private SakDAO sakDAO;
 	private StatistikkDAO statistikkDAO;

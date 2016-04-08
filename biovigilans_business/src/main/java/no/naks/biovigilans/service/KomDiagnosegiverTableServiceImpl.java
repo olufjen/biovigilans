@@ -2,8 +2,9 @@ package no.naks.biovigilans.service;
 
 import no.naks.biovigilans.dao.KomplikasjonsdiagnosegiverDAO;
 import no.naks.biovigilans.model.Komplikasjonsdiagnosegiver;
+import no.naks.rammeverk.kildelag.service.BusinessService;
 
-public class KomDiagnosegiverTableServiceImpl implements
+public class KomDiagnosegiverTableServiceImpl extends BusinessService implements
 		KomDiagnosegiverTableService {
 
 	private KomplikasjonsdiagnosegiverDAO komplikasjonsdiagnosegiverDAO;

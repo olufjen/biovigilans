@@ -2,8 +2,9 @@ package no.naks.biovigilans.service;
 
 import no.naks.biovigilans.dao.DonasjonDAO;
 import no.naks.biovigilans.model.Donasjon;
+import no.naks.rammeverk.kildelag.service.BusinessService;
 
-public class DonasjonTableServiceImpl implements DonasjonTableService {
+public class DonasjonTableServiceImpl extends BusinessService implements DonasjonTableService {
 
 	private DonasjonDAO  donasjonDAO;
 	

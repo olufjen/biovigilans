@@ -84,7 +84,7 @@ public abstract class AbstractSaksbehandler extends AbstractModel {
 			String field = "dbvalg";
 			dbChoice =  userEntries.get(field);
 			if (dbChoice == null)
-				dbChoice = "";
+				dbChoice = "hemovigilans";
 		}
 		this.dbChoice = dbChoice;
 	}

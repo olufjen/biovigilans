@@ -2,8 +2,9 @@ package no.naks.biovigilans.service;
 
 import no.naks.biovigilans.dao.AnnenKomplikasjonDAO;
 import no.naks.biovigilans.model.Annenkomplikasjon;
+import no.naks.rammeverk.kildelag.service.BusinessService;
 
-public class AnnenKomplikasjonTableServiceImpl implements
+public class AnnenKomplikasjonTableServiceImpl extends BusinessService implements
 		AnnenKomplikasjonTableService {
 
 	AnnenKomplikasjonDAO annenKomplikasjonDAO;

@@ -10,6 +10,7 @@ import no.naks.biovigilans.dao.SakDAO;
 import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
+import no.naks.rammeverk.kildelag.service.BusinessService;
 
 
 /**
@@ -18,7 +19,7 @@ import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
  * Følgende tabeller blir berørt i db:
  * 		
  **/
-public class HendelseTablesServiceImpl implements HendelseTablesService {
+public class HendelseTablesServiceImpl extends BusinessService implements HendelseTablesService {
 	
 	private HendelsehemovigilansDAO hendelsehemovigilansDAO;
 	private SakDAO sakDAO;

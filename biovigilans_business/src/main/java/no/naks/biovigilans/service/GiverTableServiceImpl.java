@@ -5,8 +5,9 @@ import no.naks.biovigilans.model.Giver;
 import no.naks.biovigilans.model.Giverkomplikasjon;
 import no.naks.biovigilans.model.Giveroppfolging;
 import no.naks.biovigilans.model.Vigilansmelding;
+import no.naks.rammeverk.kildelag.service.BusinessService;
 
-public class GiverTableServiceImpl implements GiverTableService {
+public class GiverTableServiceImpl extends BusinessService implements GiverTableService {
 
 	private GiverDAO giverDAO;
 		

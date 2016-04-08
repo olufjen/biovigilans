@@ -6,8 +6,9 @@ import java.util.Map;
 import no.naks.biovigilans.dao.MelderDAO;
 import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.Vigilansmelding;
+import no.naks.rammeverk.kildelag.service.BusinessService;
 
-public class MelderTableServiceImpl implements MelderTableService {
+public class MelderTableServiceImpl extends BusinessService implements MelderTableService {
 
 	private MelderDAO melderDAO;
 	
