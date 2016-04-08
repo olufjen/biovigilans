@@ -12,7 +12,15 @@ import no.naks.biovigilans.felles.control.SessionAdmin;
 import no.naks.biovigilans.felles.control.TableWebService;
 
 import org.restlet.resource.ServerResource;
+import org.springframework.jdbc.core.JdbcTemplate;
 
+/**
+ * ProsedyreServerResource
+ * Dette er superklassen til Sessionserver Resources
+ * Slike resurser håndterer alle hendelser fra html web sider
+ * @author olj
+ *
+ */
 public class ProsedyreServerResource extends ServerResource {
 
 	protected SessionAdmin sessionAdmin = null;
@@ -25,6 +33,7 @@ public class ProsedyreServerResource extends ServerResource {
 	protected KomDiagnosegiverWebService komDiagnosegiverWebService;
 	protected AnnenKomplikasjonWebService annenKomplikasjonWebService;
 	protected KomplikasjonsklassifikasjonWebService komplikasjonsklassifikasjonWebService;
+	private JdbcTemplate alternativeSource = null; // Er kun satt dersom saksbehandler velger annen database enn hemovigilans
 	
 	
 	protected String[]sessionParams;
@@ -32,6 +41,12 @@ public class ProsedyreServerResource extends ServerResource {
 	
 	
 	
+	public JdbcTemplate getAlternativeSource() {
+		return alternativeSource;
+	}
+	public void setAlternativeSource(JdbcTemplate alternativeSource) {
+		this.alternativeSource = alternativeSource;
+	}
 	public KomplikasjonsklassifikasjonWebService getKomplikasjonsklassifikasjonWebService() {
 		return komplikasjonsklassifikasjonWebService;
 	}

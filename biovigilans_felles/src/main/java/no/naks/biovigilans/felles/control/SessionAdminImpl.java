@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.restlet.Request;
 import org.restlet.ext.servlet.ServletUtils;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * Denne klassen administerer session objekter for Restlet Resurser
@@ -13,10 +14,49 @@ import org.restlet.ext.servlet.ServletUtils;
  */
 public class SessionAdminImpl implements SessionAdmin {
 	private String[]sessionParams;
+	private JdbcTemplate hemovigilansjdbcTemplate; //  @since 30.03.2016 OLJ
+	private JdbcTemplate cellerogvevjdbcTemplate; //  @since 30.03.2016 OLJ
+	private String chosenDB = "";
+	private JdbcTemplate chosenTemplate = null;
 	
 	public SessionAdminImpl() {
 		super();
-		  System.out.println("SessionAdmin felles started");
+		  System.out.println("SessionAdmin felles started  - inneholder jdbcTemplates (saksbehandling)");
+	}
+
+	public String getChosenDB() {
+		return chosenDB;
+	}
+
+	public void setChosenDB(String chosenDB) {
+		this.chosenDB = chosenDB;
+		if (chosenDB != null && !chosenDB.equals("hemovigilans")){
+			chosenTemplate = cellerogvevjdbcTemplate;
+		}
+	}
+
+	public JdbcTemplate getChosenTemplate() {
+		return chosenTemplate;
+	}
+
+	public void setChosenTemplate(JdbcTemplate chosenTemplate) {
+		this.chosenTemplate = chosenTemplate;
+	}
+
+	public JdbcTemplate getHemovigilansjdbcTemplate() {
+		return hemovigilansjdbcTemplate;
+	}
+
+	public void setHemovigilansjdbcTemplate(JdbcTemplate hemovigilansjdbcTemplate) {
+		this.hemovigilansjdbcTemplate = hemovigilansjdbcTemplate;
+	}
+
+	public JdbcTemplate getCellerogvevjdbcTemplate() {
+		return cellerogvevjdbcTemplate;
+	}
+
+	public void setCellerogvevjdbcTemplate(JdbcTemplate cellerogvevjdbcTemplate) {
+		this.cellerogvevjdbcTemplate = cellerogvevjdbcTemplate;
 	}
 
 	@Override

@@ -31,6 +31,8 @@ public class LoginModel extends VigilansModel {
 	/**
 	 * saveLogin
 	 * Denne rutinen lagrer saksbehandlers epost og passord til en instans av saksbehandler
+	 * @since 05.04.16
+	 * Den lagrer også valg av database (meldeordning). Default er Hemovigilans
 	 */
 	public void saveLogin(){
 		String[] formFields = getFormNames();
@@ -42,6 +44,8 @@ public class LoginModel extends VigilansModel {
 		return saksbehandler;
 	}
 	public void setSaksbehandler(Saksbehandler saksbehandler) {
+		String db = this.saksbehandler.getDbChoice();
+		saksbehandler.setDbChoice(db);
 		this.saksbehandler = saksbehandler;
 	}
 	
