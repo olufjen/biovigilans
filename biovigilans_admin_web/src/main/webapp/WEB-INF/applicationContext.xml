@@ -161,7 +161,7 @@
             class="no.naks.biovigilans_admin.web.server.resource.LoginServerResourceHTML">
            <property name="securityManager" ref="securityManager"/>
            <property name="sessionAdmin" ref="sessionAdmin"></property>
-           <property name="sessionParams" value="${login.name},${login.pw}"></property>
+           <property name="sessionParams" value="${login.name},${login.pw},${login.db}"></property>
       		<property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
         </bean>
 		<bean name="/hemovigilans/meldingsdialog.html" id="dialogServerResourceHTML" autowire="byName" scope="prototype"
@@ -494,9 +494,11 @@
 	      <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
       -->
   </bean>    
-       <bean id="sessionAdmin" class="no.naks.biovigilans.felles.control.SessionAdminImpl">
-        
-        </bean>
+  <!-- Bean tjeneste for åadministrere en session - lagt til jdbcTemplates, ikke satt opp i meldetjenestene -->
+  <bean id="sessionAdmin" class="no.naks.biovigilans.felles.control.SessionAdminImpl">
+        	<property name="hemovigilansjdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+       		<property name="cellerogvevjdbcTemplate" ref="jdbcTemplatecellerogvev"></property>
+  </bean>
 
 
         <bean id="propertiesHolder" class="no.naks.web.properties.PropertiesHolder">

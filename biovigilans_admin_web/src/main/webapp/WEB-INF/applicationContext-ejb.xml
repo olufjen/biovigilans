@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="dataSourceskjemabank" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	<bean id="dataSourcebiovigilans" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${database.driver}"></property>
 		<property name="url" value="${database.url.innsiden}"></property>
 		<property name="username" value="${database.username}"></property>
@@ -12,10 +12,20 @@
 	</bean>
 
 	<bean id="jdbcTemplatebiovigilans" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="dataSourceskjemabank"></property>
+		<property name="dataSource" ref="dataSourcebiovigilans"></property>
 	</bean>
-	<bean id="domainDictionary" class="no.naks.framework.web.control.DomainDictionaryImpl">
-  </bean>
+	<bean id="dataSourcecellerogvev" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${database.driver}"></property>
+		<property name="url" value="${database.url.cellerogvev}"></property>
+		<property name="username" value="${database.username}"></property>
+		<property name="password" value="${database.password}"></property>
+	</bean>
+
+	<bean id="jdbcTemplatecellerogvev" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSourcecellerogvev"></property>
+	</bean>	
+  	<bean id="domainDictionary" class="no.naks.framework.web.control.DomainDictionaryImpl">
+  	</bean>
  
   <bean id="pasientDAO" class="no.naks.biovigilans.dao.PasientDAOImpl">
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
@@ -320,8 +330,25 @@
   		<property name="saksbehandlingDAO" ref="saksbehandlingDAO"></property>
   		<property name="sakDAO" ref="sakDAO"></property>
   		<property name="statistikkDAO" ref="statistikkDAO"></property>
+  		<property name="jdbctemplatesDAO" ref="templatesDAO"></property>
   </bean>
- 	
+  <bean id="templatesDAO" class="no.naks.rammeverk.kildelag.dao.TemplatesDAOImpl">
+  		<property name="jdbcMap">
+  		 <bean class="org.springframework.beans.factory.config.MapFactoryBean">
+  		 	<property name="targetMapClass">
+  		 	<value>java.util.HashMap</value>
+  		 	</property>
+  		 	<property name="sourceMap">
+  		 		<map>
+  		 			<entry key="hemovigilans" value-ref="jdbcTemplatebiovigilans"></entry>
+  		 			<entry key="cellerogvev" value-ref="jdbcTemplatecellerogvev"></entry>
+  		 		</map>
+  		 	</property>
+  		 </bean>
+  		
+  		</property>
+  
+  </bean>	 	
 
 </beans>
 

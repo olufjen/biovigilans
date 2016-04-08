@@ -76,7 +76,18 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 	    Reference reference = new Reference(getReference(),"..").getTargetRef();
 	
 	    Request request = getRequest();
-
+/*
+ * Setter opp knytning til valgt database
+ * Dette gjøres kun her !!	    
+ */
+		String db = login.getSaksbehandler().getDbChoice();
+		sessionAdmin.setChosenDB(db);
+		if (sessionAdmin.getChosenTemplate() != null)
+			setAlternativeSource(sessionAdmin.getChosenTemplate());
+	
+/*
+ * 		
+ */
 	    List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request, meldingsId); // For å vise tidligere valgt liste
 	    if (meldinger == null)
 	    	meldinger = hentMeldingene(statusflag[0]);

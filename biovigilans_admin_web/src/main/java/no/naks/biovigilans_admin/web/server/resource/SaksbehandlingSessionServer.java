@@ -401,6 +401,7 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	 */
 	public List<Vigilansmelding> hentMeldingene(String status){
 		 List<Vigilansmelding> meldinger = null;
+
 		if (status != null && !status.equals(statusflag[6])){
 			meldinger = saksbehandlingWebservice.collectMessages(status); 
 		}else
