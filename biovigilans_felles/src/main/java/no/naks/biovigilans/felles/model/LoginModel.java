@@ -43,8 +43,16 @@ public class LoginModel extends VigilansModel {
 	public Saksbehandler getSaksbehandler() {
 		return saksbehandler;
 	}
+	/**
+	 * setSaksbehandler
+	 * Rutinen setter aktuell login saksbehandler
+	 * saksbehandler har også informasjon om valgt database
+	 * @param saksbehandler
+	 */
 	public void setSaksbehandler(Saksbehandler saksbehandler) {
 		String db = this.saksbehandler.getDbChoice();
+		if (db == null || db.equals(""))
+			db = saksbehandler.getDbChoice();
 		saksbehandler.setDbChoice(db);
 		this.saksbehandler = saksbehandler;
 	}

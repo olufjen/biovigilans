@@ -122,4 +122,7 @@ public class SaksbehandlingWebServiceImpl extends MasterWebServiceImpl
 	public List<Vigilansmelding> collectanonymemeldinger(){
 		return saksbehandlingService.collectMessagesanonyme();
 	}
+	public void setAlterativeSource(String key){
+		saksbehandlingService.setAlterativeSource(key);
+	}
 }

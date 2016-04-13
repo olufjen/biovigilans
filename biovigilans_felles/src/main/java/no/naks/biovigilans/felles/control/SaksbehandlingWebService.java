@@ -40,5 +40,6 @@ public interface SaksbehandlingWebService {
 	public List<Melder> collectMeldere();
 	public List<Vigilansmelding> collectmeldersmeldinger(String melderIds);
 	public List<Vigilansmelding> collectanonymemeldinger();
+	public void setAlterativeSource(String key);
 	
 }

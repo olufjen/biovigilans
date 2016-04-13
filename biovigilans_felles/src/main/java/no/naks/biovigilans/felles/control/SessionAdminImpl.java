@@ -28,6 +28,9 @@ public class SessionAdminImpl implements SessionAdmin {
 		return chosenDB;
 	}
 
+	/* setChosenDB
+	 * Denne rutinen setter opp riktig jdbcTemplate etter hvilken database bruker velger
+	 */
 	public void setChosenDB(String chosenDB) {
 		this.chosenDB = chosenDB;
 		if (chosenDB != null && !chosenDB.equals("hemovigilans")){

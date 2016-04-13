@@ -1625,7 +1625,8 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
     	 Melder melder = null;
     	 if (melderwebModel != null){
     		 melder = melderwebModel.getMelder();
-    		 melderId = melder.getMelderId();
+    		 if (melder.getMelderId() == null)
+    			 melder = null;
     	 }
     	
     	if (melder == null && melderId != null && melderId.longValue() != 0) 
