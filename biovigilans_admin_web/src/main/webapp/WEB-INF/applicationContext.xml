@@ -494,7 +494,7 @@
 	      <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
       -->
   </bean>    
-  <!-- Bean tjeneste for åadministrere en session - lagt til jdbcTemplates, ikke satt opp i meldetjenestene -->
+  <!-- Bean tjeneste for å administrere en session - lagt til jdbcTemplates, ikke satt opp i meldetjenestene -->
   <bean id="sessionAdmin" class="no.naks.biovigilans.felles.control.SessionAdminImpl">
         	<property name="hemovigilansjdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
        		<property name="cellerogvevjdbcTemplate" ref="jdbcTemplatecellerogvev"></property>

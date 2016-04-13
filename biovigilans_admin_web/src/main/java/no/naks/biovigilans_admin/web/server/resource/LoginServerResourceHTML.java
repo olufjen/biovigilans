@@ -151,6 +151,9 @@ public class LoginServerResourceHTML extends SaksbehandlingSessionServer {
     	    }
     	    if (allowed){
     	    	  System.out.println("Bruker godkjent");
+/*
+ * saksbahandler har også valgt database    	    	  
+ */
     	    	  login.setSaksbehandler(saksbehandlingRealm.getLoginSaksbehandler());
     	    	  
     	    	  page = "../hemovigilans/";

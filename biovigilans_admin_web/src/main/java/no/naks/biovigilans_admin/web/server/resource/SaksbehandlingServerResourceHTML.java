@@ -80,10 +80,15 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
  * Setter opp knytning til valgt database
  * Dette gjøres kun her !!	    
  */
+		 List<Saksbehandler> saksbehandlere = (List)sessionAdmin.getSessionObject(request,behandlereKey);
+	     login = (LoginModel)sessionAdmin.getSessionObject(request,loginKey);
 		String db = login.getSaksbehandler().getDbChoice();
 		sessionAdmin.setChosenDB(db);
-		if (sessionAdmin.getChosenTemplate() != null)
+		if (sessionAdmin.getChosenTemplate() != null){
+			saksbehandlingWebservice.setAlterativeSource(db);
 			setAlternativeSource(sessionAdmin.getChosenTemplate());
+
+		}
 	
 /*
  * 		
