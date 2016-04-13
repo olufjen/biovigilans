@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlParameter;
 
 import no.naks.biovigilans.model.Annenkomplikasjon;
@@ -705,6 +706,9 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 		this.selectvigilansMeldingSQL = selectvigilansMeldingSQL;
 	}
 
+	public void setAlternativeSource(JdbcTemplate alternativeSource){
+		setAlternativeSource(alternativeSource);
+	}
 
 	@Override
 	public List collectMessages() {

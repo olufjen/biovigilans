@@ -3,6 +3,8 @@ package no.naks.biovigilans.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import no.naks.biovigilans.model.Vigilansmelding;
 
 public interface SaksbehandlingDAO {
@@ -334,4 +336,5 @@ public interface SaksbehandlingDAO {
 	public List collectMessagesanonyme();
 
 	public Map<String,List> selectMeldingetternokkel (String meldeid);
+	public void setAlternativeSource(JdbcTemplate alternativeSource);
 }

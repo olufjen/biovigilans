@@ -118,4 +118,13 @@ public class SaksbehandlingServiceImpl extends BusinessService implements Saksbe
 	public List collectMessagesanonyme(){
 		return saksbehandlingDAO.collectMessagesanonyme();
 	}
+
+	@Override
+	public void setAlterativeSource(String key) {
+		setAlterativeSource(key);
+		if (getJdbctemplatesDAO() != null){
+//			saksbehandlingDAO.setAlternativeSource(getJdbctemplatesDAO());
+		}
+		
+	}
 }
