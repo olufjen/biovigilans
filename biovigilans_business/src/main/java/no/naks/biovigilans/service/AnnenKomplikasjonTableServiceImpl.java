@@ -26,4 +26,12 @@ public class AnnenKomplikasjonTableServiceImpl extends BusinessService implement
 	public void saveAnnenKomplikasjon(Annenkomplikasjon annenKomplikasjon){
 		annenKomplikasjonDAO.saveAnnenKomplikasjon(annenKomplikasjon);
 	}
+	@Override
+	public void setAlterativeSource(String key) {
+		super.setAlterativeDBSource(key);
+		if (getJdbctemplatesDAO() != null){
+			annenKomplikasjonDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
+		}
+		
+	}
 }

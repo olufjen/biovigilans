@@ -56,5 +56,8 @@ public interface Vigilansmelding {
 	public void setColor(String color);	
 	public String getMeldingTitle();
 	public void setMeldingTitle(String meldingTitle);
+	
+	public String getMeldingHead();
+	public void setMeldingHead(String meldingHead);
 
 }

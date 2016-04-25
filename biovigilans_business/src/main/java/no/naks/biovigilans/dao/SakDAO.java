@@ -3,6 +3,8 @@ package no.naks.biovigilans.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.Regionstatistikk;
@@ -69,4 +71,5 @@ public interface SakDAO {
 	public void setStatistikkregionhentperiodeSQL(
 			String statistikkregionhentperiodeSQL);
 	public List<Regionstatistikk> collectRegionstatistikk(String startperiod,String endperiod,String type);
+	public void setAlternativeSource(JdbcTemplate alternativeSource);
 }

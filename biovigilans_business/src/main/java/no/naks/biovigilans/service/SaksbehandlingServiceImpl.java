@@ -13,6 +13,16 @@ import no.naks.biovigilans.model.Sak;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.service.BusinessService;
 
+/**
+ * SaksbehandlingServiceImpl
+ * Dette er en serviceklasse for saksbehandling
+ * Den er en grenseflate mellom Webservice klasser og DAO.
+ * @since April 2016
+ * Tilpasset flere databasekilder setAlterativeSource(String key)
+ * 
+ * @author olj
+ *
+ */
 public class SaksbehandlingServiceImpl extends BusinessService implements SaksbehandlingService {
 	private SaksbehandlingDAO saksbehandlingDAO;
 	private SakDAO sakDAO;
@@ -121,9 +131,11 @@ public class SaksbehandlingServiceImpl extends BusinessService implements Saksbe
 
 	@Override
 	public void setAlterativeSource(String key) {
-		setAlterativeSource(key);
+		super.setAlterativeDBSource(key);
 		if (getJdbctemplatesDAO() != null){
-//			saksbehandlingDAO.setAlternativeSource(getJdbctemplatesDAO());
+			saksbehandlingDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
+			sakDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
+			statistikkDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
 		}
 		
 	}

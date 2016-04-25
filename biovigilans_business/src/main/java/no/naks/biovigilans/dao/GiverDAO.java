@@ -20,5 +20,7 @@ public interface GiverDAO {
 	public void saveGiverkomplikasjon(Giverkomplikasjon giverKomplikasjon);
 	public void saveGiveroppfolging(Giveroppfolging giveroppfolging);
 	
+	public String getMeldingHead();
+	public void setMeldingHead(String meldingHead);	
 
 }

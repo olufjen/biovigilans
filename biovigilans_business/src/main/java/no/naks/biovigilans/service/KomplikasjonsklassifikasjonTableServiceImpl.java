@@ -26,4 +26,12 @@ public class KomplikasjonsklassifikasjonTableServiceImpl extends BusinessService
 	public List<Komplikasjonsklassifikasjon> hentKlassifikasjoner(){
 		return komplikasjonsklassifikasjonDAO.getKomplikasjonsklassifikasjoner();
 	}
+	@Override
+	public void setAlterativeSource(String key) {
+		super.setAlterativeDBSource(key);
+		if (getJdbctemplatesDAO() != null){
+			komplikasjonsklassifikasjonDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
+		}
+		
+	}
 }

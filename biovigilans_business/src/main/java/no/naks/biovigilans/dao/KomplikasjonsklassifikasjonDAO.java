@@ -2,6 +2,8 @@ package no.naks.biovigilans.dao;
 
 import java.util.List;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 
 public interface KomplikasjonsklassifikasjonDAO {
@@ -22,4 +24,5 @@ public interface KomplikasjonsklassifikasjonDAO {
 	public List<Komplikasjonsklassifikasjon> getKomplikasjonsklassifikasjoner();
 	public void setKomplikasjonsklassifikasjoner(
 			List<Komplikasjonsklassifikasjon> komplikasjonsklassifikasjoner);
+	public void setAlternativeSource(JdbcTemplate alternativeSource);
 }

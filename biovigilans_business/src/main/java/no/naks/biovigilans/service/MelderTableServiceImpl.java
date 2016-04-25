@@ -3,6 +3,8 @@ package no.naks.biovigilans.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import no.naks.biovigilans.dao.MelderDAO;
 import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.Vigilansmelding;
@@ -42,5 +44,15 @@ public class MelderTableServiceImpl extends BusinessService implements MelderTab
 	}
 	public List<Vigilansmelding> collectMeldersmeldinger(String melderIds){
 		return melderDAO.meldersMeldinger(melderIds);
+	}
+
+	@Override
+	public void setAlternativeSource(String key) {
+		super.setAlterativeDBSource(key);
+		if (getJdbctemplatesDAO() != null){
+			melderDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
+		}
+
+		
 	}
 }

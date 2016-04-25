@@ -19,6 +19,8 @@ import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
 
 public class GiverDAOImpl extends AbstractAdmintablesDAO implements GiverDAO {
 
+	private String meldingHead = "";  // Meldingshode for hemovigilans = Hem, for Celler og vev = Cev, for Organer = Org (April 2016)
+	
 	private String insertGiverSQL;
 	private String updateGiverSQL;
 	private Tablesupdate tablesUpdate = null;
@@ -39,6 +41,12 @@ public class GiverDAOImpl extends AbstractAdmintablesDAO implements GiverDAO {
 	private String[] giveroppfolgingprimarykeyTableDefs;
 	
 	
+	public String getMeldingHead() {
+		return meldingHead;
+	}
+	public void setMeldingHead(String meldingHead) {
+		this.meldingHead = meldingHead;
+	}
 	public String getInsertGiverSQL() {
 		return insertGiverSQL;
 	}
@@ -158,6 +166,7 @@ public class GiverDAOImpl extends AbstractAdmintablesDAO implements GiverDAO {
 	}
 	
 	public void saveVigilansmelding(Vigilansmelding melding){
+		melding.setMeldingHead(meldingHead);
 		melding.setMeldingParams();
 		melding.setMeldingTypes();
 		int[]meldingTypes = melding.getTypes();

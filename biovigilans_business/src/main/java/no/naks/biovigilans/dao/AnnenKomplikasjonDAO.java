@@ -1,5 +1,7 @@
 package no.naks.biovigilans.dao;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import no.naks.biovigilans.model.Annenkomplikasjon;
 
 public interface AnnenKomplikasjonDAO {
@@ -20,4 +22,8 @@ public interface AnnenKomplikasjonDAO {
 	public void setMeldingPrimaryKey(String meldingPrimaryKey);
 	public String[] getMeldingprimarykeyTableDefs();
 	public void setMeldingprimarykeyTableDefs(String[] meldingprimarykeyTableDefs);
+	public String getMeldingHead();
+	public void setMeldingHead(String meldingHead);
+	public void setAlternativeSource(JdbcTemplate alternativeSource);
+
 }

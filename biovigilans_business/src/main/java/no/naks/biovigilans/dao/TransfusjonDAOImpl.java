@@ -26,6 +26,8 @@ import no.naks.rammeverk.kildelag.dao.Tablesupdate;
  */
 public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 		TransfusjonDAO {
+	private String meldingHead = "";  // Meldingshode for hemovigilans = Hem, for Celler og vev = Cev, for Organer = Org (April 2016)
+
 	private Tablesupdate tablesUpdate = null;
 	private String insertTransfusjonSQL;
 	private String updateTransfusjonSQL;
@@ -56,6 +58,16 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 	
 		
 	
+	public String getMeldingHead() {
+		return meldingHead;
+	}
+
+
+	public void setMeldingHead(String meldingHead) {
+		this.meldingHead = meldingHead;
+	}
+
+
 	public List<Utredning> getUtredninger() {
 		return utredninger;
 	}
@@ -318,6 +330,7 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 	 */
 	private void savePasientkomplikasjon(Long transId,Pasientkomplikasjon pasientkomplikasjon){
 		Vigilansmelding melding = (Vigilansmelding)pasientkomplikasjon;
+		melding.setMeldingHead(meldingHead);
 		melding.setMeldingParams();
 		melding.setMeldingTypes();
 		int[]meldingTypes = melding.getTypes();

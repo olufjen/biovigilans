@@ -3,6 +3,8 @@ package no.naks.biovigilans.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
@@ -106,4 +108,5 @@ import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
 	public List<Melder> hentMeldere();
 	public List<Vigilansmelding> meldersMeldinger (String melderIDs);
+	public void setAlternativeSource(JdbcTemplate alternativeSource);
 }

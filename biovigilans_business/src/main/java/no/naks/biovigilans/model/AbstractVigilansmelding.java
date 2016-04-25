@@ -79,10 +79,18 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	private String color = "green";	//Farge - en indikasjon på status for meldingen;
 	private String meldingTitle = "Ordinær melding";
 	
+	private String meldingHead = ""; // Meldingshode for hemovigilans = Hem, for Celler og vev = Cev, for Organer = Org (April 2016)
+	
 	protected String[]vigilansKeys;	
 	protected Map<String,String>vigilansFields;
 
 	
+	public String getMeldingHead() {
+		return meldingHead;
+	}
+	public void setMeldingHead(String meldingHead) {
+		this.meldingHead = meldingHead;
+	}
 	public String getMeldingTitle() {
 		return meldingTitle;
 	}
@@ -279,16 +287,20 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	private String formatNokkel(){
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(getMeldingsdato());
+		String nokkle = new String(getMeldingsnokkel());
+		nokkle = nokkle.substring(0, 3);
+		if (meldingHead.equals(""))
+				meldingHead = nokkle;
 		int day =  cal.get(Calendar.DAY_OF_MONTH) ;
 		int month= cal.get(Calendar.MONTH)+1;
 		int year = cal.get(Calendar.YEAR);
 		String mId = String.valueOf(meldeid.longValue());
 		int lm = mId.length();
-		String hemId = "Hem"+mId;
+		String hemId = meldingHead+mId;
 		int index = -1;
 		index = this.meldingsnokkel.indexOf(hemId);
 		if (index > -1){
-			return "Hem"+ " "+ getMeldeid() + " " + String.valueOf(day) + " " + String.valueOf(month) + " " + String.valueOf(year);
+			return meldingHead+ " "+ getMeldeid() + " " + String.valueOf(day) + " " + String.valueOf(month) + " " + String.valueOf(year);
 		}
 		else{
 			meldingTitle = "Oppfølgingsmelding";
@@ -312,9 +324,9 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 			String date= Integer.toString(day);
 			date = date + Integer.toString(month);
 			date = date + Integer.toString(year);
-			meldingsnokkel = "Hem" + getMeldeid() + date ;
+			meldingsnokkel = meldingHead + getMeldeid() + date ;
 
-			fNokkel = "Hem"+ " "+ getMeldeid() + " " + String.valueOf(day) + " " + String.valueOf(month)+ String.valueOf(year);
+			fNokkel = meldingHead+ " "+ getMeldeid() + " " + String.valueOf(day) + " " + String.valueOf(month)+ String.valueOf(year);
 		}
 		this.meldingsnokkel = meldingsnokkel;
 		if (fNokkel.equals(""))

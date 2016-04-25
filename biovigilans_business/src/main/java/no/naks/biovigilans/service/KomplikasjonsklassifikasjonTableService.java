@@ -8,4 +8,5 @@ public interface KomplikasjonsklassifikasjonTableService {
 
 	public void saveKomplikasjonsklassifikasjon(Komplikasjonsklassifikasjon komplikasjonsklassifikasjon);
 	public List<Komplikasjonsklassifikasjon> hentKlassifikasjoner();
+	public void setAlterativeSource(String key);
 }

@@ -707,7 +707,7 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	}
 
 	public void setAlternativeSource(JdbcTemplate alternativeSource){
-		setAlternativeSource(alternativeSource);
+		super.setAlternativeSource(alternativeSource);
 	}
 
 	@Override

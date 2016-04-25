@@ -8,6 +8,8 @@ import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
 public class AnnenkomplikasjonDAOImpl extends AbstractAdmintablesDAO implements AnnenKomplikasjonDAO {
 
+	private String meldingHead = "";  // Meldingshode for hemovigilans = Hem, for Celler og vev = Cev, for Organer = Org (April 2016)
+
 	private String insertAnnenKomplikasjonSQL;
 	private String updateAnnenKomplikasjonSQL;
 	private String annenKomplikasjonPrimaryKey ;
@@ -21,6 +23,12 @@ public class AnnenkomplikasjonDAOImpl extends AbstractAdmintablesDAO implements 
 	
 	
 	
+	public String getMeldingHead() {
+		return meldingHead;
+	}
+	public void setMeldingHead(String meldingHead) {
+		this.meldingHead = meldingHead;
+	}
 	public String getInsertMeldingSQL() {
 		return insertMeldingSQL;
 	}
@@ -75,6 +83,7 @@ public class AnnenkomplikasjonDAOImpl extends AbstractAdmintablesDAO implements 
 
 	public void saveAnnenKomplikasjon(Annenkomplikasjon annenKomplikasjon){
 		Vigilansmelding melding = (Vigilansmelding)annenKomplikasjon;
+		melding.setMeldingHead(meldingHead);
 		melding.setMeldingsdato(null);
 		melding.setMeldingParams();
 		melding.setMeldingTypes();

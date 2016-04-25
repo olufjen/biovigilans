@@ -2,6 +2,8 @@ package no.naks.biovigilans.dao;
 
 import java.util.List;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import no.naks.biovigilans.model.Regionstatistikk;
 
 /**
@@ -32,6 +34,6 @@ public interface StatistikkDAO {
 			String statistikksykehushentperiodeSQL);
 	public List<Regionstatistikk> collectRegionstatistikk(String startperiod,String endperiod,String type);
 	public List<Regionstatistikk> collectsykehusstatistikk(String startperiod,String endperiod,String type);
-
+	public void setAlternativeSource(JdbcTemplate alternativeSource);
 }
 

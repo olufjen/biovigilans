@@ -1,5 +1,7 @@
 package no.naks.biovigilans.dao;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import no.naks.biovigilans.model.Komplikasjonsdiagnosegiver;
 
 public interface KomplikasjonsdiagnosegiverDAO {
@@ -17,5 +19,5 @@ public interface KomplikasjonsdiagnosegiverDAO {
 			String[] komplikasjonsdiagnosegiverprimarykeyTableDefs);
 	
 	public void saveKompDiagnosgiverDAO(Komplikasjonsdiagnosegiver Komplikasjonsdiagnosegiver );
-
+	public void setAlternativeSource(JdbcTemplate alternativeSource);
 }

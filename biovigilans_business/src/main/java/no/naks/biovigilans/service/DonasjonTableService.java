@@ -5,4 +5,5 @@ import no.naks.biovigilans.model.Donasjon;
 public interface DonasjonTableService {
 
 	public void saveDonasjon(Donasjon donasjon);
+	public void setAlterativeSource(String key);
 }

@@ -27,7 +27,14 @@ public class DonasjonTableServiceImpl extends BusinessService implements Donasjo
 		donasjonDAO.saveDonasjonDAO(donasjon);
 	}
 
-
+	@Override
+	public void setAlterativeSource(String key) {
+		super.setAlterativeDBSource(key);
+		if (getJdbctemplatesDAO() != null){
+			donasjonDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
+		}
+		
+	}
 
 
 }

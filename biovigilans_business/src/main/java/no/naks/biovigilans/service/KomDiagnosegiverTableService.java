@@ -5,4 +5,5 @@ import no.naks.biovigilans.model.Komplikasjonsdiagnosegiver;
 public interface KomDiagnosegiverTableService {
 
 	public void saveKomDiagnosgiver(Komplikasjonsdiagnosegiver komDiagnosegiver);
+	public void setAlterativeSource(String key);
 }

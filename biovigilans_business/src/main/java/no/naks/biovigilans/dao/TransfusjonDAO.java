@@ -63,5 +63,9 @@ public interface TransfusjonDAO {
 	public void setSymptomListe(List<Symptomer> symptomListe);
 	public List<Utredning> getUtredninger(); 
 	public void setUtredninger(List<Utredning> utredninger);
+	public String getMeldingHead();
+
+
+	public void setMeldingHead(String meldingHead);
 
 }

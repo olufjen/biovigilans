@@ -1,5 +1,7 @@
 package no.naks.biovigilans.dao;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import no.naks.biovigilans.model.Donasjon;
 
 public interface DonasjonDAO {
@@ -13,4 +15,6 @@ public interface DonasjonDAO {
 	public String[] getDonasjonprimarykeyTableDefs() ;
 	public void setDonasjonprimarykeyTableDefs(String[] donasjonprimarykeyTableDefs) ;
 	public void saveDonasjonDAO(Donasjon donasjon);
+	public void setAlternativeSource(JdbcTemplate alternativeSource);
+
 }

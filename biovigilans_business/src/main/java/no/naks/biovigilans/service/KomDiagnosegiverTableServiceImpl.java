@@ -23,4 +23,12 @@ public class KomDiagnosegiverTableServiceImpl extends BusinessService implements
 	public void saveKomDiagnosgiver(Komplikasjonsdiagnosegiver komDiagnosegiver){
 		komplikasjonsdiagnosegiverDAO.saveKompDiagnosgiverDAO(komDiagnosegiver);
 	}
+	@Override
+	public void setAlterativeSource(String key) {
+		super.setAlterativeDBSource(key);
+		if (getJdbctemplatesDAO() != null){
+		komplikasjonsdiagnosegiverDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
+		}
+		
+	}
 }
