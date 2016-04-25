@@ -311,7 +311,7 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	     sessionAdmin.setSessionObject(getRequest(), melderwebModel,melderId);
 	     List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(getRequest(), meldingsId); // Midlertdig
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjon.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,hemovigilanstransfusjon));
 	     
 	        // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
@@ -514,7 +514,7 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	    		if (sendTilmelder != null){
 	       			meldingsType = "transfusjon";
 	    			 sessionAdmin.setSessionObject(request,meldingsType, meldingstypeKey);
-	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjon.html"));
+	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,hemovigilanstransfusjon));
 	    			 
 	    			Representation transfusjonHendelser = clres2.get();
 	 //       		invalidateSessionobjects();
@@ -581,7 +581,7 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	    			}
 	    		
 	 //   			setDiplayvalues(dataModel);
-	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjon.html"));
+	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,hemovigilanstransfusjon));
 	    			 
 	    			Representation andreHendelser = clres2.get();
 //	        		invalidateSessionobjects();
@@ -660,7 +660,7 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	    		    sessionAdmin.setSessionObject(request, newLogin, loginKey);
 */
 //	    			setDiplayvalues(dataModel);
-	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjon.html"));
+	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,hemovigilanstransfusjon));
 	    			 
 	    			Representation andreHendelser = clres2.get();
 //	        		invalidateSessionobjects();
@@ -671,7 +671,7 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	    		if (lagre != null){
 	    			result.getVigilansmelding().setSjekklistesaksbehandling(statusflag[1]);
 	    			hendelseWebService.updateVigilansmelding(result.getVigilansmelding());
-	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjon.html"));
+	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,hemovigilanstransfusjon));
 		    		Representation pasientkomplikasjonFtl = clres2.get();
 		    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 		    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();

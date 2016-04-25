@@ -46,6 +46,7 @@
   	<property name="giverprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	
   	<property name="insertMeldingSQL" value="${vigilansmelding.insertvigilansmelding}"></property>
+   	<property name="meldingHead" value="Hem"></property>
   	<property name="meldingPrimaryKey" value="${primarykey.melding}"></property>
   	<property name="meldingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	<property name="updateMeldingSQL" value="${vigilansmelding.updatevigilansmelding}"></property>
@@ -80,6 +81,7 @@
   	  	<property name="transfusjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	  	<property name="insertblodProduktSQL" value="${blodprodukt.insertblodprodukt}"></property>
   	  	<property name="insertMeldingSQL" value="${vigilansmelding.insertvigilansmelding}"></property>
+  	   	<property name="meldingHead" value="Hem"></property>
    		<property name="updateMeldingSQL" value="${vigilansmelding.updatevigilansmelding}"></property>
   	  	<property name="insertPasientkomplikasjonSQL" value="${pasientkomplikasjon.insertpasientkomplikasjon}"></property>
   	  	<property name="meldingPrimaryKey" value="${primarykey.melding}"></property>
@@ -104,6 +106,7 @@
    	<property name="meldingPrimaryKey" value="${primarykey.melding}"></property>
     <property name="meldingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
    	<property name="insertMeldingSQL" value="${vigilansmelding.insertvigilansmelding}"></property>
+   	<property name="meldingHead" value="Hem"></property>
   	<property name="updateMeldingSQL" value="${vigilansmelding.updatevigilansmelding}"></property>
   </bean>
    <bean id="komplikasjonsklassifikasjonDAO" class="no.naks.biovigilans.dao.KomplikasjonsklassifikasjonDAOImpl">
@@ -136,18 +139,23 @@
   </bean>
   <bean id="donasjonTableService" class="no.naks.biovigilans.service.DonasjonTableServiceImpl" >
   	<property name="donasjonDAO" ref="donasjonDAO"></property>
+	<property name="jdbctemplatesDAO" ref="templatesDAO"></property> <!-- Denne property må settes i alle services !!! -->
   </bean>
   <bean id="komDiagnosegiverTableService" class="no.naks.biovigilans.service.KomDiagnosegiverTableServiceImpl" >
   	<property name="komplikasjonsdiagnosegiverDAO" ref="komplikasjonsdiagnosegiverDAO"></property>
+	<property name="jdbctemplatesDAO" ref="templatesDAO"></property> <!-- Denne property må settes i alle services !!! -->
   </bean>
   <bean id="melderTableService" class="no.naks.biovigilans.service.MelderTableServiceImpl">
   	<property name="melderDAO" ref="melderDAO"></property>
+	<property name="jdbctemplatesDAO" ref="templatesDAO"></property> <!-- Denne property må settes i alle services !!! -->
   </bean>
   <bean id="annenKomplikasjonTableService" class="no.naks.biovigilans.service.AnnenKomplikasjonTableServiceImpl" >
   	<property name="annenKomplikasjonDAO" ref="annenkomplikasjonDAO"></property>
+ 	<property name="jdbctemplatesDAO" ref="templatesDAO"></property> <!-- Denne prperty må settes i alle services !!! -->
   </bean>
    <bean id="komplikasjonsklassifikasjonTableService" class="no.naks.biovigilans.service.KomplikasjonsklassifikasjonTableServiceImpl" >
   	<property name="komplikasjonsklassifikasjonDAO" ref="komplikasjonsklassifikasjonDAO"></property>
+	<property name="jdbctemplatesDAO" ref="templatesDAO"></property> <!-- Denne property må settes i alle services !!! -->
   </bean>
    <bean id="melderDAO" class="no.naks.biovigilans.dao.MelderDAOImpl" >
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
@@ -330,7 +338,7 @@
   		<property name="saksbehandlingDAO" ref="saksbehandlingDAO"></property>
   		<property name="sakDAO" ref="sakDAO"></property>
   		<property name="statistikkDAO" ref="statistikkDAO"></property>
-  		<property name="jdbctemplatesDAO" ref="templatesDAO"></property>
+  		<property name="jdbctemplatesDAO" ref="templatesDAO"></property> <!-- Denne prperty må settes i alle services !!! -->
   </bean>
   <bean id="templatesDAO" class="no.naks.rammeverk.kildelag.dao.TemplatesDAOImpl">
   		<property name="jdbcMap">

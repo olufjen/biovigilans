@@ -179,7 +179,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	     LocalReference localUri = new LocalReference(reference);
 	
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,hemovigilansandrehendelser));
 	     setAndreHendelser(); // Setter opp andreHendelser session objekter
 	    // setTransfusjonsObjects(); 
 	     annenModel.setFormNames(sessionParams);
@@ -348,7 +348,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     		Parameter sendTilmelder = form.getFirst("btnsend");
     		if (sendTilmelder != null){ // Ønsker å sende melding til melder
     			setDiplayvalues(dataModel,melder);
-    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
+    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,hemovigilansandrehendelser));
     			meldingsType = "annen";
     			 sessionAdmin.setSessionObject(request,meldingsType, meldingstypeKey);
     			Representation andreHendelser = clres2.get();
@@ -423,7 +423,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
         			sakModel.setSaksMappe(null);
     			}
     			setDiplayvalues(dataModel,melder);
-    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
+    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,hemovigilansandrehendelser));
     			 
     			Representation andreHendelser = clres2.get();
 //        		invalidateSessionobjects();
@@ -494,7 +494,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     				annenModel.getVigilansmelding().setSjekklistesaksbehandling(newStatus);
     				hendelseWebService.updateVigilansmelding(annenModel.getVigilansmelding());
     			}
-    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
+    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,hemovigilansandrehendelser));
     			 
     			Representation andreHendelser = clres2.get();
 //        		invalidateSessionobjects();
@@ -542,7 +542,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     		     sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);*/
     		     
     		//	dataModel.put(melderId, melderwebModel);
-    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
+    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,hemovigilansandrehendelser));
  
     			Representation andreHendelser = clres2.get();
  //       		invalidateSessionobjects();

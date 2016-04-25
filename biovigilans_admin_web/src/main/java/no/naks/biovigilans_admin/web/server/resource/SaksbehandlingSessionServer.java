@@ -64,6 +64,14 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	
 	protected String startPeriodKey = "startperiod"; //Session nøkler for start og slutt på angitt periode
 	protected String endPeriodKey = "endperiod";
+/*
+ * 	Pekere til valgte skjermbilder etter valg av meldeordning
+ */
+	protected String hemovigilansandrehendelser = "/hemovigilans/rapporter_andrehendelser.html";
+	protected String cellereogvevandrehendelser = "/cellerogvev/rapporter_andrehendelser.html";
+	protected String hemovigilanstransfusjon = "/hemovigilans/rapporter_transfusjon.html";
+	protected String hemovigilansgiverhendelser = "/hemovigilans/rapporter_giver.html";
+	
 	
 	public String[] getFlaggNames() {
 		return flaggNames;

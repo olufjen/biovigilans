@@ -77,7 +77,8 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 	
 	    Request request = getRequest();
 /*
- * Setter opp knytning til valgt database
+ * Setter opp knytning til valgt database, dersom forskjellig fra hemovigilans
+ * Tjenesteklassene setter opp databasekilde til sine DAO klasser
  * Dette gjøres kun her !!	    
  */
 		 List<Saksbehandler> saksbehandlere = (List)sessionAdmin.getSessionObject(request,behandlereKey);
@@ -86,12 +87,17 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 		sessionAdmin.setChosenDB(db);
 		if (sessionAdmin.getChosenTemplate() != null){
 			saksbehandlingWebservice.setAlterativeSource(db);
+			annenKomplikasjonWebService.setAlterativeSource(db);
+			donasjonWebService.setAlterativeSource(db);
+			komplikasjonsklassifikasjonWebService.setAlterativeSource(db);
+			komDiagnosegiverWebService.setAlterativeSource(db);
+//			melderWebService.setAlterativeSource(db); MeldertableService er i saksbehandlerWebservice !!
 			setAlternativeSource(sessionAdmin.getChosenTemplate());
 
 		}
 	
 /*
- * 		
+ * Ferdig alternativeSource		
  */
 	    List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request, meldingsId); // For å vise tidligere valgt liste
 	    if (meldinger == null)
