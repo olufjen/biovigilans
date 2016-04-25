@@ -20,5 +20,7 @@ public class KomDiagnosegiverWebServiceImpl implements
 	public void saveKomDiagnosegiver(KomDiagnosegiverwebModel komDiagnosegiverwebModel){
 		komDiagnosegiverTableService.saveKomDiagnosgiver(komDiagnosegiverwebModel.getKomDiagnosegiver());
 	}
-
+	public void setAlterativeSource(String key){
+		komDiagnosegiverTableService.setAlterativeSource(key);
+	}
 }

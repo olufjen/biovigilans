@@ -27,5 +27,7 @@ public class DonasjonWebServiceImpl implements DonasjonWebService {
 	
 		donasjonTableService.saveDonasjon(donasjonwebModel.getDonasjon());
 	}
-
+	public void setAlterativeSource(String key){
+		donasjonTableService.setAlterativeSource(key);
+	}
 }

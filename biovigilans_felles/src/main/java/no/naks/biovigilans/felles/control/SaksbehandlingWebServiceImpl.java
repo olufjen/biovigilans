@@ -124,5 +124,6 @@ public class SaksbehandlingWebServiceImpl extends MasterWebServiceImpl
 	}
 	public void setAlterativeSource(String key){
 		saksbehandlingService.setAlterativeSource(key);
+		melderTableService.setAlternativeSource(key);
 	}
 }

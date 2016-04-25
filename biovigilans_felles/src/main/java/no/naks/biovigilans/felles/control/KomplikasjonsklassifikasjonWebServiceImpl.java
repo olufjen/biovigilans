@@ -24,4 +24,7 @@ public class KomplikasjonsklassifikasjonWebServiceImpl implements Komplikasjonsk
 	public List<Komplikasjonsklassifikasjon> hentKomplikasjonsklassifikasjonene(){
 		return komplikasjonsklassifikasjonTableService.hentKlassifikasjoner();
 	}
+	public void setAlterativeSource(String key){
+		komplikasjonsklassifikasjonTableService.setAlterativeSource(key);
+	}
 }

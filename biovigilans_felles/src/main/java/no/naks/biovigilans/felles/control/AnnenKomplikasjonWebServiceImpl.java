@@ -22,4 +22,7 @@ public class AnnenKomplikasjonWebServiceImpl implements
 	public void saveAnnenKomplikasjon(AnnenKomplikasjonwebModel annenKomplikasjonWebModel){
 		annenKomplikasjonTableService.saveAnnenKomplikasjon(annenKomplikasjonWebModel.getAnnenKomplikasjon());
 	}
+	public void setAlterativeSource(String key){
+		annenKomplikasjonTableService.setAlterativeSource(key);
+	}
 }

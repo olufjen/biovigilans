@@ -12,4 +12,5 @@ public interface MelderWebService {
 	public List selectMelder(String epost);
 	public Map<String,List> selectMeldinger(String meldingsNokkel);
 	public Map collectAnnenMeldinger(List<Vigilansmelding>meldinger);
+	public void setAlterativeSource(String key);
 }

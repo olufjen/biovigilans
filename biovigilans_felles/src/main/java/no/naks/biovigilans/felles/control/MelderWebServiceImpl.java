@@ -38,4 +38,7 @@ public class MelderWebServiceImpl implements MelderWebService {
 	
 		return melderTableService.collectAnnenMeldinger(meldinger);
 	}
+	public void setAlterativeSource(String key){
+		melderTableService.setAlternativeSource(key);
+	}
 }

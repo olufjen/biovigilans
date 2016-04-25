@@ -4,4 +4,5 @@ import no.naks.biovigilans.felles.model.KomDiagnosegiverwebModel;
 
 public interface KomDiagnosegiverWebService {
 	public void saveKomDiagnosegiver(KomDiagnosegiverwebModel komDiagnosegiverwebModel);
+	public void setAlterativeSource(String key);	
 }
