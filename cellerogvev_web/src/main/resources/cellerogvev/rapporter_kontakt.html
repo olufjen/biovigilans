@@ -268,20 +268,7 @@ function homePage(){
   <li><a href="rapporter_andrehendelser.html" data-toggle="tab">Andre uønskede hendelser</a></li>
  
 </ul>  -->
- <div class="radio">
-          <label>
-            <input name="k-anonym" type="radio" id="k-anonym" value="k-anonym" onclick="toggleDisplay('kontakt1',0);toggleDisplay('anonymbutton',this.checked);passwordsubmit();"/>
-            Ønsker å melde anonymt
-          </label>
- </div>
- <div id="anonymbutton" style="display:none" >
-   <label>
-            <input name="k-anonym" type="radio" id="k-ikkeanonym" value="k-ikkeanonym" onclick="toggleDisplay('kontakt1',this.checked);toggleDisplay('anonymbutton',0)"/>
-            Ønsker å melde normalt
-   </label><br>
- 	 <button name="lagreanonymt" id="lagreanonymt" type="submit" onclick="anonymKnappen();" class="btn btn-primary btn-lg" >Lagre</button>
-</div>
-   
+
 <div  class="tab-pane" id="kontakt1">
 <div id="funnet" style="display: ${funnet}">
 <h3>Melder funnet, men feil eller intet passord oppgitt. Du har tre valg:</h3>
@@ -394,6 +381,20 @@ function homePage(){
       </div>
  -->       
 		<br/>
+<div class="radio">
+          <label>
+            <input name="k-anonym" type="radio" id="k-anonym" value="k-anonym" onclick="toggleDisplay('kontakt1',0);toggleDisplay('anonymbutton',this.checked);passwordsubmit();"/>
+            Ønsker å melde anonymt
+          </label>
+ </div>
+ <div id="anonymbutton" style="display:none" >
+   <label>
+            <input name="k-anonym" type="radio" id="k-ikkeanonym" value="k-ikkeanonym" onclick="toggleDisplay('kontakt1',this.checked);toggleDisplay('anonymbutton',0)"/>
+            Ønsker å melde normalt
+   </label><br>
+ 	 <button name="lagreanonymt" id="lagreanonymt" type="submit" onclick="anonymKnappen();" class="btn btn-primary btn-lg" >Lagre</button>
+</div>
+   
 		<!--
           <button name="avbrytkontakt" type="submit" class="btn btn-default"  onclick="homePage()">Avbryt</button>
    -->     

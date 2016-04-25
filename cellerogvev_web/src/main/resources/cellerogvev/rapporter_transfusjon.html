@@ -373,7 +373,7 @@ function showtext(id,thetext){
       <li class="previous" title="Her fyller du inn kontaktinformasjon "><a href="#">Kontaktinformasjon</a></li>
       <li class="previous" title="Her vises kvitteringen for meldingen "><a href="#">Kvittering</a></li>
     </ul>
-    <h2>Er dette en uønsket hendelse som førte til betydelig pasientskade eller kunne ha ført til pasientskade?</h2>
+    <h2></h2>
 
     <form id="rapport" action="?method=PUT" method="post">
     
@@ -478,7 +478,7 @@ function showtext(id,thetext){
 
       <!--Tidligere transfusjonskomplikasjoner -->
       <div class="form-group" >
-        <label>Tidligere komplikasjoner</label>
+        <label>Tidligere komplikasjoner ved overføring av celler/vev</label>
         <div class="radio">
           <label>
             <input type="radio" name="p-tidligeretransfusjon" id="p-transfusjon-ip-1" value="tidligeretransfusjon-ja" onclick="toggleDisplay('tidligeretransfusjon', this.checked)">
@@ -3359,7 +3359,7 @@ og/eller
   <div class="checkbox">
     <label>
       <input name="p-feilblodtrans" type="checkbox" id="p-forhold" value="feilblodtrans"  
-      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', this.checked);toggleDisplay('blodkrav', this.checked)"/>Menneskelig feil   
+      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', this.checked)"/>Menneskelig feil   
     </label>
     <div id="gikkgalt" class="form-group" style="display: none">
      <label>Hva gikk galt?</label>
@@ -3569,7 +3569,7 @@ og/eller
   
   <div class="checkbox">
     <label>
-      <input name="p-paregnelig" type="checkbox" id="g" value="tiltaknestetransfusjon" />Tiltak ved neste transfusjon av denne pasienten  
+      <input name="p-paregnelig" type="checkbox" id="g" value="tiltaknestebehandling" />Tiltak ved neste behandling av denne pasienten  
     </label>
     </div>
   <div class="checkbox">

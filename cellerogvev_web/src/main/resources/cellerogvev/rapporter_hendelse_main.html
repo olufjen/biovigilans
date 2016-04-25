@@ -84,18 +84,34 @@
       <div class="tab-content">
         <!-- Meld fra om -->
         <div class="tab-pane active" id="meldfra">
-
-          <div class="form-group">
-            <label>Er dette en uønsket hendelse som førte til betydelig pasientskade eller kunne ha ført til pasientskade?</label>          
+         <div id="pasient-nei" >
+            <div id="giverrelatert" class="form-group">
+              <label>Er dette en uønsket hendelse som førte til eller kunne ha ført til bivirkninger hos donor ved uttak (høsting) av celler og vev?</label>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="p-giverrelatert" id="p-giverrelatert-ja" value="giverrelatert-ja" onclick="toggleDisplay('giverrelatert-ja', this.checked);">
+                  Ja
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="p-giverrelatert" id="p-giverrelatert-nei" value="giverrelatert-nei" onclick="toggleDisplay('pasientskjema', 1)">
+                  Nei
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" id="pasientskjema" style="display: none">
+            <label>Er dette en uønsket hendelse som førte til pasientskade eller kunne ha ført til pasientskade?</label>          
             <div class="radio">
               <label>
-                <input type="radio" name="p-pasient" id="p-pasient-ja" value="pasient-ja" onclick="toggleDisplay('pasient-ja', this.checked);toggleDisplay('pasient-nei', 0)">
+                <input type="radio" name="p-pasient" id="p-pasient-ja" value="pasient-ja" onclick="toggleDisplay('pasient-ja', this.checked)">
                  Ja
               </label>
             </div>
             <div class="radio">
               <label>
-                <input type="radio" name="p-pasient" id="p-pasient-nei" value="pasient-nei" onclick="toggleDisplay('pasient-ja', 0); toggleDisplay('pasient-nei', this.checked)">
+                <input type="radio" name="p-pasient" id="p-pasient-nei" value="pasient-nei" onclick="document.location='rapporter_andrehendelser.html';">
                 Nei
               </label>
             </div>
@@ -119,27 +135,11 @@
             </div>
           </div>
 
-          <div id="pasient-nei" style="display: none">
-            <div id="giverrelatert" class="form-group">
-              <label>Er dette en uønsket hendelse og bivirkninger knyttet til overføring av celler og vev?</label>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="p-giverrelatert" id="p-giverrelatert-ja" value="giverrelatert-ja" onclick="toggleDisplay('giverrelatert-ja', this.checked);">
-                  Ja
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="p-giverrelatert" id="p-giverrelatert-nei" value="giverrelatert-nei" onclick="document.location='rapporter_andrehendelser.html';">
-                  Nei
-                </label>
-              </div>
-            </div>
-          </div>
+ 
 
           <div id="giverrelatert-ja" style="display: none">
             <div id="symptomer" class="form-group">
-              <label>Er dette en uønsket hendelse som har skjedd ved uttak, testing,prosessering, oppbevaring og distribusjon som kan ha påvirket kvaliteten og sikkerheten til celler og vev?</label>
+              <label>Symptomer hos donor?</label>
               <div class="radio">
                 <label>
                   <input type="radio" name="p-symptomer" id="p-symptomer-ja" value="symptomer-ja" onclick="document.location='rapporter_giver.html';">
