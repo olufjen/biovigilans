@@ -241,14 +241,14 @@ function sjekkforetak(){
 	var foretak = document.getElementById("k-helseforetak").value;
 //	alert("sjekker foretak:"+foretak);
 	 if (foretak == ''){
-		 document.getElementById('k-helseforetak').required = true;
+		 document.getElementById('k-helseforetak').required = false;
 //		 alert("foretak er tomt");
 	 }
 }
 function sjekksykehus(){
 	var sykehus = document.getElementById('k-sykehus').value;
 	if (sykehus == ''){
-	 document.getElementById('k-sykehus').required = true;
+	 document.getElementById('k-sykehus').required = false;
 //	 alert("foretak er tomt");
 	}
 }
@@ -311,6 +311,8 @@ function setanonymDefault(){
          <b>Ingen av delene, jeg prøver på nytt </b>                
 </div> 
 <br>
+<h4>Har du meldt tidligere, skal dine kontaktopplysninger komme opp automatisk straks du har skrevet inn epost-adresse og riktig passord. Fyll alltid ut disse to feltene og avslutt passordfeltet med å trykke TAB-tasten. Da knyttes meldingen til deg som melder straks du velger knappen "Send Inn".</h4>
+<h4>Opplever du problemer ved utfylling av kontaktskjema, noter meldingsdato og dato for når hendelsen inntraff, og send disse opplysningene til hemovigilans@helsedir.no. Da kan vi spore meldingen og knytte deg som melder til den.</h4>
 	<div class="form-group">
         <label for="k-epost">Melders epost:</label>
         <div>
