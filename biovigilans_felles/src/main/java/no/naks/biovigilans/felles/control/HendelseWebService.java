@@ -32,5 +32,5 @@ public interface HendelseWebService extends MasterWebService {
 	public List<Forebyggendetiltak> hentForebyggende();
 	public List<Symptomer> hentSymptomer();
 	public List<Utredning> hentUtredningene();
-	
+	public void setAlterativeSource(String key);
 }

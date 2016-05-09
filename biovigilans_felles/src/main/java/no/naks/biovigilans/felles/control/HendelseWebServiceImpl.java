@@ -61,7 +61,10 @@ public class HendelseWebServiceImpl extends MasterWebServiceImpl implements
 		pasientService.savePasient(innMelding.getPasient());
 		
 	}
-
+	public void setAlterativeSource(String key){
+		hendelseTablesService.setAlterativeSource(key);
+		pasientService.setAlterativeSource(key);
+	}
 
 	
 	public void saveTransfusjon(TransfusjonWebModel transfusjon,PasientKomplikasjonWebModel innMelding) {
