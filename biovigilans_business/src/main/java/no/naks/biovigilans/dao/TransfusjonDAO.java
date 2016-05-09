@@ -2,6 +2,8 @@ package no.naks.biovigilans.dao;
 
 import java.util.List;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import no.naks.biovigilans.model.Produktegenskap;
 import no.naks.biovigilans.model.Symptomer;
 import no.naks.biovigilans.model.Transfusjon;
@@ -64,8 +66,7 @@ public interface TransfusjonDAO {
 	public List<Utredning> getUtredninger(); 
 	public void setUtredninger(List<Utredning> utredninger);
 	public String getMeldingHead();
-
-
 	public void setMeldingHead(String meldingHead);
+	public void setAlternativeSource(JdbcTemplate alternativeSource);
 
 }

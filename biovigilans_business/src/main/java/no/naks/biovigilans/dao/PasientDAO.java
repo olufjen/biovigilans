@@ -2,6 +2,8 @@ package no.naks.biovigilans.dao;
 
 import java.util.List;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import no.naks.biovigilans.model.Forebyggendetiltak;
 import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.Tiltak;
@@ -58,4 +60,5 @@ public interface PasientDAO {
 	public void setTiltakene(List<Tiltak> tiltakene);
 	public List<Forebyggendetiltak> getForebyggendeListe();
 	public void setForebyggendeListe(List<Forebyggendetiltak> forebyggendeListe);
+	public void setAlternativeSource(JdbcTemplate alternativeSource);
 }

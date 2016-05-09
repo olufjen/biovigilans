@@ -5,7 +5,9 @@ package no.naks.biovigilans.dao;
 import java.sql.Types;
 import java.util.List;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlParameter;
+
 
 
 
@@ -34,4 +36,5 @@ public interface HendelsehemovigilansDAO {
 	public List<Vigilansmelding> collectMeldinger(Long melderId);
 	public void updateVigilansstatus(Vigilansmelding melding);
 	public List<Vigilansmelding> collectMeldingen(Long meldeId);
+	public void setAlternativeSource(JdbcTemplate alternativeSource);
 }
