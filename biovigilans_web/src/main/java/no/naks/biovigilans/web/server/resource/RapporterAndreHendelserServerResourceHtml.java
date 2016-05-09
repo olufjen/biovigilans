@@ -54,6 +54,9 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	 * en rapportert hendelse
 	 * @return
 	 */
+	/**
+	 * @return
+	 */
 	@Get
 	public Representation getHemovigilans() {
 
@@ -91,6 +94,15 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	    	 datePart = "none";
 	    	 Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
 	    	 annenKomplikasjon = annenModel.getAnnenKomplikasjon();
+/*
+ * OLJ 03.05.16 Flytter alle nødvendige data fra vigilansmelding til annenkomplikasjon	Dette er gjort i MelderRapportServerResourceHTML    	 
+ */
+	    	 annenModel.setHendelseDato(melding.getDatoforhendelse());
+	    	 annenModel.setMeldingsNokkel(melding.getMeldingsnokkel());
+	    	 
+//	    	 annenKomplikasjon.setMeldeid(melding.getMeldeid());
+	    	 annenKomplikasjon.setMelderId(melding.getMelderId());
+
 	    	 annenModel.setHendelseDato(melding.getDatoforhendelse());
 	    	 annenModel.setMeldingsNokkel(melding.getMeldingsnokkel());
 	    	 klassifikasjoner = (List)sessionAdmin.getSessionObject(request, klassifikasjonKey);
