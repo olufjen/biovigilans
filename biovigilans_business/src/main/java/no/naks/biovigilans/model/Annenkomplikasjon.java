@@ -56,4 +56,8 @@ public interface Annenkomplikasjon {
 
 	public boolean isUpdat();
 	public void setUpdat(boolean isUpdat);
+	public Date getDatoforhendelse();
+	public void setDatoforhendelse(Date datoforhendelse);
+	public Date getMeldingsdato();
+	public void setMeldingsdato(Date meldingsdato);
 }

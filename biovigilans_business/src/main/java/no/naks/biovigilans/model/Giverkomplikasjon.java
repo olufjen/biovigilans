@@ -61,5 +61,11 @@ public interface Giverkomplikasjon {
 	public java.lang.String getSjekklistesaksbehandling();
 	public void setSjekklistesaksbehandling(
 			java.lang.String sjekklistesaksbehandling);
+	public Date getDatoforhendelse();
+	public void setDatoforhendelse(Date datoforhendelse);
+	public Date getDatooppdaget();
+	public void setDatooppdaget(Date datooppdaget);
+	public Date getMeldingsdato();
+	public void setMeldingsdato(Date meldingsdato);
 	
 }

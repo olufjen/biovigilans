@@ -32,4 +32,5 @@ public interface HendelseTablesService {
 	public void updateVigilansmelding(Vigilansmelding melding);
 	public List<Vigilansmelding> collectMeldingen(Long meldeId);
 	public Diskusjon collectDiskusjon(Long diskId);
+	public void setAlterativeSource(String key); 
 }

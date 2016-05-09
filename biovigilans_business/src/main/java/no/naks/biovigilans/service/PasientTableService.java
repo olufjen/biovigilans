@@ -24,5 +24,5 @@ public interface PasientTableService {
 	public List<Produktegenskap> hentproduktEgenskaper();
 	public List<Symptomer> hentsymptomer();
 	public List<Utredning> hentUtredninger();
-	
+	public void setAlterativeSource(String key); 
 }

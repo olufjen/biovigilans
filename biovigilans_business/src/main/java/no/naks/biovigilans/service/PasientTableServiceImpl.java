@@ -60,4 +60,12 @@ public class PasientTableServiceImpl extends BusinessService implements PasientT
 	public List<Utredning> hentUtredninger(){
 		return transfusjonDAO.getUtredninger();
 	}
+	public void setAlterativeSource(String key) {
+		super.setAlterativeDBSource(key);
+		if (getJdbctemplatesDAO() != null){
+		pasientDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
+		transfusjonDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
+		}
+	}
+		
 }

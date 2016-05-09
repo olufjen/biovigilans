@@ -60,4 +60,12 @@ public class HendelseTablesServiceImpl extends BusinessService implements Hendel
 	public Diskusjon collectDiskusjon(Long diskId){
 		return sakDAO.collectDiskusjon(diskId);
 	}
+	public void setAlterativeSource(String key) {
+		super.setAlterativeDBSource(key);
+		if (getJdbctemplatesDAO() != null){
+		sakDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
+		hendelsehemovigilansDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
+		}
+		
+	}
 }
