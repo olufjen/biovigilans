@@ -34,6 +34,13 @@ import no.naks.biovigilans.model.Saksbehandler;
 import no.naks.biovigilans_admin.web.control.SaksbehandlingRealm;
 import no.naks.biovigilans.felles.control.SaksbehandlingWebService;
 
+/**
+ * LoginServerResourceHTML
+ * Denne klassen håndterer brukere som logger seg inn til biovigilans.
+ * Kun godkjente saksbehandlere kan logge seg inn.
+ * @author olj
+ *
+ */
 public class LoginServerResourceHTML extends SaksbehandlingSessionServer {
 	private DefaultWebSecurityManager securityManager;
 	private SaksbehandlingRealm saksbehandlingRealm = null;
@@ -156,7 +163,7 @@ public class LoginServerResourceHTML extends SaksbehandlingSessionServer {
  */
     	    	  login.setSaksbehandler(saksbehandlingRealm.getLoginSaksbehandler());
     	    	  
-    	    	  page = "../hemovigilans/";
+    	    	  page = "../hemovigilans/hemovigilansadmin.html";
  	    	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/login.html"));
  	 	        Representation loginFtl = clres2.get();
  	 	        TemplateRepresentation  templatemapRep = new TemplateRepresentation(loginFtl,dataModel,

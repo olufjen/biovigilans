@@ -39,16 +39,18 @@
           <div class="hidden-xs col-sm-3 col-sm-push-5 col-vertical-bottom-sm">
        
           </div>
-          <div class="col-xs-3 col-sm-pull-9 col-vertical-bottom-sm">
-            <div class="bottom">
-				<button type="button" class="btn btn-default">Tilbake</button>
-			</div>
-          </div>
+
         </div>
       </div>
     </header>
 
 <div class="container">
+<form name="logoutform" action="?method=PUT" method="post">
+    
+            <div class="bottom">
+				<button type="submit" class="btn btn-default" name="submit" value="Logout">Logg ut</button>
+			</div>
+     
 
 <h1>Biovigilans Administrasjon</h1>
 
@@ -58,7 +60,8 @@
 <a href="#" name="hvg-rapport"  class="btn btn-default">Rapportering</a>
 <!-- <a href="rapporter_hendelse_main.html"><button name="hvg-rapporter" type="button" class="btn btn-primary">Rapporter hendelse</button></a>
 <a href="#"><button name="hvg-laring" type="button" class="btn btn-default">Læringsnotater</button></a> -->
-</div>
+</form>
+</div> <!-- end container -->
 <div class="panel-group" id="accordion">
   <div class="panel panel-default">
     <div class="panel-heading">

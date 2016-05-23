@@ -146,8 +146,13 @@
         <bean name="/hemovigilans/analyse_admin_main.html" id="analyseServerResourceHTML" autowire="byName" scope="prototype"
             class="no.naks.biovigilans_admin.web.server.resource.RapporterAnalyseServerResourceHTML">
         <property name="sessionAdmin" ref="sessionAdmin"></property>
-	
-        </bean> 
+        </bean>
+        <!-- Lagt tim 23.05.16 OLJ -->
+       <bean name="/hemovigilans/hemovigilansadmin.html" id="logoutServerResourceHTML" autowire="byName" scope="prototype"
+            class="no.naks.biovigilans_admin.web.server.resource.LogoutServerResourceHTML">
+        <property name="sessionAdmin" ref="sessionAdmin"></property>	
+        </bean>
+         
         <bean name="/hemovigilans/meldingtilmelder.html" id="MeldingtilMelderServerResourceHTML" autowire="byName" scope="prototype"
         class="no.naks.biovigilans_admin.web.server.resource.MeldingtilMelderServerResourceHTML">
               <property name="sessionAdmin" ref="sessionAdmin"></property>
