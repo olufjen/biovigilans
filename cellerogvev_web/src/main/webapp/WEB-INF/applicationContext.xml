@@ -204,7 +204,7 @@
             class="no.naks.biovigilans.web.server.resource.RapporterLeveranseServerResourceHTML">
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
-                        ${blodproduktfrysetørret},${blodproduktuniplas},${blodproduktannen},${cellerogvev1},${cellerogvev2},${cellerogvev3},${cellerogvev5},${cellerogvev6}"></property>
+                        ${blodproduktfrysetørret},${blodproduktuniplas},${blodproduktannen},${cellerogvev2},${cellerogvev3},${cellerogvev5},${cellerogvev6}"></property>
         <property name="sessionAdmin" ref="sessionAdmin"></property>
         <property name="tablewebservice" ref="tableWebService"></property>
         <property name="innmeldingWebService" ref="hendelseWebService"></property>
@@ -250,9 +250,9 @@
         <property name="reaksjonengruppe" value="${blodgiverbenk},${annetStedBlodbanken},${utenforBlodbanken},${påJobb},${hjemme},${gaten},${annestSted},${cellerogvev7},${cellerogvev8}"></property>
         <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
-                        ${blodproduktfrysetørret},${blodproduktuniplas},${blodproduktannen},${cellerogvev1},${cellerogvev2},${cellerogvev3},${cellerogvev5},${cellerogvev6}"></property>
+                        ${blodproduktfrysetørret},${blodproduktuniplas},${blodproduktannen},${cellerogvev2},${cellerogvev3},${cellerogvev5},${cellerogvev6}"></property>
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property> 
-        <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
+        <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke},${avdelingutenfor},${avdelingandre}"></property>
         <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
         <property name="pasientSession" value="${pasientkomplikasjon.kjonnmann},${pasientkomplikasjon.kjonnkvinne},${pasientkomplikasjon.alder},${pasientkomplikasjon.antistoffja},${pasientkomplikasjon.antistoffnei},
                         ${pasientkomplikasjon.antistoff-erytrocytt},${pasientkomplikasjon.antistoff-hla},${pasientkomplikasjon.antistoff-trombocytt},${pasientkomplikasjon.antistoff-leukocytt},
@@ -352,8 +352,8 @@
             class="no.naks.biovigilans.web.server.resource.RapporterStartServerResourceHTML">
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
-                        ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen},${cellerogvev1},${cellerogvev2},${cellerogvev3},${cellerogvev5},${cellerogvev6}"></property>
-        <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
+                        ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen},${cellerogvev2},${cellerogvev3},${cellerogvev5},${cellerogvev6}"></property>
+        <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke},${avdelingutenfor},${avdelingandre}"></property>
         <property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},${aldergruppegiver5},
                     ${aldergruppegiver6},${aldergruppegiver7}">
         </property>
@@ -371,12 +371,12 @@
    <bean name="/cellerogvev/rapportert_melding.html" id="rapportertemeldingerServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterteMeldingerServerResourceHTML">
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
-                <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
+                <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke},${avdelingutenfor},${avdelingandre}"></property>
         <property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},${aldergruppegiver5},
                     ${aldergruppegiver6},${aldergruppegiver7}">
         </property>
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
-                        ${blodproduktfrysetørret},${blodproduktuniplas},${blodproduktannen},${cellerogvev1},${cellerogvev2},${cellerogvev3},${cellerogvev5},${cellerogvev6}"></property>
+                        ${blodproduktfrysetørret},${blodproduktuniplas},${blodproduktannen},${cellerogvev2},${cellerogvev3},${cellerogvev5},${cellerogvev6}"></property>
       <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
         <property name="reaksjonengruppe" value="${blodgiverbenk},${annetStedBlodbanken},${utenforBlodbanken}${påJobb},${hjemme},${gaten},${annestSted},${cellerogvev7},$${cellerogvev8}"></property>
         <property name="utenforBlodbankengruppe" value="${påJobb},${hjemme},${gaten},${annestSted}"></property>
@@ -512,7 +512,7 @@
    <bean name="/cellerogvev/rapportert_pasient.html" id="rapportertepasienterServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterteMeldingerServerResourceHTML">
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
-        <property name="blodProdukt" value="${cellerogvev3},${blodproduktplasmaoctaplas},${cellerogvev4},${blodproduktannen},${blodproduktpatogeninaktivert},${cellerogvev1},
+        <property name="blodProdukt" value="${cellerogvev3},${blodproduktplasmaoctaplas},${cellerogvev4},${blodproduktannen},${blodproduktpatogeninaktivert},
         ${cellerogvev5},${blodproduktuniplas},${blodproduktflerepatogeninaktivert},${blodproduktferskplasma},${blodproduktkarantene},${cellerogvev2},
                         ${blodproduktfrysetørret},${cellerogvev6}">
          </property>
@@ -623,13 +623,13 @@
    <bean name="/cellerogvev/rapportert_giver.html" id="rapportertegiverServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterteMeldingerServerResourceHTML">
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
-        <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
+        <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke},${avdelingutenfor},${avdelingandre}"></property>
         <property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},${aldergruppegiver5},
                     ${aldergruppegiver6},${aldergruppegiver7}">
         </property>
         
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
-                        ${blodproduktfrysetørret},${blodproduktuniplas},${blodproduktannen},${cellerogvev1},${cellerogvev2},${cellerogvev3},${cellerogvev5},${cellerogvev6}"></property>
+                        ${blodproduktfrysetørret},${blodproduktuniplas},${blodproduktannen},${cellerogvev2},${cellerogvev3},${cellerogvev5},${cellerogvev6}"></property>
         <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
         <property name="reaksjonengruppe" value="${blodgiverbenk},${annetStedBlodbanken},${utenforBlodbanken}${påJobb},${hjemme},${gaten},${annestSted},${cellerogvev7},${cellerogvev8}"></property>
         <property name="utenforBlodbankengruppe" value="${påJobb},${hjemme},${gaten},${annestSted}"></property>
@@ -676,9 +676,9 @@
         <property name="reaksjonengruppe" value="${blodgiverbenk},${annetStedBlodbanken},${utenforBlodbanken}${påJobb},${hjemme},${gaten},${annestSted},${cellerogvev7},${cellerogvev8}"></property>
         <property name="utenforBlodbankengruppe" value="${påJobb},${hjemme},${gaten},${annestSted}"></property>
         <property name="donasjonsstedgruppe" value="${donasjonsstedgruppeblodbank},${donasjonsstedgruppetappestasjon},${donasjonsstedgruppeblodbuss}"></property>
-        <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingandre},${avdelingvetikke}"></property>
+        <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingandre},${avdelingvetikke},${avdelingutenfor},${avdelingandre}"></property>
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
-                        ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktferskplasma},${blodproduktuniplas},${blodproduktannen},${cellerogvev1},${cellerogvev2},${cellerogvev3},${cellerogvev5},${cellerogvev6}"></property>
+                        ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktferskplasma},${blodproduktuniplas},${blodproduktannen},${cellerogvev2},${cellerogvev3},${cellerogvev5},${cellerogvev6}"></property>
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
         <property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf},${kontakt.passord}"></property> 
@@ -716,17 +716,17 @@
         <property name="tablewebservice" ref="tableWebService"></property>
         <property name="innmeldingWebService" ref="hendelseWebService"></property>
         <property name="icd10WebService" ref="ICD10WebService"></property> 
-        <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
+        <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke},${avdelingutenfor},${avdelingandre}"></property>
         <property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},${aldergruppegiver5},
                     ${aldergruppegiver6},${aldergruppegiver7}"></property>
-         <property name="blodProdukt" value="${cellerogvev3},${blodproduktplasmaoctaplas},${cellerogvev4},${blodproduktannen},${blodproduktpatogeninaktivert},${cellerogvev1},
+         <property name="blodProdukt" value="${cellerogvev3},${blodproduktplasmaoctaplas},${cellerogvev4},${blodproduktannen},${blodproduktpatogeninaktivert},
         ${cellerogvev5},${blodproduktuniplas},${blodproduktflerepatogeninaktivert},${blodproduktferskplasma},${blodproduktkarantene},${cellerogvev2},
                         ${blodproduktfrysetørret},${cellerogvev6}">
          </property>
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
         <!-- Reaksjonsgruppe er tappetype for donasjon -->
-        <property name="reaksjonengruppe" value="${cellerogvev3},${blodproduktplasmaoctaplas},${cellerogvev4},${blodproduktannen},${blodproduktpatogeninaktivert},${cellerogvev1},
+        <property name="reaksjonengruppe" value="${cellerogvev3},${blodproduktplasmaoctaplas},${cellerogvev4},${blodproduktannen},${blodproduktpatogeninaktivert},
         ${cellerogvev5},${blodproduktuniplas},${blodproduktflerepatogeninaktivert},${blodproduktferskplasma},${blodproduktkarantene},${cellerogvev2},
                         ${blodproduktfrysetørret},${cellerogvev6}"></property>
         <property name="utenforBlodbankengruppe" value="${påJobb},${hjemme},${gaten},${annestSted}"></property>
@@ -776,10 +776,10 @@
                 <property name="tablewebservice" ref="tableWebService"></property>
                 <property name="innmeldingWebService" ref="hendelseWebService"></property>
                 <property name="icd10WebService" ref="ICD10WebService"></property>
-                <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingandre},${avdelingvetikke}"></property>
+                <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke},${avdelingutenfor},${avdelingandre}"></property>
                 <property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient3},${aldergruppepasient4},${aldergruppepasient5},
                         ${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}"></property>
-                <property name="blodProdukt" value="${cellerogvev3},${blodproduktplasmaoctaplas},${cellerogvev4},${blodproduktannen},${blodproduktpatogeninaktivert},${cellerogvev1},
+                <property name="blodProdukt" value="${cellerogvev3},${blodproduktplasmaoctaplas},${cellerogvev4},${blodproduktannen},${blodproduktpatogeninaktivert},
         ${cellerogvev5},${blodproduktuniplas},${blodproduktflerepatogeninaktivert},${blodproduktferskplasma},${blodproduktkarantene},${cellerogvev2},
                         ${blodproduktfrysetørret},${cellerogvev6}">
          		</property>

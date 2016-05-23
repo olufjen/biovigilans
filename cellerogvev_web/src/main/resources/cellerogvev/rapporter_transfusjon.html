@@ -56,6 +56,18 @@
     };
 
     $( document ).ready(function(){ 
+/*         $('#btavd').click(function(){
+      	  alert('item selected button');
+        });	 */
+//  Disse funksjonsdefinisjonene må komme først i document ready
+        $('#avdeling').blur( function () {
+      	 // alert('item selected input');
+      	  sjekkavdeling();
+        });
+        $('#typecellerogvev').blur( function () {
+         	 // alert('item selected input');
+         	  sjekkcellerogvev();
+           });        
       if (reqFlag == 'none'){
         //  alert(reqFlag);
         document.getElementById('pas-kjonn-1').required = true;
@@ -97,8 +109,21 @@
       var month = ("0" + (now.getMonth() + 1)).slice(-2);
       var today = now.getFullYear()+"-"+(month)+"-"+(day);
       $('#transfusjon-date').attr('max', today);
-    });
+ 
+//      $("#avdelinger").on("input", sjekkavdeling);
 
+ 
+    });
+      /*    $("#avdeling").bind('input', function() {
+     	   
+    	        alert('item selected input')
+    	        sjekkavdeling();
+   	});
+    $("#avdeling").change(function() {
+ 	   
+        alert('item selected')
+        sjekkavdeling();
+	}); */
 
 var Spinner1;
 var foo;
@@ -362,6 +387,26 @@ function showtext(id,thetext){
           return false;
         }
       }
+    }
+  	function sjekkavdeling(){
+  	  var avd = $("#avdeling").val();
+//  	  alert('sjekkavdeling '+avd);
+  	  if (avd == 'Annen avdeling'){
+  		toggleDisplay('avdelingannen', 1);
+  	  }else{
+  		toggleDisplay('avdelingannen', 0);  
+  	  }
+  	
+  	}
+  	function sjekkcellerogvev(){
+    	  var celx = $("#typecellerogvev").val();
+//    	  alert('sjekkavdeling '+avd);
+    	  if (celx == 'Annet'){
+    		toggleDisplay('cellerogvevannen', 1);
+    	  }else{
+    		toggleDisplay('cellerogvevannen', 0);  
+    	  }
+    	
     }
     </script>
 
@@ -674,20 +719,24 @@ function showtext(id,thetext){
       </div>
   
       <div class="form-group" style="display: ${display}">
-        <label>Tidligere oppgitt Institusjon/Virksomhet/Avdeling: </label>
+        <label>Tidligere oppgitt Avdeling: </label>
         <div>${pasienten.avdeling}</div>
       </div>
   
-      <div id="avdeling" class="form-group">
-        <label>Institusjon/Virksomhet/Avdeling</label>
-        <input name ="p-avdeling-list" list="avdelinger" id="avdeling" class="form-control">
-        <datalist id="avdelinger">
+      <div id="avdelingene" class="form-group">
+        <label>Avdeling</label>
+<!--         <button id="btavd">Test</button> -->
+        <input name ="p-avdeling-list" list="avdelinger" id="avdeling" class="form-control" >
+        <datalist id="avdelinger" >
           <#list pasientkomplikasjon.avdelinger as avdeling>
            <option >${avdeling}</option>
           </#list>  
         </datalist>
       </div>
-    
+  	  <div id="avdelingannen" style="margin-left: 0.5cm; display: none" class="form-group">
+        <label>Navn på avdeling</label> 
+        <input type="text" name="p-avdeling-list" size="80"  value="" class="form-control">
+      </div>    
       <!-- Transfusjon  -->      
 <!--      <h3>Anvendelse/Transfusjon</h3>
        <div class="form-group" style="display: ${display}">
@@ -734,7 +783,7 @@ function showtext(id,thetext){
     
     <div class="form-group">
       <label>Type celler eller vev </label>
-      <input  name ="p-antistoff-transfusjon" list="icd10gruppetrans" class="form-control">
+      <input id="typecellerogvev" name ="p-antistoff-transfusjon" list="icd10gruppetrans" class="form-control">
       <datalist id="icd10gruppetrans">
       <#list pasientkomplikasjon.blodProdukt as blodprodukt>
             <option >${blodprodukt}</option>
@@ -742,7 +791,10 @@ function showtext(id,thetext){
  
        </datalist> 
     </div>
-
+  	  <div id="cellerogvevannen" style="margin-left: 0.5cm; display: none" class="form-group">
+        <label>Navn på annen type celler og vev</label> 
+        <input type="text" name="p-antistoff-transfusjon" size="80"  value="" class="form-control">
+      </div> 
     <!-- Blodprodukt  -->
 <!--     <h3>Blodprodukt </h3>
     <div class="form-group" style="display: ${display}">
@@ -3236,7 +3288,7 @@ og/eller
     </div>
 
     <div class="form-group">
-      <h3>Klinisk resultat (hvis det er kjent)</h3>    
+      <h3>Klinisk resultat </h3>    
       <div class="form-group" style="display: ${display}">
         <label>Tidligere oppgitt Klinisk resultat</label>
         <div>${pasientKomp.kliniskresultat}</div>
@@ -3251,7 +3303,7 @@ og/eller
       </div>
       <div class="radio">
         <label title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet">
-          <input type="radio" name="klinisk-res"  id="utfall" value="mindre alvorlig sekvele" title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet"/>
+          <input type="radio" name="klinisk-res"  id="utfall" value="Lett sekvele" title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet"/>
           Lette sekvele
         </label>
       </div>
@@ -3282,25 +3334,25 @@ og/eller
    
       <div class="form-group">
         <div class="radio">
-          <label title="- når det er avgjørende bevis som ut over rimelig tvil viser at reaksjonen (bivirkningen) skyldes blod eller blodkomponenter. ">
+          <label title="- når det er avgjørende bevis som ut over rimelig tvil viser at reaksjonen (bivirkningen) skyldes celler og vev. ">
             <input type="radio" name="aarsaks"  id="arsak" value="Sikker" title="- når det er avgjørende bevis som ut over rimelig tvil viser at reaksjonen (bivirkningen) skyldes blod eller blodkomponenter. ">
             Sikker
           </label>
         </div>
         <div class="radio">
-          <label title="- når bevisene klart taler til fordel for at reaksjonen (bivirkningen) skyldes blod eller blodkomponenter.">
+          <label title="- når bevisene klart taler til fordel for at reaksjonen (bivirkningen) skyldes celler og vev.">
             <input type="radio" name="aarsaks"  id="arsak" value="sannsynlig" title="- når bevisene klart taler til fordel for at reaksjonen (bivirkningen) skyldes blod eller blodkomponenter. "/>
             Sannsynlig
           </label>
         </div>
         <div class="radio">
-          <label title="- når bevisene ikke kan avklare om reaksjonen (bivirkningen) skyldes blod eller blodkomponenter eller andre årsaker.">
+          <label title="- når bevisene ikke kan avklare om reaksjonen (bivirkningen) skyldes celler og vev eller andre årsaker.">
             <input type="radio" name="aarsaks"  id="arsak" value="mulig"  title="- når bevisene ikke kan avklare om reaksjonen (bivirkningen) skyldes blod eller blodkomponenter eller andre årsaker."/>
             Mulig
           </label>
         </div>
         <div class="radio">
-          <label title="- når bevisene klart taler til fordel for at reaksjonen (bivirkningen) skyldes annen årsak enn blod eller blodkomponenter">
+          <label title="- når bevisene klart taler til fordel for at reaksjonen (bivirkningen) skyldes annen årsak enn celler og vev">
             <input type="radio" name="aarsaks"  id="arsak" value="Usannsynlig" title="- når bevisene klart taler til fordel for at reaksjonen (bivirkningen) skyldes annen årsak enn blod eller blodkomponenter"/>
             Usannsynlig
           </label>
@@ -3346,22 +3398,22 @@ og/eller
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-forholdutstyr" type="checkbox" id="p-forhold"  value="forholdutstyr" 
+      <input name="p-forholdutstyr" type="checkbox" id="p-forhold"  value="vevcellefeil" 
       onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Vev og cellefeil  
     </label>
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-uforlikeligprodukt" type="checkbox" id="p-forhold"  value="uforlikeligprodukt" 
+      <input name="p-uforlikeligprodukt" type="checkbox" id="p-forhold"  value="feilvedutstyr" 
       onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Feil ved utstyret  
     </label>
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-feilblodtrans" type="checkbox" id="p-forhold" value="feilblodtrans"  
+      <input name="p-feilblodtrans" type="checkbox" id="p-forhold" value="menneskeligfeil"  
       onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', this.checked)"/>Menneskelig feil   
     </label>
-    <div id="gikkgalt" class="form-group" style="display: none">
+    <div id="gikkgalt" class="form-group" style="margin-left: 0.5cm; display: none">
      <label>Hva gikk galt?</label>
      <div class="checkbox">
       <label>
@@ -3396,20 +3448,20 @@ og/eller
     </div>    
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-mangelfullbehandlingblod" id="p--mangelfullbehandlingblod" value="-mangelfullbehandlingblod" />Feil/ mangelfull behandling av blodet???? i blodbanken
+        <input type="checkbox" name="p-mangelfullbehandlingblod" id="p--mangelfullbehandlingblod" value="-mangelfullbehandlingcellerogvev" />Feil/ mangelfull behandling av celler og vev
       </label>
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-utleveringblodblodbank" id="p-utleveringblodblodbank" value="utleveringblodblodbank" />Valg/utlevering av blodprodukt???? (blodbankpersonell)
+        <input type="checkbox" name="p-utleveringblodblodbank" id="p-utleveringblodblodbank" value="utleveringcellerogvev" />Valg/utlevering av celler og vev
       </label>
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-hentingblodblodbank" id="p-hentingblodblodbank" value="hentingblodblodbank" />Henting av blod???? i blodbanken (ikke blodbankpersonell)
+        <input type="checkbox" name="p-hentingblodblodbank" id="p-hentingblodblodbank" value="hentingcellerogvev" />Henting av celler og vev
       </label>
     </div>
-  <div class="checkbox">
+<!--   <div class="checkbox">
       <label>
         <input type="checkbox" name="p-hentingblodiskap" id="p-hentingblodiskap" value="hentingblodiskap" />Henting av blod???? i skap/fryser utenfor blodbank
       </label>
@@ -3418,7 +3470,7 @@ og/eller
       <label>
         <input type="checkbox" name="p-hentingblodrorpost" id="p-hentingblodrorpost" value="hentingblodrorpost" />Henting av blod???? ved rørpoststasjon
       </label>
-    </div>
+    </div> -->
   <div class="checkbox">
       <label>
         <input type="checkbox" name="p-identitestkontroll" id="p-identitestkontroll" value="identitestkontrollikkefulgt" />Rutiner for identitetskontroll ved transfusjon ikke fulgt
@@ -3476,7 +3528,7 @@ og/eller
   <div class="checkbox">
     <label>
       <input name="p-annetskjedde" type="checkbox" id="p-forhold1"  value="annetskjedde" 
-      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('p-forhold2', 1)"/>Annet  
+      onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('p-forhold2',this.checked)"/>Annet  
     </label>
    </div>
    <div class="checkbox" id="p-forhold2" style="display: none">

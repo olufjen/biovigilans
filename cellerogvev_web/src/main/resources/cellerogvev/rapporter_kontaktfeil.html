@@ -26,18 +26,30 @@
 </head>
 
 <body onload="setSelectListValue();">
- <header>
-    <div class="container">
-      <figure class="main-logo">        
-        <img alt="Logo Helsedirektoratet" src="/cellerogvev_web/resources/css/logo.png">        
-      </figure>
-    </div>    
-  </header>
-
-  <div class="container">
-      <div class="left hidden-print">        
-        <button type="button" class="btn btn-default btn-lg btn-back" onclick="homePage()">Tilbake</button>        
+ <header class="master-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-9 col-sm-6 col-sm-push-3 col-vertical-bottom-sm logo-container">
+            <div class="bottom">
+              <a class="home" href="#" id="home" rel="home" title="">
+                <img class="logo" src="/cellerogvev_web/resources/css/logo.png" alt="" />
+              </a>
+            </div>
+          </div>
+          <div class="hidden-xs col-sm-3 col-sm-push-5 col-vertical-bottom-sm">
+       
+          </div>
+          <div class="col-xs-3 col-sm-pull-9 col-vertical-bottom-sm">
+            <div class="bottom">
+        <button type="button" onclick="homePage()" class="btn btn-default btn-lg">Tilbake</button>
       </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+<div class="container">
 <form id="rapport" action="?method=PUT" method="post"> 
 <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->  
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -53,13 +65,8 @@ $( document ).ready(function(){
 	if (reqFlag == 'none'){
 	//		alert(reqFlag);
 			document.getElementById('k-passordsjekk').required = false;
-	/* 		document.getElementById('k-helseregion').required = true
-			document.getElementById('k-helseforetak').required = true;
-			document.getElementById('k-helseforetak').required = true;
-			document.getElementById('k-sykehus').required = true; */
 	}
 	if (reqFlag == 'block'){
-	//	alert(reqFlag);
 		document.getElementById('k-passordsjekk').required = false; // Slått av inntil videre (OLJ 15.09.15)
 	}
 	if (kontaktButton == 'disable'){
@@ -185,7 +192,7 @@ function passwordsubmit(){
 	//document.getElementById("k-passord").innerHTML = event.keyCode;
 	 $("#lagrekontakt").prop("disabled", false);
 	 $("#lagreanonymt").prop("disabled", false);
-//	 sjekksykehus();
+		
 }
 function formsubmitnymelder(){
 	$("#btnnymelder").click();
@@ -194,17 +201,8 @@ function regionValgt(){
 	var region = document.getElementById("k-helseregion").value;
 //	document.getElementById("k-passordsjekk").setAttribute("value", newpwd);
 	var tt = document.getElementById("k-passordsjekk").value;
-	document.getElementById('k-helseregion').required = false;
-//	 alert("sjekker region region valgt:"+region);
 //	alert(newpwd+" "+tt);
-	 if (region == ''){
-//		 document.getElementById('k-helseregion').required = true;
-//		 alert("region er tom region valgt");
-	 }
 	if(region != ''){
-		/* document.getElementById('k-helseforetak').required = true;
-		document.getElementById('k-sykehus').required = true; */
-//		alert("Click btnRegion");
 		$("#btnRegion").click();
 	}
 	
@@ -212,8 +210,10 @@ function regionValgt(){
 function foretakValgt(){
 	var foretak = document.getElementById("k-helseforetak").value;
 //	document.getElementById("k-passordsjekk").setAttribute("value", newpwd);
+	var tt = document.getElementById("k-passordsjekk").value;
+
 	 if (foretak == ''){
-//		 alert("foretak er tomt");
+		 alert("foretak er tomt");
 	 }
 
 	 if (foretak != ''){
@@ -228,34 +228,10 @@ function leveranseValgt(){
 	//document.location("leveranse.html");
 	$("#btnleveranseb").click();
 }
-function sjekkregion(){
-	var region = document.getElementById("k-helseregion").value;
-//	alert("sjekker region:"+region);
-	document.getElementById('k-helseregion').required = false;
-	 if (region == ''){
-		 document.getElementById('k-helseregion').required = true;
-//		 alert("region er tom");
-	 }
-}
-function sjekkforetak(){
-	var foretak = document.getElementById("k-helseforetak").value;
-//	alert("sjekker foretak:"+foretak);
-	 if (foretak == ''){
-		 document.getElementById('k-helseforetak').required = true;
-//		 alert("foretak er tomt");
-	 }
-}
-function sjekksykehus(){
-	var sykehus = document.getElementById('k-sykehus').value;
-	if (sykehus == ''){
-	 document.getElementById('k-sykehus').required = true;
-//	 alert("foretak er tomt");
-	}
-}
 function anonymKnappen(){
 // Skaper problemer dersom man har en forhåndsutfylt epost adresse i kontaktskjema og ønsker å melde anonymnt!	 
 	 var epost = document.getElementById("k-epost").value;
-	 document.getElementById("k-epost").value = ""; // Derfor er dette kommentert ut. Det vil ivareta om man
+//	 document.getElementById("k-epost").value = ""; // Derfor er dette kommentert ut. Det vil ivareta om man
 //     													Fyller ut epost adresse og passord, og deretter trykker retur tasten.
 //														Resultatet blir at anonymknappen velges!
 	 var nepost = document.getElementById("k-epost").value;
@@ -269,14 +245,11 @@ function homePage(){
 	document.location = newAddr;
 
 }
-function setanonymDefault(){
-	document.getElementById("k-anonym").checked = 0;
-	document.getElementById("k-ikkeanonym").checked = 1;
-}
+
 //window.onload=initialize();
 </script>
 
-<h1>Rapporter hendelse–Celler og vev</h1>
+<h1>Rapporter hendelse–Hemovigilans</h1>
    <ul class="pager">
     <li class="previous" title="Ved startsiden velger du ny melding eller oppfølgingsmelding "><a href="#">Start</a></li>
     <li class="previous" title="Her velger du type melding "><a href="#">Type hendelse</a></li>
@@ -296,7 +269,6 @@ function setanonymDefault(){
  
 </ul>  -->
 
-   
 <div  class="tab-pane" id="kontakt1">
 <div id="funnet" style="display: ${funnet}">
 <h3>Melder funnet, men feil eller intet passord oppgitt. Du har tre valg:</h3>
@@ -357,7 +329,7 @@ function setanonymDefault(){
       <div class="form-group" id="helseforetak" style="display: none">
         <label for="k-helseforetak">Helseforetak:</label>
         <div>
-        <select name ="k-helseforetak" id="k-helseforetak" class="form-control"  onchange="foretakValgt();"  >
+        <select name ="k-helseforetak" id="k-helseforetak" class="form-control" onchange="foretakValgt();"  >
 						<option selected="selected" >${melder.helseforetak}</option>
 			       		<#list melder.valgtRegion as region>
 			       				<option>${region} </option>
@@ -409,12 +381,25 @@ function setanonymDefault(){
       </div>
  -->       
 		<br/>
+<div class="radio">
+          <label>
+            <input name="k-anonym" type="radio" id="k-anonym" value="k-anonym" onclick="toggleDisplay('kontakt1',0);toggleDisplay('anonymbutton',this.checked);passwordsubmit();"/>
+            Ønsker å melde anonymt
+          </label>
+ </div>
+ <div id="anonymbutton" style="display:none" >
+   <label>
+            <input name="k-anonym" type="radio" id="k-ikkeanonym" value="k-ikkeanonym" onclick="toggleDisplay('kontakt1',this.checked);toggleDisplay('anonymbutton',0)"/>
+            Ønsker å melde normalt
+   </label><br>
+ 	 <button name="lagreanonymt" id="lagreanonymt" type="submit" onclick="anonymKnappen();" class="btn btn-primary btn-lg" >Lagre</button>
+</div>
+   
 		<!--
           <button name="avbrytkontakt" type="submit" class="btn btn-default"  onclick="homePage()">Avbryt</button>
    -->     
-          <button name="lagrekontakt" type="submit" id="lagrekontakt" class="btn btn-primary" onclick="sjekkregion();sjekkforetak();" >Send inn</button>
+          <button name="lagrekontakt" type="submit" id="lagrekontakt" class="btn btn-primary"  >Send inn</button>
           <button name="nyttpassord" type="submit" id="nyttpassord" class="btn btn-primary" style="display: none" >Glemt passord?</button>
-          
  		  <button type="submit" id="btnprovny" value="provny"  name="provnytt" class="btn btn-primary btn-lg" style="display: none" > getValue </button>
  		  <button type="submit" id="btnhentpassord" value="passord"  name="hentpassord" class="btn btn-primary btn-lg" style="display: none" > getValue </button>
  		  <button type="submit" id="btnnymelder" value="nymelder"  name="nymelder" class="btn btn-primary btn-lg" style="display: none" > getValue </button>
@@ -424,19 +409,6 @@ function setanonymDefault(){
 		  <button name="lagrekontakt" id="btnleveranse" type="submit"  class="btn btn-primary btn-lg" style="display: none" >getValue</button>
 		  <button name="lagrekontaktb" id="btnleveranseb" type="button" onclick="document.location='leveranse.html';" style="display: none" class="btn btn-primary btn-lg" >getValue</button>
 </div> <!--slutt på Kontaktinformasjon-->
-<!--  <div class="radio">
-          <label >
-            <input name="k-anonym" type="radio" id="k-anonym" value="k-anonym" onclick="toggleDisplay('kontakt1',0);toggleDisplay('anonymbutton',this.checked);passwordsubmit();"/>
-            Ønsker å melde anonymt
-          </label>
- </div>
- <div id="anonymbutton" style="display:none" >
-   <label><b>Når du melder anonymt, mister du muligheten til å se meldingen i ettertid og til å få tilbakemelding fra Celler og vev gruppen.</b><br><br>
-            <input name="k-anonym" type="radio" id="k-ikkeanonym" value="k-ikkeanonym" checked onclick="toggleDisplay('kontakt1',this.checked);toggleDisplay('anonymbutton',0)"/>
-            Ønsker å melde normalt
-   </label><br>
- 	 <button name="lagreanonymt" id="lagreanonymt" type="submit" onclick="anonymKnappen();" class="btn btn-primary btn-lg" >Lagre</button>
-</div> -->
 </form>
 </div>
 </body>
