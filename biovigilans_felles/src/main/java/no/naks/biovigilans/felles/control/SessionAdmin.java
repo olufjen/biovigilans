@@ -20,9 +20,8 @@ public interface SessionAdmin {
 	public String[] getSessionParams();
 	public void setSessionParams(String[] sessionParams);
 	public void removesessionObject(Request request,String idKey);
-	public String getChosenDB();
-
-	public void setChosenDB(String chosenDB);
+	public String getChosenDB(Request req);
+	public void	setChosenDB(Request req, String chosenDB);
 
 	public JdbcTemplate getChosenTemplate();
 

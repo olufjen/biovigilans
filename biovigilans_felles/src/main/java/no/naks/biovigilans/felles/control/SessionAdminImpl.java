@@ -17,6 +17,9 @@ public class SessionAdminImpl implements SessionAdmin {
 	private JdbcTemplate hemovigilansjdbcTemplate; //  @since 30.03.2016 OLJ
 	private JdbcTemplate cellerogvevjdbcTemplate; //  @since 30.03.2016 OLJ
 	private String chosenDB = "";
+	private String dbKey = "key";
+	private String jdbccellerKey = "jdbccellerkey";
+	private String jdbchemoKey = "jdbchemokey";
 	private JdbcTemplate chosenTemplate = null;
 	
 	public SessionAdminImpl() {
@@ -24,17 +27,29 @@ public class SessionAdminImpl implements SessionAdmin {
 		  System.out.println("SessionAdmin felles started  - inneholder jdbcTemplates (saksbehandling)");
 	}
 
-	public String getChosenDB() {
+	public String getChosenDB(Request req) {
+		String idKey = dbKey+"hemovigilans";
+		String chosenDB = (String)getSessionObject(req, idKey);
+		if (chosenDB == null){
+			idKey = dbKey+"cellerogvev";
+			chosenDB = (String)getSessionObject(req, idKey);
+		}
+			
 		return chosenDB;
 	}
 
 	/* setChosenDB
 	 * Denne rutinen setter opp riktig jdbcTemplate etter hvilken database bruker velger
 	 */
-	public void setChosenDB(String chosenDB) {
-		this.chosenDB = chosenDB;
+	public void setChosenDB(Request req, String chosenDB) {
+		String idKey = dbKey+chosenDB;
+		setSessionObject(req, chosenDB, idKey);
 		if (chosenDB != null && !chosenDB.equals("hemovigilans")){
-			chosenTemplate = cellerogvevjdbcTemplate;
+			setSessionObject(req, cellerogvevjdbcTemplate, jdbccellerKey);
+		}
+		if (chosenDB != null && chosenDB.equals("hemovigilans")){
+			setSessionObject(req, hemovigilansjdbcTemplate,jdbchemoKey );
+
 		}
 	}
 
