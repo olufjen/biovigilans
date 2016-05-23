@@ -129,13 +129,16 @@
   <bean id="hendelseTablesService" class="no.naks.biovigilans.service.HendelseTablesServiceImpl">
   	<property name="hendelsehemovigilansDAO" ref="hendelsehemovigilansDAO"></property>
   	<property name="sakDAO" ref="sakDAO"></property>
+	<property name="jdbctemplatesDAO" ref="templatesDAO"></property> <!-- Denne prperty må settes i alle services !!! -->
   </bean>
   <bean id="PasientTableService" class="no.naks.biovigilans.service.PasientTableServiceImpl">
   	<property name="pasientDAO" ref="pasientDAO"></property>
   	<property name="transfusjonDAO" ref="transfusjonDAO"></property>
+	<property name="jdbctemplatesDAO" ref="templatesDAO"></property> <!-- Denne prperty må settes i alle services !!! -->
   </bean>
   <bean id="giverTableService" class="no.naks.biovigilans.service.GiverTableServiceImpl">
   	<property name="giverDAO" ref="giverDAO"></property>
+	<property name="jdbctemplatesDAO" ref="templatesDAO"></property> <!-- Denne prperty må settes i alle services !!! -->
   </bean>
   <bean id="donasjonTableService" class="no.naks.biovigilans.service.DonasjonTableServiceImpl" >
   	<property name="donasjonDAO" ref="donasjonDAO"></property>

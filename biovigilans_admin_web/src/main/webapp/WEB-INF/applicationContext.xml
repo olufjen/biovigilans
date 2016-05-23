@@ -326,6 +326,7 @@
             class="no.naks.biovigilans_admin.web.server.resource.SaksbehandlingServerResourceHTML">
         	<property name="sessionAdmin" ref="sessionAdmin"></property>
 			<property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
+	        <property name="innmeldingWebService" ref="hendelseWebService"></property>
             <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusalle},${statusframelder},${statusalleunntattavvist}"></property>
         <property name="merknader" value="${merknaddialogmelder},${merknaddialoghemovigilans},${merknadtilhdir},${merknadtildiskusjon},${merknadtilseminar},${merknadtilarsrapport},${merknadreklassifisering}"></property>
 			
