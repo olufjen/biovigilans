@@ -84,18 +84,20 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 		 List<Saksbehandler> saksbehandlere = (List)sessionAdmin.getSessionObject(request,behandlereKey);
 	     login = (LoginModel)sessionAdmin.getSessionObject(request,loginKey);
 		String db = login.getSaksbehandler().getDbChoice();
-		sessionAdmin.setChosenDB(db);
-		if (sessionAdmin.getChosenTemplate() != null){
+		sessionAdmin.setChosenDB(request,db);
+		setDBSource(request);
+/*		if (sessionAdmin.getChosenTemplate() != null){
 			saksbehandlingWebservice.setAlterativeSource(db);
 			annenKomplikasjonWebService.setAlterativeSource(db);
 			donasjonWebService.setAlterativeSource(db);
 			komplikasjonsklassifikasjonWebService.setAlterativeSource(db);
 			komDiagnosegiverWebService.setAlterativeSource(db);
+			hendelseWebService.setAlterativeSource(db);
 //			melderWebService.setAlterativeSource(db); MeldertableService er i saksbehandlerWebservice !!
 			setAlternativeSource(sessionAdmin.getChosenTemplate());
 
 		}
-	
+	*/
 /*
  * Ferdig alternativeSource		
  */
@@ -133,7 +135,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 	
 	  /**
      * storeHemovigilans
-     * Denne rutinen tar imot meldingsnøkkel fra bruker og henter frem meidngsinformasjon basert på 
+     * Denne rutinen tar imot meldingsnøkkel fra bruker og henter frem meldingsinformasjon basert på 
      * oppgitt meldingsnøkkel
      * Bruker kan også velge å endre listeutvalg
      * @param form
@@ -148,6 +150,8 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
         Map<String, Object> dataModel = new HashMap<String, Object>();
         Reference reference = new Reference(getReference(),"..").getTargetRef();
         Request request = getRequest();
+        setDBSource(request);
+//	     String db =  sessionAdmin.getChosenDB(request);
   	    List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(getRequest(), meldingsId);
   	    dobleMeldingene = (List)sessionAdmin.getSessionObject(request,dobleMeldingKey);
   	    login = (LoginModel) sessionAdmin.getSessionObject(request, loginKey);

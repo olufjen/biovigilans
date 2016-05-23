@@ -71,7 +71,11 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	protected String cellereogvevandrehendelser = "/cellerogvev/rapporter_andrehendelser.html";
 	protected String hemovigilanstransfusjon = "/hemovigilans/rapporter_transfusjon.html";
 	protected String hemovigilansgiverhendelser = "/hemovigilans/rapporter_giver.html";
-	
+	protected String cellerogvevtransfusjonhendelse = "/cellerogvev/rapporter_transfusjon.html";
+	protected String cellerogvevgiverhendelser = "/cellerogvev/rapporter_giver.html";
+	protected String andrehendelserskjema = "/hemovigilans/rapporter_andrehendelser.html";
+	protected String giverhendelsesskjema = "/hemovigilans/rapporter_giver.html";
+	protected String transfusjonhendelseskjema = "/hemovigilans/rapporter_transfusjon.html";
 	
 	public String[] getFlaggNames() {
 		return flaggNames;
@@ -237,6 +241,23 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 		this.giverSession = giverSession;
 	}
 	
+	/**
+	 * setDBSource
+	 * Denne rutinen setter aktuell databasekilde som bruker har valgt
+	 * Dette gjøres pr. request
+	 */
+	protected void setDBSource(Request request){
+		String db =  sessionAdmin.getChosenDB(request);
+		saksbehandlingWebservice.setAlterativeSource(db);
+		annenKomplikasjonWebService.setAlterativeSource(db);
+		donasjonWebService.setAlterativeSource(db);
+		komplikasjonsklassifikasjonWebService.setAlterativeSource(db);
+		komDiagnosegiverWebService.setAlterativeSource(db);
+		hendelseWebService.setAlterativeSource(db);
+//		melderWebService.setAlterativeSource(db); MeldertableService er i saksbehandlerWebservice !!
+		setAlternativeSource(sessionAdmin.getChosenTemplate());
+
+	}
 	/**
 	 * dialogHemovigilans
 	 * Denne rutinen sjekker om det skal sendes epost til saksbehandlerne i Hemovigilansgruppen
