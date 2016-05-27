@@ -372,6 +372,8 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	/**
 	 * hentMeldingene
 	 * Denne rutinen henter meldinger basert på en tidperiode gitt som datoer
+	 * @since 26.05.16 Hva skjer her dersom opprinnelig melding er utenfor perioden?
+	 * Sorteringsfunksjonen (Finne doble) kan kommenteres bort?
 	 * @param start Start dato for perioden
 	 * @param end Sluttdato for perioden
 	 * @return
@@ -379,7 +381,7 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	public List<Vigilansmelding> hentMeldingene(String start,String end){
 		 List<Vigilansmelding> meldinger = null;
 		 meldinger = saksbehandlingWebservice.collectMessages(start, end);
-		 sorterMeldinger(meldinger);
+//		 sorterMeldinger(meldinger); kommentert bort 26.05.16 Doble meldinger er funnet for alle meldinger
 		 for (Vigilansmelding melding: meldinger){
 		    	if (melding.getSjekklistesaksbehandling() == null){
 		    		melding.setSjekklistesaksbehandling("Levert");
@@ -425,17 +427,20 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	/**
 	 * hentMeldingene
 	 * Denne rutinen henter meldinger basert på definert utvalg
+	 * @since 26.05 Henter alle meldinger først slik at alle doble meldinger er kjent
 	 * @param status Utvalg status for meldingene eller null
 	 * @return
 	 */
 	public List<Vigilansmelding> hentMeldingene(String status){
-		 List<Vigilansmelding> meldinger = null;
-
+		List<Vigilansmelding> meldinger = null;
+		meldinger = saksbehandlingWebservice.collectMessages(); // Henter alle meldinger
+		sorterMeldinger(meldinger); // Og sorterer disse før valgt utvalg hentes
 		if (status != null && !status.equals(statusflag[6])){
 			meldinger = saksbehandlingWebservice.collectMessages(status); 
-		}else
+		}
+/*		else
 			meldinger = saksbehandlingWebservice.collectMessages(); // Henter alle meldinger
-	    sorterMeldinger(meldinger);
+	    sorterMeldinger(meldinger); Endret 26.05.16 se kommentar over*/
 	    for (Vigilansmelding melding: meldinger){
 	    	if (melding.getSjekklistesaksbehandling() == null){
 	    		melding.setSjekklistesaksbehandling("Levert");

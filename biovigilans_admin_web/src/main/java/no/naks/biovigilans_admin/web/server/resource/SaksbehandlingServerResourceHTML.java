@@ -145,6 +145,10 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
      * @param form
      * @return
      */
+    /**
+     * @param form
+     * @return
+     */
     @Post
     public Representation storeHemovigilans(Form form) {
         Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -172,11 +176,24 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 		Parameter formMinesaker  = form.getFirst("minesaker"); // Bruker etterspør sine saker
 		Parameter sokMelding = form.getFirst("meldingsnokkelsok"); // Bruker etterspør en gitt melding
 		Parameter formAnonymesaker  = form.getFirst("anonymesaker"); // Bruker etterspør anonyme meldinger
+		Parameter tilbake = form.getFirst("tilbake"); // Bruker returnerer til hovedside
   		String meldtUtvalgetstart = null;
   		String meldtUtvalgetslutt = null;
   		boolean toPDF = false;
   		String page = "";
-  		if (formAnonymesaker != null){
+  		if (tilbake != null){
+ 	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
+
+    		// Load the FreeMarker template
+    		Representation pasientkomplikasjonFtl = clres2.get();
+
+    		TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+    				MediaType.TEXT_HTML);
+    		String backPage = "../hemovigilans/hemovigilansadmin.html";
+    		  redirectPermanent(backPage);
+    		return templatemapRep;
+  		}
+  		if (formAnonymesaker != null){ // Henter anonyme meldinger
   			Long saksbehandlerid = login.getSaksbehandler().getSakbehandlerid();
   			meldinger = hentanonymeMeldinger();
  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
@@ -195,7 +212,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     				MediaType.TEXT_HTML);
     		return templatemapRep;
   		}
-  		if (sokMelding != null){
+  		if (sokMelding != null){ // Søker etter en gitt melding
   			meldingsID = null;
  			Long saksbehandlerid = login.getSaksbehandler().getSakbehandlerid();
  			for (Parameter entry : form) {
@@ -531,7 +548,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     	    	blodprodukter = (List)meldingDetaljene.get(blodproduktKey);
     	    	egenskaper = meldingDetaljene.get(produktegenskapKey);
     	    	symptomer = meldingDetaljene.get(symptomerKey);
- 
+//    	    	klassifikasjoner = (List)meldingDetaljene.get(klassifikasjonKey); // Lagt til 26.05.16 OLJ
     	    	utredninger = meldingDetaljene.get(utredningKey);
     	    	tiltak = meldingDetaljene.get(tiltakKey);
     	    	forebyggendeTiltak = meldingDetaljene.get(forebyggendetiltakKey);
@@ -585,7 +602,14 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     	    if (utredninger == null || utredninger.isEmpty() && histutredninger != null){
     	    	utredninger = histutredninger;
     	    }
-    	    
+/*
+ * Klassifikasjoner lagt til 26.05.16    	    
+ */
+ /*   	    if (klassifikasjoner != null && histklassifikasjoner != null)
+    	    	klassifikasjoner.addAll(histklassifikasjoner);
+    	    if (klassifikasjoner == null || klassifikasjoner.isEmpty() && histklassifikasjoner != null)
+    	    	klassifikasjoner = histklassifikasjoner;
+    	    */
     	    if (giverListe != null ){
     	    	giverKomplikasjon = giverListe.get(0);
  
