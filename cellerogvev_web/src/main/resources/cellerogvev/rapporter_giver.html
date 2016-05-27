@@ -83,13 +83,14 @@
         	  alert('item selected input');
         	  sjekkcellerogvev();
           });    */
+//          alert("Document ready function");  
 		if (reqFlag == 'none'){
 			//	alert(reqFlag);
 				document.getElementById('tab-kjonn-1').required = true;
 //				document.getElementById('tab-kjonn-2').required = true;
 				document.getElementById('giveralder').required = true;
-				document.getElementById('tab-giver-forste').required = true;
-				document.getElementById('tab-giver-etabler').required = true;
+//				document.getElementById('tab-giver-forste').required = true;
+//				document.getElementById('tab-giver-etabler').required = true;
 				document.getElementById('dato-donasjon').required = true;
 				document.getElementById('tappested').required = true;
 //				document.getElementById('tab-maltid').required = true;
@@ -117,8 +118,8 @@
 				document.getElementById('tab-kjonn-1').required = false;
 //				document.getElementById('tab-kjonn-2').required = false;
 				document.getElementById('giveralder').required = false;
-				document.getElementById('tab-giver-forste').required = false;
-				document.getElementById('tab-giver-etabler').required = false;
+//				document.getElementById('tab-giver-forste').required = false;
+//				document.getElementById('tab-giver-etabler').required = false;
 				document.getElementById('dato-donasjon').required = false;
 				document.getElementById('tappested').required = false;
 /* 				document.getElementById('tab-maltid').required = false;
@@ -145,8 +146,10 @@
 		 	var day = ("0" + now.getDate()).slice(-2);
 	        var month = ("0" + (now.getMonth() + 1)).slice(-2);
 	        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+//	        alert("Max dato "+today); 
 	        $('#dato-donasjon').attr('max', today);
 	        $('#dato-hendelse').attr('max', today);
+//	        alert("Max dato satt "+today); 
 	});
 	 
 	

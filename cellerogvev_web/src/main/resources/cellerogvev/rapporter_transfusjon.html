@@ -75,10 +75,10 @@
         document.getElementById('p-transfusjon-ip-1').required = true;
         document.getElementById('p-inneliggende').required = true;
         document.getElementById('avdeling').required = true;
-        document.getElementById('transfusjon-date').required = true;
+//        document.getElementById('transfusjon-date').required = true;
         document.getElementById('p-transfusjon-hg').required = true;
-        document.getElementById('p-blod').required = true;
-        document.getElementById('p-annenblod-ja').required = true;
+//        document.getElementById('p-blod').required = true;
+//        document.getElementById('p-annenblod-ja').required = true;
         document.getElementById('grad1').required = true;
         document.getElementById('utfall').required = true;
         document.getElementById('arsak').required = true;
@@ -93,10 +93,10 @@
         document.getElementById("p-transfusjon-ip-1").required = false;
         document.getElementById('p-inneliggende').required = false;
         document.getElementById('avdeling').required = false;
-        document.getElementById('transfusjon-date').required = false;
+//        document.getElementById('transfusjon-date').required = false;
         document.getElementById('p-transfusjon-hg').required = false;
-        document.getElementById('p-blod').required = false;
-        document.getElementById('p-annenblod-ja').required = false;
+//        document.getElementById('p-blod').required = false;
+//        document.getElementById('p-annenblod-ja').required = false;
         document.getElementById('grad1').required = false;
         document.getElementById('utfall').required = false;
         document.getElementById('arsak').required = false;
@@ -107,8 +107,9 @@
       var now = new Date();
       var day = ("0" + now.getDate()).slice(-2);
       var month = ("0" + (now.getMonth() + 1)).slice(-2);
+//      alert('Max dato');
       var today = now.getFullYear()+"-"+(month)+"-"+(day);
-      $('#transfusjon-date').attr('max', today);
+//      $('#transfusjon-date').attr('max', today); Transfusjonsdato er ikke i bruk
  
 //      $("#avdelinger").on("input", sjekkavdeling);
 
