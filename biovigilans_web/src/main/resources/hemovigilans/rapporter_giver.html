@@ -129,10 +129,12 @@
 				document.getElementById('tab-avreg').required = false;
 	
 			}
+			alert("Max dato settes");
 		 	var now = new Date();
 		 	var day = ("0" + now.getDate()).slice(-2);
 	        var month = ("0" + (now.getMonth() + 1)).slice(-2);
 	        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+	        alert("Max dato "+today); 
 	        $('#dato-donasjon').attr('max', today);
 	        $('#dato-hendelse').attr('max', today);
 	});
