@@ -174,7 +174,7 @@ public class MeldingfraMelderServerResourceHTML extends
     	 */
     	 
 //Denne client resource forholder seg til src/main/resource katalogen !!!	
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/meldingframelder.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/meldingframelder.html"));
 	     
 	        // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
@@ -242,7 +242,7 @@ public class MeldingfraMelderServerResourceHTML extends
 		        	 dataModel.put(buttonKey, sendButton);
 //		        	 dataModel.put(tilmelderKey, melder);
 //		        	 dataModel.put(meldingtilMelderKey, melding);
-		 	    	ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/meldingframelder.html"+paramMessage));
+		 	    	ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/meldingframelder.html"+paramMessage));
 					 
 					Representation meldingmelderHendelser = clres2.get();
 //		       		invalidateSessionobjects();
@@ -259,17 +259,17 @@ public class MeldingfraMelderServerResourceHTML extends
 		     
 //		        	 dataModel.put(statusflagKey,statusflag);
 		        	 
-	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/meldingframelder.html"));
+	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/meldingframelder.html"));
 	   			 
 	    			Representation meldingHendelser = clres2.get();
 //	        		invalidateSessionobjects();
 	        		templateRep = new TemplateRepresentation(meldingHendelser, dataModel,
 	        				MediaType.TEXT_HTML);
-	        		redirectPermanent("../hemovigilans/");
+	        		redirectPermanent("../cellerogvev/");
 	        		return templateRep;  // Hvorfor er denne nødvendig? OLJ 28.07.15
 	    		}
 	    	}
-	    	ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/meldingframelder.html"));
+	    	ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/meldingframelder.html"));
 			 
 			Representation meldingmelderHendelser = clres2.get();
 //       		invalidateSessionobjects();
