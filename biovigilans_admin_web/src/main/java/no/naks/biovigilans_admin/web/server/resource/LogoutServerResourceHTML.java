@@ -54,7 +54,7 @@ public class LogoutServerResourceHTML extends SaksbehandlingSessionServer {
     	Request request = getRequest();
     	invalidateSessionobjects();
     	Map<String, Object> dataModel = new HashMap<String, Object>();
-    	String page = "/hemovigilans/login.html";
+    	String page = "../hemovigilans/login.html";
 	    ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/login.html"));
 	 	        Representation loginFtl = clres2.get();
 	 	        TemplateRepresentation  templatemapRep = new TemplateRepresentation(loginFtl,dataModel,
