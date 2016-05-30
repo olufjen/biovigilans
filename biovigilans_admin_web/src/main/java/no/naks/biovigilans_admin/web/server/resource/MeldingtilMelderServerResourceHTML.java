@@ -74,7 +74,8 @@ public class MeldingtilMelderServerResourceHTML extends
     	 if (melding.getMelderId() != null && melding.getMelderId().longValue() != 0)
     			 melder = saksbehandlingWebservice.collectmelder(melding.getMelderId());
 	     login = (LoginModel)sessionAdmin.getSessionObject(request,loginKey);
-
+	     String db =  sessionAdmin.getChosenDB(request);
+	     setMeldertext(db);
     	 sessionAdmin.setSessionObject(request, melder, tilmelderKey);
     	 sessionAdmin.setSessionObject(request, melding, meldingtilMelderKey);
     	 meldingsDiskusjon = (MeldingModel) sessionAdmin.getSessionObject(request,meldingdiskusjonKey); 
@@ -124,6 +125,8 @@ public class MeldingtilMelderServerResourceHTML extends
 			   meldingsDiskusjon = new MeldingModel();
 			   sessionAdmin.setSessionObject(request,meldingsDiskusjon, meldingdiskusjonKey);
 		   }
+		   String db =  sessionAdmin.getChosenDB(request);
+		   setMeldertext(db);
 		   meldingsDiskusjon.setFormNames( getSessionParams());
 		   if (form != null){
 	    		Parameter sendMelding = form.getFirst("btnsendmelding");
