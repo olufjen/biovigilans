@@ -159,6 +159,8 @@
               <property name="sessionParams" value="${nymelding.tema},${nymelding.text}"></property>
               <property name="tilMeldermsg" value="${tilmelder.text}"></property>
               <property name="tilMeldertillegg" value="${tilmeldertillegg.text}"></property>
+              <property name="tilMeldermsgCEV" value="${cevtilmelder.text}"></property>
+              <property name="tilMeldertilleggCEV" value="${cevtilmeldertillegg.text}"></property>
               <property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
               <property name="emailWebService" ref="emailWebService"></property>
         </bean>
