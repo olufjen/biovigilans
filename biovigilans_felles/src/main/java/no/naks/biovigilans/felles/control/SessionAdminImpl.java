@@ -27,6 +27,9 @@ public class SessionAdminImpl implements SessionAdmin {
 		  System.out.println("SessionAdmin felles started  - inneholder jdbcTemplates (saksbehandling)");
 	}
 
+	/* getChosenDB
+	 * Denne rutinen returnerer nøkkel til hvilken database som er valgt
+	 */
 	public String getChosenDB(Request req) {
 		String idKey = dbKey+"hemovigilans";
 		String chosenDB = (String)getSessionObject(req, idKey);
