@@ -50,10 +50,17 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	protected String meldingstypeKey = "meldingstype";
 	protected String tilmelderKey = "melderen";	//Til bruk i skjermbildet til å sende melding til melder
 	protected String tilmelderSendKey = "nymelding"; 	// Nøkkel til meldingen som skal sendes
-	
+
+/*
+ * Meldingtekst til melder lagt til tekst for celler og vev OJN 30.05.16	
+ * 
+ */
 	protected String tilMeldermsg;			//Standard melding til meldere
 	protected String tilMeldertillegg;
 	protected String tilsakbehandlereMsg;	//Standard melding til saksbehandlere 
+	protected String tilMeldermsgCEV;
+	protected String tilMeldertilleggCEV;
+	
 	protected String[] flaggNames; // Inneholder navn på input felt i skjermbildet. Bruker velger ett eller flere saksflagg
 /*
  * Benyttet til excel rapporter
@@ -76,7 +83,24 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	protected String andrehendelserskjema = "/hemovigilans/rapporter_andrehendelser.html";
 	protected String giverhendelsesskjema = "/hemovigilans/rapporter_giver.html";
 	protected String transfusjonhendelseskjema = "/hemovigilans/rapporter_transfusjon.html";
+
 	
+	public String getTilMeldermsgCEV() {
+		return tilMeldermsgCEV;
+	}
+
+	public void setTilMeldermsgCEV(String tilMeldermsgCEV) {
+		this.tilMeldermsgCEV = tilMeldermsgCEV;
+	}
+
+	public String getTilMeldertilleggCEV() {
+		return tilMeldertilleggCEV;
+	}
+
+	public void setTilMeldertilleggCEV(String tilMeldertilleggCEV) {
+		this.tilMeldertilleggCEV = tilMeldertilleggCEV;
+	}
+
 	public String[] getFlaggNames() {
 		return flaggNames;
 	}
@@ -240,7 +264,18 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	public void setGiverSession(String[] giverSession) {
 		this.giverSession = giverSession;
 	}
-	
+
+	/**
+	 * setMeldertext
+	 * Setter riktig tekst til melder for celler og vev
+	 * @param dbKey
+	 */
+	protected void setMeldertext(String dbKey){
+		if (dbKey.equals("cellerogvev")){
+			tilMeldermsg = tilMeldermsgCEV;
+			tilMeldertillegg = tilMeldertilleggCEV;
+		}
+	}
 	/**
 	 * setDBSource
 	 * Denne rutinen setter aktuell databasekilde som bruker har valgt
@@ -256,7 +291,7 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 		hendelseWebService.setAlterativeSource(db);
 //		melderWebService.setAlterativeSource(db); MeldertableService er i saksbehandlerWebservice !!
 		setAlternativeSource(sessionAdmin.getChosenTemplate());
-
+		setMeldertext(db);
 	}
 	/**
 	 * dialogHemovigilans

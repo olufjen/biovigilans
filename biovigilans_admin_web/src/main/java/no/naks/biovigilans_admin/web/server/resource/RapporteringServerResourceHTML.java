@@ -245,9 +245,9 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
   			for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals(""))){
     					System.out.println(entry.getName() + "=" + entry.getValue());
-    					if (entry.getName().equals("fra-datomelde") )
+    					if (entry.getName().equals("fra-dato") )
     						meldtUtvalgetstart = entry.getValue();
-    					if (entry.getName().equals("til-datomelde") )
+    					if (entry.getName().equals("til-dato") )
     						meldtUtvalgetslutt = entry.getValue();
     			}
   

@@ -270,7 +270,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     				MediaType.TEXT_HTML);
     		return templatemapRep;
   		}
- 		if (datoHendt != null){ // Begrense utvalget til en periode av dato meldt
+ 		if (datoHendt != null){ // Begrense utvalget til en periode av dato Hendt
   			for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals(""))){
     					System.out.println(entry.getName() + "=" + entry.getValue());
@@ -305,9 +305,9 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
   			for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals(""))){
     					System.out.println(entry.getName() + "=" + entry.getValue());
-    					if (entry.getName().equals("fra-datomelde") )
+    					if (entry.getName().equals("fra-dato") )
     						meldtUtvalgetstart = entry.getValue();
-    					if (entry.getName().equals("til-datomelde") )
+    					if (entry.getName().equals("til-dato") )
     						meldtUtvalgetslutt = entry.getValue();
     			}
   
