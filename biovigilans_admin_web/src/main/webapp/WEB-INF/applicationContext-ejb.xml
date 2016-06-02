@@ -316,7 +316,7 @@
   	<property name="selectSakSQL" value="${sak.select}"></property>
   	<property name="diskusjonTableDefs" value="${diskusjon.diskusjonid},${diskusjon.datoforkommentar},${diskusjon.kommentar},${diskusjon.tema},${diskusjon.meldeid}"></property>
   	<property name="sakTableDefs" value="${sak.saksid},${sak.datosak},${sak.sakopplysninger},${sak.sakkommentar},${sak.sakstatus},${sak.diskusjonid},${sak.sakbehandlerid}"></property>
-  	<property name="flaggNames" value="${flagg.statusvalg},${flagg.statusvalg1},${flagg.statusvalg2},${flagg.statusvalg3},${flagg.statusvalg4},${flagg.statusvalg5},${flagg.statusvalg6},${flagg.statusvalg7}"></property>
+  	<property name="flaggNames" value="${flagg.statusvalg},${flagg.statusvalg1},${flagg.statusvalg2},${flagg.statusvalg3},${flagg.statusvalg4},${flagg.statusvalg5},${flagg.statusvalg6},${flagg.statusvalg7},${flagg.statusvalg8}"></property>
   	<property name="saksbehandlerSQL" value="${behandler.select}"></property>
   	<property name="saksbehandlerTableDefs" value="${behandler.behandlerid},${behandler.behandlernavn},${behandler.behandlerepost},${behandler.behandlertlf},${behandler.behandlerpassord}"></property>
   	<property name="selectmelderSQL" value="${melder.selectmelderfrasak}"></property>

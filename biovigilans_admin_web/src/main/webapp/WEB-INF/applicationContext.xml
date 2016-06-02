@@ -335,7 +335,7 @@
 			<property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
 	        <property name="innmeldingWebService" ref="hendelseWebService"></property>
             <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusalle},${statusframelder},${statusalleunntattavvist}"></property>
-        <property name="merknader" value="${merknaddialogmelder},${merknaddialoghemovigilans},${merknadtilhdir},${merknadtildiskusjon},${merknadtilseminar},${merknadtilarsrapport},${merknadreklassifisering}"></property>
+        <property name="merknader" value="${merknaddialogmelder},${merknaddialoghemovigilans},${merknadtilhdir},${merknadtildiskusjon},${merknadtilseminar},${merknadtilarsrapport},${merknadreklassifisering},${merknadkommentar}"></property>
 			
 	       <property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
                 ${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
@@ -473,14 +473,14 @@
             class="no.naks.biovigilans_admin.web.server.resource.RapporterAndreHendelserServerResourceHtml">
         <property name="innmeldingWebService" ref="hendelseWebService"></property>
         <property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
-        <property name="merknader" value="${merknaddialogmelder},${merknaddialoghemovigilans},${merknadtilhdir},${merknadtildiskusjon},${merknadtilseminar},${merknadtilarsrapport},${merknadreklassifisering}"></property>
+        <property name="merknader" value="${merknaddialogmelder},${merknaddialoghemovigilans},${merknadtilhdir},${merknadtildiskusjon},${merknadtilseminar},${merknadtilarsrapport},${merknadreklassifisering},${merknadkommentar}"></property>
         <property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
                 ${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
                 ${andreHendelser.planlagte},${andreHendelser.kommentar},${andreHendelser.klassifikasjon-sub},${andreHendelser.hvagikkgalt},${andrehendelser.ytterligereopplysninger},
                 ${andrehendelser.pasientopplysninger},${andrehendelser.kjonn},${andrehendelser.alder}">
         
         </property>
-        <property name="flaggNames" value="${flagg.statusvalg},${flagg.statusvalg1},${flagg.statusvalg2},${flagg.statusvalg3},${flagg.statusvalg4},${flagg.statusvalg5},${flagg.statusvalg6},${flagg.statusvalg7}">
+        <property name="flaggNames" value="${flagg.statusvalg},${flagg.statusvalg1},${flagg.statusvalg2},${flagg.statusvalg3},${flagg.statusvalg4},${flagg.statusvalg5},${flagg.statusvalg6},${flagg.statusvalg7},${flagg.statusvalg8}">
         </property>
         <property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient3},${aldergruppepasient4},${aldergruppepasient5},
                         ${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}">
@@ -523,8 +523,8 @@
                 <property name="innmeldingWebService" ref="hendelseWebService"></property>
                 <property name="icd10WebService" ref="ICD10WebService"></property>
                 <property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
-                <property name="merknader" value="${merknaddialogmelder},${merknaddialoghemovigilans},${merknadtilhdir},${merknadtildiskusjon},${merknadtilseminar},${merknadtilarsrapport},${merknadreklassifisering}"></property>
-                <property name="flaggNames" value="${flagg.statusvalg},${flagg.statusvalg1},${flagg.statusvalg2},${flagg.statusvalg3},${flagg.statusvalg4},${flagg.statusvalg5},${flagg.statusvalg6},${flagg.statusvalg7}">
+                <property name="merknader" value="${merknaddialogmelder},${merknaddialoghemovigilans},${merknadtilhdir},${merknadtildiskusjon},${merknadtilseminar},${merknadtilarsrapport},${merknadreklassifisering},${merknadkommentar}"></property>
+                <property name="flaggNames" value="${flagg.statusvalg},${flagg.statusvalg1},${flagg.statusvalg2},${flagg.statusvalg3},${flagg.statusvalg4},${flagg.statusvalg5},${flagg.statusvalg6},${flagg.statusvalg7},${flagg.statusvalg8}">
         		</property>
    		         <property name="tilsakbehandlereMsg" value="${tilsaksbehandler.text}"></property>
                 <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg}"></property>
@@ -639,8 +639,8 @@
         <property name="giverWebService" ref="giverWebService"></property>
         <property name="donasjonWebService" ref="donasjonWebService"></property>
         <property name="komDiagnosegiverWebService" ref="komDiagnosegiverWebService"></property>
-        <property name="merknader" value="${merknaddialogmelder},${merknaddialoghemovigilans},${merknadtilhdir},${merknadtildiskusjon},${merknadtilseminar},${merknadtilarsrapport},${merknadreklassifisering}"></property>
-        <property name="flaggNames" value="${flagg.statusvalg},${flagg.statusvalg1},${flagg.statusvalg2},${flagg.statusvalg3},${flagg.statusvalg4},${flagg.statusvalg5},${flagg.statusvalg6},${flagg.statusvalg7}">
+        <property name="merknader" value="${merknaddialogmelder},${merknaddialoghemovigilans},${merknadtilhdir},${merknadtildiskusjon},${merknadtilseminar},${merknadtilarsrapport},${merknadreklassifisering},${merknadkommentar}"></property>
+        <property name="flaggNames" value="${flagg.statusvalg},${flagg.statusvalg1},${flagg.statusvalg2},${flagg.statusvalg3},${flagg.statusvalg4},${flagg.statusvalg5},${flagg.statusvalg6},${flagg.statusvalg7},${flagg.statusvalg8}">
         </property>
         <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
         <property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},${aldergruppegiver5},

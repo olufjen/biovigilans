@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Rapporter hendelse - Celler og ev</title>
+<title>Rapportert hendelse - Celler og vev</title>
    <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html;">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -352,6 +352,7 @@ function showtext(id,thetext){
 					$("#statusvalg4").attr('disabled',false);
 					$("#statusvalg5").attr('disabled',false);	
 					$("#statusvalg6").attr('disabled',false);
+					$("#statusvalg7").attr('disabled',false);
 //					alert("step 2");
 					$("#sendinnTxt").html('Godkjent');
 					$("#avbrytTxt").html('Avbryt');
@@ -359,6 +360,8 @@ function showtext(id,thetext){
 					$("#btnSendinn").val('godkjent');
 					$("#meldingtilhelsedir").attr('disabled',false);
 					$("#meldingtilhelsedir").attr('readonly',false);
+					$("#kommentartilmeldingtxt").attr('disabled',false);
+					$("#kommentartilmeldingtxt").attr('readonly',false);
 					return false;
 				}else if(btnValue == "godkjent"){
 					$("input[type=radio]").attr('disabled', false);
@@ -413,6 +416,7 @@ function showtext(id,thetext){
 function enableReclassification(){
 /*
 * Alle felt skal være redigerbare olj 5.03.16
+* OBS Må tilpasses celler og vev !! OLJ 02.06.16
 */
 
 		$('div').find('input, textarea, select').attr('readonly', reclasflag);
@@ -746,10 +750,21 @@ function enableReclassification(){
 	<input type="checkbox" name="statusvalg5" id="statusvalg5" value="Eksempel til årsrapport" />
   		Eksempel til årsrapport
   </label>
+    <!-- Kommentar til meldingen 31.05.16 -->  
+   <label>
+	<input type="checkbox" title="Her kan du legge inn en kommentar til meldingen" onclick="toggleDisplayid('kommentartilmelding', 1);" name="statusvalg7" id="statusvalg7" value="Kommentar til meldingen" />
+  		Kommentar til meldingen
+  </label>
   <label>
   	<input title="Husk å gjøre reklassifisering!" type="checkbox" name="statusvalg6" id="statusvalg6" onchange="enableReclassification();" value="Reklassifisering av melding" />
   		Reklassifisering av melding
   </label>
+    <!-- Kommentar til meldingen 31.05.16 -->   
+  <div id="kommentartilmelding" class="form-group" style="display: none">
+	<label>Kommentarer</label>
+  	<textarea id="kommentartilmeldingtxt" class="form-control" name="kommentartilmeldingtxt" rows="2" ></textarea>
+  </div>
+  
  <div id="saksbehandlere" class="form-group" style="display: none">
 	<label>Melding til Helsedirektoratet</label>
   	<textarea id="meldingtilhelsedir" class="form-control" name="meldingtilhelsedir" rows="2" ></textarea>
@@ -804,14 +819,6 @@ function enableReclassification(){
       <!-- Pasient -->
       <div class="tab-pane" id="pasientkomplikasjoner">        
         <h3>Pasient</h3>
-        <div class="bg-success" style="display: ${display}">
-          <label>Meldingsnøkkel: </label>         
-          <div>${pasientkomplikasjon.meldingsNokkel}</div>
-        </div>          
-        <div class="bg-success" style="display: ${display}">
-          <label>Dato for hendelsen: </label>
-          <div>${pasientkomplikasjon.hendelseDato?date}</div>
-        </div>
         <div class="bg-success" style="display: ${display}">
           <label>Tidligere oppgitt kjønn: </label>
           <div>${pasienten.kjonn}</div>

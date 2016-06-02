@@ -221,12 +221,15 @@
 							$("#statusvalg4").attr('disabled',false);
 							$("#statusvalg5").attr('disabled',false);
 							$("#statusvalg6").attr('disabled',false);
+							$("#statusvalg7").attr('disabled',false);
 							$("#sendinnTxt").html('Godkjent');
 							$("#avbrytTxt").html('Avbryt');							
 							$("#btnAvbryt").val('ikkeGodkjent');
 							$("#btnSendinn").val('godkjent');
 							$("#meldingtilhelsedir").attr('disabled',false);
 							$("#meldingtilhelsedir").attr('readonly',false);
+							$("#kommentartilmeldingtxt").attr('disabled',false);
+							$("#kommentartilmeldingtxt").attr('readonly',false);
 							return false;
 						}else if(btnValue == "godkjent"){
 							$("input[type=radio]").attr('disabled', false);
@@ -432,10 +435,22 @@
 	<input type="checkbox" name="statusvalg5" id="statusvalg5" value="Eksempel til årsrapport" />
   		Eksempel til årsrapport
   </label>
+<!-- Kommentar til meldingen 31.05.16 -->  
+   <label>
+	<input type="checkbox" title="Her kan du legge inn en kommentar til meldingen" onclick="toggleDisplayid('kommentartilmelding', 1);" name="statusvalg7" id="statusvalg7" value="Kommentar til meldingen" />
+  		Kommentar til meldingen
+  </label>
+  
   <label>
 	<input title="Husk å gjøre reklassifisering!" type="checkbox" name="statusvalg6" id="statusvalg6" onchange="enableReclassification();" value="Reklassifisering av melding" />
   		Reklassifisering av melding
   </label>
+<!-- Kommentar til meldingen 31.05.16 -->   
+  <div id="kommentartilmelding" class="form-group" style="display: none">
+	<label>Kommentarer</label>
+  	<textarea id="kommentartilmeldingtxt" class="form-control" name="kommentartilmeldingtxt" rows="2" ></textarea>
+  </div>
+  
   <div id="saksbehandlere" class="form-group" style="display: none">
 	<label>Melding til Helsedirektoratet</label>
   	<textarea id="meldingtilhelsedir" class="form-control" name="meldingtilhelsedir" rows="2" ></textarea>
