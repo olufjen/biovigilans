@@ -168,7 +168,9 @@ public class SakModel extends VigilansModel {
 	 */
 	public void saveSaker(Long meldeId){
 		Map<String,String> saksMap = getFormMap();
-		String meldingsText = saksMap.get("meldingtilhelsedir");
+		String meldingsText = saksMap.get("meldingtilhelsedir");// kommentartilmeldingtxt
+		if (meldingsText == null || meldingsText.equals(""))
+			meldingsText = saksMap.get("kommentartilmeldingtxt");
 		if (meldingsText == null || meldingsText.equals(""))
 			meldingsText = "Sak opprettet";
 		if (saksMappe == null)
@@ -268,8 +270,10 @@ public class SakModel extends VigilansModel {
 	/**
 	 * setsakStatus
 	 * Denne funksjonen setter sakstatus på en sak (melding) på bakgrunn av merknader som settes på meldingen.
-	 * @param merknad
-	 * @return
+	 * Dersom merknad[0] Starte dialog med Melder settes status til status[5] Tilleggsopplysninger etterspurt
+	 * Dersom merknad[1] Starte dialog i Hemovigilansgruppen eller merknad[2] Melde til helsedirektoratet settes status til status[2] Under behandling 
+	 * @param Diskusjon : Nye diskusjoner
+	 * @return String : ny status eller null
 	 */
 	public String setsakStatus(List<Diskusjon>diskusjoner){
 		int i = 0;
