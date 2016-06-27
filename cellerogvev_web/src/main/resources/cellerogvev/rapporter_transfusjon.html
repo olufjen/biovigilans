@@ -1149,8 +1149,12 @@ function showtext(id,thetext){
           <option name="p-antistoff-transfusjon-2"></option>
       </select>
     -->
+     <div class="form-group" style="display: ${display}">
+        <label>Tidligere oppgitt autolog eller allogent bruk: </label>     
+        <div>${transfusjon.feiltranfudert}</div>
+      </div>
  	<div class="form-group">
-	<label>Var det til autolog eller alogent bruk</label>
+	<label>Var det til autolog eller allogent bruk</label>
 		<div class="radio" >
 			          <label>
 			          	<input type="radio" name="p-transfusjontext" id="fullblod-ja"  value="Autolog"/>Autolog
@@ -1158,7 +1162,7 @@ function showtext(id,thetext){
 		</div>
 		<div class="radio">
 		<label>
-		 	<input type="radio" name="p-transfusjontext" id="fullblod-nei" value="Alogen"/>Alogen
+		 	<input type="radio" name="p-transfusjontext" id="fullblod-nei" value="Allogen"/>Allogen
 		 </label>
 		</div>
 	</div>   

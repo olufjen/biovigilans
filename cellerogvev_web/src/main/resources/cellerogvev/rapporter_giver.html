@@ -382,8 +382,12 @@
 	   $('#dato-hendelse').attr('min', dateDonasjon);
 	 }
 	 function sjekkcellerogvev(){
+//		 alert('sjekkceller ');
 	    	  var celx = $("#type-tapping").val();
 //	    	  alert('sjekkceller '+celx);
+
+			  $("#typetappingannen").val(celx);
+//	    	  alert('sjekkceller 1 '+celx);
 	    	  if (celx == 'Annet'){
 	    		toggleDisplay('cellerogvevannen', 1);
 	    	  }else{
@@ -584,6 +588,12 @@ uttas.</h4>
         <label>Navn på annen type celler og vev</label> 
         <input type="text" id="typetappingannen" name="type-tapping" size="80"  value="" class="form-control">
       </div> 
+	<div class="form-group" style="display: ${display}">
+			<label>Tidligere oppgitt Autologt/Alogent bruk</label>
+			<div>
+				<label>${donasjonen.komplisertvenepunksjon}</label>
+			</div>
+	</div>      
 	<div class="form-group">
 	<label>Er celler og vev til autolog eller alogent bruk</label>
 		<div class="radio" >
@@ -1179,7 +1189,7 @@ uttas.</h4>
 		    </div>
 	        <div class="radio">
 	          <label title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet">
-	          	<input type="radio" name="tab-klinisk" id="tab-klinisk"  value="mindrealvorlig-sekvele" title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet"/>
+	          	<input type="radio" name="tab-klinisk" id="tab-klinisk"  value="mindre alvorlig-sekvele" title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet"/>
 	          	Lette sekvele
 	          </label>
 		    </div>
