@@ -132,6 +132,12 @@ public class MeldingfraMelderServerResourceHTML extends
 	    	 diskusjon = hendelseWebService.collectDiskusjon(diskId);
 //	    	 String komm = "Vennlingst stryk teksten og skriv ditt svar: " + diskusjon.getKommentar();
 //	    	 diskusjon.setKommentar(komm);
+	    	 String saksbehandler = diskusjon.getTema();
+	    	 char sep = ';';
+	    	 saksbehandler = extractString(saksbehandler, sep, -1);
+	    	 if (saksbehandler == null)
+	    		 saksbehandler = "ukjent";
+	    	 diskusjon.setSaksbehandler(saksbehandler);
 	     }
 	     if (melding == null){
 	    	 melding = new AnnenkomplikasjonImpl("");
@@ -146,6 +152,7 @@ public class MeldingfraMelderServerResourceHTML extends
 	    	 diskusjon = new DiskusjonImpl();
 	    	 diskusjon.setTema("Ingen melding"); 
 	    	 diskusjon.setKommentar("");
+	    	 diskusjon.setSaksbehandler("ukjent");
 	     }
 		 displayPart = "none";
     	 datePart = "none";
