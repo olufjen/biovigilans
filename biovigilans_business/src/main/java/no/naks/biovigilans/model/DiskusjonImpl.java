@@ -28,7 +28,8 @@ public class DiskusjonImpl extends AbstractDiskusjon implements Diskusjon {
 	}
 
 	public void setParams(){
-		Long id = getDiskusjonid();
+//		Long id = getDiskusjonid();
+		Long id = null; // diskusjoner er alltid nye OLJ 22.06.16
 		if (id == null){
 			params = new Object[]{getDatoforkommentar(),getKommentar(),getTema(),getMeldeid()};
 		}else

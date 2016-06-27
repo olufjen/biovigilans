@@ -58,17 +58,17 @@ public class SakDAOImpl extends AbstractAdmintablesDAO implements SakDAO{
 			Object[] params = diskusjon.getParams();
 			String sql=insertDiskusjonSQL;
 			Long id = diskusjon.getDiskusjonid();
-			if(id!=null){
+/*			if(id!=null){
 				sql = updateDiskusjonSQL;
 				types = diskusjon.getUtypes();
-			}
+			} Kommentert bort 22.06.16 OLJ Diskusjoner blir aldri oppdatert*/
 			
 			tablesUpdate = new TablesUpdateImpl(getDataSource(), sql, types);
 			tablesUpdate.insert(params);
 			
-			if(id==null){
+//			if(id==null){ Se over OLJ 22.06.16
 				diskusjon.setDiskusjonid(getPrimaryKey(diskusjonPrimaryKey,diskusjonprimarykeyTableDefs));
-			}
+//			}
 		}
 		
 	}
@@ -87,17 +87,17 @@ public class SakDAOImpl extends AbstractAdmintablesDAO implements SakDAO{
 				Object[] params = diskusjon.getParams();
 				String sql=insertDiskusjonSQL;
 				Long id = diskusjon.getDiskusjonid();
-				if(id!=null){
+/*				if(id!=null){
 					sql = updateDiskusjonSQL;
 					types = diskusjon.getUtypes();
-				}
+				}Kommentert bort 22.06.16 OLJ Diskusjoner blir aldri oppdatert */
 				
 				tablesUpdate = new TablesUpdateImpl(getDataSource(), sql, types);
 				tablesUpdate.insert(params);
 				
-				if(id==null){
+//				if(id==null){ Se kommentar over OLJ 22.06.16
 					diskusjon.setDiskusjonid(getPrimaryKey(diskusjonPrimaryKey,diskusjonprimarykeyTableDefs));
-				}					
+//				}					
 			}
 		
 		}
