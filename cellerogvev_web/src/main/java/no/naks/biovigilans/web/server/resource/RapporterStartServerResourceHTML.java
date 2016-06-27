@@ -177,6 +177,12 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
  	    String meldingsText = "Melders epost/passord finnes ikke, prøv igjen";
 	    dataModel.put( meldeTxtId, meldingsText);
 	    Request request = getRequest();
+	    /*
+	     * Setter valgt db til cellerogvev.
+	     * OLJ 06.06.16
+	     * Til bruk for pdf    		
+	     */
+	        		sessionAdmin.setChosenDB(request, "cellerogvev");
 	    
 /*	    Map<String,List> alleMeldinger = new HashMap<String,List>();
  	    List<Vigilansmelding> meldinger = null;

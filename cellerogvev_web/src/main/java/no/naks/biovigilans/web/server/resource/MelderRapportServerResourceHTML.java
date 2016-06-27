@@ -334,6 +334,8 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 				 for (Annenkomplikasjon annenKomp : annenListe){
 					 if (annenKomp.getMeldeid().longValue() == meldeId.longValue()){
 						 annenKomplikasjon = annenKomp;
+						 annenKomplikasjon.setDatoforhendelse(melding.getDatoforhendelse());
+						 annenKomplikasjon.setMeldingsdato(melding.getMeldingsdato());
 						 break;
 					 }
 				 }				 
@@ -342,7 +344,8 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 				 for (Giverkomplikasjon giverKomp : giverListe){
 					 if (giverKomp.getMeldeid().longValue() == meldeId.longValue()){
 						 giverKomplikasjon = giverKomp;
-						
+						 giverKomplikasjon.setDatoforhendelse(melding.getDatoforhendelse());
+						 giverKomplikasjon.setMeldingsdato(melding.getMeldingsdato());						
 						 break;
 					 }
 				 }

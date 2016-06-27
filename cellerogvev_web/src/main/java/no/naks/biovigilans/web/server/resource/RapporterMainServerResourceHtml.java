@@ -47,7 +47,7 @@ public class RapporterMainServerResourceHtml extends SessionServerResource {
 	
 	     Request request = getRequest();
 
-
+	  	sessionAdmin.setChosenDB(request, "cellerogvev");
 	    
 
 /*
@@ -89,6 +89,13 @@ public class RapporterMainServerResourceHtml extends SessionServerResource {
     	
  
     	if (form != null){
+    		Request request = getRequest();
+/*
+ * Setter valgt db til cellerogvev.
+ * OLJ 06.06.16
+ * Til bruk for pdf    		
+ */
+    		sessionAdmin.setChosenDB(request, "cellerogvev");
     		Parameter logout = form.getFirst("avbryt4");
     		Parameter lukk = form.getFirst("lukk4");
     	     Map<String, Object> dataModel = new HashMap<String, Object>();
