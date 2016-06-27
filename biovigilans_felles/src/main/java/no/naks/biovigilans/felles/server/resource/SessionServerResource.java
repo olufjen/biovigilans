@@ -921,11 +921,14 @@ public class SessionServerResource extends ProsedyreServerResource {
 	/**
 	 * setlinkMap
 	 * Denne rutinen setter opp linkhashmap for modelobjekter til bruk i PDF rapporter
-	 * Den kalles når bruker ønsker en PDF rapport fra en levert melding
+	 * Den kalles når melder kommer til kvitteringssiden
+	 * Den kalles også fra SaksbehandlerSessionserver når bruker har valgt pdf-utskrift
+	 * @since 08.06.16 Tilpasninger for flere meldeordninger
 	 */
 	protected void setlinkMap(){
-		 Request request = getRequest();
-		 LinkedHashMap<String, String> formLinkHashmap = null;
+		  Request request = getRequest();
+		  LinkedHashMap<String, String> formLinkHashmap = null;
+		  String db = sessionAdmin.getChosenDB(request);
 		  transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(request,transfusjonId);
 		  annenModel = (AnnenKomplikasjonwebModel)sessionAdmin.getSessionObject(request, andreHendelseId);
 		  giverModel = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(request,giverkomplikasjonId);
@@ -947,9 +950,15 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  Transfusjon transfusjonen = transfusjon.getTransfusjon();
 			  SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 			  Date pDate = transfusjon.getVigilansmelding().getDatoforhendelse();
+			  Date mDate = transfusjon.getVigilansmelding().getMeldingsdato();
+//			  String supplerende = giverModel.getVigilansmelding().getSupplerendeopplysninger(); Finnes allerede
+			  String rmDate = "";
+			  if (mDate != null)
+				  rmDate = df.format(mDate);
 			  String prDate = "";
 			  if (pDate != null)
 				  prDate = df.format(pDate);
+			  formLinkHashmap.put("Meldt dato", rmDate);
 			  formLinkHashmap.put("Dato for hendelsen", prDate);
 			  String kjonn = pasient.getKjonn();
 			  if (kjonn == null)
@@ -995,16 +1004,20 @@ public class SessionServerResource extends ProsedyreServerResource {
 				  tDato = df.format(transDato);
 			  formLinkHashmap.put("Transfusjonsdato",tDato);
 			  String indikasjon = transfusjonen.getIndikasjon();
+			  String typeHeader = "Indikasjon for transfusjonen";
+			  if (db != null && db.equals("cellerogvev")){
+				  typeHeader = "Type celler og vev";
+			  }
 			  if (indikasjon == null)
 				  indikasjon = "";
-			  formLinkHashmap.put("Indikasjon for transfusjonen",indikasjon);
+			  formLinkHashmap.put(typeHeader,indikasjon);
 			  List<Blodprodukt> blodprodukter = (List)sessionAdmin.getSessionObject(request,blodproduktKey);
 			  int ctb = 0;
 			  if (blodprodukter != null && !blodprodukter.isEmpty() ){
 				  for (Blodprodukt blodprodukt : blodprodukter){
 					  String produktnavn = blodprodukt.getBlodprodukt();
 					  String blodkey = "Blodprodukt " + String.valueOf(ctb);
-					  String tappekey = "Tappetype " + String.valueOf(ctb);
+					  String tappekey = "Tappetype ";// + String.valueOf(ctb);
 					  if (produktnavn == null)
 						  produktnavn = "Ikke oppgitt";
 					  formLinkHashmap.put(blodkey, produktnavn);
@@ -1019,7 +1032,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  if (produktegenskaper != null && !produktegenskaper.isEmpty()){
 				  int ctp = 0;
 				  for (Produktegenskap produktegenskap : produktegenskaper){
-					  String egenskapKey = "Produktegenskap " + String.valueOf(ctp);
+					  String egenskapKey = "Produktegenskap ";// + String.valueOf(ctp);
 					  String egenskap = produktegenskap.getEgenskapBeskrivelse();
 					  if (egenskap == null)
 						  egenskap = "";
@@ -1031,7 +1044,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  if (symptomer != null && !symptomer.isEmpty()){
 				  int ctp = 0;
 				  for (Symptomer symptom : symptomer){
-					  String egenskapKey = "Symptomer " + String.valueOf(ctp);
+					  String egenskapKey = "Symptomer ";// + String.valueOf(ctp);
 					  String egenskap = symptom.getSymptombeskrivelse();
 					  if (egenskap == null)
 						  egenskap = "";
@@ -1048,7 +1061,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  if (utredninger != null && !utredninger.isEmpty()){
 				  int ctp = 0;
 				  for (Utredning utredning : utredninger){
-					  String egenskapKey = "Mistenkte årsaker " + String.valueOf(ctp);
+					  String egenskapKey = "Mistenkte årsaker ";// + String.valueOf(ctp);
 					  String egenskap = utredning.getUtredningbeskrivelse();
 					  if (egenskap == null)
 						  egenskap = "";
@@ -1076,7 +1089,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  if (klassifikasjoner != null && !klassifikasjoner.isEmpty()){
 				  int ctp = 0;
 				  for (Komplikasjonsklassifikasjon klassifikasjon :klassifikasjoner){
-					  String egenskapKey = "Hvorfor skjedde " + String.valueOf(ctp);
+					  String egenskapKey = "Hvorfor skjedde ";// + String.valueOf(ctp);
 					  String egenskap = klassifikasjon.getKlassifikasjonsbeskrivelse();
 					  if (egenskap == null)
 						  egenskap = "";
@@ -1088,7 +1101,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  if (tiltakene != null && !tiltakene.isEmpty()){
 				  int ctp = 0;
 				  for (Tiltak tiltak :tiltakene){
-					  String egenskapKey = "Tiltak " + String.valueOf(ctp);
+					  String egenskapKey = "Tiltak ";// + String.valueOf(ctp);
 					  String egenskap = tiltak.getBeskrivelse();
 					  if (egenskap == null)
 						  egenskap = "";
@@ -1100,7 +1113,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  if (forebyggtiltakene != null && !forebyggtiltakene.isEmpty()){
 				  int ctp = 0;
 				  for (Forebyggendetiltak tiltak :forebyggtiltakene){
-					  String egenskapKey = "Tiltak " + String.valueOf(ctp);
+					  String egenskapKey = "Tiltak ";// + String.valueOf(ctp);
 					  String egenskap = tiltak.getTiltakbeskrivelse();
 					  if (egenskap == null)
 						  egenskap = "";
@@ -1126,10 +1139,15 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  Giveroppfolging giveroppfolging = giverModel.getGiveroppfolging();
 			  SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 			  Date hDate = giverModel.getVigilansmelding().getDatoforhendelse();
-
+			  Date mDate = giverModel.getVigilansmelding().getMeldingsdato();
+//			  String supplerende = giverModel.getVigilansmelding().getSupplerendeopplysninger(); Finnes allerede
 			  String rDate = "";
+			  String rmDate = "";
 			  if (hDate != null)
 				  rDate = df.format(hDate);
+			  if (mDate != null)
+				  rmDate = df.format(mDate);
+			  formLinkHashmap.put("Meldt dato", rmDate);
 			  formLinkHashmap.put("Dato for hendelsen", rDate);
 			  String kjonn = giver.getKjonn();
 			  if (kjonn == null)
@@ -1140,8 +1158,8 @@ public class SessionServerResource extends ProsedyreServerResource {
 				  alder = "";
 			  formLinkHashmap.put("Alder", alder);
 			  Long v = giver.getVekt();
-			  String vekt = "";
-			  if (v != null)
+			  String vekt = "Ikke angitt";
+			  if (v != null && v.longValue() != 0)
 				  vekt = String.valueOf(v.longValue());
 			  formLinkHashmap.put("Vekt", vekt);
 			  String erfaring = giver.getGivererfaring();
@@ -1149,13 +1167,21 @@ public class SessionServerResource extends ProsedyreServerResource {
 				  erfaring = "";
 			  formLinkHashmap.put("Givererfaring", erfaring);
 			  String sted = donasjon.getDonasjonssted();
+			  String stedHeader = "Sted for tapping";
 			  if (sted == null)
 				  sted = "";
-			  formLinkHashmap.put("Sted for tapping",sted);
+			  if (db != null && db.equals("cellerogvev")){
+				  stedHeader = "Donorsted";
+			  }
+			  formLinkHashmap.put(stedHeader,sted);
+			  String typeHeader = "Type tapping";
 			  String type = donasjon.getTappetype();
 			  if (type == null)
 				  type = "";
-			  formLinkHashmap.put("Type tapping",type);
+			  if (db != null && db.equals("cellerogvev")){
+				  typeHeader = "Type celler og vev";
+			  }
+			  formLinkHashmap.put(typeHeader,type);
 			  String gerfaring = giver.getGivererfaringaferese();
 			  if (gerfaring == null)
 				  gerfaring = "";
@@ -1165,22 +1191,34 @@ public class SessionServerResource extends ProsedyreServerResource {
 				  maltid = "";
 			  formLinkHashmap.put("Måltid før tapping", maltid);
 			  String kompljanei = donasjon.getKomplisertvenepunksjon();
+			  String komplisertHeader = "Komplisert venepunksjon";
 			  if (kompljanei == null)
 				  kompljanei = "";
-			  formLinkHashmap.put("Komplisert venepunksjon", kompljanei);
+			  if (db != null && db.equals("cellerogvev")){
+				  komplisertHeader = "Autologt/Allogent";
+			  }			  
+			  formLinkHashmap.put(komplisertHeader, kompljanei);
 			  String stedkomp = giverkomplikasjon.getStedforkomplikasjon();
+			  String hvorskjeddeHeader = "Hvor skjedde reaksjonen";
 			  if (stedkomp == null)
 				  stedkomp = "";
-			  formLinkHashmap.put("Hvor skjedde reaksjonen",stedkomp);
+			  if (db != null && db.equals("cellerogvev")){
+				  hvorskjeddeHeader = "Beskrivelse av reaksjon hos donor";
+			  }		
+			  formLinkHashmap.put(hvorskjeddeHeader,stedkomp);
 			  Date sDate = giverkomplikasjon.getDatosymptomer();
 			  String srDate = "";
 			  if (sDate != null)
 				  srDate = df.format(sDate);
 			  formLinkHashmap.put("Dato for reaksjon", srDate);
 			  String tidfratap = giverkomplikasjon.getTidfratappingtilkompliasjon();
+			  String tidfraHeader = "Tid fra tapping til reaksjon";
 			  if (tidfratap == null)
 				  tidfratap = "";
-			  formLinkHashmap.put("Tid fra tapping til reaksjon", tidfratap);
+			  if (db != null && db.equals("cellerogvev")){
+				  tidfraHeader = "Tid fra donasjon til reaksjon";
+			  }	
+			  formLinkHashmap.put(tidfraHeader, tidfratap);
 			  String lokal = komplikasjonsdiagnose.getLokalskadearm();
 			  if (lokal == null)
 				  lokal = "";
@@ -1224,7 +1262,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  String hendelse = giverModel.getVigilansmelding().getSupplerendeopplysninger();
 			  if (hendelse == null)
 				  hendelse = "";
-			  formLinkHashmap.put("Beskrivelse av hendelsen", hendelse);
+			  formLinkHashmap.put("Eventuelle kommentarer", hendelse);
 			  String oppfbeskrivelse = giveroppfolging.getGiveroppfolgingbeskrivelse();
 			  if (oppfbeskrivelse == null)
 				  oppfbeskrivelse = "";
@@ -1278,22 +1316,44 @@ public class SessionServerResource extends ProsedyreServerResource {
 				  delkode = "";
 			  formLinkHashmap.put("Delkode", delkode);
 			  String pasientopp = annenKomplikasjon.getPasientopplysninger();
+			  if (pasientopp == null || pasientopp.equals("")|| pasientopp.equals("null;null")|| pasientopp.equals("null;"))
+				  pasientopp = "Ikke angitt";
 			  if (pasientopp != null)
 				  formLinkHashmap.put("Pasientopplysninger", pasientopp);
 			  String def = annenKomplikasjon.getKomplikasjondefinisjon();
 			  List<Komplikasjonsklassifikasjon> klassifikasjoner = (List)sessionAdmin.getSessionObject(request,klassifikasjonKey);
+			  List<String>hvagikk = annenModel.getHvagikkgaltList();// lagt til 21.06.16 OLJ
+			  boolean bhvagikk = false;
+			  int ctp = 0;
+			  String egenskapKey = "Hva gikk galt ";// + String.valueOf(ctp);
 			  if (klassifikasjoner != null && !klassifikasjoner.isEmpty()){
-				  int ctp = 0;
+				
 				  for (Komplikasjonsklassifikasjon klassifikasjon :klassifikasjoner){
-					  String egenskapKey = "Hva gikk galt " + String.valueOf(ctp);
+					 
 					  String egenskap = klassifikasjon.getKlassifikasjonsbeskrivelse();
 					  if (egenskap == null)
 						  egenskap = "";
-					  if (!egenskap.isEmpty())
+					  if (!egenskap.isEmpty() && !egenskap.equals("ukjent"))
 						  formLinkHashmap.put(egenskapKey+String.valueOf(ctp),egenskap);
+					  else if(hvagikk != null) {
+						  bhvagikk = true;// lagt til 21.06.16 OLJ
+					  }
 					  ctp++;
 				  }
-			  }	
+			  }
+/*
+ * Lagt til 21.06.16			  
+ */
+			  if (hvagikk != null && !hvagikk.isEmpty()){
+				  ctp = 0;
+				  for (String galt : hvagikk){
+					  formLinkHashmap.put(egenskapKey+String.valueOf(ctp),galt);
+					  ctp++;
+				  }
+			  }
+/*
+ * 			  
+ */
 			  if (def == null)
 				  def = "";
 			  formLinkHashmap.put("Definisjon av hendelsen",def);
@@ -1612,8 +1672,22 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 		return keys;
 	}
 	
+	/**
+	 * createPDF
+	 * Denne rutinen kalles når bruker aktivt velger utskrift til PDF
+	 * Rutinen setlinkMap er tidligere utført for å fylle ut nødvendig informasjon
+	 * @return
+	 * @throws Exception
+	 */
 	protected String createPDF() throws Exception{
-		  
+		 Request request = getRequest();
+		 String headerText = "Hemovigilans";
+		 String trans = "Transfusjon ";
+		String db = sessionAdmin.getChosenDB(request);
+		if (db != null && db.equals("cellerogvev")){
+			headerText = "Celler og vev";
+			trans = "Overføring ";
+		}
 		VigilansModel melding = checkMessageType();
 		 Map<String, Object> dataModel = new HashMap<String, Object>();
 	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(getRequest(),melderId);
@@ -1662,7 +1736,7 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
  			linkHashmap = annenModel.getFormLinkHashmap();
  			setMelderinfo(melder);
     		 String nokkel = annenModel.getMeldingsNokkel();
-    		 List<String> hvagikkgaltList = annenModel.getHvagikkgaltList();
+/*    		 List<String> hvagikkgaltList = annenModel.getHvagikkgaltList();
     		 String hvagikkgaltString ="";
     		 for(String hvagikkgalt: hvagikkgaltList){
     			 if(hvagikkgaltString ==""){
@@ -1673,9 +1747,9 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
     			 
     		 }
     		 
-    		 linkHashmap.put("Hva gikk galt", hvagikkgaltString);
+    		 linkHashmap.put("Hva gikk galt", hvagikkgaltString); kommentert ut 21.06.16 OLJ se rutine setlinkMap*/
     		 
-    		 String heading ="Rapporter Andre Hendelser";
+    		 String heading ="Rapporter Andre Hendelser " + headerText;
      		 table = createTable(heading,nokkel);
     		
         }
@@ -1687,7 +1761,7 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
     		 linkHashmap = transfusjon.getFormLinkHashmap();
  			setMelderinfo(melder);
         	 String nokkel = transfusjon.getMeldingsNokkel();
-        	String heading ="Rapporter Transfusjon Hemovigilans";
+        	String heading ="Rapporter " + trans + headerText;
         	
 			table = createTable(heading,nokkel);
 	    }
@@ -1696,7 +1770,7 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
     		 linkHashmap = giverModel.getFormLinkHashmap();
  			setMelderinfo(melder);
     		 String nokkel = giverModel.getMeldingsNokkel();
-    		 String heading ="Rapporter Giver Hemovigilans";
+    		 String heading ="Rapporter Giver " + headerText;
  			 table = createTable(heading,nokkel);
  	    }
     	 document.add(table);
@@ -1706,13 +1780,14 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 	}
 	
 	private void setMelderinfo(Melder melder){
-		linkHashmap.put("MELDER", "Detaljer om melder");
-		linkHashmap.put("Melders navn", melder.getMeldernavn());
-		linkHashmap.put("Melders epost", melder.getMelderepost());
-		linkHashmap.put("Melders telefon", melder.getMeldertlf());
-		linkHashmap.put("Melders region", melder.getHelseregion());
-		linkHashmap.put("Melders forertak", melder.getHelseforetak());
-		linkHashmap.put("Melders sykehus", melder.getSykehus());
+		linkHashmap.put("___", " ");
+		linkHashmap.put("MELDER", " ");
+		linkHashmap.put("navn", melder.getMeldernavn());
+		linkHashmap.put("epost", melder.getMelderepost());
+		linkHashmap.put("telefon", melder.getMeldertlf());
+		linkHashmap.put("region", melder.getHelseregion());
+		linkHashmap.put("foretak", melder.getHelseforetak());
+		linkHashmap.put("sykehus", melder.getSykehus());
 	}
 	private PdfPTable createTable(String heading, String nokkel){
 		
@@ -1747,8 +1822,11 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 			table.addCell(cellh2);
 	   }	     
         Iterator iterator = linkHashmap.entrySet().iterator();
-    	
+		int cts = 0;
+		char scount = Character.forDigit(cts, 10);
+//		String gmlhtemp = "";
 		while (iterator.hasNext()) {
+		
 			PdfPCell cell1 = new PdfPCell();
 			PdfPCell cell2 = new PdfPCell();
 			Map.Entry mapEntry = (Map.Entry) iterator.next();
@@ -1762,7 +1840,18 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 				String[] textParts = headingTxt.split("-");
 				headingTxt = textParts[1];
 			}
-			headingTxt = WordUtils.capitalize(headingTxt);
+			String htemp = null;
+			for (int i = 0;i<10;i++){
+				scount = Character.forDigit(i, 10);
+				htemp = extractString(headingTxt,scount,0);
+				if (htemp != null){
+					headingTxt = htemp;
+					break;
+				}
+			}
+			char[] delim = {'.'};
+			headingTxt = WordUtils.capitalize(headingTxt,delim);
+
 			String txt = mapEntry.getValue().toString();
 			if(txt.equalsIgnoreCase("M")){
 				txt ="Mann";
@@ -1779,6 +1868,11 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 				table.addCell(cell2);
 				
 			}
+/*			if (htemp != null && !htemp.equals(gmlhtemp)){
+				gmlhtemp = htemp;
+				cts = 0;
+			}
+			scount = Character.forDigit(cts, 10);*/
 		}
 
       
