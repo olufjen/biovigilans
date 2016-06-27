@@ -129,12 +129,12 @@
 				document.getElementById('tab-avreg').required = false;
 	
 			}
-			alert("Max dato settes");
+//			alert("Max dato settes");
 		 	var now = new Date();
 		 	var day = ("0" + now.getDate()).slice(-2);
 	        var month = ("0" + (now.getMonth() + 1)).slice(-2);
 	        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-	        alert("Max dato "+today); 
+//	        alert("Max dato "+today); 
 	        $('#dato-donasjon').attr('max', today);
 	        $('#dato-hendelse').attr('max', today);
 	});
@@ -558,12 +558,12 @@
 			      	<label>Første gangs fullblodgivning?</label>
 			      	<div class="radio" >
 			          <label>
-			          	<input type="radio" name="fullblod" id="fullblod-ja"  value="fullblod-ja"/>Ja
+			          	<input type="radio" name="fullblod" id="fullblod-ja"  value="fullblod-forstegang-ja"/>Ja
 			          </label>
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="fullblod" id="fullblod-nei" value="fullblod-nei"/>Nei
+			          	<input type="radio" name="fullblod" id="fullblod-nei" value="fullblod-forstegang-nei"/>Nei
 			          </label>
 				    </div>
 				</div>
