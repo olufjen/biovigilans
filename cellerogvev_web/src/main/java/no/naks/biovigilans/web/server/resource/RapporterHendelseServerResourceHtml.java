@@ -190,6 +190,9 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    	 pasientKomplikasjon.setKlassifikasjon("Ikke angitt");
 	     }
 	     Transfusjon pasientTransfusjon = transfusjon.getTransfusjon();
+    	 if (pasientTransfusjon.getFeiltranfudert() == null || pasientTransfusjon.getFeiltranfudert().isEmpty()){
+    		 pasientTransfusjon.setFeiltranfudert("Ikke angitt");
+    	 }
     	 List sykdommer = (List)sessionAdmin.getSessionObject(request,sykdomKey);
     	 List<Blodprodukt> blodprodukter = (List)sessionAdmin.getSessionObject(request,blodproduktKey);
     	 List egenskaper = (List)sessionAdmin.getSessionObject(request,produktegenskapKey);
@@ -218,6 +221,9 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    	 }
 	    	 if (pasientTransfusjon.getIndikasjon() == null || pasientTransfusjon.getIndikasjon().isEmpty()){
 	    		 pasientTransfusjon.setIndikasjon("Ikke angitt");
+	    	 }
+	    	 if (pasientTransfusjon.getFeiltranfudert() == null || pasientTransfusjon.getFeiltranfudert().isEmpty()){
+	    		 pasientTransfusjon.setFeiltranfudert("Ikke angitt");
 	    	 }
 	    	 transfusjon.setTransfusjon(pasientTransfusjon);
 	    	 result.setPasient(pasient);
