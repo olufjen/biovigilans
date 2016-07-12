@@ -735,8 +735,18 @@ uttas.</h4>
 
 	     </select>
     </div>
+    <div id="cellerogvevannen" style="margin-left: 0.5cm; display: none" class="form-group">
+        <label>Navn på annen type celler og vev</label> 
+        <input type="text" id="typetappingannen" name="type-tapping" size="80"  value="" class="form-control">
+   </div> 
+	<div class="form-group" style="display: ${display}">
+			<label>Tidligere oppgitt Autologt/Allogent bruk</label>
+			<div>
+				<label>${donasjonen.komplisertvenepunksjon}</label>
+			</div>
+	</div>    
 	<div class="form-group">
-	<label>Er celler og vev til autolog eller alogent bruk</label>
+	<label>Er celler og vev til autolog eller allogent bruk</label>
 		<div class="radio" >
 			          <label>
 			          	<input type="radio" name="tab-vene" id="fullblod-ja"  value="Autolog"/>Autolog
@@ -744,7 +754,7 @@ uttas.</h4>
 		</div>
 		<div class="radio">
 		<label>
-		 	<input type="radio" name="tab-vene" id="fullblod-nei" value="Alogen"/>Alogen
+		 	<input type="radio" name="tab-vene" id="fullblod-nei" value="Alogen"/>Allogen
 		 </label>
 		</div>
 	</div>     	      
