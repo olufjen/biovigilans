@@ -130,9 +130,18 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	 annenModel = (AnnenKomplikasjonwebModel) sessionAdmin.getSessionObject(getRequest(),andreHendelseId);
     	 donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(getRequest(),donasjonId);
    
-	     
-
-	 
+/*
+ * Tar vare på kvitteringsmelding til melder.	     
+ */
+    	String emailTxt = emailWebService.getEmailText();
+    	String emailSubject = emailWebService.getSubject();
+    	
+ /*	    String melderEpost = melderwebModel.getMelder().getMelderepost();
+ 	    if(melderEpost != null || !melderEpost.equals("")){
+ 	    	 emailWebService.setMailTo(melderEpost);
+ 	    	 emailWebService.sendEmail(meldingsNokkel); //Kommentert bort til stage !!
+ 	    }
+	 */
 
     	 if (transfusjon != null){
     		 Vigilansmelding vigilansmelding = (Vigilansmelding) transfusjon.getPasientKomplikasjon();
@@ -146,6 +155,8 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     		 meldingsNokkel = vigilansmelding.getMeldingsnokkel();
     		 datoLevert = transfusjon.getMeldLevert();
     		 dataModel.put(meldingsId, transfusjon);
+    		 sendMeldingtilsaksbehandlere("Celler og vev Transfusjonshendelse", "Det er mottatt en transfusjonsmelding :  Meldingsnøkkel "+meldingsNokkel);
+
     	 }
     	 if (giverModel != null){
     		 Vigilansmelding vigilansmelding = (Vigilansmelding) giverModel.getGiverKomplikasjon();
@@ -161,6 +172,7 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     		 meldingsNokkel = vigilansmelding.getMeldingsnokkel();
     		 datoLevert = giverModel.getMeldLevert();
     		 dataModel.put(meldingsId, giverModel);
+    		 sendMeldingtilsaksbehandlere("Celler og vev Donorhendelse", "Det er mottatt en donormelding :  Meldingsnøkkel "+meldingsNokkel);
     	 }
     	 if (annenModel != null){
     		 Vigilansmelding vigilansmelding = (Vigilansmelding) annenModel.getAnnenKomplikasjon();
@@ -175,6 +187,7 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     		 meldingsNokkel = vigilansmelding.getMeldingsnokkel();
     		 datoLevert = annenModel.getMeldLevert();
     		 dataModel.put(meldingsId, annenModel);
+    		 sendMeldingtilsaksbehandlere("Celler og vev Annen hendelse", "Det er mottatt en annen melding :  Meldingsnøkkel "+meldingsNokkel);
     	 }
     	 
          VigilansModel melding = checkMessageType();
@@ -196,7 +209,10 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	    dataModel.put(nokkelId,simple);
     	    SimpleScalar datoSimple = new SimpleScalar(datoLevert);
     	    dataModel.put(datoId, datoSimple);
+    	    
     	    String melderEpost = melderwebModel.getMelder().getMelderepost();
+    	    emailWebService.setEmailText(emailTxt);
+    	    emailWebService.setSubject(emailSubject);
     	    if(melderEpost != null || !melderEpost.equals("")){
     	    	 emailWebService.setMailTo(melderEpost);
     	    	 emailWebService.sendEmail(meldingsNokkel); //Kommentert bort til stage !!
