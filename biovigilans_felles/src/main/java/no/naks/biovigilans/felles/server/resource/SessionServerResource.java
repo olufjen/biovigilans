@@ -1546,9 +1546,9 @@ protected void sorterMeldinger(Map<String,List>alleMeldinger,List<Vigilansmeldin
 	protected void sortermeldingerMeldt(List<Vigilansmelding>meldinger){
 		List<Vigilansmelding> localMeldinger = new ArrayList();
 		localMeldinger.addAll(meldinger);
-		meldinger.sort((vm1, vm2)->vm2.getDatooppdaget().compareTo(vm1.getDatooppdaget()));
+		meldinger.sort((vm1, vm2)->vm2.getMeldingsdato().compareTo(vm1.getMeldingsdato()));
 		if (meldinger.equals(localMeldinger)){
-			meldinger.sort((vm1, vm2)->vm1.getDatooppdaget().compareTo(vm2.getDatooppdaget()));
+			meldinger.sort((vm1, vm2)->vm1.getMeldingsdato().compareTo(vm2.getMeldingsdato()));
 		}
 	}	
 /**
