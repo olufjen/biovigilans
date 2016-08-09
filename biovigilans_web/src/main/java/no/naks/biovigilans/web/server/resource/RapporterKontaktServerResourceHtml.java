@@ -591,7 +591,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
  
     		for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals("")))
-    					System.out.println(entry.getName() + "=" + entry.getValue());
+ //   					System.out.println(entry.getName() + "=" + entry.getValue());
     			melderwebModel.setValues(entry);
     		}
 
