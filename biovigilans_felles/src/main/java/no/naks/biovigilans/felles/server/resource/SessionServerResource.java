@@ -70,20 +70,30 @@ import no.naks.biovigilans.felles.xml.no.TematiskGruppeNivaa2;
 /**
  * SessionServerResource
  * Denne klassen inneholder alle Webmodel objekter for en session.
- * Den er felles superklasse for alle ResourceHtml klassene
+ * Den er felles superklasse for alle resurser - ResourceHtml klassene
  * @author olj
  *
  */
 public class SessionServerResource extends ProsedyreServerResource {
 
-/*
- * Session objekter 
- */
+
+	/**
+	 * Session objekter for transfusjonsmeldinger
+	 */
 	protected PasientKomplikasjonWebModel result = null;
 	protected TransfusjonWebModel transfusjon = null;
 	protected TransfusjonKvitteringWebModel kvittering = null;
+	/**
+	 * Nøkkel dersom melding er av type annenkomplikasjon
+	 */
 	protected String andreKey = "annenKomp"; 		// Nøkkel dersom melding er av type annenkomplikasjon
+	/**
+	 * Nøkkel dersom melding er av type pasientkomplikasjon
+	 */
 	protected String pasientKey = "pasientKomp"; // Nøkkel dersom melding er av type pasientkomplikasjon
+	/**
+	 * Nøkkel dersom melding er at type giverkomplikasjon
+	 */
 	protected String giverKey = "giverkomp"; 	// Nøkkel dersom melding er at type giverkomplikasjon
 	protected String meldingsId = "meldingliste";  // Nøkkel til en Vigilansmelding (OBS i adm til en liste vigilansmeldinger) OBS: Endret fra meldinger !!
 	protected String vigilansmeldinger = "vigilansmeldinger"; // Nøkkel til en liste vigilansmeldinger
@@ -110,9 +120,9 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String symptomerKey  ="symptomer";
 	protected String tiltakKey = "tiltak";
 	protected String forebyggendetiltakKey = "forebyggende";
-/*
- * Nøkler for pasientkomplikasjoner	
- */
+	/**
+	 * Nøkler for pasientkomplikasjoner	
+	 */
 	protected String pasientenKey = "pasienten";
 	protected String transfusjonsKey = "transfusjon";
 	protected String sykdomKey = "sykdom";
@@ -129,7 +139,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String datePart = "block";
 	protected String dobleKey = "doblemeldinger";
 
-	/*
+	/**
 	 * Variabler som definerer hva som er alvorlige hendelser
 	 * OLJ 29.02.16	
 	 */
@@ -146,9 +156,9 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String[] alvorligHendelsepasienthvorfor;
 	
 	protected List<String> hvagikkgaltList = new ArrayList<String>();
-/*
- * Session objekter for giver	
- */
+	/**
+	 * Session objekter for giver	
+	 */
 	protected GiverKomplikasjonwebModel giverModel = null;
 	protected DonasjonwebModel donasjon = null;
 	protected KomDiagnosegiverwebModel komDiagnosegiver = null;
@@ -163,8 +173,10 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String[] skadeiarmen;
 	protected String[] sykemeldinggruppe;
 	protected String[] varighetSkadegruppe;
-	
-	//Rapporter AndreHendelse
+
+	/**
+	 * Session objekter for andre hendelser
+	 */
 	protected AnnenKomplikasjonwebModel annenModel =  null;
 	protected String andreHendelseId ="andreHendelse";
 	protected String annenHendelseId ="annenHendelse";
@@ -172,9 +184,9 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String[] hovedprosesslist;
 	protected String[] feilelleravvik;
 	protected String[] hendelsenoppdaget;
-/*
- * Session objekter for kontakt	
- */
+	/**
+	 * Session objekter for kontakt	
+	 */
 	protected MelderwebModel melderwebModel;
 	protected String melderId = "melder"; // Nøkkel for melderwebModel
 	protected String melderNokkel = "melderPrimar"; // Nøkkel for melder fra db
@@ -2036,9 +2048,10 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 		}
 		if (!alvorlig){
 			for (String alvorlighet : alvorligHendelsepasientutfall){
-				if (pasientkomplikasjon.getKliniskresultat() != null && alvorlighet.equals(pasientkomplikasjon.getKliniskresultat())){
+				if (pasientkomplikasjon.getKliniskresultat() != null && alvorlighet.equalsIgnoreCase(pasientkomplikasjon.getKliniskresultat())){
 					alvorlig = true;
-					arsak = giverKomplikasjon.getVarighetkomplikasjon();
+					arsak = pasientkomplikasjon.getKliniskresultat();
+//					arsak = giverKomplikasjon.getVarighetkomplikasjon();
 					break;
 				}
 			}
