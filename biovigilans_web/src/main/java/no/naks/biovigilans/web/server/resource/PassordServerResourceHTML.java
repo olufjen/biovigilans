@@ -22,6 +22,11 @@ import no.naks.biovigilans.felles.server.resource.SessionServerResource;
 import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.MelderImpl;
 
+/**
+ * Denne resursen sørger for at bruker får tilsendt sitt passord, dersom bruker har glemt dette.
+ * @author olj
+ *
+ */
 public class PassordServerResourceHTML extends SessionServerResource {
 	private String meldeTxtId = "melding";
 
@@ -64,7 +69,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
 	}
     /**
      * storeHemovigilans
-     * 
+     * Denne rutinen sørger for å sende passord til oppgitt epost adresse, eller gir melding om at epost adresse ikke finnes
      * @param form
      * @return
      */

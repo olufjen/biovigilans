@@ -35,17 +35,20 @@ import org.restlet.resource.Post;
 import freemarker.template.SimpleScalar;
 
 /**
+ * Denne resursen er knyttet til startsiden for Hemovigilans. 
+ * Her velger bruker om det er en ny melding eller en oppfølgingsmelding
+ * Ved oppfølgingsmeldinger hentes all informasjon om alle meldinger til pålogget melder.
+ * Meldingene hentes fra databasen og settes i sessionadmin
+ * Velger bruker ny melding hentes siden rapporter_hendelse_main.html direkte
  * @author olj
- *  Denne resursen er knyttet til startsiden for Hemovigilans. 
- *  Her velger bruker om det er en ny melding eller en oppfølgingsmelding
- *  Ved oppfølgingsmeldinger hentes all informasjon om alle meldinger til pålogget melder.
- *  Meldingene hentes fra databasen og settes i sessionadmin
- *  Velger bruker ny melding hentes siden rapporter_hendelse_main.html direkte
  */
 public class RapporterStartServerResourceHTML extends SessionServerResource {
 
 	
 	private String delMelding = "delmelding"; // Ikke i bruk
+	/**
+	 * Peker til meldingstekst til bruker ved valgt av oppfølgingsmelding/meldingsoversikt og bruker oppgir feil passord
+	 */
 	private String meldeTxtId = "melding"; // Peker til meldingstekst til bruker ved valgt av oppfølgingsmelding/meldingsoversikt og bruker oppgir feil passord
 	private String passordCheck = "none"; // Ikke i bruk
 	private String displayPassord = "passord"; // Ikke i bruk

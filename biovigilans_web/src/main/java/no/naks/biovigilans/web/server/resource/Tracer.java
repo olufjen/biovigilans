@@ -6,6 +6,11 @@ import org.restlet.Response;
 import org.restlet.Restlet;
 import org.restlet.data.MediaType;
 
+/**
+ * En test resurs. Denne resursen viser hvor forespørselen kommer fra.
+ * @author olj
+ *
+ */
 public class Tracer extends Restlet {
 
 

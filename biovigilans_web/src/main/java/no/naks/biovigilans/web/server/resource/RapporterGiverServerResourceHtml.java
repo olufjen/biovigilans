@@ -36,8 +36,9 @@ import com.ibm.icu.util.Calendar;
 import freemarker.template.SimpleScalar;
 
 /**
+ * Denne resursen er knyttet til siden for å rapportere giverhendelser 
  * @author olj
- *  Denne resursen er knyttet til siden for å rapportere giverhendelser 
+ *  
  */
 public class RapporterGiverServerResourceHtml extends SessionServerResource {
 
@@ -48,12 +49,9 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
 	}
 	
 	/**
-	 * getInnmelding
+	 * getHemovigilans
 	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
-	 * en rapportert hendelse
-	 * @return
-	 */
-	/**
+	 * en rapportert giverhendelse
 	 * @return
 	 */
 	@Get
@@ -215,7 +213,7 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
 
 	/**
      * storeHemovigilans
-     * Denne rutinen tar imot alle ny informasjon fra bruker om den rapporterte hendelsen
+     * Denne rutinen tar imot alle ny informasjon fra bruker om den rapporterte giverhendelsen
      * @param form
      * @return
      */

@@ -49,13 +49,23 @@ import org.restlet.resource.Post;
 import freemarker.template.SimpleScalar;
 
 /**
+ *  Denne resursen er knyttet til kontaktsiden. Her rapporterer man kontaktinformasjon
  * @author olj
- *  Denne resursen er knyttet til kontaksiden. Her rapporterer man kontaktinformasjon
+ * 
  */
 public class RapporterKontaktServerResourceHtml extends SessionServerResource {
+	/**
+	 * Epost adresse som blir benyttet når bruker velger å melde anonymt
+	 */
 	private String anonymEpost = "hemovigilans@helsedir.no";
+	/**
+	 * Inneholder navn på alle helseregioner
+	 */
 	private String[] helseRegioner;
 	private String[] hfeneNord;
+	/**
+	 * Inneholder navn på alle foretakene i en helseregion
+	 */
 	private String[]hfeneMidt;
 	private String[]hfeneVest;
 	private String[]hfeneSor;
@@ -78,9 +88,15 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	private String[]sykehusHFvviken;
 	private String[]sykehusHFostf;
 	private String[]sykehusHFoslo;
+	/**
+	 * Inneholder navn på alle sykehus i et foretak
+	 */
 	private String[]sykehusHFahus;
 	private String[]sykehusHFinnl;
 	private String[]sykehusHFOpriv;
+	/**
+	 * Benyttes dersom melder er funnet, men bruker har oppgitt feil passord 
+	 */
 	private String foundKey = "funnet"; //Benyttes dersom melder er funnet, men bruker har oppgitt feil passord
 	private String extraPassordKey = "extra";
 	private String enableLagre = "lagre"; // Benyttes til å enable lagre knapp på kontaktskjema
@@ -454,7 +470,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	/**
 	 * getHemovigilans
 	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
-	 * en rapportert hendelse
+	 * kontaktinformasjon
 	 * @return
 	 */
 	@Get
@@ -534,7 +550,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	 }
     /**
      * storeHemovigilans
-     * Denne rutinen tar imot alle ny informasjon fra bruker om den rapporterte hendelsen
+     * Denne rutinen tar imot alle ny informasjon fra brukers kontaktinformasjon
      * @param form
      * @return
      */

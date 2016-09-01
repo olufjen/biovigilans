@@ -60,10 +60,8 @@ import freemarker.template.SimpleScalar;
 
 /**
  * Resurser blir instansiert for hver kall fra klient
- * 
- * @author olj
  * Denne resursen håndterer all dialog for rapportering av transfusjonskomplikasjoner hemovigilans
- * 
+ * @author olj
  */
 public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 
@@ -166,8 +164,9 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	}
 
 	/**
-	 * getInnmelding
-	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
+	 * getHemovigilans
+	 * Denne rutinen trigges når bruker velger å melde en transfusjonshendelse.
+	 * Den henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
 	 * en rapportert hendelse av typen transfusjoner
 	 * @return
 	 */
@@ -293,7 +292,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 
 	    /**
 	     * storeHemovigilans
-	     * Denne rutinen tar imot alle ny informasjon fra bruker om den rapporterte hendelsen
+	     * Denne rutinen tar imot alle ny informasjon fra bruker om den rapporterte transfusjonshendelsen
 	     * @param form
 	     * @return
 	     */

@@ -30,9 +30,9 @@ import freemarker.template.SimpleScalar;
 /**
  * RapporterteMeldingerServerResourceHTML
  * Dette er resource for rapporterte meldinger.
- * Den aktiveres når bruker velger oppfølgingsmelding og har angitt en meldingsnøkkel.
- * En oppfølgingsmelding identifiseres med bruk av en meldingsnøkkel.
- * Den er knyttet til alle typer meldinger, Transfusjon, Giver eller andre meldinger
+ * Den aktiveres når bruker velger oppfølgingsmelding/meldingsoversikt.
+ * Her oppgir bruker sin epostadresse og passord
+ * Er riktig epostadresse og passord angitt, så fr bruker en oversikt over sine meldinger.
  * @author olj
  *
  */
@@ -118,7 +118,7 @@ public class RapporterteMeldingerServerResourceHTML extends
 	/**
 	 * getHemovigilans
 	 * Denne rutinen henter inn nødvendige session objekter og  
-	 * henter frem siden for oppfølgingsmeldinger
+	 * henter frem siden for brukers meldinger
 	 * @return
 	 */
 	@Get

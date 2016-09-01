@@ -22,9 +22,10 @@ import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
 /**
+ * Denne resursen er knyttet til siden rapporter_hendelse_main
+ * Med denne siden velger melder hva slags type melding dette er.
+ * - En melding om pasienttransfusjon, en melding om en giverhendelse, en melding om en annen hendelse.
  * @author olj
- *  Denne resursen er knyttet til siden rapporter_hendelse_main
- *  Med denne siden velger melder hva slags type melding dette er.
  */
 public class RapporterMainServerResourceHtml extends SessionServerResource {
 

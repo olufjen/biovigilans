@@ -35,8 +35,9 @@ import org.restlet.resource.Post;
 import freemarker.template.SimpleScalar;
 
 /**
+ * Denne resursen er knyttet til siden for å rapportere andre hendelser
  * @author olj
- *  Denne resursen er knyttet til siden for å rapportere andre hendelser
+ *  
  */
 public class RapporterAndreHendelserServerResourceHtml extends SessionServerResource {
 
@@ -49,12 +50,9 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 
 
 	/**
-	 * getInnmelding
+	 * getHemovigilans
 	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
 	 * en rapportert hendelse
-	 * @return
-	 */
-	/**
 	 * @return
 	 */
 	@Get
@@ -139,7 +137,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	 }
     /**
      * storeHemovigilans
-     * Denne rutinen tar imot alle ny informasjon fra bruker om den rapporterte hendelsen
+     * Denne rutinen tar imot all ny informasjon fra bruker om den rapporterte hendelsen
      * @param form
      * @return
      */

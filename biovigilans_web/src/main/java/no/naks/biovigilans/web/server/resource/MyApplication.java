@@ -8,6 +8,11 @@ import org.restlet.data.Protocol;
 import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
 
+/**
+ * En test resurs
+ * @author olj
+ *
+ */
 public class MyApplication extends Application {
     public static void main(String[] args) throws Exception {
         Component c = new Component();

@@ -57,10 +57,12 @@ import freemarker.template.SimpleScalar;
 
 /**
  * RapporterLeveranseServerResourceHTML
- * @author olj
- *
  * Denne klassen er knyttet til leveranse.html
  * Det er den endelige kvitteringssiden for en melding til Hemovigilans
+ * 
+ * @author olj
+ *
+ * 
  */
 public class RapporterLeveranseServerResourceHTML extends SessionServerResource {
 
@@ -169,8 +171,9 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 
 	/**
 	 * getHemovigilans
-	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
-	 * en rapportert hendelse
+	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å vise kvitteringssiden
+	 * etter at en hendelse er rapportert.
+	 * Bruker kan også velge å hente meldngen ut til PDF
 	 * @return
 	 */
 	@Get
@@ -293,6 +296,14 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	 return templatemapRep;
 	}
 	
+	/**
+	 * generatePDF
+	 * Denne rutinen utføres dersom bruker har valgt å hente meldingen som er levert til PDF.
+	 * @param form
+	 * @return
+	 * @throws DocumentException
+	 * @throws IOException
+	 */
 	@Post
 	 public Representation generatePDF(Form form) throws DocumentException, IOException {
 		   Request request = getRequest();
