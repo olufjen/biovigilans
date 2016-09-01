@@ -17,13 +17,22 @@ import org.springframework.jdbc.core.JdbcTemplate;
 /**
  * ProsedyreServerResource
  * Dette er superklassen til Sessionserver Resources
- * Slike resurser håndterer alle hendelser fra html web sider
+ * Slike resurser håndterer alle hendelser fra html web sider.
+ * Den inneholder referanser til alle singleton tjenester som er tilgjengelig for resursene.
+ * Den er også superklassen som arver fra Restlet rammeverket
  * @author olj
  *
  */
 public class ProsedyreServerResource extends ServerResource {
 
+	/**
+	 * Inneholder alle Web model objekter for sesjonen
+	 */
 	protected SessionAdmin sessionAdmin = null;
+	/**
+	 * Resursens singleton tjenester: Disse er definert i applikasjonens Spring xml definisjoner
+	 */
+	protected AnnenKomplikasjonWebService annenKomplikasjonWebService;
 	protected TableWebService tablewebservice;
 	protected HendelseWebService hendelseWebService;
 	protected ICD10WebService icd10WebService;
@@ -31,11 +40,17 @@ public class ProsedyreServerResource extends ServerResource {
 	protected DonasjonWebService donasjonWebService;
 	protected MelderWebService melderWebService;
 	protected KomDiagnosegiverWebService komDiagnosegiverWebService;
-	protected AnnenKomplikasjonWebService annenKomplikasjonWebService;
+
 	protected KomplikasjonsklassifikasjonWebService komplikasjonsklassifikasjonWebService;
+	/**
+	 *  Er kun satt dersom saksbehandler velger annen database enn hemovigilans
+	 */
 	private JdbcTemplate alternativeSource = null; // Er kun satt dersom saksbehandler velger annen database enn hemovigilans
 	
 	
+	/**
+	 * Resursen parameteroppsett for HTML-siden den betjener
+	 */
 	protected String[]sessionParams;
 	
 	

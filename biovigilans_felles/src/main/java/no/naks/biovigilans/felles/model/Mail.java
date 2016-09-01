@@ -1,5 +1,10 @@
 package no.naks.biovigilans.felles.model;
 
+/**
+ * Denne klassen inneholde informasjon  fra epost som sendes
+ * @author olj
+ *
+ */
 public class Mail {
 
     private String status;

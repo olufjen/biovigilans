@@ -5,6 +5,11 @@ import java.util.Map;
 import no.naks.biovigilans.model.Komplikasjonsdiagnosegiver;
 import no.naks.biovigilans.model.KomplikasjonsdiagnosegiverImpl;
 
+/**
+ * Denne web modellklassen representerer felter i givermeldingsskjema som knyttet til diagnosen for giver
+ * @author olj
+ *
+ */
 public class KomDiagnosegiverwebModel extends VigilansModel {
 
 	private Komplikasjonsdiagnosegiver komDiagnosegiver;

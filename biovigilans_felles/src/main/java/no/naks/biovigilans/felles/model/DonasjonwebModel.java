@@ -5,8 +5,16 @@ import java.util.Map;
 import no.naks.biovigilans.model.Donasjon;
 import no.naks.biovigilans.model.DonasjonImpl;
 
+/**
+ * Denne web modellklassen represnterer felter for donasjonen i skjermbildet for giverkomplikasjoner
+ * @author olj
+ *
+ */
 public class DonasjonwebModel extends VigilansModel {
 	
+	/**
+	 * Database modellobjektet for donasjon
+	 */
 	private Donasjon donasjon;
 	
 	

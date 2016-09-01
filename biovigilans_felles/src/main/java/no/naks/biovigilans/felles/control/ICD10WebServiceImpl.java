@@ -18,8 +18,9 @@ import no.naks.biovigilans.felles.xml.no.TematiskGruppeNivaa2;
 
 
 /**
- * @author olj
  * Denne klassen leser xml definisjoner av ICD10 og gjør disse tilgjengelig for søk og oppslag
+ * @author olj
+ * 
  */
 public class ICD10WebServiceImpl implements ICD10WebService {
 /*

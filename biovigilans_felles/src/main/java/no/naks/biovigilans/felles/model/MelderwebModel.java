@@ -8,8 +8,16 @@ import java.util.Map;
 import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.MelderImpl;
 
+/**
+ * Denne web modellklassen representerer en melder i kontaktskjema
+ * @author olj
+ *
+ */
 public class MelderwebModel extends VigilansModel {
 	
+	/**
+	 * Melders database modell klasse
+	 */
 	private Melder melder;
 	
 	private String meldernavn ="" ;

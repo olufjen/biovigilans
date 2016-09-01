@@ -6,6 +6,12 @@ import java.util.Map;
 
 import org.restlet.data.Parameter;
 
+/**
+ * Denne klassen benyttes til å vise en kvitteringsside for hva melder har registrert fra en giverkomplikasjon
+ * Den er for tiden ikke i bruk.
+ * @author olj
+ *
+ */
 public class GiverKvitteringWebModel extends VigilansModel {
 	
 	private String kjonn;

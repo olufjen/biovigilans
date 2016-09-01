@@ -15,6 +15,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class SessionAdminImpl implements SessionAdmin {
 	private String[]sessionParams;
 	private JdbcTemplate hemovigilansjdbcTemplate; //  @since 30.03.2016 OLJ
+	/**
+	 * Database templates for Biovigilans
+	 * Peker til valgt database
+	 */
 	private JdbcTemplate cellerogvevjdbcTemplate; //  @since 30.03.2016 OLJ
 	private String chosenDB = "";
 	private String dbKey = "key";

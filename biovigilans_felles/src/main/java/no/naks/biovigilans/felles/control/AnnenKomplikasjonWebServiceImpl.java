@@ -4,9 +4,17 @@ import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.service.AnnenKomplikasjonTableService;
 import no.naks.biovigilans.felles.model.AnnenKomplikasjonwebModel;
 
+/**
+ * Denne singleton tjenesten benyttes til å lagre andre typer hendelser ved bruk av forretningslaget
+ * @author olj
+ *
+ */
 public class AnnenKomplikasjonWebServiceImpl implements
 		AnnenKomplikasjonWebService {
 	
+	/**
+	 * Forretningslaget singleton tjeneste
+	 */
 	AnnenKomplikasjonTableService annenKomplikasjonTableService;
 
 	public AnnenKomplikasjonTableService getAnnenKomplikasjonTableService() {

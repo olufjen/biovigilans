@@ -13,6 +13,11 @@ import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 import no.naks.biovigilans.model.KomplikasjonsklassifikasjonImpl;
 import no.naks.biovigilans.model.Vigilansmelding;
 
+/**
+ * Denne web modellklassen representerer felter for skjermbildet til andre hendelser.
+ * @author olj
+ *
+ */
 public class AnnenKomplikasjonwebModel extends VigilansModel {
 	
 	private Annenkomplikasjon annenKomplikasjon;

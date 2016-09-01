@@ -5,9 +5,18 @@ import java.util.List;
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 import no.naks.biovigilans.service.KomplikasjonsklassifikasjonTableService;
 
+/**
+ * Denne singleton tjenesten benyttes til å lagre klassifikasjon av komplikasjonsdiagnoser for pasient
+ * ved bruk av forretninglagets tjenester
+ * @author olj
+ *
+ */
 public class KomplikasjonsklassifikasjonWebServiceImpl implements KomplikasjonsklassifikasjonWebService {
 
-	KomplikasjonsklassifikasjonTableService komplikasjonsklassifikasjonTableService;
+	/**
+	 * Forretningslagets lagringstjeneste
+	 */
+	private KomplikasjonsklassifikasjonTableService komplikasjonsklassifikasjonTableService;
 
 	public KomplikasjonsklassifikasjonTableService getKomplikasjonsklassifikasjonTableService() {
 		return komplikasjonsklassifikasjonTableService;

@@ -14,23 +14,36 @@ import no.naks.biovigilans.model.Vigilansmelding;
 import org.restlet.data.Parameter;
 
 /**
+ * Denne klassen er superklassen til alle web modelklasser som representerer et skjermbilde (et brukergrensesnitt)
  * @author olj
- * Denne klassen er superklassen til alle modelklasser som representerer et skjermbilde (et brukergrensesnitt)
+ *
  *
  */
 public class VigilansModel {
 
 	protected boolean lagret = false; // Satt true dersom session objects er lagret
+	/**
+	 * Inneholder brukers input verdier fra skjermbildet
+	 */
 	private Map<String,String> formMap; // Inneholder brukers input verdier fra skjermbildet
 	
-	private LinkedHashMap<String, String> formLinkHashmap ; // Inneholder verdier for genrate PDF file.
+	/**
+	 * Inneholder verdier for generate PDF file.
+	 */
+	private LinkedHashMap<String, String> formLinkHashmap ; // Inneholder verdier for generate PDF file.
 	
+	/**
+	 * Inneholder navn på input felt i skjermbildet
+	 */
 	private String[] formNames; // Inneholder navn på input felt i skjermbildet
 	private String accountRef;
 	private Vigilansmelding vigilans;
 	private Date meldingLevert;
 	private String meldingsNokkel = "";
 	private String meldLevert;
+	/**
+	 * Dato settes dersom dette er en oppfølgingsmelding
+	 */
 	protected Date hendelseDato = null; // Dato settes dersom dette er en oppfølgingsmelding
 	
 	public VigilansModel() {

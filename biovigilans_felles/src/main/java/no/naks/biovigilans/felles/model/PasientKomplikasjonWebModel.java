@@ -28,10 +28,11 @@ import javax.xml.bind.JAXBElement;
 import org.restlet.data.Parameter;
 
 /**
- * @author olj
+ *
  * Denne klassen representerer en pasientkomplikasjon ved en transfusjon 
  * Klassen er også kilde til nedtrekksvalg for htmlsidene.
  * Disse valgene kan hentes fra andre kilder
+ * @author olj
  */
 public class PasientKomplikasjonWebModel extends VigilansModel{
 
@@ -46,8 +47,17 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	private Tiltak tiltak;
 	private Vigilansmelding vigilansmelding;
 	
+	/**
+	 * Inneholder navn på avdelinger tilgjengelig for brukerrvalg
+	 */
 	private String[] avdelinger; 	// Inneholder navn på avdelinger tilgjengelig for brukerrvalg
+	/**
+	 * Inneholder aldersgrupper tilgjengelig for brukervalg
+	 */
 	private String[] aldergruppe;	// Inneholder aldersgrupper tilgjengelig for brukervalg
+	/**
+	 * Inneholder definisjon av kjønn for mann/kvinne
+	 */
 	private String[] kjonnValg; 	// Inneholder definisjon av kjønn for mann/kvinne
 	private String mann; 			//definisjon kjønn mann
 	private String kvinne;			//definisjon kjønn kvinne 
@@ -56,6 +66,9 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	private String [] antiStoffid;
 	private String sykdomSymptom;
 	private String transfusjon;
+	/**
+	 * Viser hvilket kjønn som er valgt 		
+	 */
 	private String kjonnValgt;		//Viser hvilket kjønn som er valgt 		
 	
 	private String alder = "-";
@@ -67,12 +80,21 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	private List<Title> titles;
 
 	private List<String> icd10Codes;
+	/**
+	 * ICD10 hovedtermer
+	 */
 	private List<String> mainTerms;  // ICD10 hovedtermer
 	
 	private List<ICD10Component> components;
 	private Map<String,Object > mapComponent;
 	
+	/**
+	 * Nedtrekk Blodprodukt når man velger blodplasma
+	 */
 	private List<String>blodProdukt; // Nedtrekk Blodprodukt når man velger blodplasma
+	/**
+	 * Nedtrekk Hemolyseparametre når hemelyseparametre er positive
+	 */
 	private List<String>hemolyseParametre; // Nedtrekk Hemolyseparametre når hemelyseparametre er positive
 	
 	public PasientKomplikasjonWebModel() {

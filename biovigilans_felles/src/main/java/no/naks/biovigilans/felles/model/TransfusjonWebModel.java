@@ -31,15 +31,17 @@ import no.naks.biovigilans.model.UtredningImpl;
 import no.naks.biovigilans.model.Vigilansmelding;
 
 /**
- * @author olj
  * Denne klassen representerer Transfusjonopplysninger gitt av bruker.
  * Det omfatter Transfusjon, Blodprodukt, og Pasientkomplikasjon som definert i modellen
- * 
+ * @author olj
  */
 public class TransfusjonWebModel extends VigilansModel {
 
 
 	private Blodprodukt blodProdukt;
+	/**
+	 * Database modellobjekter
+	 */
 	private Blodprodukt annenBlodprodukt;
 	private Transfusjon transfusjon;
 	private Pasientkomplikasjon pasientKomplikasjon;

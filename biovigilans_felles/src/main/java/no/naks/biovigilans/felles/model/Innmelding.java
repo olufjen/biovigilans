@@ -19,6 +19,7 @@ import org.restlet.data.Parameter;
 import edu.unc.ils.mrc.hive2.api.HiveConcept;
 
 /**
+ * Denne klassen er ikke i bruk.
  * @author olj
  * For Restlet er dette representation klassen for Innmelding
  * 

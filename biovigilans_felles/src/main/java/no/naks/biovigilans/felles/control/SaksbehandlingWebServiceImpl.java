@@ -13,13 +13,17 @@ import no.naks.biovigilans.service.SaksbehandlingService;
 import no.naks.framework.web.control.MasterWebServiceImpl;
 
 /**
- * Denne klassen er WebService for saksbehandling
+ * Denne klassen er singleton tjeneste for saksbehandling
+ * Den henter inn valgt utvalg av meldinger og lagrer saksopplysninger om en melding
  * @author olj
  *
  */
 public class SaksbehandlingWebServiceImpl extends MasterWebServiceImpl
 		implements SaksbehandlingWebService {
 	private SaksbehandlingService saksbehandlingService;
+	/**
+	 * Forretningslagets tjenester
+	 */
 	private MelderTableService melderTableService;
 	
 	public SaksbehandlingWebServiceImpl() {

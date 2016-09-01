@@ -19,11 +19,19 @@ import no.naks.biovigilans.model.KomplikasjonsdiagnosegiverImpl;
 import no.naks.biovigilans.model.Vigilansmelding;
 
 
+/**
+ * Denn web modellklassen representer felter i skjermbildet for giverkomplikasjoner
+ * @author olj
+ *
+ */
 public class GiverKomplikasjonwebModel extends VigilansModel {
 	private Giver giver;
 	private Vigilansmelding vigilansmelding;
 	protected Giverkomplikasjon giverKomplikasjon;
 	protected Giveroppfolging giveroppfolging;
+	/**
+	 * Database modellobjekter
+	 */
 	protected Donasjon donasjonen;
 	protected Komplikasjonsdiagnosegiver komplikasjonsdiagnoseGiver;
 	

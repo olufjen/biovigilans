@@ -31,6 +31,7 @@ import no.naks.biovigilans.model.Regionstatistikk;
 import no.naks.biovigilans.model.Vigilansmelding;
 /**
  * Denne klassen benyttes til å lage rapporter til excel
+ * Den benyttes i saksbehandlingen
  * @author olj
  * @param <T>
  *

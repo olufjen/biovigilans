@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ *  Denne klassen benyttes til å vise en kvitteringsside for hva melder har registrert fra en transfusjonskomplikasjon
+ *  Den er for tiden ikke i bruk.
  * @author olj
  *
- * Denne klassen benyttes til åvise en kvitteringsside for hva melder har registrert fra en transfusjonskomplikasjon
+ *
  * 
  */
 public class TransfusjonKvitteringWebModel extends VigilansModel {

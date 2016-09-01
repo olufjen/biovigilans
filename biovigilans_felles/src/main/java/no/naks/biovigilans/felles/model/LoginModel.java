@@ -5,10 +5,18 @@ import java.util.Map;
 import no.naks.biovigilans.model.Saksbehandler;
 import no.naks.biovigilans.model.SaksbehandlerImpl;
 
+/**
+ * Denne web modellklassen rpepresenterer login skjermbildet for saksbehandler
+ * @author olj
+ *
+ */
 public class LoginModel extends VigilansModel {
 
 	private String epostAdresse;
 	private String passord;
+	/**
+	 * saksbehandler db modell klasse
+	 */
 	private Saksbehandler saksbehandler;
 	
 	public LoginModel() {

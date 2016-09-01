@@ -4,8 +4,16 @@ import no.naks.biovigilans.service.GiverTableService;
 import no.naks.biovigilans.felles.model.GiverKomplikasjonwebModel;
 import no.naks.framework.web.control.MasterWebServiceImpl;
 
+/**
+ * Denne singleton tjenesten benyttes til å lagre givermeldinger og giveropplysninger ved bruk av forretningslagets tjenester
+ * @author olj
+ *
+ */
 public class GiverWebServiceImpl extends MasterWebServiceImpl implements GiverWebService {
 
+	/**
+	 * Forretningslaget singleton tjeneste
+	 */
 	private GiverTableService giverTableService;
 	
 	public GiverWebServiceImpl(){

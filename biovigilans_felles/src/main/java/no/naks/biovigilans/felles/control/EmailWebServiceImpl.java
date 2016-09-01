@@ -2,6 +2,11 @@ package no.naks.biovigilans.felles.control;
 
 import no.naks.rammeverk.mailer.Mailer;
 
+/**
+ * DEnne tjenesten benyttes til å sende epost
+ * @author olj
+ *
+ */
 public class EmailWebServiceImpl implements EmailWebService {
 
 		private Mailer mailer ;

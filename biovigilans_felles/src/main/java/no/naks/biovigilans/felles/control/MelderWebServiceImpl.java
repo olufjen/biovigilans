@@ -7,8 +7,17 @@ import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.service.MelderTableService;
 import no.naks.biovigilans.felles.model.MelderwebModel;
 
+/**
+ * Denne singleton tjenesten benyttes til å lagre opplysninger om melder ved bruk av forretningslagets tjenester
+ * DEn henter også opplysninger om  en valgt melder
+ * @author olj
+ *
+ */
 public class MelderWebServiceImpl implements MelderWebService {
 
+	/**
+	 * Forretningslagets tjeneste
+	 */
 	private MelderTableService melderTableService;
 	
 	public MelderWebServiceImpl(){
