@@ -51,6 +51,8 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	private String flaggKey = "saksbehandling";
 	private String tilsakbehandler = "tilsaksbehandler";
 	private String sakbehandlerShow = "none";
+    private Annenkomplikasjon orgAnnenkomplikasjon = null;
+    private String orgKompKey = "orgkomp";
 //	private SaksbehandlingWebService saksbehandlingWebservice;
 	
 
@@ -109,6 +111,10 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	   	 SimpleScalar simple = new SimpleScalar(displayPart);
     	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
     	 SimpleScalar tilsakbehandel = new SimpleScalar(sakbehandlerShow);
+     	 SimpleScalar iconImportant = new SimpleScalar(imagesrcImportant);
+		 SimpleScalar orgInfo = new SimpleScalar(displayorgInfo);
+    	 dataModel.put(imageImportantkey,iconImportant);
+      	 dataModel.put(displayorgInfoKey, orgInfo);
     	 dataModel.put(tilsakbehandler, tilsakbehandel);
     	 dataModel.put(flaggKey,flaggs);
     	 dataModel.put(statusflagKey,statusflag);
@@ -117,6 +123,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	     dataModel.put(andreHendelseId, annenModel);
 	     dataModel.put(annenHendelseId, annenKomplikasjon);
 	     dataModel.put(klassifikasjonKey, klassifikasjoner);
+	     dataModel.put(annenHendelseOrg, orgAnnenkomplikasjon);
 	  	 dataModel.put(tilmelderKey, melder);
 	     sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
 	}
@@ -142,7 +149,63 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	public void setStatusflagKey(String statusflagKey) {
 		this.statusflagKey = statusflagKey;
 	}
-
+	/**
+	 * statusChange
+	 * Denne rutinen kalles når bruker har valgt å endre status på meldingen
+	 * @param form
+	 * @param request
+	 * @param dataModel
+	 * @param melder
+	 * @param diskusjoner
+	 * @return
+	 */
+	private TemplateRepresentation statusChange(Form form,Request request,Map<String, Object> dataModel,Melder melder,List<Diskusjon>diskusjoner,ClientResource clres2){
+		 //      			Vigilansmelding melding = (Vigilansmelding) annenModel.getAnnenKomplikasjon();
+		Vigilansmelding melding = (Vigilansmelding) annenModel.getAnnenKomplikasjon();
+		Date datoforhendelse =  melding.getDatoforhendelse();
+	 	Long meldeId = melding.getMeldeid();
+		melding.setDatoforhendelse(datoforhendelse);
+		String statusCode = "";
+	     SakModel sakModel = (SakModel)sessionAdmin.getSessionObject(request,  sakModelKey);
+		for (Parameter entry : form) {
+			if (entry.getName().equals("nystatus") && entry.getValue() != null && !(entry.getValue().equals(""))){
+				statusCode = entry.getValue();
+				System.out.println(entry.getName() + "=" + entry.getValue());
+		
+			}
+		}
+		if (!statusCode.equals("")){
+			if (statusCode.equals(statusflag[0])) // Dersom status settes til Levert, så skal det settes til null i db
+				statusCode = null;
+			annenModel.getVigilansmelding().setSjekklistesaksbehandling(statusCode);
+			hendelseWebService.updateVigilansmelding(annenModel.getVigilansmelding());
+			if (statusCode == null){
+				statusCode = statusflag[0];
+				annenModel.getVigilansmelding().setSjekklistesaksbehandling(statusCode);
+			}
+			
+			sakModel.setLoginSaksbehandler(login.getSaksbehandler());
+			sakModel.lagSak(meldeId, statusCode);
+			saksbehandlingWebservice.saveDiskusjon(sakModel.getDiskusjonsMappe());
+			sakModel.setSakdiskusjon();
+			saksbehandlingWebservice.saveSak(sakModel.getSaksMappe());
+			
+			List<Diskusjon> nyediskusjoner = sakModel.lagDiskusjonsliste();
+			if (diskusjoner != null)
+				diskusjoner.addAll(nyediskusjoner);
+   			sakModel.setDiskusjonsMappe(null);
+			sakModel.setSaksMappe(null);
+		}
+		setDiplayvalues(dataModel,melder);
+	 	dataModel.put(behandlingsFlaggKey, diskusjoner);
+		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,andrehendelserskjema));
+		 
+		Representation andreHendelser = clres2.get();
+//		invalidateSessionobjects();
+		TemplateRepresentation templateRep = new TemplateRepresentation(andreHendelser, dataModel,
+				MediaType.TEXT_HTML);
+		return templateRep;  // Hvorfor er denne nødvendig? OLJ 28.07.15
+	}
 
 
 	/**
@@ -162,6 +225,9 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	     String db =  sessionAdmin.getChosenDB(request);
 	     if (db != null && !db.equals("hemovigilans"))
 	    	 andrehendelserskjema = cellereogvevandrehendelser;
+	     
+	 	hvagikkgaltList.clear(); // Lagt til 31.10.16 OLJ
+
 	     SakModel sakModel = (SakModel)sessionAdmin.getSessionObject(request,  sakModelKey);
 	     if (sakModel == null){
 	    	 sakModel = new SakModel();
@@ -189,17 +255,23 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	     annenModel.distributeTerms();
 
 	     Annenkomplikasjon annenKomplikasjon = null;
+	
 	     List klassifikasjoner = annenModel.getKlassifikasjoner();
 	     
 	     List<Diskusjon> diskusjoner = null;
 	     List<Sak> saker = null;
 //	     List<Saksbehandler> saksbehandlere = (List<Saksbehandler>) sessionAdmin.getSessionObject(request,behandlereKey);
 		 Melder melder = null;
+	     
+		 List<Annenkomplikasjon> annenListe =(List) sessionAdmin.getSessionObject(request,reportAndreKey);
 	     if (annenModel.getVigilansmelding().getMeldingsnokkel() != null){
 	    	 displayPart = "block";
 	    	 datePart = "none";
 	    	 Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
 	    	 annenKomplikasjon = annenModel.getAnnenKomplikasjon();
+	    	 makeSequence(request, melding);
+	    	 annenModel.getVigilansmelding().setSekvensNr(melding.getSekvensNr());
+	    	 orgAnnenkomplikasjon = annenKomplikasjon; //Dersom det ikke finnes oppfølginger
 	    	 annenModel.setHendelseDato(melding.getDatoforhendelse());
 	    	 annenModel.setMeldingsNokkel(melding.getMeldingsnokkel());
 	    	 klassifikasjoner = (List)sessionAdmin.getSessionObject(request, klassifikasjonKey);
@@ -211,21 +283,32 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	     	 
 	   	     String mmKey = melding.getMeldingsnokkel(); //
     	     Long orgmeldeId = getmeldingsNokkelsak(mmKey); //Hent meldingsid for første melding med samme meldingsnøkkel
+       		 String mnKey = String.valueOf(meldeId.longValue());
 	    	 Map<String,List> diskusjonene = saksbehandlingWebservice.collectDiskusjoner(meldeId);
 	    	 Map<String,List> orgMapdiskusjoner = null;
 	    	 String omKey = "";
-	    	 List<Diskusjon> orgdiskusjoner = null;
+	    	 List<Diskusjon> orgdiskusjoner = null;	    	 
+	    	 boolean sameKey = false;
 	    	 if (orgmeldeId != null){
 	    		 orgMapdiskusjoner = saksbehandlingWebservice.collectDiskusjoner(orgmeldeId); // Henter diskusjoner fra tidligere meldinger med samme nøkkel
 	    		 omKey = String.valueOf(orgmeldeId.longValue());
 	    		 orgdiskusjoner =  orgMapdiskusjoner.get(omKey);
+	    		 sameKey = mnKey.equals(omKey);
 	    	 }
 
+	    	 for (Annenkomplikasjon komplikasjon : annenListe){
+	    		 if (orgmeldeId != null && komplikasjon.getMeldeid().longValue() == orgmeldeId.longValue()){
+	    			 orgAnnenkomplikasjon = komplikasjon;
+	    			 displayorgInfo = "block";
+	    			 break;
+	    		 }
+	    	 }
 	    	 String mKey = String.valueOf(meldeId.longValue());
 	    	 diskusjoner = diskusjonene.get(mKey);
+
 	    	 if (diskusjoner == null)
 	    		 diskusjoner = new ArrayList<Diskusjon>();
-	    	 if (orgdiskusjoner != null)
+	    	 if (orgdiskusjoner != null && !sameKey)
 	    		 diskusjoner.addAll(orgdiskusjoner);
 	    	 if (!diskusjoner.isEmpty()){
 	    		 checkDiskusjoner(diskusjoner); // Sjekker om diskusjonene inneholder melding til melder
@@ -245,25 +328,29 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	    	 annenKomplikasjon = annenModel.getAnnenKomplikasjon();
 	  
 	     }
-	   
+
+	     
     	 SimpleScalar simple = new SimpleScalar(displayPart);
     	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
-    	 
+		 SimpleScalar orgInfo = new SimpleScalar(displayorgInfo);
     	 SimpleScalar tilMelder = new SimpleScalar(tilMelderPart);
+    	 SimpleScalar iconImportant = new SimpleScalar(imagesrcImportant);
+    	 dataModel.put(imageImportantkey,iconImportant);
     	 dataModel.put(tilMelding,tilMelder);
-    	 
+    	 dataModel.put(displayorgInfoKey, orgInfo);
     	 dataModel.put(displayKey, simple);
     	 dataModel.put(displaydateKey, hendelseDate);
     	 dataModel.put(statusflagKey,statusflag);
 	     dataModel.put(andreHendelseId, annenModel);
 	     dataModel.put(annenHendelseId, annenKomplikasjon);
+	     dataModel.put(annenHendelseOrg, orgAnnenkomplikasjon);
 	     dataModel.put(klassifikasjonKey, klassifikasjoner);
 	 	dataModel.put(behandlingsFlaggKey, diskusjoner);
 	 	
 	 	dataModel.put(tilmelderKey, melder);
 	 	
-	     sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
-	     
+	     sessionAdmin.setSessionObject(request, annenModel,andreHendelseId);
+	     sessionAdmin.setSessionObject(request, orgAnnenkomplikasjon, orgKompKey);
 	     
 	        // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
@@ -291,7 +378,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     		invalidateSessionobjects();
     	}*/
     	
-    	
+    	hvagikkgaltList.clear(); // Lagt til 31.10.16 OLJ
 	     login = (LoginModel)sessionAdmin.getSessionObject(request,loginKey);
 	     sakbehandlerShow = "none";
 	     setDBSource(request);
@@ -310,7 +397,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     	     Map<String,List> diskusjonene = (Map<String,List>)sessionAdmin.getSessionObject(request, diskusjonsKey);
 //====    	     
   		  annenModel = (AnnenKomplikasjonwebModel)sessionAdmin.getSessionObject(request, andreHendelseId);
-  		  
+  		  orgAnnenkomplikasjon = (Annenkomplikasjon)sessionAdmin.getSessionObject(request, orgKompKey);
   		  if(annenModel == null){
   			  annenModel = new AnnenKomplikasjonwebModel();
   			  annenModel.setFormNames(sessionParams);
@@ -351,8 +438,8 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     		Parameter lagreFlagg = form.getFirst("btnlagreflagg");
     		Parameter statusChange = form.getFirst("btnstatuschange");
     		Parameter avslutt = form.getFirst("btnavslutt");
-    		
     		Parameter sendTilmelder = form.getFirst("btnsend");
+    		
     		if (sendTilmelder != null){ // Ønsker å sende melding til melder
     			setDiplayvalues(dataModel,melder);
     			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,andrehendelserskjema));
@@ -384,6 +471,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 */
     		 	sessionAdmin.removesessionObject(request, diskusjonsKey);
     		 	sessionAdmin.removesessionObject(request, sakModelKey);
+       		 	sessionAdmin.removesessionObject(request, klassifikasjonKey);
     			sessionAdmin.setSessionObject(request, newLogin, loginKey);
     			 sessionAdmin.setSessionObject(request, saksbehandlere, behandlereKey);
     			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
@@ -396,6 +484,12 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     		}
     		if (statusChange != null){  // Bruker har valgt å endre saksstatus
  //      			Vigilansmelding melding = (Vigilansmelding) annenModel.getAnnenKomplikasjon();
+    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,andrehendelserskjema));
+    			
+    			templateRep = statusChange(form, request, dataModel, melder, diskusjoner, clres2);
+/*    		
+ * Dette utføres nå i egen subrutine  se over. OLJ 28.10.16	
+ * 
     			Date datoforhendelse =  melding.getDatoforhendelse();
     			melding.setDatoforhendelse(datoforhendelse);
     			String statusCode = "";
@@ -430,14 +524,17 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
         			sakModel.setSaksMappe(null);
     			}
     			setDiplayvalues(dataModel,melder);
-    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,andrehendelserskjema));
+    		 	dataModel.put(behandlingsFlaggKey, diskusjoner);
+    		
     			 
     			Representation andreHendelser = clres2.get();
 //        		invalidateSessionobjects();
         		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
         				MediaType.TEXT_HTML);
+*/         				
         		return templateRep;  // Hvorfor er denne nødvendig? OLJ 28.07.15
-    		}
+
+    			}
     		//Parameter ikkegodkjet = form.getFirst("ikkegodkjent");
     		//Parameter godkjet = form.getFirst("godkjent");
     		if (lagreFlagg != null){ // Bruker har valgt å sette saksmerknader
@@ -452,9 +549,18 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     			
     			sakModel.setFlaggNames(flaggNames);
     			sakModel.getFormMap().clear();
+    			boolean avvist = false;
     			for (Parameter entry : form) {
         			if (entry.getValue() != null && !(entry.getValue().equals(""))){
         					System.out.println("Saksmerknader "+entry.getName() + "=" + entry.getValue());
+        					if (entry.getName().equals("nystatus")){ // Bruker også valgt å endre status til avvist
+        						avvist = true;
+        					}
+        					if (entry.getName().equals("kommentartilmeldingtxt")&& avvist){
+        						String txtVal = entry.getValue(); // Betyr at kommentar skal vises til Melder
+        						txtVal = "Vises;"+txtVal;
+        						entry.setValue(txtVal);
+        					}
         					sakModel.setValues(entry);
         			}
     			}
@@ -476,6 +582,8 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
         			
     			}
     			if (sakModel.isReklassifikasjon()){
+     				annenModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
+     				hendelseWebService.updateVigilansmelding(annenModel.getVigilansmelding());
     				sakModel.setGmlMeldeid(meldeId);
     				saveannenReclassifikasjon();
     			}
@@ -488,6 +596,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     			sakModel.setDiskusjonsMappe(null);
     			sakModel.setSaksMappe(null);
     			setDiplayvalues(dataModel,melder);
+    		 	dataModel.put(behandlingsFlaggKey, diskusjoner); // Lagt til 26.10.26 OLJ 
     			tilMelderPart = "none";
     			if (sakModel.isTilMelder())
     				tilMelderPart = "block";
@@ -503,10 +612,15 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     			}
     			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,andrehendelserskjema));
     			 
-    			Representation andreHendelser = clres2.get();
-//        		invalidateSessionobjects();
-        		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
+    			
+    			if (avvist)
+    				templateRep = statusChange(form, request, dataModel, melder, diskusjoner, clres2);
+    			else{
+    				Representation andreHendelser = clres2.get();
+    				templateRep = new TemplateRepresentation(andreHendelser, dataModel,
         				MediaType.TEXT_HTML);
+    			}
+//        		invalidateSessionobjects();    			
         		return templateRep;  // Hvorfor er denne nødvendig? OLJ 28.07.15
     		}
     		if(lagre != null){ // Bruker har valgt å godkjenne meldingen

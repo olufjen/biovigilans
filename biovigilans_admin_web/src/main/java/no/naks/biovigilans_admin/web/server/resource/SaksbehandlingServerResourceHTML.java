@@ -102,11 +102,14 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
  * Ferdig alternativeSource		
  */
 	    List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request, meldingsId); // For å vise tidligere valgt liste
-	    if (meldinger == null)
+	    if (meldinger == null){
 	    	meldinger = hentMeldingene(statusflag[0]);
+	    	sortermeldingerMeldt(meldinger); // Sorter listen etter dato meldt
+	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
+	    }
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 		 sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-	 	 sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+//	 	 sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey); // Er allerede satt ved dobleKey
 	 	 SimpleScalar simpleDisplay = new SimpleScalar(displayPart);
 	 	 SimpleScalar simple = new SimpleScalar(utvalg);
 	 	 SimpleScalar merk = new SimpleScalar(merknadValg);
@@ -157,7 +160,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
         setDBSource(request);
 //	     String db =  sessionAdmin.getChosenDB(request);
   	    List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(getRequest(), meldingsId);
-  	    dobleMeldingene = (List)sessionAdmin.getSessionObject(request,dobleMeldingKey);
+  	    dobleMeldingene = (List)sessionAdmin.getSessionObject(request,dobleKey);
   	    login = (LoginModel) sessionAdmin.getSessionObject(request, loginKey);
   	    dataModel.put(meldeKey,meldinger);
   	    dataModel.put(statusflagKey,statusflag);
@@ -196,8 +199,10 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
   		if (formAnonymesaker != null){ // Henter anonyme meldinger
   			Long saksbehandlerid = login.getSaksbehandler().getSakbehandlerid();
   			meldinger = hentanonymeMeldinger();
+//	    	sortermeldingerMeldt(meldinger); // Sorter listen etter dato meldt
+	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
  		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
@@ -235,8 +240,9 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
  	    		meldinger = (List) meldingDetaljene.get(meldingsID);
  	    		meldinger = hentMeldingstyper(meldinger);
  			}
+ 			makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
  		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
@@ -254,8 +260,10 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
   		if (formMinesaker != null){ // Søker frem saksbehandlers saker
   			Long saksbehandlerid = login.getSaksbehandler().getSakbehandlerid();
   			meldinger = hentMineMeldinger(saksbehandlerid);
+//	    	sortermeldingerMeldt(meldinger); // Sorter listen etter dato meldt
+	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
  		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
@@ -284,12 +292,14 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     		}
  			saksbehandlingWebservice.setTimeperiodType(false); // Flagg for dato hendt til false
   			meldinger = hentMeldingene(meldtUtvalgetstart, meldtUtvalgetslutt);
+//	    	sortermeldingerMeldt(meldinger); // Sorter listen etter dato meldt
+	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
    		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
   		 	 dataModel.put(merknadlisteKey, merk);
   			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
   		    dataModel.put(meldeKey,meldinger);
   	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
 
@@ -314,12 +324,14 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     		}
   			saksbehandlingWebservice.setTimeperiodType(true);// Flagg for dato meldt til true
   			meldinger = hentMeldingene(meldtUtvalgetstart, meldtUtvalgetslutt);
+//	    	sortermeldingerMeldt(meldinger); // Sorter listen etter dato meldt
+	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
    		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
   		 	 dataModel.put(merknadlisteKey, merk);
   			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
   		    dataModel.put(meldeKey,meldinger);
   	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
 
@@ -339,13 +351,15 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     			}
     		}
   			meldinger = hentMeldingene(utvalget);
+//	    	sortermeldingerMeldt(meldinger); // Sorter listen etter dato meldt
+	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
   			utvalg = utvalget;
   		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
   		 	 dataModel.put(merknadlisteKey, merk);
   			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
   		    dataModel.put(meldeKey,meldinger);
   	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
 
@@ -366,6 +380,8 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     			}
     		}
   			meldinger = hentMeldingMerknader(utvalget);
+//	    	sortermeldingerMeldt(meldinger); // Sorter listen etter dato meldt
+	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
   			merknadValg = utvalget;
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
   		 	 dataModel.put(merknadlisteKey, merk);
@@ -373,7 +389,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
   		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
   		    dataModel.put(meldeKey,meldinger);
   	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
 
@@ -399,7 +415,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
   		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
   		    dataModel.put(meldeKey,meldinger);
   	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
 
@@ -421,7 +437,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
  		 	SimpleScalar simple = new SimpleScalar(utvalg);
  		 	dataModel.put(utvalgKey, simple);
  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
- 		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+ 		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
  		    dataModel.put(meldeKey,meldinger);
  	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
 
