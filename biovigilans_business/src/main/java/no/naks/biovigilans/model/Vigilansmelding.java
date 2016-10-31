@@ -36,7 +36,8 @@ public interface Vigilansmelding {
 	public void setKladd(String kladd);
 	public String getGodkjent();
 	public void setGodkjent(String godkjent);
-	
+	public int getSekvensNr();
+	public void setSekvensNr(int sekvensNr);
 	public void setMeldingTypes();
 	public void setMeldingParams();
 	public int[] getTypes();

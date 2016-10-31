@@ -11,5 +11,5 @@ public interface GiverTableService {
 	public void saveVigilansmelding(Vigilansmelding vigilansmelding);
 	public void saveGiverKomplikasjon(Giverkomplikasjon giverKomplikasjon);
 	public void saveGiveroppfolging(Giveroppfolging giveroppfolging);
-
+	public void setAlterativeSource(String key);
 }

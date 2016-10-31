@@ -40,4 +40,13 @@ public class GiverTableServiceImpl extends BusinessService implements GiverTable
 	public void saveGiveroppfolging(Giveroppfolging giveroppfolging){
 		giverDAO.saveGiveroppfolging(giveroppfolging);
 	}
+	
+	@Override
+	public void setAlterativeSource(String key) {
+		super.setAlterativeDBSource(key);
+		if (getJdbctemplatesDAO() != null){
+			giverDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
+		}
+		
+	}
 }

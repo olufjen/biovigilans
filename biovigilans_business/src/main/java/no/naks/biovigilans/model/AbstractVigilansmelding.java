@@ -80,11 +80,18 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	private String meldingTitle = "Ordinær melding";
 	
 	private String meldingHead = ""; // Meldingshode for hemovigilans = Hem, for Celler og vev = Cev, for Organer = Org (April 2016)
+	protected int sekvensNr = 0; // Sekvensnummer som vises i oversikten dersom flere meldinger har samme meldingsnummer
 	
 	protected String[]vigilansKeys;	
 	protected Map<String,String>vigilansFields;
 
 	
+	public int getSekvensNr() {
+		return sekvensNr;
+	}
+	public void setSekvensNr(int sekvensNr) {
+		this.sekvensNr = sekvensNr;
+	}
 	public String getMeldingHead() {
 		return meldingHead;
 	}

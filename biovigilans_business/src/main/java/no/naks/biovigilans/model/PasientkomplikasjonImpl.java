@@ -288,7 +288,7 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 			setArsakssammenheng(null);
 			setKlassifikasjon(null);
 			setKladd(null);
-			setSupplerendeopplysninger(null);
+//			setSupplerendeopplysninger(null); Fjernet 23.09.16 ref transfusjonswebmodel
 		}
 		if (getMeldingsnokkel() != null){
 			setMeldeid(null);
@@ -305,7 +305,7 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 			setArsakssammenheng(null);
 			setKlassifikasjon(null);
 			setKladd(null);
-			setSupplerendeopplysninger(null);
+//			setSupplerendeopplysninger(null);Fjernet 23.09.16 ref transfusjonswebmodel
 			if (getAlvorlighetsgrad() == null || getAlvorlighetsgrad().isEmpty())
 				setAlvorlighetsgrad(alvor);
 			if (getKliniskresultat() == null || getKliniskresultat().isEmpty())
@@ -316,8 +316,8 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 				setKlassifikasjon(klasse);
 			if (getKladd() == null || getKladd().isEmpty())
 				setKladd(kladd);
-			if (getSupplerendeopplysninger() == null || getSupplerendeopplysninger().isEmpty())
-				setSupplerendeopplysninger(supplerende);
+/*			if (getSupplerendeopplysninger() == null || getSupplerendeopplysninger().isEmpty())
+				setSupplerendeopplysninger(supplerende); Fjernet 23.09.16 ref transfusjonswebmodel */
 		}
 	}
 	/* produceSymptoms

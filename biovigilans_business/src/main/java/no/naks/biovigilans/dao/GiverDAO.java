@@ -1,5 +1,7 @@
 package no.naks.biovigilans.dao;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import no.naks.biovigilans.model.Giver;
 import no.naks.biovigilans.model.Giverkomplikasjon;
 import no.naks.biovigilans.model.Giveroppfolging;
@@ -22,5 +24,5 @@ public interface GiverDAO {
 	
 	public String getMeldingHead();
 	public void setMeldingHead(String meldingHead);	
-
+	public void setAlternativeSource(JdbcTemplate alternativeSource);
 }
