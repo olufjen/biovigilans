@@ -36,7 +36,7 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	protected String[] aldergruppeGiver;
 	protected String[] merknader; // Inneholder tilgjengelige merknader som kan resulterer i at saksstatus endres
 	protected String meldeKey = "meldinger";
-	protected String[] statusflag;
+
 	protected String statusflagKey = "statusflag";
 	protected String sakModelKey = "sakModel";
 	protected String behandlingsFlaggKey = "flaggliste";
@@ -65,10 +65,7 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 /*
  * Benyttet til excel rapporter
  */
-	protected String reportAndreKey = "reportandremeldinger"; // Sesjonsnøkkel for rapporter andre meldinger
-	protected String reportGiverKey = "reportgivermeldinger"; // Sesjonsnøkkel for rapporter giver meldinger	
-	protected String reportPasientKey = "reportpasientmeldinger"; // Sesjonsnøkkel for rapporter pasient meldinger
-	
+
 	protected String startPeriodKey = "startperiod"; //Session nøkler for start og slutt på angitt periode
 	protected String endPeriodKey = "endperiod";
 /*
@@ -84,7 +81,8 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	protected String giverhendelsesskjema = "/hemovigilans/rapporter_giver.html";
 	protected String transfusjonhendelseskjema = "/hemovigilans/rapporter_transfusjon.html";
 
-	
+	protected String imagesrcImportant = "/biovigilans_admin_web/resources/images/important.png"; // Peker til ikon for tidligere info
+	protected String imageImportantkey = "ikonImportant";
 	public String getTilMeldermsgCEV() {
 		return tilMeldermsgCEV;
 	}
@@ -237,14 +235,6 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 		this.sakModelKey = sakModelKey;
 	}
 
-	public String[] getStatusflag() {
-		return statusflag;
-	}
-
-	public void setStatusflag(String[] statusflag) {
-		this.statusflag = statusflag;
-	}
-
 	public String getStatusflagKey() {
 		return statusflagKey;
 	}
@@ -268,12 +258,21 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	/**
 	 * setMeldertext
 	 * Setter riktig tekst til melder for celler og vev
+	 * @since 05.09.16
+	 * Setter også riktig nedtrekk for saksbehandling
 	 * @param dbKey
 	 */
 	protected void setMeldertext(String dbKey){
 		if (dbKey.equals("cellerogvev")){
 			tilMeldermsg = tilMeldermsgCEV;
 			tilMeldertillegg = tilMeldertilleggCEV;
+			for (int i = 0;i<cellerogvevhovedprosesslist.length;i++){
+				hovedprosesslist[i] = cellerogvevhovedprosesslist[i];
+			}
+			for (int i = 0;i<cellerogvevfeilelleravvik.length;i++){
+				feilelleravvik[i] = cellerogvevfeilelleravvik[i];
+			}
+			
 		}
 	}
 	/**
@@ -286,10 +285,11 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 		saksbehandlingWebservice.setAlterativeSource(db);
 		annenKomplikasjonWebService.setAlterativeSource(db);
 		donasjonWebService.setAlterativeSource(db);
+		giverWebService.setAlterativeSource(db);
 		komplikasjonsklassifikasjonWebService.setAlterativeSource(db);
 		komDiagnosegiverWebService.setAlterativeSource(db);
 		hendelseWebService.setAlterativeSource(db);
-//		melderWebService.setAlterativeSource(db); MeldertableService er i saksbehandlerWebservice !!
+//		melderWebService.setAlterativeSource(db);// MeldertableService er i saksbehandlerWebservice !!??? 
 		setAlternativeSource(sessionAdmin.getChosenTemplate());
 		setMeldertext(db);
 	}
@@ -358,52 +358,7 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 			}
 		}
 	}
-	/**
-	 * hentMeldingstyper
-	 * Denne rutinen setter meldingstype til meldingsuttvalget
-	 * Verdien settes i feltet meldingstype
-	 * @param meldinger
-	 * @return
-	 */
-	protected List<Vigilansmelding> hentMeldingstyper(List<Vigilansmelding> meldinger){
-		/*
-		 * Finne meldinstyper:	    
-		 */
-		  		Request request = getRequest();
-			    Map andreMeldinger = saksbehandlingWebservice.collectAnnenMeldinger(meldinger);
-			    List<Annenkomplikasjon> annenListe =(List) andreMeldinger.get(andreKey);
-			    List<Pasientkomplikasjon> pasientListe = (List) andreMeldinger.get(pasientKey);
-			    List<Giverkomplikasjon> giverListe = (List)  andreMeldinger.get(giverKey);
-			    sessionAdmin.setSessionObject(request, annenListe, reportAndreKey);
-			    sessionAdmin.setSessionObject(request, pasientListe, reportPasientKey);
-			    sessionAdmin.setSessionObject(request, giverListe, reportGiverKey);
-			    
-			    for (Vigilansmelding melding: meldinger){
-			    	melding.setMeldingstype("Ukjent");
-			    	if (melding.getSjekklistesaksbehandling() == null || melding.getSjekklistesaksbehandling().isEmpty()){
-			    		melding.setSjekklistesaksbehandling("Levert");
-			    	}
-			    	for (Annenkomplikasjon annenKomplikasjon : annenListe){
-			    		if (melding.getMeldeid().longValue() == annenKomplikasjon.getMeldeid().longValue()){
-			    			melding.setMeldingstype("Annen hendelse");
-			    		
-			    		}
-			    	}
-			    	for (Pasientkomplikasjon pasientKomplikasjon : pasientListe){
-			    		if (melding.getMeldeid().longValue() == pasientKomplikasjon.getMeldeid().longValue()){
-			    			melding.setMeldingstype("Pasientkomplikasjon");
-			    		
-			    		}
-			    	}
-			    	for (Giverkomplikasjon giverKomplikasjon : giverListe){
-			    		if (melding.getMeldeid().longValue() == giverKomplikasjon.getMeldeid().longValue()){
-			    			melding.setMeldingstype("Giverkomplikasjon");
-			    		
-			    		}
-			    	}
-			    }	    
-			    return meldinger;
-	}
+
 	/**
 	 * hentMeldingene
 	 * Denne rutinen henter meldinger basert på en tidperiode gitt som datoer
@@ -468,8 +423,10 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	 */
 	public List<Vigilansmelding> hentMeldingene(String status){
 		List<Vigilansmelding> meldinger = null;
-		meldinger = saksbehandlingWebservice.collectMessages(); // Henter alle meldinger
-		sorterMeldinger(meldinger); // Og sorterer disse før valgt utvalg hentes
+		meldinger = saksbehandlingWebservice.collectMessages(); // Henter alle meldinger. Dette må gjøres for å kunne sette opprinnelig melding til Erstattet
+
+		sorterMeldinger(meldinger); // Og sorterer disse og fjerner doble før valgt utvalg hentes
+
 		if (status != null && !status.equals(statusflag[6])){
 			meldinger = saksbehandlingWebservice.collectMessages(status); 
 		}
@@ -481,8 +438,8 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	    		melding.setSjekklistesaksbehandling("Levert");
 	    	}
 	    }
-    
-	    return hentMeldingstyper(meldinger);
+		meldinger = hentMeldingstyper(meldinger);// Lager egne lister for alle meldingstyper
+	    return meldinger;
 	}
 	/**
 	 * hentmeldingMerknader

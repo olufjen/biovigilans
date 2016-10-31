@@ -60,7 +60,61 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
 	}
 	
 
-
+	/**
+	 * statusChange
+	 * Denne rutinen kalles når bruker har valgt å endre status på meldingen
+	 * @param form
+	 * @param request
+	 * @param dataModel
+	 * @param melder
+	 * @param diskusjoner
+	 * @return
+	 */
+	private TemplateRepresentation statusChange(Form form,Request request,Map<String, Object> dataModel,Melder melder,List<Diskusjon>diskusjoner,ClientResource clres2){
+		Vigilansmelding	melding = (Vigilansmelding) giverModel.getGiverKomplikasjon();
+		Date datoforhendelse =  melding.getDatoforhendelse();
+		melding.setDatoforhendelse(datoforhendelse);
+		String statusCode = "";
+		Long meldeId = melding.getMeldeid();
+	    SakModel sakModel = (SakModel)sessionAdmin.getSessionObject(request,  sakModelKey);
+		for (Parameter entry : form) {
+			if (entry.getName().equals("nystatus") && entry.getValue() != null && !(entry.getValue().equals(""))){
+				statusCode = entry.getValue();
+				System.out.println(entry.getName() + "=" + entry.getValue());
+		
+			}
+		}
+		if (!statusCode.equals("")){
+			if (statusCode.equals(statusflag[0])) // Dersom status settes til Levert, så skal det settes til null i db
+				statusCode = null;
+			giverModel.getVigilansmelding().setSjekklistesaksbehandling(statusCode);
+			hendelseWebService.updateVigilansmelding(giverModel.getVigilansmelding());
+				if (statusCode == null){
+				statusCode = statusflag[0];
+				giverModel.getVigilansmelding().setSjekklistesaksbehandling(statusCode);
+			}
+				sakModel.setLoginSaksbehandler(login.getSaksbehandler());
+			sakModel.lagSak(meldeId, statusCode);
+			saksbehandlingWebservice.saveDiskusjon(sakModel.getDiskusjonsMappe());
+			sakModel.setSakdiskusjon();
+			saksbehandlingWebservice.saveSak(sakModel.getSaksMappe());
+			
+			List<Diskusjon> nyediskusjoner = sakModel.lagDiskusjonsliste();
+			if (diskusjoner != null)
+				diskusjoner.addAll(nyediskusjoner);
+   			sakModel.setDiskusjonsMappe(null);
+			sakModel.setSaksMappe(null);
+		}
+	
+//   			setDiplayvalues(dataModel);
+		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,giverhendelsesskjema));
+		 
+		Representation andreHendelser = clres2.get();
+//		invalidateSessionobjects();
+		TemplateRepresentation templateRep = new TemplateRepresentation(andreHendelser, dataModel,
+				MediaType.TEXT_HTML);
+		return templateRep;  // Hvorfor er denne nødvendig? OLJ 28.07.15		
+	}
 
 
 
@@ -127,6 +181,7 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
 	    	 displayPart = "block";
 	    	 datePart = "none";
 	    	 Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
+	    	 makeSequence(request, melding);
 	    	 setGivermelding();
 	    	 giverModel.setVigilansmelding(melding); // Fjernet kommentert ut. Denne linjen var kommentert ut OLJ 07.10.15
 	    	//==  Hent alle diskusjoner og merknader   =======	    	 
@@ -135,15 +190,18 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
 	    	 String mKey = melding.getMeldingsnokkel();
 	   
 	   	     Long orgmeldeId = getmeldingsNokkelsak(mKey); //Hent meldingsid for første melding med samme meldingsnøkkel
+	   		 String mnKey = String.valueOf(meldeId.longValue());
 	    	 Map<String,List> diskusjonene = saksbehandlingWebservice.collectDiskusjoner(meldeId);
 	     	 diskusjoner = diskusjonene.get(mKey);
 	    	 String omKey = "";
 	    	 Map<String,List> orgMapdiskusjoner = null;
 	    	 List<Diskusjon> orgdiskusjoner = null;
+	    	 boolean sameKey = false;
 	    	 if (orgmeldeId != null){
 	    		 orgMapdiskusjoner = saksbehandlingWebservice.collectDiskusjoner(orgmeldeId); // Henter diskusjoner fra tidligere meldinger med samme nøkkel
 	    		 omKey = String.valueOf(orgmeldeId.longValue());
 	    		 orgdiskusjoner =  orgMapdiskusjoner.get(omKey);
+	    		 sameKey = mnKey.equals(omKey);
 	    	 }	    	 
 	    	 String mmKey = String.valueOf(meldeId.longValue());
 	    	 diskusjoner = diskusjonene.get(mmKey);	    	 
@@ -154,7 +212,7 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
 	    	 if (!diskusjoner.isEmpty()){
 	    		 checkDiskusjoner(diskusjoner);
 	    	 }
-	    	 if (orgMapdiskusjoner != null)
+	    	 if (orgMapdiskusjoner != null && !sameKey)
 	    		 diskusjonene.putAll(orgMapdiskusjoner);
 	    	 
 	    	 sessionAdmin.setSessionObject(request, diskusjonene, diskusjonsKey);
@@ -352,9 +410,9 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
     			if (entry.getValue() != null && !(entry.getValue().equals("")))
     					System.out.println(entry.getName() + "=" + entry.getValue());
     			giverModel.setValues(entry);
-/*    			donasjon.setValues(entry);
+    			donasjon.setValues(entry);
     			komDiagnosegiver.setValues(entry);
-    			giverKvittering.setValues(entry);
+/*    			giverKvittering.setValues(entry);
     			if(entry.getName().equalsIgnoreCase("tab-annenreak")){
     				giverKvittering.annenreakList.add(entry.getValue()) ;
     			}*/
@@ -430,8 +488,8 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
        		Parameter lagreFlagg = form.getFirst("btnlagreflagg");
     		Parameter statusChange = form.getFirst("btnstatuschange");
     		Parameter avslutt = form.getFirst("btnavslutt");
-       		
     		Parameter sendTilmelder = form.getFirst("btnsend");
+    		
     		if (sendTilmelder != null){
        			meldingsType = "giver";
        			sessionAdmin.setSessionObject(request,meldingsType, meldingstypeKey);
@@ -469,8 +527,13 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
         		redirectPermanent("../hemovigilans/saksbehandling.html");
         		return templateRep;  // Hvorfor er denne nødvendig? OLJ 28.07.15
     		}
-    		if (statusChange != null){
-       			melding = (Vigilansmelding) giverModel.getGiverKomplikasjon();
+    		if (statusChange != null){// Bruker har valgt å endre saksstatus
+       			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,giverhendelsesskjema));
+       			templateRep = statusChange(form, request, dataModel, melder, diskusjoner, clres2);
+    			
+    			
+/*  Dette er nå flyttet til egen rutine - se over
+ *      			melding = (Vigilansmelding) giverModel.getGiverKomplikasjon();
     			Date datoforhendelse =  melding.getDatoforhendelse();
     			melding.setDatoforhendelse(datoforhendelse);
     			String statusCode = "";
@@ -509,7 +572,7 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
     			Representation andreHendelser = clres2.get();
 //        		invalidateSessionobjects();
         		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
-        				MediaType.TEXT_HTML);
+        				MediaType.TEXT_HTML);*/
         		return templateRep;  // Hvorfor er denne nødvendig? OLJ 28.07.15
     		}
     		//Parameter ikkegodkjet = form.getFirst("ikkegodkjent");
@@ -525,9 +588,18 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
  */
     			sakModel.setFlaggNames(flaggNames);
     			sakModel.getFormMap().clear();
+    			boolean avvist = false;
     			for (Parameter entry : form) {
         			if (entry.getValue() != null && !(entry.getValue().equals(""))){
         					System.out.println(entry.getName() + "=" + entry.getValue());
+        					if (entry.getName().equals("nystatus")){ // Bruker har også valgt å endre status til avvist
+        						avvist = true;
+        					}
+           					if (entry.getName().equals("kommentartilmeldingtxt")&& avvist){
+        						String txtVal = entry.getValue(); // Betyr at kommentar skal vises til Melder
+        						txtVal = "Vises;"+txtVal;
+        						entry.setValue(txtVal);
+           					}
         					sakModel.setValues(entry);
         			}
     			}
@@ -544,7 +616,10 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
         			dialogHemivigilans(request, sakModel.getDiskId(),mailTxt,giverModel.getVigilansmelding());
     			}
       			if (sakModel.isReklassifikasjon()){
+     				giverModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
+     				hendelseWebService.updateVigilansmelding(giverModel.getVigilansmelding());
       				sakModel.setGmlMeldeid(meldeId);
+      				giverModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[0]); //OBS !!?? Nødvendig her OLJ 04.10.16
       				savegiverReclassifikasjon();
     			}
 /*
@@ -570,11 +645,17 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
     			}
 //    			setDiplayvalues(dataModel);
     			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,giverhendelsesskjema));
-    			 
-    			Representation andreHendelser = clres2.get();
-//        		invalidateSessionobjects();
-        		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
+    			if (avvist)
+    				templateRep = statusChange(form, request, dataModel, melder, diskusjoner, clres2);
+    			else{
+    				Representation andreHendelser = clres2.get();
+    				templateRep = new TemplateRepresentation(andreHendelser, dataModel,
         				MediaType.TEXT_HTML);
+    			}    			 
+//    			Representation andreHendelser = clres2.get();
+//        		invalidateSessionobjects();
+//        		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
+//        				MediaType.TEXT_HTML);
         		return templateRep;  // Hvorfor er denne nødvendig? OLJ 28.07.15
     		}    		
     		if(lagre!=null){

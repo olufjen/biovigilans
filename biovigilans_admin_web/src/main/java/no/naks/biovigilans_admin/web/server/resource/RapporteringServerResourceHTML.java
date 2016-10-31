@@ -84,7 +84,7 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
 	    List<Vigilansmelding> meldinger = hentMeldingene(null);
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 		 sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-	 	 sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+	 	 sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
 	 	 SimpleScalar simpleDisplay = new SimpleScalar(displayPart);
 	 	 SimpleScalar simple = new SimpleScalar(utvalg);
 	 	 SimpleScalar merk = new SimpleScalar(merknadValg);
@@ -129,7 +129,7 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
         Reference reference = new Reference(getReference(),"..").getTargetRef();
         Request request = getRequest();
   	    List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(getRequest(), meldingsId);
-  	    dobleMeldingene = (List)sessionAdmin.getSessionObject(request,dobleMeldingKey);
+  	    dobleMeldingene = (List)sessionAdmin.getSessionObject(request,dobleKey);
   	    login = (LoginModel) sessionAdmin.getSessionObject(request, loginKey);
   	    dataModel.put(meldeKey,meldinger);
   	    dataModel.put(statusflagKey,statusflag);
@@ -191,7 +191,7 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
  		 	SimpleScalar simple = new SimpleScalar(utvalg);
  		 	dataModel.put(utvalgKey, simple);
  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
- 		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+ 		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
  		    dataModel.put(meldeKey,meldinger);
  			Response response = getResponse(); 
 	         // String path = "C:\\hemovigilans\\rapporter";
@@ -226,7 +226,7 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
   		 	 dataModel.put(merknadlisteKey, merk);
   			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
   		 	sessionAdmin.setSessionObject(request, meldtUtvalgetstart, startPeriodKey);
   		 	sessionAdmin.setSessionObject(request, meldtUtvalgetslutt, endPeriodKey);
   		 	sessionAdmin.setSessionObject(request, "hent", "hent");
@@ -259,7 +259,7 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
   		 	 dataModel.put(merknadlisteKey, merk);
   			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
 		 	sessionAdmin.setSessionObject(request, meldtUtvalgetstart, startPeriodKey);
   		 	sessionAdmin.setSessionObject(request, meldtUtvalgetslutt, endPeriodKey);
   		    dataModel.put(meldeKey,meldinger);
@@ -287,7 +287,7 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
   		 	 dataModel.put(merknadlisteKey, merk);
   			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
   		    dataModel.put(meldeKey,meldinger);
   	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapportering.html"));
 
@@ -315,7 +315,7 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
   		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
   		    dataModel.put(meldeKey,meldinger);
   	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapportering.html"));
 
@@ -341,7 +341,7 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
   		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
   		    dataModel.put(meldeKey,meldinger);
   	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapportering.html"));
 
@@ -363,7 +363,7 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
  		 	SimpleScalar simple = new SimpleScalar(utvalg);
  		 	dataModel.put(utvalgKey, simple);
  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
- 		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+ 		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
  		    dataModel.put(meldeKey,meldinger);
  	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapportering.html"));
 

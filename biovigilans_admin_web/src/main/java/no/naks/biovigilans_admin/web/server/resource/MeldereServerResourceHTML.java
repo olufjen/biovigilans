@@ -48,7 +48,7 @@ public class MeldereServerResourceHTML extends SaksbehandlingSessionServer {
 	    	meldinger = hentMeldingene(statusflag[0]);
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 		 sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-	 	 sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+//	 	 sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
 	 	 SimpleScalar simpleDisplay = new SimpleScalar(displayPart);
 	 	 SimpleScalar simple = new SimpleScalar(utvalg);
 	 	 SimpleScalar merk = new SimpleScalar(merknadValg);
@@ -97,7 +97,7 @@ public class MeldereServerResourceHTML extends SaksbehandlingSessionServer {
 	    List<Melder>  meldere = saksbehandlingWebservice.collectMeldere();
 	    
   	    List<Vigilansmelding> meldinger = saksbehandlingWebservice.collectmeldersmeldinger("");
-  	    dobleMeldingene = (List)sessionAdmin.getSessionObject(request,dobleMeldingKey);
+  	    dobleMeldingene = (List)sessionAdmin.getSessionObject(request,dobleKey);
   	    login = (LoginModel) sessionAdmin.getSessionObject(request, loginKey);
 
   	    dataModel.put(statusflagKey,statusflag);
@@ -122,7 +122,7 @@ public class MeldereServerResourceHTML extends SaksbehandlingSessionServer {
 				}
 			}
 				sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-	 		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+	 		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
 	 		    meldinger = saksbehandlingWebservice.collectmeldersmeldinger(meldingsID);
 			 	SimpleScalar simple = new SimpleScalar(utvalg);
 	 		 	dataModel.put(utvalgKey, simple);
@@ -141,7 +141,7 @@ public class MeldereServerResourceHTML extends SaksbehandlingSessionServer {
 	   		return templatemapRep;  			
 		}
 		sessionAdmin.setSessionObject(request, meldinger, meldingsId);
-		sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey);
+		sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
 		SimpleScalar simple = new SimpleScalar(utvalg);
 		dataModel.put(utvalgKey, simple);
 		SimpleScalar merk = new SimpleScalar(merknadValg);
