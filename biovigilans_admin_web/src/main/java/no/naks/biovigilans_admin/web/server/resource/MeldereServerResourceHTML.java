@@ -30,7 +30,7 @@ public class MeldereServerResourceHTML extends SaksbehandlingSessionServer {
 	private String merknadKey = "merknader";
 	private String merknadlisteKey = "merknadvalgt";
 	private String meldereKey = "meldere";
-	private String melderSQLkey = "sql";
+	private String melderSQLkey = "sql"; 
 	private String vigilansmelderSQL = "SELECT meldeid,datoforhendelse,datooppdaget,donasjonoverforing,sjekklistesaksbehandling,supplerendeopplysninger,meldingsdato,meldingsnokkel,melderid,kladd,godkjent from vigilansmelding where melderid in (24,64,65,66)";
 
 	@Get
