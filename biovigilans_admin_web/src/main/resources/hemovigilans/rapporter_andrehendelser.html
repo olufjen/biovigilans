@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Rapportert hendelse - Celler og vev</title>
+  <title>Rapportert hendelse - Hemovigilans</title>
      <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html;">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,6 +54,7 @@
 		var statusflag = "${andreHendelse.vigilansmelding.sjekklistesaksbehandling}";
 		var reclasflag = false;
 		var reclasflagtemp = true;
+		var tilMelderflag = false;
 			/**
 			This  function set the calender for date to the browsers those doesn't support html5 input type date.
 			
@@ -261,7 +262,17 @@
 					}
 				}
 				function setStatus(){
-					$("#btnstatuschange").click();
+					toggleDisplayid('kommentartilmelding', 0);
+					var statusValg = $("#nystatus").val();
+					if (statusValg=="Avvist"){
+						toggleDisplayid('kommentartilmelding', 1);
+//						document.getElementById('kommentartilmelding')setAttribute("value","Til melder;");
+						$("#statusvalg7").attr("checked",true);
+						tilMelderflag = true;
+					}else{
+						$("#btnstatuschange").click();
+					}
+					
 				}
 
 				function toggleDisplayid(id, displayvalue)
@@ -496,7 +507,7 @@
 				</div>
 				<h3>Meldingsnøkkel </h3>
 					<div>
- 					<label>${andreHendelse.vigilansmelding.formatNokkel}</label>
+ 					<label title="${andreHendelse.vigilansmelding.sekvensNr}(${andreHendelse.vigilansmelding.meldeid})">${andreHendelse.vigilansmelding.formatNokkel}</label>
  					</div>
 				<label>Dato for hendelsen </label>
      				<div>
@@ -509,8 +520,8 @@
 				</div>
 			<div class="bg-success" style="display: ${display}">
 				<label>Tidligere beskrivelse av hendelsen </label>
-					<div>
- 					<label>${annenHendelse.komplikasjonbeskrivelse}</label>
+					<div> 
+ 					<label>${annenHendelse.komplikasjonbeskrivelse}	<img alt="OBS" title="${annenHendelseOrg.komplikasjonbeskrivelse}"  src="${ikonImportant}" style="display: ${displayorgInfo} height:22px;width:22px;"> </label>
  					</div>
 			</div>				
 				<div class="form-group" >

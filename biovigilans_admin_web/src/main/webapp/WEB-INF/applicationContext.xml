@@ -193,7 +193,7 @@
             class="no.naks.biovigilans_admin.web.server.resource.RapporteringServerResourceHTML">
         	<property name="sessionAdmin" ref="sessionAdmin"></property>
 			<property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
-            <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusalle},${statusframelder},${statusalleunntattavvist}"></property>
+            <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusalle},${statusframelder},${statusalleunntattavvist},${statuserstattet}"></property>
         <property name="merknader" value="${merknaddialogmelder},${merknaddialoghemovigilans},${merknadtilhdir},${merknadtildiskusjon},${merknadtilseminar},${merknadtilarsrapport},${merknadreklassifisering}"></property>
 			
 	       <property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
@@ -334,7 +334,7 @@
         	<property name="sessionAdmin" ref="sessionAdmin"></property>
 			<property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
 	        <property name="innmeldingWebService" ref="hendelseWebService"></property>
-            <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusalle},${statusframelder},${statusalleunntattavvist}"></property>
+            <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusalle},${statusframelder},${statusalleunntattavvist},${statuserstattet}"></property>
         <property name="merknader" value="${merknaddialogmelder},${merknaddialoghemovigilans},${merknadtilhdir},${merknadtildiskusjon},${merknadtilseminar},${merknadtilarsrapport},${merknadreklassifisering},${merknadkommentar}"></property>
 			
 	       <property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
@@ -464,7 +464,10 @@
       <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
       <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
       ${hovedprosessoption10},${hovedprosessoption11}"></property>
-      <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7},${feilelleravvikoption8}"></property>  
+      	  <property name="cellerogvevhovedprosesslist" value="${cellerhovedprosessoption1},${cellerhovedprosessoption2},${cellerhovedprosessoption3},${cellerhovedprosessoption4},${cellerhovedprosessoption5},
+	  ${cellerhovedprosessoption6},${cellerhovedprosessoption7},${cellerhovedprosessoption8},${cellerhovedprosessoption9},${cellerhovedprosessoption10},${cellerhovedprosessoption11}"></property>
+      <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7},${feilelleravvikoption8}"></property> 
+      <property name="cellerogvevfeilelleravvik" value="${cellerfeilelleravvikoption1},${cellerfeilelleravvikoption2},${cellerfeilelleravvikoption3},${cellerfeilelleravvikoption4},${cellerfeilelleravvikoption8}"></property> 
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
 	   <property name="icd10WebService" ref="ICD10WebService"></property>	
       </bean>
@@ -485,13 +488,15 @@
         <property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient3},${aldergruppepasient4},${aldergruppepasient5},
                         ${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}">
          </property>
-         <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg}"></property>
+         <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusframelder},${statusalleunntattavvist},${statuserstattet}"></property>
          <property name="tilsakbehandlereMsg" value="${tilsaksbehandler.text}"></property>
       <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
       <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
       ${hovedprosessoption10},${hovedprosessoption11}"></property>
       <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7},${feilelleravvikoption8}"></property>  
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
+	  <property name="cellerogvevhovedprosesslist" value="${cellerhovedprosessoption1},${cellerhovedprosessoption2},${cellerhovedprosessoption3},${cellerhovedprosessoption4},${cellerhovedprosessoption5},
+	  ${cellerhovedprosessoption6},${cellerhovedprosessoption7},${cellerhovedprosessoption8},${cellerhovedprosessoption9},${cellerhovedprosessoption10},${cellerhovedprosessoption11}"></property>
       <property name="icd10WebService" ref="ICD10WebService"></property>
        <property name="annenKomplikasjonWebService" ref="annenKomplikasjonWebService"></property>
       <!-- 
@@ -527,7 +532,7 @@
                 <property name="flaggNames" value="${flagg.statusvalg},${flagg.statusvalg1},${flagg.statusvalg2},${flagg.statusvalg3},${flagg.statusvalg4},${flagg.statusvalg5},${flagg.statusvalg6},${flagg.statusvalg7},${flagg.statusvalg8}">
         		</property>
    		         <property name="tilsakbehandlereMsg" value="${tilsaksbehandler.text}"></property>
-                <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg}"></property>
+                <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusframelder},${statusalleunntattavvist},${statuserstattet}"></property>
                 <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingandre},${avdelingvetikke}"></property>
                 <property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient3},${aldergruppepasient4},${aldergruppepasient5},
                         ${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}"></property>
@@ -645,7 +650,7 @@
         <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
         <property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},${aldergruppegiver5},
                     ${aldergruppegiver6},${aldergruppegiver7}"></property>
-        <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg}"></property>
+        <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusframelder},${statusalleunntattavvist},${statuserstattet}"></property>
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
                       ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>

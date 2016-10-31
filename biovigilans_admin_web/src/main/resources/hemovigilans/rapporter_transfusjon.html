@@ -389,7 +389,16 @@ function showtext(id,thetext){
 			}
 		}
 	function setStatus(){
-		$("#btnstatuschange").click();
+		toggleDisplayid('kommentartilmelding', 0);
+		var statusValg = $("#nystatus").val();
+		if (statusValg=="Avvist"){
+			toggleDisplayid('kommentartilmelding', 1);
+//			document.getElementById('kommentartilmelding')setAttribute("value","Til melder;");
+			$("#statusvalg7").attr("checked",true);
+			tilMelderflag = true;
+		}else{
+			$("#btnstatuschange").click();
+		}
 	}
 	function toggleDisplayid(id, displayvalue)
 	{    
@@ -807,7 +816,7 @@ function showtext(id,thetext){
 				</div>
 				<h3>Meldingsnøkkel </h3>
 					<div>
- 					<label>${pasientkomplikasjon.vigilansmelding.formatNokkel}</label>
+ 					<label title="${pasientkomplikasjon.vigilansmelding.sekvensNr}(${pasientkomplikasjon.vigilansmelding.meldeid})">${pasientkomplikasjon.vigilansmelding.formatNokkel}</label>
  					</div>
 				<label>Dato for hendelsen </label>
      				<div>

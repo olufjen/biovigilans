@@ -256,7 +256,7 @@
      	<table class="table table-hover" border=1>
   		<tr><th>Til PDF</th><th>Detaljer</th><th >Meldingsnøkkel</th><th><a href="javascript:formSubmit('btnsorteringdatohendt');">Dato for hendelse</a> </th><th><a href="javascript:formSubmit('btnsorteringdatomeldt');">Meldingsdato</a></th><th>Meldingstype</th><th>Status</th>
   			<#list meldinger as melding>
-  			<tr id="nokkelr"><td><button type="submit" id="btnpdf" name="pdf" value="${melding.meldeid}"  class="btn btn-success btn-lg">Til PDF</button></td><td><button type="submit" id="btnleveranse" name="lukk1" value="${melding.meldeid}"  class="btn btn-default">Velg</button></td><td id="nokkel">${melding.formatNokkel}</td><td>${melding.datoforhendelse?date}</td><td>${melding.meldingsdato?date}</td><td>${melding.meldingstype}</td><td id="tabstatus" title=${melding.meldingTitle} bgcolor=${melding.color}>${melding.sjekklistesaksbehandling}</td> 
+  			<tr id="nokkelr"><td><button type="submit" id="btnpdf" name="pdf" value="${melding.meldeid}"  class="btn btn-success btn-lg">Til PDF</button></td><td><button type="submit" id="btnleveranse" name="lukk1" value="${melding.meldeid}"  class="btn btn-default">Velg</button></td><td id="nokkel" title="${melding.sekvensNr}(${melding.meldeid})" >${melding.formatNokkel}</td><td>${melding.datoforhendelse?date}</td><td>${melding.meldingsdato?date}</td><td>${melding.meldingstype}</td><td id="tabstatus" title=${melding.meldingTitle} bgcolor=${melding.color}>${melding.sjekklistesaksbehandling}</td> 
   			</#list>
 		</table>  
      </div>
