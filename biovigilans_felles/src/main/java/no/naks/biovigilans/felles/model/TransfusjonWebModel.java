@@ -260,7 +260,10 @@ public class TransfusjonWebModel extends VigilansModel {
 		transfusjon.produceProduktegenskaper(tromboEgenskap);
 		transfusjon.produceProduktegenskaper(plasmaEgenskap);
 		transfusjon.produceBlodprodukt(annenBlodprodukt);
+		vigilansmelding.saveToVigilansmelding(); // Lagt til 23.09.16 - supplerende opplysninger mangler ved oppfølging
 		pasientKomplikasjon.savetoPasientkomplikasjon();
+		Vigilansmelding melding = (Vigilansmelding)pasientKomplikasjon;
+		melding.setSupplerendeopplysninger(vigilansmelding.getSupplerendeopplysninger()); //// Lagt til 23.09.16 - supplerende opplysninger mangler ved oppfølging
 /*		
 		pasientKomplikasjon.setAlvorlighetsgrad(null);
 		pasientKomplikasjon.setKliniskresultat(null);

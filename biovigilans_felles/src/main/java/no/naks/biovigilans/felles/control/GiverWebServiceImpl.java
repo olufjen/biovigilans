@@ -43,4 +43,7 @@ public class GiverWebServiceImpl extends MasterWebServiceImpl implements GiverWe
 	public void saveGiveroppfolging(GiverKomplikasjonwebModel giverModel){
 		giverTableService.saveGiveroppfolging(giverModel.getGiveroppfolging()); 
 	}
+	public void setAlterativeSource(String key){
+		giverTableService.setAlterativeSource(key);
+	}
 }

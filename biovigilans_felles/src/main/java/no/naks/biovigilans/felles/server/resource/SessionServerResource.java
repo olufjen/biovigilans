@@ -97,7 +97,12 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String giverKey = "giverkomp"; 	// Nøkkel dersom melding er at type giverkomplikasjon
 	protected String meldingsId = "meldingliste";  // Nøkkel til en Vigilansmelding (OBS i adm til en liste vigilansmeldinger) OBS: Endret fra meldinger !!
 	protected String vigilansmeldinger = "vigilansmeldinger"; // Nøkkel til en liste vigilansmeldinger
-	protected String allemeldingerMap = "allemeldinger"; // Nøkkel til en Map som inneholder alle meldingsdetaljer		
+	protected String allemeldingerMap = "allemeldinger"; // Nøkkel til en Map som inneholder alle meldingsdetaljer	
+	
+	protected String reportAndreKey = "reportandremeldinger"; // Sesjonsnøkkel for rapporter andre meldinger
+	protected String reportGiverKey = "reportgivermeldinger"; // Sesjonsnøkkel for rapporter giver meldinger	
+	protected String reportPasientKey = "reportpasientmeldinger"; // Sesjonsnøkkel for rapporter pasient meldinger
+	
 	protected String[] avdelinger;
 	protected String[] aldergruppe;
 	protected String[] kjonnValg; 
@@ -136,6 +141,8 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String displayKey = "display";						
 	protected String displayPart = "none";
 	protected String displaydateKey = "displaydate";
+	protected String displayorgInfo = "none";
+	protected String displayorgInfoKey = "displayorgInfo"; 
 	protected String datePart = "block";
 	protected String dobleKey = "doblemeldinger";
 
@@ -179,11 +186,14 @@ public class SessionServerResource extends ProsedyreServerResource {
 	 */
 	protected AnnenKomplikasjonwebModel annenModel =  null;
 	protected String andreHendelseId ="andreHendelse";
-	protected String annenHendelseId ="annenHendelse";
+	protected String annenHendelseId = "annenHendelse";
+	protected String annenHendelseOrg = "annenHendelseOrg";
 	protected String[] alvorligHendelse; 
 	protected String[] hovedprosesslist;
 	protected String[] feilelleravvik;
 	protected String[] hendelsenoppdaget;
+	protected String[] cellerogvevhovedprosesslist; // Lagt til for Celler og vev 05.09.16
+	protected String[] cellerogvevfeilelleravvik;	// Lagt til for Celler og vev 05.09.16
 	/**
 	 * Session objekter for kontakt	
 	 */
@@ -230,13 +240,39 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected SaksbehandlingWebService saksbehandlingWebservice;
     
 	protected String meldingsNokkel = null;   // Meldingsnøkkel benyttet for utskrift til pdf
+	protected String[] statusflag; //Statusflag for meldinger
 	
 	private String[] alvorGrad = {"Grad 2 Alvorlig","Grad 3 Livstruende","Grad 4 Dødsfall"};
+
 	
 /*
  * 	For alvorlige pasienthendelser
  */
 	
+	public String[] getStatusflag() {
+		return statusflag;
+	}
+
+	public void setStatusflag(String[] statusflag) {
+		this.statusflag = statusflag;
+	}
+
+	public String[] getCellerogvevhovedprosesslist() {
+		return cellerogvevhovedprosesslist;
+	}
+
+	public void setCellerogvevhovedprosesslist(String[] cellerogvevhovedprosesslist) {
+		this.cellerogvevhovedprosesslist = cellerogvevhovedprosesslist;
+	}
+
+	public String[] getCellerogvevfeilelleravvik() {
+		return cellerogvevfeilelleravvik;
+	}
+
+	public void setCellerogvevfeilelleravvik(String[] cellerogvevfeilelleravvik) {
+		this.cellerogvevfeilelleravvik = cellerogvevfeilelleravvik;
+	}
+
 	public String[] getAlvorligHendelsepasientgrad() {
 		return alvorligHendelsepasientgrad;
 	}
@@ -283,6 +319,22 @@ public class SessionServerResource extends ProsedyreServerResource {
 
 	
 	
+	public String getDisplayorgInfoKey() {
+		return displayorgInfoKey;
+	}
+
+	public void setDisplayorgInfoKey(String displayorgInfoKey) {
+		this.displayorgInfoKey = displayorgInfoKey;
+	}
+
+	public String getDisplayorgInfo() {
+		return displayorgInfo;
+	}
+
+	public void setDisplayorgInfo(String displayorgInfo) {
+		this.displayorgInfo = displayorgInfo;
+	}
+
 	public String getMeldingsNokkel() {
 		return meldingsNokkel;
 	}
@@ -1488,11 +1540,59 @@ public class SessionServerResource extends ProsedyreServerResource {
 			}
 		}  
     }
+	/**
+	 * hentMeldingstyper
+	 * Denne rutinen setter meldingstype til meldingsuttvalget
+	 * Den setter også opp egne lister for hver type melding
+	 * Verdien settes i feltet meldingstype
+	 * @param meldinger
+	 * @return
+	 */
+	protected List<Vigilansmelding> hentMeldingstyper(List<Vigilansmelding> meldinger){
+		/*
+		 * Finne meldinstyper:	    
+		 */
+		  		Request request = getRequest();
+			    Map andreMeldinger = saksbehandlingWebservice.collectAnnenMeldinger(meldinger);
+			    List<Annenkomplikasjon> annenListe =(List) andreMeldinger.get(andreKey);
+			    List<Pasientkomplikasjon> pasientListe = (List) andreMeldinger.get(pasientKey);
+			    List<Giverkomplikasjon> giverListe = (List)  andreMeldinger.get(giverKey);
+			    sessionAdmin.setSessionObject(request, annenListe, reportAndreKey);
+			    sessionAdmin.setSessionObject(request, pasientListe, reportPasientKey);
+			    sessionAdmin.setSessionObject(request, giverListe, reportGiverKey);
+			    
+			    for (Vigilansmelding melding: meldinger){
+			    	melding.setMeldingstype("Ukjent");
+			    	if (melding.getSjekklistesaksbehandling() == null || melding.getSjekklistesaksbehandling().isEmpty()){
+			    		melding.setSjekklistesaksbehandling("Levert");
+			    	}
+			    	for (Annenkomplikasjon annenKomplikasjon : annenListe){
+			    		if (melding.getMeldeid().longValue() == annenKomplikasjon.getMeldeid().longValue()){
+			    			melding.setMeldingstype("Annen hendelse");
+			    		
+			    		}
+			    	}
+			    	for (Pasientkomplikasjon pasientKomplikasjon : pasientListe){
+			    		if (melding.getMeldeid().longValue() == pasientKomplikasjon.getMeldeid().longValue()){
+			    			melding.setMeldingstype("Pasientkomplikasjon");
+			    		
+			    		}
+			    	}
+			    	for (Giverkomplikasjon giverKomplikasjon : giverListe){
+			    		if (melding.getMeldeid().longValue() == giverKomplikasjon.getMeldeid().longValue()){
+			    			melding.setMeldingstype("Giverkomplikasjon");
+			    		
+			    		}
+			    	}
+			    }	    
+			    return meldinger;
+	}
  /**
  * sorterMeldinger
  * Denne rutinen sørger for at et uttrekk av meldinger blir sortert.
  * Det innebærer at oppfølgingsmeldinger blir fjernet, og en melding blir igjen som representerer alle 
  * meldingene med samme meldingsnøkkel.
+ * Er denne i bruk? 10.10.16 JA
  * @param alleMeldinger,meldinger
  */
 protected void sorterMeldinger(Map<String,List>alleMeldinger,List<Vigilansmelding>meldinger){
@@ -1562,7 +1662,44 @@ protected void sorterMeldinger(Map<String,List>alleMeldinger,List<Vigilansmeldin
 		if (meldinger.equals(localMeldinger)){
 			meldinger.sort((vm1, vm2)->vm1.getMeldingsdato().compareTo(vm2.getMeldingsdato()));
 		}
-	}	
+	}
+	/**
+	 * makeSequence
+	 * Denne rutinen setter opp sekvensnumre for meldinger med samme meldingsnummer
+	 * @param request
+	 * @param meldinger
+	 */
+	protected void makeSequence(Request request, List<Vigilansmelding>meldinger){
+		if (dobleMeldingene == null)
+			dobleMeldingene =(List<Vigilansmelding>) sessionAdmin.getSessionObject(request, dobleKey);
+		for (Vigilansmelding nestemelding: dobleMeldingene){
+			int seknr = 0;
+			for (Vigilansmelding melding: meldinger){
+				if (melding.getMeldingsnokkel().equals(nestemelding.getMeldingsnokkel()) && melding.getMeldeid().longValue() > nestemelding.getMeldeid().longValue()){
+	    			seknr++;
+	    			melding.setSekvensNr(seknr);
+	    		}				 
+			}
+		}
+	}
+	/**
+	 * makeSequence
+	 * Denne rutinen setter opp sekvensnummer for en gitt melding.
+	 * Den kalles når bruker har valgt å behandle en valgt melding
+	 * @param request
+	 * @param melding
+	 */
+	protected void makeSequence(Request request,Vigilansmelding melding){
+		if (dobleMeldingene == null)
+			dobleMeldingene =(List<Vigilansmelding>) sessionAdmin.getSessionObject(request, dobleKey);
+		int seknr = 0;
+		for (Vigilansmelding nestemelding: dobleMeldingene){
+			if (melding.getMeldingsnokkel().equals(nestemelding.getMeldingsnokkel()) && melding.getMeldeid().longValue() > nestemelding.getMeldeid().longValue()){
+    			seknr++;
+    			melding.setSekvensNr(seknr);
+    		}			
+		}
+	}
 /**
 * sorterMeldinger
 * Denne rutinen sørger for at et uttrekk av meldinger blir sortert.
@@ -1578,7 +1715,7 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 			 
 			 for (Vigilansmelding nestemelding: meldinger){
 		    		if (melding.getMeldingsnokkel().equals(nestemelding.getMeldingsnokkel()) && melding.getMeldeid().longValue() < nestemelding.getMeldeid().longValue()){
-		    				dobleMeldingene.add(melding);
+		    			dobleMeldingene.add(melding);
 		    		}				 
 			 }
 		 }
@@ -1643,25 +1780,57 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 	/**
 	 * getmeldingsNokkelsak
 	 * Denne rutinen returnerer meldeid fra første melding med samme meldingsnøkkel andre meldinger
+	 * @since 29.09.16 Finner frem til orginal melding. Håndterer intil 9999 meldinger
 	 * @param nokkel
 	 * @return
 	 */
 
 	protected Long getmeldingsNokkelsak(String nokkel){
 		Request request = getRequest();
-		List<Vigilansmelding> dobleMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request, dobleKey);
-
+		dobleMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request, dobleKey);
+		char sep = 'm';
+		String mKey = extractString(nokkel, sep, -1);
 		if (dobleMeldingene != null && !dobleMeldingene.isEmpty()){
 			for (Vigilansmelding melding : dobleMeldingene){
+				long mid = melding.getMeldeid().longValue();
+				boolean rKey = false;
+				int inLen = 3;
 				if (melding.getMeldingsnokkel().equals(nokkel)){
-					return melding.getMeldeid();
+					if (mid < 10)
+						inLen = 1;
+					if (mid >10 && mid <100)
+						inLen = 2;
+					if (mid >1000 && mid <10000)
+						inLen = 4;
+					mKey = mKey.substring(0,inLen);
+					rKey = mid == Long.valueOf(mKey).longValue();
+					if (rKey)
+						return melding.getMeldeid();
 				}
 			}			
 		}
 	
 		return null;
 	}
-	
+
+	/**
+	 * getorgmelding
+	 * Denne rutinen returnerer orginal melding fra doble meldinger
+	 * @param nokkel
+	 * @return
+	 */
+
+	protected Vigilansmelding getorgmelding(Long mId){
+		if (dobleMeldingene != null && !dobleMeldingene.isEmpty()){
+			for (Vigilansmelding melding : dobleMeldingene){
+				if (melding.getMeldeid().longValue() == mId.longValue()){
+					Class objectType = melding.getClass();
+					return melding;
+				}
+			}
+		}
+		return null;
+	}
 	/**
 	 * meldingidOppfolging
 	 * Denne rutinen returnerer en liste av nøkler for oppfølgingsmeldinger

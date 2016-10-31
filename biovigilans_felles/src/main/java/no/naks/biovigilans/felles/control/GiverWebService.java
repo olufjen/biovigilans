@@ -9,4 +9,5 @@ public interface GiverWebService extends MasterWebService {
 		public void saveVigilansmelding(GiverKomplikasjonwebModel giverModel);
 		public void saveGiverkomplikasjon(GiverKomplikasjonwebModel giverModel);
 		public void saveGiveroppfolging(GiverKomplikasjonwebModel giverModel) ;
+		public void setAlterativeSource(String key);
 }
