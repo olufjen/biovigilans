@@ -92,6 +92,8 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	    	 datePart = "none";
 	    	 Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
 	    	 annenKomplikasjon = annenModel.getAnnenKomplikasjon();
+			 annenModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
+ 			 hendelseWebService.updateVigilansmelding(annenModel.getVigilansmelding());
 /*
  * OLJ 03.05.16 Flytter alle nødvendige data fra vigilansmelding til annenkomplikasjon	Dette er gjort i MelderRapportServerResourceHTML    	 
  */

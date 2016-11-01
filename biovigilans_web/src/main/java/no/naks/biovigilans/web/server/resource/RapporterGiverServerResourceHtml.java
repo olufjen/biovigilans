@@ -93,7 +93,9 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
 	    	 datePart = "none";
 	    	 Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
 	    	 giverModel.setVigilansmelding(melding);
-	    	 
+			 giverModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
+ 			 hendelseWebService.updateVigilansmelding(giverModel.getVigilansmelding());
+ 			giverModel.getVigilansmelding().setSjekklistesaksbehandling(null);
 	    	 if(giverKomplikasjon.getDatosymptomer() == null){
 	    			Calendar kalender = Calendar.getInstance();
 	    			int month = kalender.get(Calendar.MONTH);

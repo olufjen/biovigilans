@@ -7,6 +7,7 @@ import java.util.Map;
 
 import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.Blodprodukt;
+import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.Donasjon;
 import no.naks.biovigilans.model.Forebyggendetiltak;
 import no.naks.biovigilans.model.Giver;
@@ -60,7 +61,10 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	private String[] annenSession; 
 	private String[] aldergruppeGiver;
 	private String meldeTxtId = "melding";
-
+	private String utvalg = "";
+	private String merknadValg = "";
+	private String utvalgKey = "valgt";
+	private String merknadlisteKey = "merknadvalgt";
 	
 	public String getMeldeTxtId() {
 		return meldeTxtId;
@@ -126,7 +130,7 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	     Long melderId = null;
 	 	Map<String, List> alleMeldinger = new HashMap<String,List>();
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
-		  
+	 	 SimpleScalar simpleDisplay = new SimpleScalar(displayPart);
 	     Melder melder =  (Melder) sessionAdmin.getSessionObject(request, melderNokkel);
 	     if (melder == null){
 	        String meldingsText = "Vennligst velg oppfølgingsmelding, og logg inn med din epost adresse";
@@ -164,9 +168,27 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 		    sessionAdmin.setSessionObject(request,giverListe, giverKey);
 		    sessionAdmin.setSessionObject(request,alleMeldinger, allemeldingerMap);
 		    sessionAdmin.setSessionObject(request,meldinger, vigilansmeldinger);
-		    
+		    List<Diskusjon> diskusjoner = null;
 		    for (Vigilansmelding melding: meldinger){
 		    	melding.setMeldingstype("Ukjent");
+/*
+ * Lagt til for å vise kommentar til meldingen		    	
+ */
+		    	Long meldeId = melding.getMeldeid();
+		    	Map<String,List> diskusjonene = saksbehandlingWebservice.collectDiskusjoner(meldeId);
+		    	String mKey = String.valueOf(meldeId.longValue());
+		    	diskusjoner = diskusjonene.get(mKey);
+		    	for (Diskusjon diskusjon : diskusjoner){
+		    		String tema = diskusjon.getTema();
+		    		if (tema != null && !tema.isEmpty() && tema.startsWith("Vises;")){
+		    			char sep = ';';
+		    			tema = extractString(tema, sep, -1);
+		    			melding.setMeldingTitle(tema+" "+melding.getMeldingTitle());
+		    		}
+		    	}
+/*
+ * 		    	
+ */
 		    	for (Annenkomplikasjon annenKomplikasjon : annenListe){
 		    		if (melding.getMeldeid().longValue() == annenKomplikasjon.getMeldeid().longValue()){
 		    			melding.setMeldingstype("Annen hendelse");
@@ -199,6 +221,7 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	   
 	     dataModel.put(meldeKey,meldinger);
 	     dataModel.put(melderNokkel,melder);
+		 dataModel.put(displayKey, simpleDisplay);
 //	     meldingene = (Vigilansmelding) meldinger.toArray();
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
@@ -225,11 +248,90 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
  	    Map<String, Object> dataModel = new HashMap<String, Object>();
  	    Reference reference = new Reference(getReference(),"..").getTargetRef();
 	    Request request = getRequest();
+	    Melder melder =  (Melder) sessionAdmin.getSessionObject(request, melderNokkel);
+	    /*
+	     * Denne listen inneholder nå bare oppfølgingsmelding (dersom det finnes oppfølging)
+	     * Dersom en meldingsnøkkel bare har en melding, så inneholder den denne.	     
+	     */
+	    	     List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request,vigilansmeldinger);
+		Parameter sokMelding = form.getFirst("meldingsnokkelsok"); // Bruker etterspør en gitt melding
+		Parameter oversikt = form.getFirst("oversikt"); // Bruker etterspør en gitt melding	
+		displayPart = "block";
+	 	 SimpleScalar simpleDisplay = new SimpleScalar(displayPart);
+ 	    String meldingsID = null;
+ 	   if (oversikt != null){ // Dersom bruker ønsker tilbake til oversikt
+ 		   	displayPart = "none";
+ 		 	 SimpleScalar simpleDisp = new SimpleScalar(displayPart);
+ 		     andreMeldingene = (List)sessionAdmin.getSessionObject(request,andreMeldingKey);
+ 		     giverMeldingene = (List)sessionAdmin.getSessionObject(request,giverMeldingKey);
+ 		     pasientMeldingene = (List)sessionAdmin.getSessionObject(request,pasientMeldingKey);
+ 		     
+ 		     Map<String, List> alleMeldinger = (Map)sessionAdmin.getSessionObject(request,allemeldingerMap);
 
+ 	/*
+ 	 * Disse listene inneholder alle meldingene som annenliste, pasientliste og giverliste	     
+ 	 */
+ 	         List<Annenkomplikasjon> annenListe =(List) sessionAdmin.getSessionObject(request, andreKey);
+ 			 List<Pasientkomplikasjon> pasientListe = (List) sessionAdmin.getSessionObject(request, pasientKey);
+ 			 List<Giverkomplikasjon> giverListe = (List)  sessionAdmin.getSessionObject(request,  giverKey);
+ 		     dataModel.put(meldeKey,meldinger);
+ 		     dataModel.put(melderNokkel,melder);
+ 			 dataModel.put(displayKey, simpleDisp);
+ 	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/melder_rapport.html"));
+
+    		// Load the FreeMarker template
+    		Representation pasientkomplikasjonFtl = clres2.get();
+
+    		TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+    				MediaType.TEXT_HTML);
+    		return templatemapRep;  	
+ 			 
+ 	   }
+  		if (sokMelding != null){ // Søker etter en gitt melding
+  			meldingsID = null;
+ 			for (Parameter entry : form) {
+    			if (entry.getValue() != null && !(entry.getValue().equals(""))){
+    					System.out.println(entry.getName() + "=" + entry.getValue());
+    				
+     					if (entry.getName().equals("meldingsnokkel")){
+     						meldingsID = entry.getValue();
+
+    	    			}
+    			}
+    		}
+  
+    
+ 			Map<String,List> meldingDetaljene = null;
+ 			if (meldingsID != null){
+ 	    		 meldingDetaljene = (Map<String,List>)saksbehandlingWebservice.selectMeldingetternokkel(meldingsID);
+ 	    	}
+ 			if (meldingDetaljene != null){
+ 	    		meldinger = (List) meldingDetaljene.get(meldingsID);
+ 	    		meldinger = hentMeldingstyper(meldinger);
+ 			}
+ 			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
+//			makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
+ 		 	SimpleScalar simple = new SimpleScalar(utvalg);
+  		 	dataModel.put(utvalgKey, simple);
+  		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
+  		 	 dataModel.put(merknadlisteKey, merk);
+  		    dataModel.put(meldeKey,meldinger);
+  		     dataModel.put(melderNokkel,melder);
+  			 dataModel.put(displayKey, simpleDisplay);
+  	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/melder_rapport.html"));
+
+    		// Load the FreeMarker template
+    		Representation pasientkomplikasjonFtl = clres2.get();
+
+    		TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+    				MediaType.TEXT_HTML);
+    		return templatemapRep;  			
+  		}
 	    meldingsNokkel = null;
 	 	String page = "p";
 	 	boolean toPDF = false;
-	 	  Melder melder =  (Melder) sessionAdmin.getSessionObject(request, melderNokkel);
+//	 	melder =  (Melder) sessionAdmin.getSessionObject(request, melderNokkel); // Hentet tidligere OLJ 24.10.16
 	 	String pdf = "";
 	   	if (form != null){
 	    		for (Parameter entry : form) {
@@ -254,11 +356,7 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	     pasientMeldingene = (List)sessionAdmin.getSessionObject(request,pasientMeldingKey);
 	     
 	     Map<String, List> alleMeldinger = (Map)sessionAdmin.getSessionObject(request,allemeldingerMap);
-/*
- * Denne listen inneholder nå bare oppfølgingsmelding (dersom det finnes oppfølging)
- * Dersom en meldingsnøkkel bare har en melding, så inneholder den denne.	     
- */
-	     List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request,vigilansmeldinger);
+
 /*
  * Disse listene inneholder alle meldingene som annenliste, pasientliste og giverliste	     
  */

@@ -206,6 +206,9 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    	 displayPart = "block";
 	    	 datePart = "none";
 	    	 Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
+//	    	 transfusjon.setVigilansmelding(melding);
+			 transfusjon.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
+ 			 hendelseWebService.updateVigilansmelding(transfusjon.getVigilansmelding());
 	    	 transfusjon.setHendelseDato(melding.getDatoforhendelse());
 	    	 result.setHendelseDato(melding.getDatoforhendelse());
 	    	 transfusjon.setMeldingsNokkel(melding.getMeldingsnokkel());
