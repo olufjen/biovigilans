@@ -62,7 +62,14 @@ function toggleDisplay(id, displayvalue)
     }
  //   alert("step 4");
 }
+function formSubmit(button){
+  	var clickbutton = "#"+button;
+  //	alert("Før clicked");
+  //	$("#valgt").click();
+  	$(clickbutton).click();
+  //	alert("clicked");
 
+  	}
 function meldingsnokkel(){
 	blurCount = blurCount + 1;
 
@@ -79,12 +86,27 @@ function meldingsnokkel(){
         <label></label>
  
  </div>
-
+ <div class="row" id="saken">
+ 
+  <div class="col-xs-12 col-sm-4 bottom-xs-1-6 teaser">
+ 		<div for="nokkelsok" title="Her kan søke etter en melding med gitt meldingsnøkkel. Da vil du se alle meldingene knyttet til en meldingsnøkkel. Skriv meldingsnøkkelen uten mellomrom."><b> Søk meldingsnøkkel:</b>
+           <div class="input-group">
+ 			<input type="text" size="16" class="date-input-large" name="meldingsnokkel" id="meldingsnokkel" onblur="formSubmit('btnmeldingsnokkelsok');" >
+           </div>                     
+        </div>       
+  </div>
+  <div class="col-xs-12 col-sm-4 bottom-xs-1-6 teaser">
+  	<div>
+  	<div>
+  		<button type="submit" id="btnoversikt" name="oversikt" value="oversikt"  class="btn btn-default" style="display: ${display}" >Tilbake til oversikt</button>
+ 	</div>
+ 	</div>
+  </div>
      <div class="form-group" id="tabeller"  >
      	<table class="table table-hover" border=1  >
   		<tr class="success"><th>Til Pdf<th>Oppfølging<th>Meldingsnøkkel</th><th>Dato for hendelse</th><th>Meldingsdato</th><th>Meldingstype</th><th>Status</th>
   			<#list meldinger as melding>
-  			<tr id="nokkelr"><td><button type="submit" id="btnpdf" name="pdf" value="${melding.meldingsnokkel}"  class="btn btn-success">Til PDF</button></td><td><button type="submit" id="btnleveranse" name="lukk1" value="${melding.meldingsnokkel}"  class="btn btn-default">Oppfølging melding</button></td><td id="nokkel">${melding.meldingsnokkel}</td><td>${melding.datoforhendelse?date}</td><td>${melding.meldingsdato?date}</td><td>${melding.meldingstype}</td><td>${melding.sjekklistesaksbehandling}</td> 
+  			<tr id="nokkelr"><td><button type="submit" id="btnpdf" name="pdf" value="${melding.meldingsnokkel}"  class="btn btn-success">Til PDF</button></td><td><button type="submit" id="btnleveranse" name="lukk1" value="${melding.meldingsnokkel}"  class="btn btn-default">Oppfølging melding</button></td><td id="nokkel">${melding.meldingsnokkel}</td><td>${melding.datoforhendelse?date}</td><td>${melding.meldingsdato?date}</td><td>${melding.meldingstype}</td><td id="tabstatus" title="${melding.meldingTitle}" bgcolor=${melding.color}>${melding.sjekklistesaksbehandling}</td> 
   			</#list>
 		</table>  
      </div>
@@ -95,7 +117,7 @@ function meldingsnokkel(){
 
 </div>
 		  <button type="submit" id="btnnokkel" value="nokkel"  name="formValue" class="btn btn-primary" style="display: none" > getValue </button>
-
+  	  <button type="submit" id="btnmeldingsnokkelsok" name="meldingsnokkelsok" value="meldingsnokkelsok" style="display: none" >getValue</button>
 
 <!--<script src="js/bootstrap.min.js"></script>-->
 </form>
