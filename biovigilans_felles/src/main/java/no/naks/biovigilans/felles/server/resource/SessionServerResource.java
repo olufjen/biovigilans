@@ -1545,6 +1545,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	 * Denne rutinen setter meldingstype til meldingsuttvalget
 	 * Den setter også opp egne lister for hver type melding
 	 * Verdien settes i feltet meldingstype
+	 * @since 01.11.16 Henter listen kun en gang: Sørger for at listene over de ulike typer meldinger er komplett
 	 * @param meldinger
 	 * @return
 	 */
@@ -1553,14 +1554,36 @@ public class SessionServerResource extends ProsedyreServerResource {
 		 * Finne meldinstyper:	    
 		 */
 		  		Request request = getRequest();
-			    Map andreMeldinger = saksbehandlingWebservice.collectAnnenMeldinger(meldinger);
-			    List<Annenkomplikasjon> annenListe =(List) andreMeldinger.get(andreKey);
-			    List<Pasientkomplikasjon> pasientListe = (List) andreMeldinger.get(pasientKey);
-			    List<Giverkomplikasjon> giverListe = (List)  andreMeldinger.get(giverKey);
-			    sessionAdmin.setSessionObject(request, annenListe, reportAndreKey);
-			    sessionAdmin.setSessionObject(request, pasientListe, reportPasientKey);
-			    sessionAdmin.setSessionObject(request, giverListe, reportGiverKey);
-			    
+		  		List<Annenkomplikasjon> annenListe =(List) sessionAdmin.getSessionObject(request,reportAndreKey);
+			    List<Pasientkomplikasjon> pasientListe = (List)	sessionAdmin.getSessionObject(request,reportPasientKey);	
+			    List<Giverkomplikasjon> giverListe = (List)	sessionAdmin.getSessionObject(request,reportGiverKey);
+			    andreMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request, andreMeldingKey);
+			    giverMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request,giverMeldingKey);
+			    pasientMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request, pasientMeldingKey);
+			    boolean aset = false;boolean pset = false;boolean gset = false;
+			    if (andreMeldingene == null){
+			    	andreMeldingene = new ArrayList<Vigilansmelding>();
+			    	aset = true;
+			    }
+			    if (giverMeldingene == null){
+			    	giverMeldingene = new ArrayList<Vigilansmelding>();
+			    	gset = true;
+			    }
+			    if (pasientMeldingene == null){
+			    	pasientMeldingene = new ArrayList<Vigilansmelding>();
+			    	pset = true;
+			    }
+			    if (annenListe == null && pasientListe == null && giverListe == null){
+				    Map andreMeldinger = saksbehandlingWebservice.collectAnnenMeldinger(meldinger);// Henter alle meldingsdetaljer fra vigilansmeldingene
+				    annenListe =(List) andreMeldinger.get(andreKey);
+				    pasientListe = (List) andreMeldinger.get(pasientKey);
+				    giverListe = (List)  andreMeldinger.get(giverKey);
+				    sessionAdmin.setSessionObject(request, annenListe, reportAndreKey);
+				    sessionAdmin.setSessionObject(request, pasientListe, reportPasientKey);
+				    sessionAdmin.setSessionObject(request, giverListe, reportGiverKey);
+				    sessionAdmin.setSessionObject(request, andreMeldinger, allemeldingerMap);
+			    }
+
 			    for (Vigilansmelding melding: meldinger){
 			    	melding.setMeldingstype("Ukjent");
 			    	if (melding.getSjekklistesaksbehandling() == null || melding.getSjekklistesaksbehandling().isEmpty()){
@@ -1569,22 +1592,31 @@ public class SessionServerResource extends ProsedyreServerResource {
 			    	for (Annenkomplikasjon annenKomplikasjon : annenListe){
 			    		if (melding.getMeldeid().longValue() == annenKomplikasjon.getMeldeid().longValue()){
 			    			melding.setMeldingstype("Annen hendelse");
+			    			if (aset){
+//			    				System.out.println("Annen Hendelse "+melding.getMeldingsnokkel()+" "+melding.getMeldingstype());
+			    				andreMeldingene.add(melding);
+			    			}
 			    		
 			    		}
 			    	}
 			    	for (Pasientkomplikasjon pasientKomplikasjon : pasientListe){
 			    		if (melding.getMeldeid().longValue() == pasientKomplikasjon.getMeldeid().longValue()){
 			    			melding.setMeldingstype("Pasientkomplikasjon");
-			    		
+			    			if (pset)
+			    				pasientMeldingene.add(melding);
 			    		}
 			    	}
 			    	for (Giverkomplikasjon giverKomplikasjon : giverListe){
 			    		if (melding.getMeldeid().longValue() == giverKomplikasjon.getMeldeid().longValue()){
 			    			melding.setMeldingstype("Giverkomplikasjon");
-			    		
+			    			if (gset)
+			    				giverMeldingene.add(melding);
 			    		}
 			    	}
 			    }	    
+				 sessionAdmin.setSessionObject(request, andreMeldingene, andreMeldingKey);
+				 sessionAdmin.setSessionObject(request, giverMeldingene, giverMeldingKey);
+				 sessionAdmin.setSessionObject(request, pasientMeldingene, pasientMeldingKey);
 			    return meldinger;
 	}
  /**
@@ -1592,14 +1624,15 @@ public class SessionServerResource extends ProsedyreServerResource {
  * Denne rutinen sørger for at et uttrekk av meldinger blir sortert.
  * Det innebærer at oppfølgingsmeldinger blir fjernet, og en melding blir igjen som representerer alle 
  * meldingene med samme meldingsnøkkel.
- * Er denne i bruk? 10.10.16 JA
+ * Er denne i bruk? 10.10.16 JA Når alle meldinger til en melder hentes
  * @param alleMeldinger,meldinger
  */
 protected void sorterMeldinger(Map<String,List>alleMeldinger,List<Vigilansmelding>meldinger){
+		Request request = getRequest();
 	    List<Annenkomplikasjon> annenListe =(List) alleMeldinger.get(andreKey);
 	    List<Pasientkomplikasjon> pasientListe = (List) alleMeldinger.get(pasientKey);
 	    List<Giverkomplikasjon> giverListe = (List)  alleMeldinger.get(giverKey);
-		List<Komplikasjonsklassifikasjon> klassifikasjoner = null;
+//		List<Komplikasjonsklassifikasjon> klassifikasjoner = null;
 		andreMeldingene = new ArrayList<Vigilansmelding>();
 		giverMeldingene = new ArrayList<Vigilansmelding>();
 		pasientMeldingene = new ArrayList<Vigilansmelding>();
@@ -1629,7 +1662,9 @@ protected void sorterMeldinger(Map<String,List>alleMeldinger,List<Vigilansmeldin
 		 meldinger.removeAll(andreMeldingene);
 		 meldinger.removeAll(giverMeldingene);
 		 meldinger.removeAll(pasientMeldingene);
-
+		 sessionAdmin.setSessionObject(request, andreMeldingene, andreMeldingKey);
+		 sessionAdmin.setSessionObject(request, giverMeldingene, giverMeldingKey);
+		 sessionAdmin.setSessionObject(request, pasientMeldingene, pasientMeldingKey);
 	  
    }
 
@@ -1676,8 +1711,10 @@ protected void sorterMeldinger(Map<String,List>alleMeldinger,List<Vigilansmeldin
 			int seknr = 0;
 			for (Vigilansmelding melding: meldinger){
 				if (melding.getMeldingsnokkel().equals(nestemelding.getMeldingsnokkel()) && melding.getMeldeid().longValue() > nestemelding.getMeldeid().longValue()){
+					seknr = melding.getSekvensNr();
 	    			seknr++;
 	    			melding.setSekvensNr(seknr);
+//	    			System.out.println(melding.getMeldingsnokkel()+ " "+ melding.getMeldeid()+" Sekvens "+melding.getSekvensNr()+ " Neste "+nestemelding.getMeldeid());
 	    		}				 
 			}
 		}
@@ -1700,6 +1737,19 @@ protected void sorterMeldinger(Map<String,List>alleMeldinger,List<Vigilansmeldin
     		}			
 		}
 	}
+	/**
+	* sorterMeldingerstatus
+	* Denne rutinen sørger for at et uttrekk av meldinger blir sortert etter status.
+	* @param meldinger Liste over vigilansmeldinger
+	*/
+	protected void sorterMeldingerstatus(List<Vigilansmelding>meldinger){
+		List<Vigilansmelding> localMeldinger = new ArrayList();
+		localMeldinger.addAll(meldinger);
+		meldinger.sort((vm1, vm2)->vm1.getSjekklistesaksbehandling().compareTo(vm2.getSjekklistesaksbehandling()));
+		if (meldinger.equals(localMeldinger)){
+			meldinger.sort((vm1, vm2)->vm2.getSjekklistesaksbehandling().compareTo(vm1.getSjekklistesaksbehandling()));
+		}
+	}
 /**
 * sorterMeldinger
 * Denne rutinen sørger for at et uttrekk av meldinger blir sortert.
@@ -1715,7 +1765,13 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 			 
 			 for (Vigilansmelding nestemelding: meldinger){
 		    		if (melding.getMeldingsnokkel().equals(nestemelding.getMeldingsnokkel()) && melding.getMeldeid().longValue() < nestemelding.getMeldeid().longValue()){
-		    			dobleMeldingene.add(melding);
+		    			boolean lagret = false;
+		    			for (Vigilansmelding doble: dobleMeldingene){
+		    				if (melding.getMeldeid().longValue() == doble.getMeldeid().longValue())
+		    					lagret = true;
+		    			}
+		    			if (!lagret)
+		    				dobleMeldingene.add(melding);
 		    		}				 
 			 }
 		 }

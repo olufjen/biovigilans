@@ -28,13 +28,18 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 	protected String[] feilelleravvik;
 	protected String[] hendelsenoppdaget;
 	protected List<Komplikasjonsklassifikasjon> klassifikasjoner;
+	protected List<Vigilansmelding> tidligereVigilans; // Inneholder en liste over tidligere meldinger med samme meldingsnummer
+	protected List<Annenkomplikasjon> tidligereAnnenkomp; // Inneholder en liste over tidligere meldinger med samme meldingsnummer
+	protected List<Komplikasjonsklassifikasjon> tidligereKlassifikasjoner; // Inneholder en liste over tidligere klassifikasjoner
 	List<String> hvagikkgaltList ;
 	private String[] aldergruppe;	// Inneholder aldersgrupper tilgjengelig for brukervalg
 
 
 	public AnnenKomplikasjonwebModel(){
 		super();
-	
+		tidligereVigilans = new ArrayList<Vigilansmelding>();
+		tidligereAnnenkomp = new ArrayList<Annenkomplikasjon>();
+		tidligereKlassifikasjoner = new ArrayList<Komplikasjonsklassifikasjon>();
 		//hvagikkgaltList = new ArrayList<String>();
 	}
 
@@ -65,6 +70,31 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 		klassifikasjoner.add(komplikasjonsklassifikasjon);
 	}
 
+
+	public List<Komplikasjonsklassifikasjon> getTidligereKlassifikasjoner() {
+		return tidligereKlassifikasjoner;
+	}
+
+	public void setTidligereKlassifikasjoner(
+			List<Komplikasjonsklassifikasjon> tidligereKlassifikasjoner) {
+		this.tidligereKlassifikasjoner = tidligereKlassifikasjoner;
+	}
+
+	public List<Vigilansmelding> getTidligereVigilans() {
+		return tidligereVigilans;
+	}
+
+	public void setTidligereVigilans(List<Vigilansmelding> tidligereVigilans) {
+		this.tidligereVigilans = tidligereVigilans;
+	}
+
+	public List<Annenkomplikasjon> getTidligereAnnenkomp() {
+		return tidligereAnnenkomp;
+	}
+
+	public void setTidligereAnnenkomp(List<Annenkomplikasjon> tidligereAnnenkomp) {
+		this.tidligereAnnenkomp = tidligereAnnenkomp;
+	}
 
 	public List<Komplikasjonsklassifikasjon> getKlassifikasjoner() {
 		return klassifikasjoner;

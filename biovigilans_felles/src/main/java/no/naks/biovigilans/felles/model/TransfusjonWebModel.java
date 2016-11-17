@@ -9,6 +9,8 @@ import java.util.Map;
 
 import no.naks.biovigilans.model.Blodprodukt;
 import no.naks.biovigilans.model.BlodproduktImpl;
+import no.naks.biovigilans.model.Forebyggendetiltak;
+import no.naks.biovigilans.model.Giverkomplikasjon;
 import no.naks.biovigilans.model.Hemolyse;
 import no.naks.biovigilans.model.HemolyseImpl;
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
@@ -33,6 +35,7 @@ import no.naks.biovigilans.model.Vigilansmelding;
 /**
  * Denne klassen representerer Transfusjonopplysninger gitt av bruker.
  * Det omfatter Transfusjon, Blodprodukt, og Pasientkomplikasjon som definert i modellen
+ * ID for Websider: transfusjonId = "transfusjonwebID";
  * @author olj
  */
 public class TransfusjonWebModel extends VigilansModel {
@@ -60,11 +63,37 @@ public class TransfusjonWebModel extends VigilansModel {
 	private Map<String,Blodprodukt> blodprodukter;
 	private String[] plasmaEgenskaper;
 	private List<Sykdom> sykdommer;
-	
+	/*
+	 * Informasjon om tidligere meldinger med samme meldingsnummer	
+	 */	
+	protected List<Vigilansmelding> tidligereVigilans; // Inneholder en liste over tidligere meldinger med samme meldingsnummer
+	protected List<Pasientkomplikasjon> tidligerePasientkomp; // Inneholder en liste over tidligere meldinger med samme meldingsnummer
+	protected List<Transfusjon> tidligereTransfusjoner; // Inneholder en liste over tidligere transfusjoner med samme meldingsnummer
+	protected List<Komplikasjonsklassifikasjon> tidligereKlassifikasjoner; // Inneholder en liste over tidligere klassifikasjoner
+
+	protected List<Blodprodukt>tidligereBlodprodukter;	// Inneholder en liste over tidligere blodprodukter
+	protected List<Produktegenskap>tidligereProduktegenskaper;	// Inneholder en liste over tidligere produktegenskaper
+	protected List<Pasient>tidligerePasienter;	// Inneholder en liste over tidligere pasientopplysninger
+	protected List<Sykdom>tidligereSykdommer;	// Inneholder en liste over tidligere sykdomsopplysninger
+	protected List<Utredning>tidligereUtredninger;	// Inneholder en liste over tidligere utredninger
+	protected List<Tiltak>tidligereTiltak;	// Inneholder en liste over tidligere tiltak
+	protected List<Forebyggendetiltak>tidligereforebyggendeTiltak;	// Inneholder en liste over tidligere forebyggende tiltak
+	protected List<Symptomer>tidligereSymptomer;
+
 	public TransfusjonWebModel() {
 		super();
-	
-		
+		tidligereVigilans = new ArrayList<Vigilansmelding>();
+		tidligerePasientkomp = new ArrayList<Pasientkomplikasjon>();	
+		tidligereTransfusjoner = new ArrayList<Transfusjon>();
+		tidligereKlassifikasjoner = new ArrayList<Komplikasjonsklassifikasjon>();
+		tidligereBlodprodukter = new ArrayList<Blodprodukt> ();
+		tidligereProduktegenskaper = new ArrayList<Produktegenskap>();
+		tidligerePasienter = new ArrayList<Pasient>();
+		tidligereSykdommer = new ArrayList<Sykdom>();
+		tidligereUtredninger = new ArrayList<Utredning>();
+		tidligereTiltak = new ArrayList<Tiltak>();
+		tidligereforebyggendeTiltak = new ArrayList<Forebyggendetiltak>();
+		tidligereSymptomer = new ArrayList<Symptomer>();
 	}
 
 	public Pasient getPasient() {
@@ -99,6 +128,106 @@ public class TransfusjonWebModel extends VigilansModel {
 		tromboEgenskap = new ProduktegenskapImpl("trombocytt");
 
 		
+	}
+
+	public List<Symptomer> getTidligereSymptomer() {
+		return tidligereSymptomer;
+	}
+
+	public void setTidligereSymptomer(List<Symptomer> tidligereSymptomer) {
+		this.tidligereSymptomer = tidligereSymptomer;
+	}
+
+	public List<Tiltak> getTidligereTiltak() {
+		return tidligereTiltak;
+	}
+
+	public void setTidligereTiltak(List<Tiltak> tidligereTiltak) {
+		this.tidligereTiltak = tidligereTiltak;
+	}
+
+	public List<Forebyggendetiltak> getTidligereforebyggendeTiltak() {
+		return tidligereforebyggendeTiltak;
+	}
+
+	public void setTidligereforebyggendeTiltak(
+			List<Forebyggendetiltak> tidligereforebyggendeTiltak) {
+		this.tidligereforebyggendeTiltak = tidligereforebyggendeTiltak;
+	}
+
+	public List<Komplikasjonsklassifikasjon> getTidligereKlassifikasjoner() {
+		return tidligereKlassifikasjoner;
+	}
+
+	public void setTidligereKlassifikasjoner(
+			List<Komplikasjonsklassifikasjon> tidligereKlassifikasjoner) {
+		this.tidligereKlassifikasjoner = tidligereKlassifikasjoner;
+	}
+
+	public List<Blodprodukt> getTidligereBlodprodukter() {
+		return tidligereBlodprodukter;
+	}
+
+	public void setTidligereBlodprodukter(List<Blodprodukt> tidligereBlodprodukter) {
+		this.tidligereBlodprodukter = tidligereBlodprodukter;
+	}
+
+	public List<Produktegenskap> getTidligereProduktegenskaper() {
+		return tidligereProduktegenskaper;
+	}
+
+	public void setTidligereProduktegenskaper(
+			List<Produktegenskap> tidligereProduktegenskaper) {
+		this.tidligereProduktegenskaper = tidligereProduktegenskaper;
+	}
+
+	public List<Pasient> getTidligerePasienter() {
+		return tidligerePasienter;
+	}
+
+	public void setTidligerePasienter(List<Pasient> tidligerePasienter) {
+		this.tidligerePasienter = tidligerePasienter;
+	}
+
+	public List<Sykdom> getTidligereSykdommer() {
+		return tidligereSykdommer;
+	}
+
+	public void setTidligereSykdommer(List<Sykdom> tidligereSykdommer) {
+		this.tidligereSykdommer = tidligereSykdommer;
+	}
+
+	public List<Utredning> getTidligereUtredninger() {
+		return tidligereUtredninger;
+	}
+
+	public void setTidligereUtredninger(List<Utredning> tidligereUtredninger) {
+		this.tidligereUtredninger = tidligereUtredninger;
+	}
+
+	public List<Vigilansmelding> getTidligereVigilans() {
+		return tidligereVigilans;
+	}
+
+	public void setTidligereVigilans(List<Vigilansmelding> tidligereVigilans) {
+		this.tidligereVigilans = tidligereVigilans;
+	}
+
+	public List<Pasientkomplikasjon> getTidligerePasientkomp() {
+		return tidligerePasientkomp;
+	}
+
+	public void setTidligerePasientkomp(
+			List<Pasientkomplikasjon> tidligerePasientkomp) {
+		this.tidligerePasientkomp = tidligerePasientkomp;
+	}
+
+	public List<Transfusjon> getTidligereTransfusjoner() {
+		return tidligereTransfusjoner;
+	}
+
+	public void setTidligereTransfusjoner(List<Transfusjon> tidligereTransfusjoner) {
+		this.tidligereTransfusjoner = tidligereTransfusjoner;
 	}
 
 	public List<Sykdom> getSykdommer() {

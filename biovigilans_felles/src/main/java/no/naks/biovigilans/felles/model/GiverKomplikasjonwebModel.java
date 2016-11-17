@@ -1,11 +1,14 @@
 package no.naks.biovigilans.felles.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.ibm.icu.util.Calendar;
 
 import no.naks.biovigilans.model.AbstractVigilansmelding;
+import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.Donasjon;
 import no.naks.biovigilans.model.DonasjonImpl;
 import no.naks.biovigilans.model.Giver;
@@ -42,11 +45,25 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	protected String[] skadeiarmen;
 	protected String[] sykemeldinggruppe;
 	protected String[] varighetSkadegruppe;
-	
+/*
+ * Informasjon om tidligere meldinger med samme meldingsnummer	
+ */
+	protected List<Vigilansmelding> tidligereVigilans; // Inneholder en liste over tidligere meldinger med samme meldingsnummer
+	protected List<Giverkomplikasjon> tidligereGiverkomp; // Inneholder en liste over tidligere meldinger med samme meldingsnummer
+	protected List<Komplikasjonsdiagnosegiver> tidligereKomplikasjonsdiagnoser; //Inneholder en liste over tidligere komplikasjonsdiagnoser med samme meldingsnummer
+	protected List<Donasjon>tidligereDonasjoner; //Inneholder en liste over tidligere donasjoner knyttet til samme meldingsnummer
+	protected List<Giver>tidligereGivere; //Inneholder en liste over tidligere givere med samme meldingsnummer
+	protected List<Giveroppfolging>tidligereOppfolging; //Inneholder en liste over tidligere oppfølginger med samme meldingsnummer
 	
 	public GiverKomplikasjonwebModel() {
 		super();
-
+		tidligereVigilans = new ArrayList<Vigilansmelding>();
+		tidligereGiverkomp = new ArrayList<Giverkomplikasjon>();
+		tidligereKomplikasjonsdiagnoser = new ArrayList<Komplikasjonsdiagnosegiver>();
+		tidligereDonasjoner = new ArrayList<Donasjon>();
+		tidligereGivere =new ArrayList<Giver>();
+		tidligereOppfolging = new ArrayList<Giveroppfolging>();
+		
 	}
 
 
@@ -95,6 +112,69 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 		getVigilansmelding().setKladd("");
 		getVigilansmelding().setSupplerendeopplysninger("ukjent");
 	}
+	
+	
+	public List<Komplikasjonsdiagnosegiver> getTidligereKomplikasjonsdiagnoser() {
+		return tidligereKomplikasjonsdiagnoser;
+	}
+
+
+	public void setTidligereKomplikasjonsdiagnoser(
+			List<Komplikasjonsdiagnosegiver> tidligereKomplikasjonsdiagnoser) {
+		this.tidligereKomplikasjonsdiagnoser = tidligereKomplikasjonsdiagnoser;
+	}
+
+
+	public List<Donasjon> getTidligereDonasjoner() {
+		return tidligereDonasjoner;
+	}
+
+
+	public void setTidligereDonasjoner(List<Donasjon> tidligereDonasjoner) {
+		this.tidligereDonasjoner = tidligereDonasjoner;
+	}
+
+
+	public List<Giver> getTidligereGivere() {
+		return tidligereGivere;
+	}
+
+
+	public void setTidligereGivere(List<Giver> tidligereGivere) {
+		this.tidligereGivere = tidligereGivere;
+	}
+
+
+	public List<Giveroppfolging> getTidligereOppfolging() {
+		return tidligereOppfolging;
+	}
+
+
+	public void setTidligereOppfolging(List<Giveroppfolging> tidligereOppfolging) {
+		this.tidligereOppfolging = tidligereOppfolging;
+	}
+
+
+	public List<Vigilansmelding> getTidligereVigilans() {
+		return tidligereVigilans;
+	}
+
+
+	public void setTidligereVigilans(List<Vigilansmelding> tidligereVigilans) {
+		this.tidligereVigilans = tidligereVigilans;
+	}
+
+
+	public List<Giverkomplikasjon> getTidligereGiverkomp() {
+		return tidligereGiverkomp;
+	}
+
+
+	public void setTidligereGiverkomp(List<Giverkomplikasjon> tidligereGiverkomp) {
+		this.tidligereGiverkomp = tidligereGiverkomp;
+	}
+
+
 	public Donasjon getDonasjonen() {
 		return donasjonen;
 	}
