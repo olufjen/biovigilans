@@ -51,7 +51,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	private String flaggKey = "saksbehandling";
 	private String tilsakbehandler = "tilsaksbehandler";
 	private String sakbehandlerShow = "none";
-    private Annenkomplikasjon orgAnnenkomplikasjon = null;
+//    private Annenkomplikasjon orgAnnenkomplikasjon = null;
     private String orgKompKey = "orgkomp";
 //	private SaksbehandlingWebService saksbehandlingWebservice;
 	
@@ -101,12 +101,19 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 
 
 	private void setDiplayvalues(Map<String, Object> dataModel,Melder melder){
+		Request request = getRequest();
 		Komplikasjonsklassifikasjon klassifikasjon = annenModel.getKomplikasjonsklassifikasjon();
 		List klassifikasjoner = annenModel.getKlassifikasjoner();
 		klassifikasjon.setKlassifikasjonList(hvagikkgaltList);
 		 annenKomplikasjon = annenModel.getAnnenKomplikasjon();
 		 displayPart = "block";
     	 datePart = "none";
+    	 /*
+    	  * For å vise info fra tidligere meldinger	    	 
+    	  */
+    	 displayorgInfo = (String)sessionAdmin.getSessionObject(request, displayorgInfoKey);
+    	 if (displayorgInfo == null || displayorgInfo.isEmpty())
+    		 displayorgInfo = "none";    	 
     	 SimpleScalar flaggs = new SimpleScalar(flaggShow);
 	   	 SimpleScalar simple = new SimpleScalar(displayPart);
     	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
@@ -123,7 +130,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	     dataModel.put(andreHendelseId, annenModel);
 	     dataModel.put(annenHendelseId, annenKomplikasjon);
 	     dataModel.put(klassifikasjonKey, klassifikasjoner);
-	     dataModel.put(annenHendelseOrg, orgAnnenkomplikasjon);
+//	     dataModel.put(annenHendelseOrg, orgAnnenkomplikasjon);
 	  	 dataModel.put(tilmelderKey, melder);
 	     sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
 	}
@@ -253,9 +260,9 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	    // setTransfusjonsObjects(); 
 	     annenModel.setFormNames(sessionParams);
 	     annenModel.distributeTerms();
-
+	     andreMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request, andreMeldingKey);
 	     Annenkomplikasjon annenKomplikasjon = null;
-	
+	     Map alleMeldinger = (HashMap)sessionAdmin.getSessionObject(request,allemeldingerMap);
 	     List klassifikasjoner = annenModel.getKlassifikasjoner();
 	     
 	     List<Diskusjon> diskusjoner = null;
@@ -271,10 +278,11 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	    	 annenKomplikasjon = annenModel.getAnnenKomplikasjon();
 	    	 makeSequence(request, melding);
 	    	 annenModel.getVigilansmelding().setSekvensNr(melding.getSekvensNr());
-	    	 orgAnnenkomplikasjon = annenKomplikasjon; //Dersom det ikke finnes oppfølginger
+//	    	 orgAnnenkomplikasjon = annenKomplikasjon; //Dersom det ikke finnes oppfølginger
 	    	 annenModel.setHendelseDato(melding.getDatoforhendelse());
 	    	 annenModel.setMeldingsNokkel(melding.getMeldingsnokkel());
-	    	 klassifikasjoner = (List)sessionAdmin.getSessionObject(request, klassifikasjonKey);
+//	    	 klassifikasjoner = (List)sessionAdmin.getSessionObject(request, klassifikasjonKey); Klassifikasjonene finnes allerede i annenModel
+//			 annenModel inneholder enten nye klassifikasjoner eller de fra orginal melding	    	 
 //==  Hent alle diskusjoner og merknader   =======	    	 
 	    	 Long meldeId = melding.getMeldeid();
 	
@@ -283,26 +291,56 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	     	 
 	   	     String mmKey = melding.getMeldingsnokkel(); //
     	     Long orgmeldeId = getmeldingsNokkelsak(mmKey); //Hent meldingsid for første melding med samme meldingsnøkkel
+    	     // orgMeldeid er null dersom det ikke finnes andre meldinger med samme nøkkel.
        		 String mnKey = String.valueOf(meldeId.longValue());
 	    	 Map<String,List> diskusjonene = saksbehandlingWebservice.collectDiskusjoner(meldeId);
 	    	 Map<String,List> orgMapdiskusjoner = null;
 	    	 String omKey = "";
 	    	 List<Diskusjon> orgdiskusjoner = null;	    	 
 	    	 boolean sameKey = false;
+	    	 annenModel.getTidligereVigilans().clear();
+	    	 annenModel.getTidligereAnnenkomp().clear();
+	    	 annenModel.getTidligereKlassifikasjoner().clear();
 	    	 if (orgmeldeId != null){
 	    		 orgMapdiskusjoner = saksbehandlingWebservice.collectDiskusjoner(orgmeldeId); // Henter diskusjoner fra tidligere meldinger med samme nøkkel
 	    		 omKey = String.valueOf(orgmeldeId.longValue());
 	    		 orgdiskusjoner =  orgMapdiskusjoner.get(omKey);
 	    		 sameKey = mnKey.equals(omKey);
 	    	 }
+/*
+ * For å vise historikk	    	 
+ */
+//			 List<Komplikasjonsklassifikasjon> orgKlassifikasjoner =  (List)alleMeldinger.get(klassifikasjonKey);	    	 
+	    	 Vigilansmelding orgVigilansmelding = null;
 
-	    	 for (Annenkomplikasjon komplikasjon : annenListe){
-	    		 if (orgmeldeId != null && komplikasjon.getMeldeid().longValue() == orgmeldeId.longValue()){
-	    			 orgAnnenkomplikasjon = komplikasjon;
-	    			 displayorgInfo = "block";
-	    			 break;
+	    	 for (Vigilansmelding nestemelding: andreMeldingene){
+	    		 if (orgmeldeId != null && nestemelding.getMeldingsnokkel().equals(mmKey) && nestemelding.getMeldeid().longValue() != meldeId.longValue() ){
+	    			 orgVigilansmelding = nestemelding;
+	    			 Long orgMeldId = nestemelding.getMeldeid();
+	    			 String oMKey = String.valueOf(orgMeldId.longValue());
+	    			 Map<String,List> histMeldingsdetaljer = null;
+					 histMeldingsdetaljer = (Map<String,List>)saksbehandlingWebservice.selectMeldinger(oMKey); // Hent historikk
+					 if (histMeldingsdetaljer != null){
+						 List<Komplikasjonsklassifikasjon> orgKlassifikasjoner =  (List)histMeldingsdetaljer.get(klassifikasjonKey);
+						 annenModel.getTidligereKlassifikasjoner().addAll(orgKlassifikasjoner);
+					 }
+	    			 annenModel.getTidligereVigilans().add(orgVigilansmelding);
 	    		 }
 	    	 }
+	    	 List<Vigilansmelding> vigilans =  annenModel.getTidligereVigilans();
+	    	 for (Vigilansmelding orgmelding : vigilans){
+		    	 for (Annenkomplikasjon komplikasjon : annenListe){
+		    		 if (orgmeldeId != null && komplikasjon.getMeldeid().longValue() == orgmelding.getMeldeid().longValue() ){
+		    			 Annenkomplikasjon orgAnnenkomplikasjon = komplikasjon;
+		    			 displayorgInfo = "block";
+	    				 sessionAdmin.setSessionObject(request, displayorgInfo,displayorgInfoKey );
+		    			 annenModel.getTidligereAnnenkomp().add(orgAnnenkomplikasjon);
+//		    			 annenModel.getTidligereVigilans().add(orgVigilansmelding);
+//		    			 break;
+		    		 }
+		    	 }		    		 
+	    	 }
+    		 
 	    	 String mKey = String.valueOf(meldeId.longValue());
 	    	 diskusjoner = diskusjonene.get(mKey);
 
@@ -343,14 +381,14 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     	 dataModel.put(statusflagKey,statusflag);
 	     dataModel.put(andreHendelseId, annenModel);
 	     dataModel.put(annenHendelseId, annenKomplikasjon);
-	     dataModel.put(annenHendelseOrg, orgAnnenkomplikasjon);
+//	     dataModel.put(annenHendelseOrg, orgAnnenkomplikasjon);
 	     dataModel.put(klassifikasjonKey, klassifikasjoner);
 	 	dataModel.put(behandlingsFlaggKey, diskusjoner);
 	 	
 	 	dataModel.put(tilmelderKey, melder);
 	 	
 	     sessionAdmin.setSessionObject(request, annenModel,andreHendelseId);
-	     sessionAdmin.setSessionObject(request, orgAnnenkomplikasjon, orgKompKey);
+//	     sessionAdmin.setSessionObject(request, orgAnnenkomplikasjon, orgKompKey);
 	     
 	        // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
@@ -397,7 +435,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     	     Map<String,List> diskusjonene = (Map<String,List>)sessionAdmin.getSessionObject(request, diskusjonsKey);
 //====    	     
   		  annenModel = (AnnenKomplikasjonwebModel)sessionAdmin.getSessionObject(request, andreHendelseId);
-  		  orgAnnenkomplikasjon = (Annenkomplikasjon)sessionAdmin.getSessionObject(request, orgKompKey);
+//  		  orgAnnenkomplikasjon = (Annenkomplikasjon)sessionAdmin.getSessionObject(request, orgKompKey);
   		  if(annenModel == null){
   			  annenModel = new AnnenKomplikasjonwebModel();
   			  annenModel.setFormNames(sessionParams);
@@ -469,6 +507,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 /*
  * Fjerner saksgangen og diskusjonene fra session
 */
+    			sessionAdmin.removesessionObject(request, displayorgInfoKey);
     		 	sessionAdmin.removesessionObject(request, diskusjonsKey);
     		 	sessionAdmin.removesessionObject(request, sakModelKey);
        		 	sessionAdmin.removesessionObject(request, klassifikasjonKey);
