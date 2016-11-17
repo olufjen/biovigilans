@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.Donasjon;
 import no.naks.biovigilans.model.DonasjonImpl;
@@ -176,10 +177,12 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
 	     Komplikasjonsdiagnosegiver komplikasjonsdiagnoseGiver = giverModel.getKomplikasjonsdiagnoseGiver();
 		 Giveroppfolging giveroppfolging = giverModel.getGiveroppfolging();
 		 giverKomplikasjon = (Giverkomplikasjon)giverModel.getGiverKomplikasjon();
+         giverMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request,giverMeldingKey);
+		 List<Giverkomplikasjon> giverListe =(List) sessionAdmin.getSessionObject(request,reportGiverKey);
 		 Melder melder = null;
 	     if (giverModel.getVigilansmelding().getMeldingsnokkel() != null){
 	    	 displayPart = "block";
-	    	 datePart = "none";
+	    	 datePart = "block";
 	    	 Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
 	    	 makeSequence(request, melding);
 	    	 setGivermelding();
@@ -202,7 +205,52 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
 	    		 omKey = String.valueOf(orgmeldeId.longValue());
 	    		 orgdiskusjoner =  orgMapdiskusjoner.get(omKey);
 	    		 sameKey = mnKey.equals(omKey);
+	    	 }	  
+	    	 /*
+	    	  * For å vise historikk	    	 
+	    	  */
+	    	 Vigilansmelding orgVigilansmelding = null;
+	    	 giverModel.getTidligereVigilans().clear();
+	    	 giverModel.getTidligereGiverkomp().clear();
+	    	 giverModel.getTidligereDonasjoner().clear();
+	    	 giverModel.getTidligereGivere().clear();
+	    	 giverModel.getTidligereKomplikasjonsdiagnoser().clear();
+	    	 giverModel.getTidligereOppfolging().clear();
+	    	 
+	    	 for (Vigilansmelding nestemelding: giverMeldingene){
+	    		 if (orgmeldeId != null && nestemelding.getMeldingsnokkel().equals(mKey) && nestemelding.getMeldeid().longValue() != meldeId.longValue() ){
+	    			 orgVigilansmelding = nestemelding;
+	    			 Long orgMeldId = nestemelding.getMeldeid();
+	    			 String oMKey = String.valueOf(orgMeldId.longValue());
+	    			 Map<String,List> histMeldingsdetaljer = null;
+					 histMeldingsdetaljer = (Map<String,List>)saksbehandlingWebservice.selectMeldinger(oMKey); // Hent historikk
+					 if (histMeldingsdetaljer != null){
+				   			List givere = histMeldingsdetaljer.get(giverenKey);
+			    			List donasjoner = histMeldingsdetaljer.get(donasjonKey);
+			    			List giveroppfolginger = histMeldingsdetaljer.get(giverOppfolgingKey);
+			    			List komplikasjonsdiagnosergiver = histMeldingsdetaljer.get(giverkomplikasjondiagnoseKey);
+			    			giverModel.getTidligereDonasjoner().addAll(donasjoner);
+			    			giverModel.getTidligereGivere().addAll(givere);
+			    			giverModel.getTidligereKomplikasjonsdiagnoser().addAll(komplikasjonsdiagnosergiver);
+			    			giverModel.getTidligereOppfolging().addAll(giveroppfolginger);
+			    			
+					 }
+	    			 giverModel.getTidligereVigilans().add(orgVigilansmelding);
+	    		 }
+	    	 }
+	    	 List<Vigilansmelding> vigilans =  giverModel.getTidligereVigilans();
+	    	 for (Vigilansmelding orgmelding : vigilans){
+	    		 for (Giverkomplikasjon komplikasjon : giverListe){
+	    			 if (orgmeldeId != null && komplikasjon.getMeldeid().longValue() == orgmelding.getMeldeid().longValue() ){
+	    				 Giverkomplikasjon orgGiverkomplikasjon = komplikasjon;
+	    				 displayorgInfo = "block";
+	    				 sessionAdmin.setSessionObject(request, displayorgInfo,displayorgInfoKey );
+	    				 giverModel.getTidligereGiverkomp().add(orgGiverkomplikasjon);
+	    			 }
+	    		 }		    		 
 	    	 }	    	 
+
+	    	 
 	    	 String mmKey = String.valueOf(meldeId.longValue());
 	    	 diskusjoner = diskusjonene.get(mmKey);	    	 
 	    	 if (diskusjoner == null)
@@ -258,6 +306,12 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
 
     	 SimpleScalar simple = new SimpleScalar(displayPart);
     	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
+		 SimpleScalar orgInfo = new SimpleScalar(displayorgInfo);
+    	 SimpleScalar iconImportant = new SimpleScalar(imagesrcImportant);
+    	 dataModel.put(imageImportantkey,iconImportant);
+    	 dataModel.put(tilMelding,tilMelder);
+    	 dataModel.put(displayorgInfoKey, orgInfo);    	 
+    	 
  	 	 dataModel.put(behandlingsFlaggKey, diskusjoner);
     	 dataModel.put(statusflagKey,statusflag);
     	 dataModel.put(giverkomplikasjonKey, giverKomplikasjon);
@@ -466,8 +520,19 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
      	    dataModel.put(tilMelding,tilMelder);
     	     displayPart = "block";
 	    	 datePart = "none";
+/*
+ * For å vise info fra tidligere meldinger	    	 
+ */
+	    	 displayorgInfo = (String)sessionAdmin.getSessionObject(request, displayorgInfoKey);
+	    	 if (displayorgInfo == null || displayorgInfo.isEmpty())
+	    		 displayorgInfo = "none";
     	   	 SimpleScalar simple = new SimpleScalar(displayPart);
         	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
+    		 SimpleScalar orgInfo = new SimpleScalar(displayorgInfo);
+        	 SimpleScalar iconImportant = new SimpleScalar(imagesrcImportant);
+        	 dataModel.put(imageImportantkey,iconImportant);
+  
+        	 dataModel.put(displayorgInfoKey, orgInfo);    	 
         	 dataModel.put(statusflagKey,statusflag);
         	 dataModel.put(giverkomplikasjonKey, giverKomplikasjon);
         	 dataModel.put(giverenKey, giver);
@@ -513,7 +578,7 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
 /*
  * Fjerner saksgangen og diskusjonene fra session
  */
-
+   	   			sessionAdmin.removesessionObject(request, displayorgInfoKey);
     		 	sessionAdmin.removesessionObject(request, diskusjonsKey);
     		 	sessionAdmin.removesessionObject(request, sakModelKey);
     			sessionAdmin.setSessionObject(request, newLogin, loginKey);

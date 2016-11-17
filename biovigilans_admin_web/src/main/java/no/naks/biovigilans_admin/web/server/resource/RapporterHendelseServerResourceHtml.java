@@ -16,6 +16,7 @@ import javax.xml.namespace.QName;
 import no.naks.biovigilans.felles.server.resource.SessionServerResource;
 import no.naks.biovigilans.model.Blodprodukt;
 import no.naks.biovigilans.model.Diskusjon;
+import no.naks.biovigilans.model.Giverkomplikasjon;
 import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
@@ -236,6 +237,9 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	     Pasient pasient = result.getPasient();
 	     Sykdom sykdom = result.getSykdom();
 	     Pasientkomplikasjon pasientKomplikasjon = transfusjon.getPasientKomplikasjon();
+	     List<Pasientkomplikasjon> pasientListe = (List)	sessionAdmin.getSessionObject(request,reportPasientKey);	
+		 pasientMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request, pasientMeldingKey);
+
 	     if (pasientKomplikasjon.getKlassifikasjon() == null || pasientKomplikasjon.getKlassifikasjon().isEmpty() ){
 	    	 pasientKomplikasjon.setKlassifikasjon("Ikke angitt");
 	     }
@@ -284,7 +288,118 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	    		 omKey = String.valueOf(orgmeldeId.longValue());
 	    		 orgdiskusjoner =  orgMapdiskusjoner.get(omKey);
 	    		 sameKey = mnKey.equals(omKey);
-	    	 }	    	 
+	    	 }	
+/*
+ * For å vise historikk	    	 
+*/
+	    	 Vigilansmelding orgVigilansmelding = null;
+	    	 result.getTidligereVigilans().clear();
+	    	 result.getTidligerePasientkomp().clear();
+	    	 transfusjon.getTidligereVigilans().clear();
+	    	 transfusjon.getTidligerePasientkomp().clear();
+	    	 
+	    	 transfusjon.getTidligereBlodprodukter().clear();
+	    	 transfusjon.getTidligereKlassifikasjoner().clear();
+	    	 transfusjon.getTidligerePasienter().clear();
+	    	 transfusjon.getTidligereProduktegenskaper().clear();
+	    	 transfusjon.getTidligereSykdommer().clear();
+	    	 transfusjon.getTidligereTransfusjoner().clear();
+	    	 transfusjon.getTidligereUtredninger().clear();
+	    	 transfusjon.getTidligereforebyggendeTiltak().clear();
+	    	 transfusjon.getTidligereTiltak().clear();
+	    	 transfusjon.getTidligereSymptomer().clear();
+	    	 result.getTidligereBlodprodukter().clear();
+	    	 result.getTidligereKlassifikasjoner().clear();
+	    	 result.getTidligerePasienter().clear();
+	    	 result.getTidligereProduktegenskaper().clear();
+	    	 result.getTidligereSykdommer().clear();
+	    	 result.getTidligereTransfusjoner().clear();
+	    	 result.getTidligereUtredninger().clear();
+	    	 result.getTidligereforebyggendeTiltak().clear();
+	    	 result.getTidligereTiltak().clear();
+	    	 result.getTidligereSymptomer().clear();
+/*
+ * Henter historikk	    	 
+ */
+	    	 for (Vigilansmelding nestemelding: pasientMeldingene){
+	    		 if (orgmeldeId != null && nestemelding.getMeldingsnokkel().equals(mKey) && nestemelding.getMeldeid().longValue() != meldeId.longValue() ){
+	    			 orgVigilansmelding = nestemelding;
+	    			 Long orgMeldId = nestemelding.getMeldeid();
+	    			 String oMKey = String.valueOf(orgMeldId.longValue());
+	    			 Map<String,List> histMeldingsdetaljer = null;
+					 histMeldingsdetaljer = (Map<String,List>)saksbehandlingWebservice.selectMeldinger(oMKey); // Hent historikk
+					 if (histMeldingsdetaljer != null ){
+				   			List pasienter = histMeldingsdetaljer.get(pasientenKey);
+				   			List transfusjoner = histMeldingsdetaljer.get(transfusjonsKey);
+				   			List histsykdommer = histMeldingsdetaljer.get(sykdomKey);
+				   			List histtiltak = histMeldingsdetaljer.get(tiltakKey);
+				   			List histforebyggendeTiltak = histMeldingsdetaljer.get(forebyggendetiltakKey);
+				   			List histsymptomer = histMeldingsdetaljer.get(symptomerKey);
+				   			List histutredning = histMeldingsdetaljer.get(utredningKey);
+				   			List histblodprodukter = histMeldingsdetaljer.get(blodproduktKey);
+				   			List histproduktegenskaper = histMeldingsdetaljer.get(produktegenskapKey);
+							String klasskey = klassifikasjonKey + oMKey;
+							List histklassifikasjoner = histMeldingsdetaljer.get(klasskey);
+				   			if (histblodprodukter != null)
+				   				result.getTidligereBlodprodukter().addAll(histblodprodukter);
+				   			if (histforebyggendeTiltak != null)
+				   				result.getTidligereforebyggendeTiltak().addAll(histforebyggendeTiltak);
+				   			if (pasienter != null)
+				   				result.getTidligerePasienter().addAll(pasienter);
+				   			if (histproduktegenskaper != null)
+				   				result.getTidligereProduktegenskaper().addAll(histproduktegenskaper);
+				   			if (histsykdommer != null)
+				   				result.getTidligereSykdommer().addAll(histsykdommer);
+				   			if (histtiltak != null)
+				   				result.getTidligereTiltak().addAll(histtiltak);
+				   			if (transfusjoner != null)
+				   				result.getTidligereTransfusjoner().addAll(transfusjoner);
+				   			if (histutredning != null)
+				   				result.getTidligereUtredninger().addAll(histutredning);
+				   			if (histklassifikasjoner != null)
+				   				result.getTidligereKlassifikasjoner().addAll(histklassifikasjoner);
+				   			if (histsymptomer != null)
+				   				result.getTidligereSymptomer().addAll(histsymptomer);
+				   			if (histblodprodukter != null)
+				   				transfusjon.getTidligereBlodprodukter().addAll(histblodprodukter);
+				   			if (histforebyggendeTiltak != null)
+				   				transfusjon.getTidligereforebyggendeTiltak().addAll(forebyggendeTiltak);
+				   			if (pasienter != null)
+				   				transfusjon.getTidligerePasienter().addAll(pasienter);
+				   			if (histproduktegenskaper != null)
+				   				transfusjon.getTidligereProduktegenskaper().addAll(histproduktegenskaper);
+				   			if (histsykdommer != null)
+				   				transfusjon.getTidligereSykdommer().addAll(histsykdommer);
+				   			if (histtiltak != null)
+				   				transfusjon.getTidligereTiltak().addAll(histtiltak);
+				   			if (transfusjoner != null)
+				   				transfusjon.getTidligereTransfusjoner().addAll(transfusjoner);
+				   			if (histutredning != null)
+				   				transfusjon.getTidligereUtredninger().addAll(histutredning);
+				   			if (histklassifikasjoner != null)
+				   				transfusjon.getTidligereKlassifikasjoner().addAll(histklassifikasjoner);
+				   			if (histsymptomer != null)
+				   				transfusjon.getTidligereSymptomer();
+					 }
+	    			 result.getTidligereVigilans().add(orgVigilansmelding);
+	    			 transfusjon.getTidligereVigilans().add(orgVigilansmelding);
+	    		 }
+	    	 }
+	    	 List<Vigilansmelding> vigilans =  result.getTidligereVigilans();
+	    	 for (Vigilansmelding orgmelding : vigilans){
+	    		 for (Pasientkomplikasjon komplikasjon : pasientListe){
+	    			 if (orgmeldeId != null && komplikasjon.getMeldeid().longValue() == orgmelding.getMeldeid().longValue() ){
+	    				 Pasientkomplikasjon orgPasientkomplikasjon = komplikasjon;
+	    				 displayorgInfo = "block";
+	    				 sessionAdmin.setSessionObject(request, displayorgInfo,displayorgInfoKey );
+	    				 result.getTidligerePasientkomp().add(orgPasientkomplikasjon);
+	    				 transfusjon.getTidligerePasientkomp().add(orgPasientkomplikasjon);
+	    			 }
+	    		 }		    		 
+	    	 }	    	    	 
+	    	 
+	    	 
+	    	 
 	    	 melder = hentMelder(transfusjon.getVigilansmelding());
 	    	 
 	    	 if (diskusjoner == null)
@@ -321,6 +436,10 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
     	 
     	 SimpleScalar simple = new SimpleScalar(displayPart);
     	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
+		 SimpleScalar orgInfo = new SimpleScalar(displayorgInfo);
+    	 SimpleScalar iconImportant = new SimpleScalar(imagesrcImportant);
+    	 dataModel.put(imageImportantkey,iconImportant);
+     	 dataModel.put(displayorgInfoKey, orgInfo);    	 
  	 	 dataModel.put(behandlingsFlaggKey, diskusjoner);
     	 dataModel.put(statusflagKey,statusflag);
       	 dataModel.put(sykdomKey, sykdommer);
@@ -550,8 +669,17 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	    	    sessionAdmin.setSessionObject(getRequest(), transfusjon,transfusjonId);
 	    	    sessionAdmin.setSessionObject(getRequest(), melderwebModel,melderId);
 
-   	  	
+	    	    /*
+	    	     * For å vise info fra tidligere meldinger	    	 
+	    	     */
+	    	    displayorgInfo = (String)sessionAdmin.getSessionObject(request, displayorgInfoKey);
+	    	    if (displayorgInfo == null || displayorgInfo.isEmpty())
+	    	    	displayorgInfo = "none";   	  	
 	    	    dataModel.put(displayKey, simple);
+	    	    SimpleScalar orgInfo = new SimpleScalar(displayorgInfo);
+	    	    SimpleScalar iconImportant = new SimpleScalar(imagesrcImportant);
+	    	    dataModel.put(imageImportantkey,iconImportant);
+	    	    dataModel.put(displayorgInfoKey, orgInfo);    	 
 	            dataModel.put(displaydateKey, hendelseDate);
 	       	 	dataModel.put(statusflagKey,statusflag);
 	    	    dataModel.put(pasientkomplikasjonId, result);
@@ -602,6 +730,7 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	    			 /*
 	    			  * Fjerner saksgangen og diskusjonene fra session
 	    			  */
+	    	   		sessionAdmin.removesessionObject(request, displayorgInfoKey);
 	    		 	sessionAdmin.removesessionObject(request, diskusjonsKey);
 	    		 	sessionAdmin.removesessionObject(request, sakModelKey);
 	    			 sessionAdmin.setSessionObject(request, newLogin, loginKey);

@@ -176,6 +176,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
   		Parameter datoHendt = form.getFirst("datohendt");
   		Parameter datoHSort   = form.getFirst("sorteringdatohendt");
 		Parameter datoMSort   = form.getFirst("sorteringdatomeldt"); 
+		Parameter statusSort   = form.getFirst("btnsorteringstatus");
 		Parameter formMinesaker  = form.getFirst("minesaker"); // Bruker etterspør sine saker
 		Parameter sokMelding = form.getFirst("meldingsnokkelsok"); // Bruker etterspør en gitt melding
 		Parameter formAnonymesaker  = form.getFirst("anonymesaker"); // Bruker etterspør anonyme meldinger
@@ -404,6 +405,25 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 /*
  * Sorteringer  		
  */
+  		if (statusSort != null){ // Sortering etter status
+  			sorterMeldingerstatus(meldinger);
+		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
+  		 	 dataModel.put(merknadlisteKey, merk);
+   			
+  		 	SimpleScalar simple = new SimpleScalar(utvalg);
+  		 	dataModel.put(utvalgKey, simple);
+  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
+  		    dataModel.put(meldeKey,meldinger);
+  	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
+
+    		// Load the FreeMarker template
+    		Representation pasientkomplikasjonFtl = clres2.get();
+
+    		TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+    				MediaType.TEXT_HTML);
+    		return templatemapRep; 			
+  		}
   		if (datoHSort != null){ // Sortering dato hendt
   			
   			 sortermeldingerHendelse(meldinger);
@@ -593,31 +613,31 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     	    	sykdom = sykdommer.get(0);
     	    if (sykdom != null && sykdom.getSykdomnsnavn().equals("") && histsykdommer != null){
     	    	sykdommer = histsykdommer;
-    	    }
+    	    } //Kommentert 14.11.16 OLJ 
     	    if (sykdom == null && histsykdommer != null && sykdommer != null){
     	    	sykdommer.addAll(histsykdommer);
-    	    }
+    	    } //Kommentert 14.11.16 OLJ
        	    if (blodprodukter != null && histblodprodukter != null)
     	    	blodprodukter.addAll(histblodprodukter);
     	    if (blodprodukter == null || blodprodukter.isEmpty() && histblodprodukter != null){
     	    	blodprodukter = histblodprodukter;
-    	    }
+    	    } //Kommentert 14.11.16 OLJ 
     	    if (egenskaper != null && histegenskaper != null)
     	    	egenskaper.addAll(histegenskaper);
     	    if (egenskaper == null || egenskaper.isEmpty() && histegenskaper != null){
     	    	egenskaper = histegenskaper;
-    	    }
+    	    } //Kommentert 14.11.16 OLJ
        	    if (symptomer != null && histsymptomer != null)
     	    	symptomer.addAll(histsymptomer);
     	       	
     	    if (symptomer == null || symptomer.isEmpty() && histsymptomer != null){
     	    	symptomer = histsymptomer;
-    	    }
+    	    } //Kommentert 14.11.16 OLJ 
     	    if (utredninger != null && histutredninger != null)
     	    	utredninger.addAll(histutredninger);
     	    if (utredninger == null || utredninger.isEmpty() && histutredninger != null){
     	    	utredninger = histutredninger;
-    	    }
+    	    } //Kommentert 14.11.16 OLJ 
 /*
  * Klassifikasjoner lagt til 26.05.16    	    
  */
@@ -625,6 +645,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     	    	klassifikasjoner.addAll(histklassifikasjoner);
     	    if (klassifikasjoner == null || klassifikasjoner.isEmpty() && histklassifikasjoner != null)
     	    	klassifikasjoner = histklassifikasjoner;
+Disse hentes i RapporterAnnenServerResource og RapporterPasientserverResource OLJ 11.11.16
     	    */
     	    if (giverListe != null ){
     	    	giverKomplikasjon = giverListe.get(0);
@@ -673,9 +694,9 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 			     setAndreHendelser(); // Setter opp andreHendelser session objekter
 				    // setTransfusjonsObjects(); 
 			    klassifikasjoner = (List)meldingDetaljene.get(klassifikasjonKey);
-				if (klassifikasjoner == null || klassifikasjoner.isEmpty()){
+/*				if (klassifikasjoner == null || klassifikasjoner.isEmpty()){
 	    			klassifikasjoner = histklassifikasjoner;
-	    		}
+	    		}  OLJ 12.11.16  Henter historikk i rapporterAndreServer Resource*/
 			     if (klassifikasjoner != null){
 			    	  sessionAdmin.setSessionObject(request, klassifikasjoner,klassifikasjonKey);
 			     }
@@ -694,6 +715,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 		    	 klassifikasjoner = (List)sessionAdmin.getSessionObject(getRequest(), klassifikasjonKey);
 		    	 if (klassifikasjoner == null){
 		    			klassifikasjoner = new ArrayList<Komplikasjonsklassifikasjon>();
+		    			sessionAdmin.setSessionObject(request, klassifikasjoner,klassifikasjonKey);
 //		    			Komplikasjonsklassifikasjon komplikasjonsklassifikasjon =  new KomplikasjonsklassifikasjonImpl();
 //		    			komplikasjonsklassifikasjon.setKlassifikasjon("ukjent");
 //		    			komplikasjonsklassifikasjon.setKlassifikasjonsbeskrivelse("ukjent");
@@ -715,30 +737,32 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 	    		setTransfusjon();
 	    		setSessionParams( getPasientSession());
 	    		klassifikasjoner = (List)meldingDetaljene.get(klassifikasjonKey);
-	    		if (klassifikasjoner == null || klassifikasjoner.isEmpty()){
+/*	    		if (klassifikasjoner == null || klassifikasjoner.isEmpty()){
 	    			klassifikasjoner = histklassifikasjoner;
-	    		}
+	    		} Kommentert bort 11.11.16 OLJ Historikk hentes i HendelseServerResource*/
 	    		sessionAdmin.setSessionObject(getRequest(), klassifikasjoner,klassifikasjonKey);
 				if (tiltak != null && !tiltak.isEmpty()){
 					  tiltaket = tiltak.get(0);
 					  result.setTiltak(tiltaket);
 					  
 				}
-				if (histtiltak != null && !histtiltak.isEmpty()){
+/*				if (histtiltak != null && !histtiltak.isEmpty()){
 					  tiltak = histtiltak;
 					  tiltaket = histtiltak.get(0);
 					  result.setTiltak(tiltaket);
 					  
-				}
+				} Kommentert bort 11.11.16 OLJ Historikk hentes i HendelseServerResource*/
+				
 				if (forebyggendeTiltak != null && !forebyggendeTiltak.isEmpty()){
 					  forebyggendeTiltaket = forebyggendeTiltak.get(0);
 					  result.setForebyggendeTiltak(forebyggendeTiltaket);
 				  }
-				if (histforebyggendeTiltak != null && !histforebyggendeTiltak.isEmpty()){
+/*				if (histforebyggendeTiltak != null && !histforebyggendeTiltak.isEmpty()){
 					  forebyggendeTiltak = histforebyggendeTiltak;
 					  forebyggendeTiltaket = histforebyggendeTiltak.get(0);
 					  result.setForebyggendeTiltak(forebyggendeTiltaket);
-				  }
+				  } Kommentert bort 11.11.16 OLJ Historikk hentes i HendelseServerResource*/
+								
 	   	    	sessionAdmin.setSessionObject(request,transfusjonen, transfusjonsKey);
     	    	sessionAdmin.setSessionObject(request,pasientKomplikasjon, pasientKey);
     	    	sessionAdmin.setSessionObject(request,pasient, pasientenKey);

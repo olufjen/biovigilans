@@ -424,7 +424,7 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	public List<Vigilansmelding> hentMeldingene(String status){
 		List<Vigilansmelding> meldinger = null;
 		meldinger = saksbehandlingWebservice.collectMessages(); // Henter alle meldinger. Dette må gjøres for å kunne sette opprinnelig melding til Erstattet
-
+		meldinger = hentMeldingstyper(meldinger);// Lager egne lister for alle meldingstyper
 		sorterMeldinger(meldinger); // Og sorterer disse og fjerner doble før valgt utvalg hentes
 
 		if (status != null && !status.equals(statusflag[6])){
@@ -438,7 +438,8 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	    		melding.setSjekklistesaksbehandling("Levert");
 	    	}
 	    }
-		meldinger = hentMeldingstyper(meldinger);// Lager egne lister for alle meldingstyper
+		meldinger = hentMeldingstyper(meldinger);// Lager egne lister for alle meldingstyper Gjøres også foran fjerning av doble 
+//		 Dette for å ha komplette lister av alle typer meldinger OLJ 2.11.16
 	    return meldinger;
 	}
 	/**
