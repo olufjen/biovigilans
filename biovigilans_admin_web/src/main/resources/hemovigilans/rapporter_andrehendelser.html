@@ -521,7 +521,9 @@
 			<div class="bg-success" style="display: ${display}">
 				<label>Tidligere beskrivelse av hendelsen </label>
 					<div> 
- 					<label>${annenHendelse.komplikasjonbeskrivelse}	<img alt="OBS" title="${annenHendelseOrg.komplikasjonbeskrivelse}"  src="${ikonImportant}" style="display: ${displayorgInfo} height:22px;width:22px;"> </label>
+					<label>${annenHendelse.komplikasjonbeskrivelse} </label><br>
+					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.komplikasjonbeskrivelse)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+ 		
  					</div>
 			</div>				
 				<div class="form-group" >
@@ -531,8 +533,10 @@
 			<div class="bg-success" style="display: ${display}">
 				<label>Tidligere oppgitt hovedprosess </label>
 					<div>
- 					<label>${annenHendelse.hovedprosess}</label>
- 					</div>
+					<label>${annenHendelse.hovedprosess} </label><br>
+					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.hovedprosess)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+				
+  					</div>
 			</div>					
 				<div class="form-group">
 					<label>Hvilken hovedprosess gjaldt hendelsen?</label>
@@ -546,7 +550,8 @@
 			<div class="bg-success" style="display: ${display}">
 				<label>Tidligere oppgitt primærårsak </label>
 					<div>
- 					<label>${annenHendelse.avvikarsak}</label>
+					<label>${annenHendelse.avvikarsak}</label><br>
+					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.avvikarsak)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
  					</div>
 			</div>		
 				<div class="form-group">
@@ -562,7 +567,8 @@
 				<label>Tidligere oppgitt klassifikasjon </label>
 					<div>
  					<label>${annenHendelse.klassifikasjon}</label>
- 					<label>${annenHendelse.delkode}</label>
+ 					<label>${annenHendelse.delkode}</label><br>
+ 					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.klassifikasjon)!}${(tidligere.delkode)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
  					</div>
 			</div>		
 			    <div class="bg-success" style="display: ${display}">
@@ -572,6 +578,12 @@
 					<tr id="klaslr"></td><td id="klas">${klassifikasjon.klassifikasjon}</td></tr> 
 					</#list>
 					</table> 
+					<table border=1 >
+ 					<label><#list andreHendelse.tidligereKlassifikasjoner as tidligere>
+ 					<tr id="klaslr"><td id="klas"><img alt="OBS" src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;">${(tidligere.klassifikasjon)!}</td></tr> 
+ 					</#list>
+					</label>
+					</table>
 				</div>			
 				
 				<div class="form-group">
@@ -709,7 +721,9 @@
 								<div class="bg-success" style="display: ${display}">
 									<label>Tidligere oppgitt opplysninger om pasienten </label>
 									<div>
- 									<label>${annenHendelse.pasientopplysninger}</label>
+									<label>${annenHendelse.pasientopplysninger}</label>
+				 					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.pasientopplysninger)!}}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label><br>
+
  									</div> 
 								</div>	
 								    <div class="form-group">
@@ -809,35 +823,35 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-4"  onclick="toggleDisplay('giver'); checkUncheck();"  value="giveren fyller"  />Giveren fyller ikke kravene, men blir likevel tappet
+			          	<input type="radio" name="tab-klassifikasjon" id="k-4"  onclick="toggleDisplay('giver'); checkUncheck();"  value="giveren fyller ikke kravene, men blir likevel tappet"  />Giveren fyller ikke kravene, men blir likevel tappet
 			          </label>
 				  
 				      <div id="giver" style="display: none" >
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="15"  value="HBlav"  />Hemoglobin ikke målet før tapping. Hemoglobin målt etter tapping var for lav.
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="15"  value="Hemoglobin ikke målet før tapping. Hemoglobin målt etter tapping var for lav."  />Hemoglobin ikke målet før tapping. Hemoglobin målt etter tapping var for lav.
 				          	 </label>
 				          </div>
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="16" value="smittetesting"  />Påkrevet smittetesting ikke utført.
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="16" value="Påkrevet smittetesting ikke utført"  />Påkrevet smittetesting ikke utført.
 				          	 </label>
 				          </div>
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="17"   value="HBannen"  />Andre krav som ikke ble oppfylt.
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="17"   value="Andre krav som ikke ble oppfylt"  />Andre krav som ikke ble oppfylt.
 				          	 </label>
 				          </div>
 				      </div>  
 				     </div>
 				     <div class="radio">
 			     	  <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-5"   onclick="toggleDisplay('giveren'); checkUncheck();"  value="giver inform"  />Giveren informerer kort tid etter tapping om noe som gjør at blodet ikke skal brukes
+			          	<input type="radio" name="tab-klassifikasjon" id="k-5"   onclick="toggleDisplay('giveren'); checkUncheck();"  value="Giveren informerer kort tid etter tapping om noe som gjør at blodet ikke skal brukes"  />Giveren informerer kort tid etter tapping om noe som gjør at blodet ikke skal brukes
 			          </label>
 				      <div id="giveren" style="display: none" >    
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="18"  value="Annen smitterisiko"  />Sykdom
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="18"  value="Sykdom Annen smitterisiko"  />Sykdom
 				          	 </label>
 				          </div>
 				          <div class="radio">	 
@@ -857,7 +871,7 @@
 				          </div>
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="22"  value="annen"  />Annen informasjon
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="22"  value="Annen informasjon"  />Annen informasjon
 				          	 </label>
 				          </div>
 				        
@@ -889,7 +903,7 @@
 			          
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-7"   onclick="checkUncheck();" value="IKT"  /> IKT (utstyr og programvare)
+			          	<input type="radio" name="tab-klassifikasjon" id="k-7"   onclick="checkUncheck();" value="IKT (utstyr og programvare)"  /> IKT (utstyr og programvare)
 			          </label>
 			          
 			          
@@ -913,22 +927,22 @@
 				          </div>
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="28"  value="Feil test brukt"  />Blodtypekontroller ikke brukt
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="28"  value="Blodtypekontroller ikke brukt"  />Blodtypekontroller ikke brukt
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="29"  value="Feil test brukt"  />Teknisk svikt reagenser
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="29"  value="Teknisk svikt reagenser"  />Teknisk svikt reagenser
 				          	 </label>
 				          </div>
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="30"   value="Feil test brukt"  />Ikke gyldig typing og/eller screening
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="30"   value="kke gyldig typing og/eller screening"  />Ikke gyldig typing og/eller screening
 				          	 </label>
 				          </div>
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="31"   value="Feil test brukt"  />Rekvirert tilleggstekst ikke tatt hensyn til
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="31"   value="Rekvirert tilleggstekst ikke tatt hensyn til"  />Rekvirert tilleggstekst ikke tatt hensyn til
 				          	 </label>
 				          </div>
 				          <div class="radio">	 
@@ -943,12 +957,12 @@
 				          </div>
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="34"  value="Ikke tatt hensyn tuil feil antistoff"  />Ikke tatt hensyn til blodtypeantistoff
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="34"  value="Ikke tatt hensyn til blodtypeantistoff"  />Ikke tatt hensyn til blodtypeantistoff
 				          	 </label>
 				          </div>
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="35"   value="Feilproveglassbrukt"  />Feil prøverør brukt
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="35"   value="Feil prøverør brukt"  />Feil prøverør brukt
 				          	 </label>
 				          </div>
 				          <div class="radio">	 
@@ -966,12 +980,12 @@
 			          <div id="transport" style="display: none" >
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="37"   value="Prøver merket feil"  />Feil blod utlevert (blodbankpersonell)
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="37"   value="Feil blod utlevert (blodbankpersonell)"  />Feil blod utlevert (blodbankpersonell)
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="38"   value="Prøver merket feil"  />Feil blod hentet (annet enn blodbankpersonell)
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="38"   value="Feil blod hentet (annet enn blodbankpersonell)"  />Feil blod hentet (annet enn blodbankpersonell)
 				          	 </label>
 				          </div>
 				     
@@ -994,7 +1008,7 @@
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="41"   value="Poser merket feil"  />Pasienter merket feil
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="41"   value="Pasienter merket feil"  />Pasienter merket feil
 				          	 </label>
 				          </div>
 				        </div>
@@ -1006,41 +1020,42 @@
 			          <div id="annet" style="display: none" >
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="42" value="feilblodprodukt"  />Feil med blodproduktet				          	 </label>
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="42" value="Feil med blodproduktet"  />Feil med blodproduktet
+				          		</label>
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="43"  value="feilutstyrreagens"  />Feil utstyr eller reagens brukt
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="43"  value="Feil utstyr eller reagens brukt"  />Feil utstyr eller reagens brukt
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="44"   value="feilblodtilpasient"  />Bestilt blod til feil pasient
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="44"   value="Bestilt blod til feil pasient"  />Bestilt blod til feil pasient
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="45"  value="blodutavkarantene"  />Blod ut av karantene uten at krav til frigiving er oppfylt
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="45"  value="Blod ut av karantene uten at krav til frigiving er oppfylt"  />Blod ut av karantene uten at krav til frigiving er oppfylt
 				          	 </label>
 				          </div>
 				      		<div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="46"  value="blodikkebestilt"  />Blod ikke bestilt
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="46"  value="Blod ikke bestilt"  />Blod ikke bestilt
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="47"  value="hjelpenummernodnummer"  />Problem med hjelpenummer/nødnummer
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="47"  value="Problem med hjelpenummer/nødnummer"  />Problem med hjelpenummer/nødnummer
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="48"  value="klargjorttilfeilpasient"  />Blod klargjort av sykepleier til feil pasient
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="48"  value="Blod klargjort av sykepleier til feil pasient"  />Blod klargjort av sykepleier til feil pasient
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="49"  value="feiltolketbestilling"  />Blodbanken feiltolket bestillingen (pasient eller produkt)
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="49"  value="Blodbanken feiltolket bestillingen (pasient eller produkt)"  />Blodbanken feiltolket bestillingen (pasient eller produkt)
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
@@ -1056,7 +1071,9 @@
 		<div class="bg-success" style="display: ${display}">
 				<label>Tidligere oppgitt Definisjon alvorlig hendelse</label>
 					<div>
- 					<label>${annenHendelse.komplikasjondefinisjon}</label>
+ 					<label>${annenHendelse.komplikasjondefinisjon}</label><br>
+					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.komplikasjondefinisjon)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+
  					</div>
 			</div>	
 				<div class="form-group">
@@ -1071,7 +1088,8 @@
 				<div class="bg-success" style="display: ${display}">
 				<label>Tidligere oppgitt hvordan hendelsen ble oppdaget </label>
 					<div>
- 					<label>${annenHendelse.oppdaget}</label>
+ 					<label>${annenHendelse.oppdaget}</label><br>
+					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.oppdaget)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
  					</div>
 			</div>	
 				<div class="form-group">
@@ -1086,7 +1104,8 @@
 			<div class="bg-success" style="display: ${display}">
 				<label>Tidligere oppgitt tiltak </label>
 					<div>
- 					<label>${annenHendelse.tiltak}</label>
+ 					<label>${annenHendelse.tiltak}</label><br>
+					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.tiltak)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
  					</div>
 			</div>		
 				<div class="form-group">
@@ -1096,7 +1115,8 @@
 			<div class="bg-success" style="display: ${display}">
 				<label>Tidligere oppgitt kommentar </label>
 					<div>
- 					<label>${annenHendelse.kommentar}</label>
+ 					<label>${annenHendelse.kommentar}</label><br>
+ 					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.kommentar)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
  					</div>
 			</div>		
 				<div class="form-group">
@@ -1108,7 +1128,8 @@
 		<div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt ytterligere opplysninger</label>
 			<div>
-				<label>${andreHendelse.vigilansmelding.kladd}</label>
+				<label>${andreHendelse.vigilansmelding.kladd}</label><br>
+ 				<label><#list andreHendelse.tidligereVigilans as tidligere><img alt="OBS" title="${(tidligere.kladd)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 		</div>			
 			<label>Ytterligere opplysninger følger</label>
