@@ -34,7 +34,7 @@ public class KomplikasjonklassifikasjonSelect extends AbstractSelect {
 			klassifikasjon.setMeldeidpasient(meldeidpas);
 		}
 		Long meldeidannen = new Long(rs.getLong(tableDefs[4]));
-		if (meldeidannen != null && meldeidpas == null){
+		if (meldeidannen != null){
 			klassifikasjon.setMeldeidannen(meldeidannen);
 		}
 		return klassifikasjon;

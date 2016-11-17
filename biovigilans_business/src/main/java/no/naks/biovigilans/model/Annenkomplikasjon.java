@@ -3,7 +3,7 @@ package no.naks.biovigilans.model;
 import java.util.Date;
 import java.util.Map;
 
-public interface Annenkomplikasjon {
+public interface Annenkomplikasjon extends Vigilansmelding {
 	
 	
 	public String getKlassifikasjon();

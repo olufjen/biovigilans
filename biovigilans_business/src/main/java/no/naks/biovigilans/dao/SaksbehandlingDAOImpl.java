@@ -910,7 +910,8 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 		delMeldingKey = andreKey;
 		if (!delMeldinger.isEmpty()){
 			List klassifikasjoner = velgKomplikasjonklassifikasjon(mId, nType,annenkomplikasjonSQL);
-			alleMeldinger.put(klassifikasjonKey,klassifikasjoner);
+			String klasskey = klassifikasjonKey + String.valueOf(mId.longValue());
+			alleMeldinger.put(klassifikasjonKey,klassifikasjoner); //OBS !!!! samme nøkkel
 		}
 		if (delMeldinger.isEmpty()){
 			andremeldingSelect = null;
@@ -963,6 +964,7 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 					alleMeldinger.put(produktegenskapKey, produktEgenskaper);
 				}
 				List klassifikasjoner = velgKomplikasjonklassifikasjon(mId, nType,komplikasjonSQL);
+				String klasskey = klassifikasjonKey + String.valueOf(mId.longValue());
 				alleMeldinger.put(klassifikasjonKey,klassifikasjoner);
 				List symptomer = velgSymptomer(mId, nType);
 				alleMeldinger.put(symptomerKey,symptomer);
