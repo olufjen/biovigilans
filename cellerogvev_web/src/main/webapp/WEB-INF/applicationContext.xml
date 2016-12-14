@@ -344,7 +344,8 @@
                         ${pasientkomplikasjon.arsak.utredning90},${pasientkomplikasjon.arsak.utredning91},${pasientkomplikasjon.arsak.utredning92},${pasientkomplikasjon.arsak.utredning93},
                         ${pasientkomplikasjon.arsak.utredning94},${pasientkomplikasjon.arsak.utredning95},${pasientkomplikasjon.arsak.utredning96},${pasientkomplikasjon.arsak.utredning97},
                         ${pasientkomplikasjon.arsak.utredning98},${pasientkomplikasjon.arsak.utredning99},${pasientkomplikasjon.arsak.utredning100},${pasientkomplikasjon.arsak.utredning101},
-                        ${pasientkomplikasjon.arsak.utredning102},${pasientkompolikasjon.ytterligere},${pasientkomplikasjon.beskrivelsetransfusjon},${pasientkomplikasjon.hpaspesifitet}">
+                        ${pasientkomplikasjon.arsak.utredning102},${pasientkompolikasjon.ytterligere},${pasientkomplikasjon.beskrivelsetransfusjon},${pasientkomplikasjon.hpaspesifitet},
+                        ${pasientkomplikasjon.transfusjonannet},${pasientkomplikasjon.p-avdelingannen}">
                 </property>                
   </bean>  
     
@@ -489,7 +490,8 @@
                         ${pasientkomplikasjon.arsak.utredning90},${pasientkomplikasjon.arsak.utredning91},${pasientkomplikasjon.arsak.utredning92},${pasientkomplikasjon.arsak.utredning93},
                         ${pasientkomplikasjon.arsak.utredning94},${pasientkomplikasjon.arsak.utredning95},${pasientkomplikasjon.arsak.utredning96},${pasientkomplikasjon.arsak.utredning97},
                         ${pasientkomplikasjon.arsak.utredning98},${pasientkomplikasjon.arsak.utredning99},${pasientkomplikasjon.arsak.utredning100},${pasientkomplikasjon.arsak.utredning101},
-                        ${pasientkomplikasjon.arsak.utredning102},${pasientkompolikasjon.ytterligere},${pasientkomplikasjon.beskrivelsetransfusjon},${pasientkomplikasjon.hpaspesifitet}">
+                        ${pasientkomplikasjon.arsak.utredning102},${pasientkompolikasjon.ytterligere},${pasientkomplikasjon.beskrivelsetransfusjon},${pasientkomplikasjon.hpaspesifitet},
+                        ${pasientkomplikasjon.transfusjonannet},${pasientkomplikasjon.p-avdelingannen}">
                 </property>     
         <property name="giverSession" value="${giver.kjonn},${giver.alder},${giver.vektkg},${giver.erfaring},${giver.tidl},${giver.reaksjon},
                                 ${giver.sted},${giver.maltid},${giver.vene},${giver.tapping},${giver.fullblod},${giver.aferese-options},${giver.type-aferese},
@@ -607,7 +609,8 @@
                         ${pasientkomplikasjon.arsak.utredning90},${pasientkomplikasjon.arsak.utredning91},${pasientkomplikasjon.arsak.utredning92},${pasientkomplikasjon.arsak.utredning93},
                         ${pasientkomplikasjon.arsak.utredning94},${pasientkomplikasjon.arsak.utredning95},${pasientkomplikasjon.arsak.utredning96},${pasientkomplikasjon.arsak.utredning97},
                         ${pasientkomplikasjon.arsak.utredning98},${pasientkomplikasjon.arsak.utredning99},${pasientkomplikasjon.arsak.utredning100},${pasientkomplikasjon.arsak.utredning101},
-                        ${pasientkomplikasjon.arsak.utredning102},${pasientkompolikasjon.ytterligere},${pasientkomplikasjon.beskrivelsetransfusjon},${pasientkomplikasjon.hpaspesifitet}">
+                        ${pasientkomplikasjon.arsak.utredning102},${pasientkompolikasjon.ytterligere},${pasientkomplikasjon.beskrivelsetransfusjon},${pasientkomplikasjon.hpaspesifitet},
+                        ${pasientkomplikasjon.transfusjonannet},${pasientkomplikasjon.p-avdelingannen}">
                 </property>
         <property name="sessionAdmin" ref="sessionAdmin"></property>
         <property name="tablewebservice" ref="tableWebService"></property>
@@ -875,7 +878,8 @@
                         ${pasientkomplikasjon.arsak.utredning90},${pasientkomplikasjon.arsak.utredning91},${pasientkomplikasjon.arsak.utredning92},${pasientkomplikasjon.arsak.utredning93},
                         ${pasientkomplikasjon.arsak.utredning94},${pasientkomplikasjon.arsak.utredning95},${pasientkomplikasjon.arsak.utredning96},${pasientkomplikasjon.arsak.utredning97},
                         ${pasientkomplikasjon.arsak.utredning98},${pasientkomplikasjon.arsak.utredning99},${pasientkomplikasjon.arsak.utredning100},${pasientkomplikasjon.arsak.utredning101},
-                        ${pasientkomplikasjon.arsak.utredning102},${pasientkompolikasjon.ytterligere},${pasientkomplikasjon.beskrivelsetransfusjon},${pasientkomplikasjon.hpaspesifitet}">
+                        ${pasientkomplikasjon.arsak.utredning102},${pasientkompolikasjon.ytterligere},${pasientkomplikasjon.beskrivelsetransfusjon},${pasientkomplikasjon.hpaspesifitet},
+                        ${pasientkomplikasjon.transfusjonannet},${pasientkomplikasjon.p-avdelingannen}">
                 </property>
         </bean> 
                 
