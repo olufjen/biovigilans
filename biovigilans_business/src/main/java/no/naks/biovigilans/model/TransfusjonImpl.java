@@ -227,7 +227,7 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 			lokalBlodprodukt.setAntallFields(blodprodukt.getAntallFields());
 			lokalBlodprodukt.setUserFields(blodprodukt.getUserFields());
 			lokalBlodprodukt.setKeyvalues();
-			if (lokalBlodprodukt.getBlodprodukt().equals("trombocytt") || lokalBlodprodukt.getBlodprodukt().equals("erytrocytt") ){  // OLJ 23.03.15
+			if (lokalBlodprodukt.getBlodprodukt().equals("trombocytt") || lokalBlodprodukt.getBlodprodukt().equals("erytrocytt") ){  // OLJ 26.11.16 -> OLJ 23.03.15
 				for (String produkt : blodprodukt.getBlodproduktFields().values() ){
 					if (produkt != null && !produkt.equals("")){
 						chooseTapping(lokalBlodprodukt, produkt);
