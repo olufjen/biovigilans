@@ -554,7 +554,10 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 		Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
 		melding.setGodkjent("Ja");
 		//melding.setKladd("");
-		hendelseWebService.saveVigilansMelder(melding);
+		Long melderKey = annenModel.getVigilansmelding().getMelderId();
+		if (melderKey != null && melderKey.longValue() != 0){
+			hendelseWebService.saveVigilansMelder(melding);
+		}
 	}
 	/**
 	 * savegiverReclassifikasjon
@@ -593,7 +596,11 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 		Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
 		melding.setGodkjent("Ja");
 		//melding.setKladd("");
-		hendelseWebService.saveVigilansMelder(melding);		
+		Long melderKey = giverModel.getVigilansmelding().getMelderId();
+		if (melderKey != null && melderKey.longValue() != 0){
+			hendelseWebService.saveVigilansMelder(melding);	
+		}
+
 
 	}	
 	/**
@@ -617,7 +624,7 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 		transfusjon.getKomplikasjonsklassifikasjon().setMeldeidpasient(transfusjon.getPasientKomplikasjon().getMeldeid());
 		komplikasjonsklassifikasjonWebService.saveKomplikasjonsklassifikasjon(transfusjon.getKomplikasjonsklassifikasjon());
 		Long melderKey = transfusjon.getVigilansmelding().getMelderId();
-		if (melderKey != null){
+		if (melderKey != null && melderKey.longValue() != 0){
 			transfusjon.getPasientKomplikasjon().setMelderId(melderKey);
 			melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
 			hendelseWebService.saveVigilansMelder(melding);

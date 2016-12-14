@@ -159,7 +159,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
         Request request = getRequest();
         setDBSource(request);
 //	     String db =  sessionAdmin.getChosenDB(request);
-  	    List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(getRequest(), meldingsId);
+  	    List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request, meldingsId);
   	    dobleMeldingene = (List)sessionAdmin.getSessionObject(request,dobleKey);
   	    login = (LoginModel) sessionAdmin.getSessionObject(request, loginKey);
   	    dataModel.put(meldeKey,meldinger);
@@ -177,6 +177,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
   		Parameter datoHSort   = form.getFirst("sorteringdatohendt");
 		Parameter datoMSort   = form.getFirst("sorteringdatomeldt"); 
 		Parameter statusSort   = form.getFirst("btnsorteringstatus");
+		Parameter mtypeSort   = form.getFirst("btnsorteringmtype");
 		Parameter formMinesaker  = form.getFirst("minesaker"); // Bruker etterspør sine saker
 		Parameter sokMelding = form.getFirst("meldingsnokkelsok"); // Bruker etterspør en gitt melding
 		Parameter formAnonymesaker  = form.getFirst("anonymesaker"); // Bruker etterspør anonyme meldinger
@@ -240,8 +241,30 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
  			if (meldingDetaljene != null){
  	    		meldinger = (List) meldingDetaljene.get(meldingsID);
  	    		meldinger = hentMeldingstyper(meldinger);
+/*
+ * Dersom listen av meldinger nå inneholder meldingstypen Ukjent Sjekk:
+ */
+ 	    		int ct = 0;
+ 	    		int ix = meldinger.size();
+ 	    		String rType[] = new String[ix];
+ 	    		String type = "";
+ 	    		int[] pt = new int[ix];
+ 	    		for (Vigilansmelding nestemelding: meldinger){
+ 	    			rType[ct]= nestemelding.getMeldingstype();
+ 	    			pt[ct] = ct;
+	    			if (rType[ct] != null && !rType[ct].equals("Ukjent")){
+ 	    				pt[ct] = 0;
+ 	    				type = rType[ct];
+ 	    			}
+ 	    			ct++;
+ 	    		}
+ 	    		for (int i : pt){
+ 	    			if (i != 0)
+ 	    				meldinger.get(i).setMeldingstype(type);
+ 	    		}
+// =================== 	    		
  			}
- 			makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
+ 			makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering. Dette blir feil dersom listen over doble ikke er oppdatert
  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
   		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
  		 	SimpleScalar simple = new SimpleScalar(utvalg);
@@ -351,6 +374,31 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     						utvalget = entry.getValue();
     			}
     		}
+ /*
+  * Nullstiller meldingsdetaljer OJN 12.12.16 		
+  * Dette sørger for at alle lister blir oppdatert	
+
+  			String db = login.getSaksbehandler().getDbChoice();
+  			sessionAdmin.getSession(request,reportAndreKey).invalidate();
+ 			sessionAdmin.getSession(request,reportPasientKey).invalidate();
+ 			sessionAdmin.getSession(request,reportGiverKey).invalidate();
+ 			sessionAdmin.setChosenDB(request,db);
+  			setDBSource(request);
+ Dette fjerne alle session objekter !!!!		  */  			
+
+/*
+ * Nullstiller meldingsdetaljer OJN 12.12.16 		
+ * Dette sørger for at alle lister blir oppdatert	
+ * 
+ */   			
+	  		List<Annenkomplikasjon> annenListe =(List) sessionAdmin.getSessionObject(request,reportAndreKey);
+		    List<Pasientkomplikasjon> pasientListe = (List)	sessionAdmin.getSessionObject(request,reportPasientKey);	
+		    List<Giverkomplikasjon> giverListe = (List)	sessionAdmin.getSessionObject(request,reportGiverKey);
+		    annenListe = null;pasientListe = null;giverListe = null;
+		    sessionAdmin.setSessionObject(request, annenListe, reportAndreKey);
+		    sessionAdmin.setSessionObject(request, pasientListe, reportPasientKey);
+		    sessionAdmin.setSessionObject(request, giverListe, reportGiverKey);
+		    
   			meldinger = hentMeldingene(utvalget);
 //	    	sortermeldingerMeldt(meldinger); // Sorter listen etter dato meldt
 	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
@@ -405,6 +453,25 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 /*
  * Sorteringer  		
  */
+  		if (mtypeSort != null){ // Sortering etter meldingstype
+  			sorterMeldingermeldingstype(meldinger);
+		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
+  		 	 dataModel.put(merknadlisteKey, merk);
+   			
+  		 	SimpleScalar simple = new SimpleScalar(utvalg);
+  		 	dataModel.put(utvalgKey, simple);
+  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
+  		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
+  		    dataModel.put(meldeKey,meldinger);
+  	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
+
+    		// Load the FreeMarker template
+    		Representation pasientkomplikasjonFtl = clres2.get();
+
+    		TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+    				MediaType.TEXT_HTML);
+    		return templatemapRep; 			
+  		}
   		if (statusSort != null){ // Sortering etter status
   			sorterMeldingerstatus(meldinger);
 		 	 SimpleScalar merk = new SimpleScalar(merknadValg);

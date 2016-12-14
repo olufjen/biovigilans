@@ -686,6 +686,8 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
       				sakModel.setGmlMeldeid(meldeId);
       				giverModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[0]); //OBS !!?? Nødvendig her OLJ 04.10.16
       				savegiverReclassifikasjon();
+//      			    giverMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request,giverMeldingKey);
+//      			    giverMeldingene.add(giverModel.getVigilansmelding());
     			}
 /*
  * En rutine for å sende epost til Helsedirektoratet dersom saksbehandler har valgt "Melde til Helsedirektoratet"

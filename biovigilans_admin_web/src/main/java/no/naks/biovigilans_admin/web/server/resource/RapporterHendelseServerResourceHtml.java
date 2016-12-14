@@ -847,6 +847,9 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	     				hendelseWebService.updateVigilansmelding(transfusjon.getVigilansmelding());
 	     				sakModel.setGmlMeldeid(meldeId);
 	      				savetransfusjonReclassifikasjon();
+//	      				melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
+//	      				melding.setMeldingstype("Pasientkomplikasjon");
+
 	    			}  
 /*
 * En rutine for å sende epost til Helsedirektoratet dersom saksbehandler har valgt "Melde til Helsedirektoratet"
