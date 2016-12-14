@@ -821,7 +821,10 @@ function enableReclassification(){
         <h3>Pasient</h3>
         <div class="bg-success" style="display: ${display}">
           <label>Tidligere oppgitt kjønn: </label>
-          <div>${pasienten.kjonn}</div>
+          <div>
+			<label>${pasienten.kjonn}</label><br>          
+    	    <label><#list transfusjonwebID.tidligerePasienter as tidligere><img alt="OBS" title="${(tidligere.kjonn)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+          </div>
         </div>
       </div>
             
@@ -843,7 +846,10 @@ function enableReclassification(){
  
       <div class="bg-success" style="display: ${display}">
         <label>Tidligere oppgitt aldersgruppe: </label>     
-        <div>${pasienten.aldersGruppe}</div>
+        <div>
+        		<label>${pasienten.aldersGruppe}</label><br>
+				<label><#list transfusjonwebID.tidligerePasienter as tidligere><img alt="OBS" title="${(tidligere.aldersGruppe)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+        </div>
       </div>
 
       <div class="form-group">
@@ -868,6 +874,12 @@ function enableReclassification(){
             </tr> 
           </#list>
         </table> 
+	<table border=1 >
+		<label><#list transfusjonwebID.tidligereSykdommer as tidligere>
+		<tr id="sykklaslr"><td id="sykklas"><img alt="OBS" src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;">${(tidligere.sykdomnsnavn)!}</td></tr> 
+		</#list>
+		</label>
+	</table>         
       </div>
  
       <div class="form-group">
@@ -904,7 +916,10 @@ function enableReclassification(){
 
       <div class="bg-success" style="display: ${display}">
         <label>Tidligere oppgitt komplikasjoner: </label>     
-        <div>${transfusjon.tildigerKomplikasjon}</div>
+        <div>
+				<label>${transfusjon.tildigerKomplikasjon}</label><br>
+				<label><#list transfusjonwebID.tidligereTransfusjoner as tidligere><img alt="OBS" title="${(tidligere.tildigerKomplikasjon)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+        </div>
       </div>
 
       <!--Tidligere transfusjonskomplikasjoner -->
@@ -1079,7 +1094,10 @@ function enableReclassification(){
 
       <div class="bg-success" style="display: ${display}">
         <label>Tidligere oppgitt inneliggende/poliklinisk: </label>
-        <div>${pasienten.inneliggendePoli}</div>
+        <div>
+				<label>${pasienten.inneliggendePoli}</label><br>
+				<label><#list transfusjonwebID.tidligerePasienter as tidligere><img alt="OBS" title="${(tidligere.inneliggendePoli)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+        </div>
       </div>
 
       <div class="form-group">
@@ -1106,7 +1124,10 @@ function enableReclassification(){
   
       <div class="bg-success" style="display: ${display}">
         <label>Tidligere oppgitt Avdeling: </label>
-        <div>${pasienten.avdeling}</div>
+        <div>
+				<label>${pasienten.avdeling}</label><br>
+				<label><#list transfusjonwebID.tidligerePasienter as tidligere><img alt="OBS" title="${(tidligere.avdeling)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+        </div>
       </div>
   
       <div id="avdeling" class="form-group">
@@ -1133,7 +1154,10 @@ function enableReclassification(){
 
     <div class="bg-success" style="display: ${display}">
       <label>Tidligere oppgitt Hastegrad: </label>
-      <div>${transfusjon.hastegrad}</div>
+      <div>
+				<label>${transfusjon.hastegrad}</label><br>
+				<label><#list transfusjonwebID.tidligereTransfusjoner as tidligere><img alt="OBS" title="${(tidligere.hastegrad)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+      </div>
     </div>
 
     <div class="form-group">
@@ -1160,7 +1184,10 @@ function enableReclassification(){
 
     <div class="bg-success" style="display: ${display}">
       <label>Tidligere oppgitt Type celler eller vev: </label>
-      <div>${transfusjon.indikasjon}</div>
+      <div>
+				<label>${transfusjon.indikasjon}</label><br>
+				<label><#list transfusjonwebID.tidligereTransfusjoner as tidligere><img alt="OBS" title="${(tidligere.indikasjon)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+     </div>
     </div>
     
     <div class="form-group">
@@ -1529,7 +1556,10 @@ function enableReclassification(){
     -->
      <div class="bg-success" style="display: ${display}">
         <label>Tidligere oppgitt autolog eller allogent bruk: </label>     
-        <div>${transfusjon.feiltranfudert}</div>
+        <div>
+				<label>${transfusjon.feiltranfudert}</label><br>
+				<label><#list transfusjonwebID.tidligereTransfusjoner as tidligere><img alt="OBS" title="${(tidligere.feiltranfudert)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+        </div>
      </div>
  	<div class="form-group">
 	<label>Var det til autolog eller allogent bruk</label>
@@ -1563,9 +1593,15 @@ function enableReclassification(){
             </tr>
           </#list>
         </table>
+ 	<table border=1 >
+		<label><#list transfusjonwebID.tidligereSymptomer as tidligere>
+		<tr id="sympklaslr"><td id="sympklas"><img alt="OBS" src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;">${(tidligere.symptombeskrivelse)(tidligere.tempFors)(tidligere.tempEtters)!}</td></tr> 
+		</#list>
+		</label>
+	</table>         
       </div>      
  
-<!--     Symptomer har foreløpig et fretekt felt
+<!--     Symptomer har foreløpig et fritekt felt
       <div class="checkbox">
         <label>
           <input type="checkbox" name="p-komp-temp" id="p-komp-temp" value="temperaturstigning" onclick="toggleDisplay('temperaturstigning', this.checked)">
@@ -1753,6 +1789,12 @@ function enableReclassification(){
             </tr>
           </#list>
         </table>
+	<table border=1 >
+		<label><#list transfusjonwebID.tidligereUtredninger as tidligere>
+		<tr id="utredlaslr"><td id="utredlas"><img alt="OBS" src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;">${(tidligere.utredningbeskrivelse)!}</td></tr> 
+		</#list>
+		</label>
+	</table>         
       </div>
 
 
@@ -3622,7 +3664,10 @@ Kommentert ut ref melding basecamp 14.01.15
       <h3>Alvorlighetsgrad</h3>
       <div class="bg-success" style="display: ${display}">
         <label>Tidligere oppgitt alvorlighetsgrad</label>
-        <div>${pasientKomp.alvorlighetsgrad}</div>
+        <div>
+				<label>${pasientKomp.alvorlighetsgrad}</label><br>
+				<label><#list transfusjonwebID.tidligerePasientkomp as tidligere><img alt="OBS" title="${(tidligere.alvorlighetsgrad)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+        </div>
       </div>
 
       <div class="form-group">
@@ -3674,13 +3719,16 @@ og/eller
       <h3>Klinisk resultat </h3>    
       <div class="bg-success" style="display: ${display}">
         <label>Tidligere oppgitt Klinisk resultat</label>
-        <div>${pasientKomp.kliniskresultat}</div>
+        <div>
+				<label>${pasientKomp.kliniskresultat}</label><br>
+				<label><#list transfusjonwebID.tidligerePasientkomp as tidligere><img alt="OBS" title="${(tidligere.kliniskresultat)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+        </div>
     </div>
 
     <div class="form-group">
       <div class="radio">
         <label title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
-          <input type="radio" name="klinisk-res"  id="utfall" value="ingensekvele" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
+          <input type="radio" name="klinisk-res"  id="utfall" value="Fullstendig helbredelse" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
           Fullstendig helbredelse
         </label>
       </div>
@@ -3712,7 +3760,10 @@ og/eller
       <h3>Årsakssammenheng</h3>
       <div class="bg-success" style="display: ${display}">
         <label>Tidligere oppgitt årsakssammenheng</label>
-        <div>${pasientKomp.arsakssammenheng}</div>
+        <div>
+				<label>${pasientKomp.arsakssammenheng}</label><br>
+				<label><#list transfusjonwebID.tidligerePasientkomp as tidligere><img alt="OBS" title="${(tidligere.arsakssammenheng)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+        </div>
       </div>
    
       <div class="form-group">
@@ -3752,7 +3803,10 @@ og/eller
 
       <div class="bg-success" style="display: ${display}">
         <label>Tidligere oppgitt beskrivelse av hendelsen</label>
-        <div>${transfusjonwebID.vigilansmelding.supplerendeopplysninger}</div>
+        <div>
+				<label>${transfusjonwebID.vigilansmelding.supplerendeopplysninger}</label><br>
+				<label><#list transfusjonwebID.tidligereVigilans as tidligere><img alt="OBS" title="${(tidligere.supplerendeopplysninger)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+        </div>
       </div>
 
       <div class="form-group" >
@@ -3770,7 +3824,13 @@ og/eller
         <#list komplikasjonklassifikasjon as klassifikasjon>
         <tr id="klaslr"></td><td id="klas">${klassifikasjon.klassifikasjon}</td></tr> 
         </#list>
-  </table> 
+  </table>
+   	<table border=1 >
+		<label><#list transfusjonwebID.tidligereKlassifikasjoner as tidligere>
+		<tr id="klassklaslr"><td id="klassklas"><img alt="OBS" src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;">${(tidligere.klassifikasjon)!}</td></tr> 
+		</#list>
+		</label>
+	</table>  
  </div>
   <div class="checkbox"  >
     <label>
@@ -3943,7 +4003,12 @@ og/eller
           </tr> 
         </#list>
       </table>
-
+	<table border=1 >
+		<label><#list transfusjonwebID.tidligereTiltak as tidligere>
+		<tr id="klassklaslr"><td id="klassklas"><img alt="OBS" src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;">${(tidligere.beskrivelse)!}</td></tr> 
+		</#list>
+		</label>
+	</table> 
       <table border=1 >
         <tr>
           <th>Forebyggende Tiltak</th>
@@ -3955,7 +4020,13 @@ og/eller
             <td id="ftiltb">${forebyggende.tiltakbeskrivelse}</td>
           </tr>
         </#list>
-      </table>  
+      </table>
+	<table border=1 >
+		<label><#list transfusjonwebID.tidligereforebyggendeTiltak as tidligere>
+		<tr id="klassklaslr"><td id="klassklas"><img alt="OBS" src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;">${(tidligere.tiltakvalg)!}</td></tr> 
+		</#list>
+		</label>
+	</table>           
     </div>
 
     <div class="form-group">
@@ -4049,7 +4120,10 @@ og/eller
 
   <div class="bg-success" style="display: ${display}">
     <label>Tidligere oppgitt ytterligere opplysninger</label>
-    <div>${transfusjonwebID.vigilansmelding.kladd}</div>
+    <div>
+				<label>${transfusjonwebID.vigilansmelding.kladd}</label><br>
+				<label><#list transfusjonwebID.tidligereVigilans as tidligere><img alt="OBS" title="${(tidligere.kladd)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+    </div>
   </div>  
 
   <div class="form-group">

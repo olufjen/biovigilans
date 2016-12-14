@@ -573,16 +573,7 @@ uttas.</h4>
  					<label>${giverkomplikasjon.hendelseDato?date}</label>
  					</div>
 			</div>
-			<div class="bg-success" style="display: ${display}">
-				<label>Meldingsnøkkel </label>
-					<div>
- 					<label>${giverkomplikasjon.meldingsNokkel}</label>
- 					</div>
-				<label>Dato for hendelsen </label>
-     				<div>
- 					<label>${giverkomplikasjon.hendelseDato?date}</label>
- 					</div>
-			</div>
+
 		
 		<div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt kjønn</label>
@@ -608,7 +599,8 @@ uttas.</h4>
 		<div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt alder</label>
 			<div>
-				<label>${giver.alder}</label>
+				<label>${giver.alder}</label><br>
+				<label><#list giverkomplikasjon.tidligereGivere as tidligere><img alt="OBS" title="${(tidligere.alder)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 		</div>	    
 	    
@@ -707,7 +699,8 @@ uttas.</h4>
 	<div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt donorsted/Produsent</label>
 			<div>
-				<label>${donasjonen.donasjonssted}</label>
+				<label>${donasjonen.donasjonssted}</label><br>
+				<label><#list giverkomplikasjon.tidligereDonasjoner as tidligere><img alt="OBS" title="${(tidligere.donasjonssted)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div>	    
 	    
@@ -721,7 +714,8 @@ uttas.</h4>
 	<div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt type celler eller vev</label>
 			<div>
-				<label>${donasjonen.tappetype}</label>
+				<label>${donasjonen.tappetype}</label><br>
+				<label><#list giverkomplikasjon.tidligereDonasjoner as tidligere><img alt="OBS" title="${(tidligere.tappetype)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div>	
  
@@ -742,7 +736,8 @@ uttas.</h4>
 	<div class="form-group" style="display: ${display}">
 			<label>Tidligere oppgitt Autologt/Allogent bruk</label>
 			<div>
-				<label>${donasjonen.komplisertvenepunksjon}</label>
+				<label>${donasjonen.komplisertvenepunksjon}</label><br>
+				<label><#list giverkomplikasjon.tidligereDonasjoner as tidligere><img alt="OBS" title="${(tidligere.komplisertvenepunksjon)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div>    
 	<div class="form-group">
@@ -895,7 +890,8 @@ uttas.</h4>
 	 <div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt Hvor startet reaksjonen</label>
 			<div>
-				<label>${giverkomplikasjonen.stedforkomplikasjon}</label>
+				<label>${giverkomplikasjonen.stedforkomplikasjon}</label><br>
+				<label><#list giverkomplikasjon.tidligereGiverkomp as tidligere><img alt="OBS" title="${(tidligere.stedforkomplikasjon)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div>		    
 	    <div class="form-group">
@@ -908,7 +904,8 @@ uttas.</h4>
 			<label>Tidligere oppgitt Når symptomene oppstod</label>
 			<div>
 				<label>${giverkomplikasjonen.symptomMelding}</label>
-				<label>${giverkomplikasjonen.datosymptomer?date}</label>
+				<label>${giverkomplikasjonen.datosymptomer?date}</label><br>
+				<label><#list giverkomplikasjon.tidligereGiverkomp as tidligere><img alt="OBS" title="${(tidligere.datosymptomer?date)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div>		    
 	    <div class="bg-success"  style="display: none"  id="hendelseDato">
@@ -929,7 +926,8 @@ uttas.</h4>
 	<div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt tid fra donasjon til reaksjon</label>
 			<div>
-				<label>${giverkomplikasjonen.tidfratappingtilkompliasjon}</label>
+				<label>${giverkomplikasjonen.tidfratappingtilkompliasjon}</label><br>
+				<label><#list giverkomplikasjon.tidligereGiverkomp as tidligere><img alt="OBS" title="${(tidligere.tidfratappingtilkompliasjon)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div>	
 		<div class="form-group">
@@ -1075,7 +1073,9 @@ uttas.</h4>
 	<div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt eventuelle kommentarer</label>
 			<div>
-				<label>${giverkomplikasjondiagnose.bivirkningbeskrivelse}</label>
+				<label>${giverkomplikasjondiagnose.bivirkningbeskrivelse}</label><br>
+				<label><#list giverkomplikasjon.tidligereKomplikasjonsdiagnoser as tidligere><img alt="OBS" title="${(tidligere.bivirkningbeskrivelse)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
+				
 			</div>
 	</div>		
 		    <div class="form-group" id="beskriv-komplikasjon">
@@ -1106,7 +1106,8 @@ uttas.</h4>
 	<div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt varighet skade</label>
 			<div>
-				<label>${giverkomplikasjonen.varighetkomplikasjon}</label>
+				<label>${giverkomplikasjonen.varighetkomplikasjon}</label><br>
+				<label><#list giverkomplikasjon.tidligereGiverkomp as tidligere><img alt="OBS" title="${(tidligere.varighetkomplikasjon)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div>		    
 	      
@@ -1130,7 +1131,8 @@ uttas.</h4>
 	<div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt strakstiltak</label>
 			<div>
-				<label>${giveroppfolging.strakstiltak}</label>
+				<label>${giveroppfolging.strakstiltak}</label><br>
+				<label><#list giverkomplikasjon.tidligereOppfolging as tidligere><img alt="OBS" title="${(tidligere.strakstiltak)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div>	
 		      	<div class="radio">
@@ -1214,7 +1216,8 @@ uttas.</h4>
 	<div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt videre behandling/oppfølging</label>
 			<div>
-				<label>${giveroppfolging.videreoppfolging}</label>
+				<label>${giveroppfolging.videreoppfolging}</label><br>
+				<label><#list giverkomplikasjon.tidligereOppfolging as tidligere><img alt="OBS" title="${(tidligere.videreoppfolging)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div>	
 	       	  <div class="radio">
@@ -1285,7 +1288,8 @@ uttas.</h4>
 	<div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt tid alvorlighetsgrad</label>
 			<div>
-				<label>${giverkomplikasjonen.alvorlighetsgrad}</label>
+				<label>${giverkomplikasjonen.alvorlighetsgrad}</label><br>
+				<label><#list giverkomplikasjon.tidligereGiverkomp as tidligere><img alt="OBS" title="${(tidligere.alvorlighetsgrad)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div>	
 			<div class="radio">
@@ -1328,7 +1332,8 @@ uttas.</h4>
 	 <div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt endelig utfall av skaden</label>
 			<div>
-				<label>${giverkomplikasjonen.kliniskresultat}</label>
+				<label>${giverkomplikasjonen.kliniskresultat}</label><br>
+				<label><#list giverkomplikasjon.tidligereGiverkomp as tidligere><img alt="OBS" title="${(tidligere.kliniskresultat)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div>	
 	      
@@ -1366,7 +1371,8 @@ uttas.</h4>
  	<div class="bg-success" style="display: ${display}">
 			<label>Tidligere beskrivelse av hendelsen</label>
 			<div>
-				<label>${giverkomplikasjon.vigilansmelding.supplerendeopplysninger}</label>
+				<label>${giverkomplikasjon.vigilansmelding.supplerendeopplysninger}</label><br>
+				<label><#list giverkomplikasjon.tidligereVigilans as tidligere><img alt="OBS" title="${(tidligere.supplerendeopplysninger)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div>	
 
@@ -1380,7 +1386,8 @@ uttas.</h4>
 	 <div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt planlagte eller gjennomførte forbedringstiltak</label>
 			<div>
-				<label>${giveroppfolging.giveroppfolgingbeskrivelse}</label>
+				<label>${giveroppfolging.giveroppfolgingbeskrivelse}</label><br>
+				<label><#list giverkomplikasjon.tidligereOppfolging as tidligere><img alt="OBS" title="${(tidligere.giveroppfolgingbeskrivelse)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div> 		
 	  		
@@ -1469,7 +1476,8 @@ uttas.</h4>
   	<div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt ytterligere opplysninger</label>
 			<div>
-				<label>${giverkomplikasjon.vigilansmelding.kladd}</label>
+				<label>${giverkomplikasjon.vigilansmelding.kladd}</label><br>
+				<label><#list giverkomplikasjon.tidligereVigilans as tidligere><img alt="OBS" title="${(tidligere.kladd)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 	</div>	
 	 	<div class="form-group">

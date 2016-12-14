@@ -254,7 +254,7 @@
    <!-- Sorteringsscript: <a href="javascript:sorterdatohendelse();"></a> -->
      <div class="form-group" id="tabeller" >
      	<table class="table table-hover" border=1>
-  		<tr><th>Til PDF</th><th>Detaljer</th><th >Meldingsnøkkel</th><th><a href="javascript:formSubmit('btnsorteringdatohendt');">Dato for hendelse</a> </th><th><a href="javascript:formSubmit('btnsorteringdatomeldt');">Meldingsdato</a></th><th>Meldingstype</th><th><a href="javascript:formSubmit('btnsorteringstatus');">Status</th>
+  		<tr><th>Til PDF</th><th>Detaljer</th><th >Meldingsnøkkel</th><th><a href="javascript:formSubmit('btnsorteringdatohendt');">Dato for hendelse</a> </th><th><a href="javascript:formSubmit('btnsorteringdatomeldt');">Meldingsdato</a></th><th><a href="javascript:formSubmit('btnsorteringmtype');">Meldingstype</th><th><a href="javascript:formSubmit('btnsorteringstatus');">Status</th>
   			<#list meldinger as melding>
   			<tr id="nokkelr"><td><button type="submit" id="btnpdf" name="pdf" value="${melding.meldeid}"  class="btn btn-success btn-lg">Til PDF</button></td><td><button type="submit" id="btnleveranse" name="lukk1" value="${melding.meldeid}"  class="btn btn-default">Velg</button></td><td id="nokkel" title="${melding.sekvensNr}(${melding.meldeid})" >${melding.formatNokkel}</td><td>${melding.datoforhendelse?date}</td><td>${melding.meldingsdato?date}</td><td>${melding.meldingstype}</td><td id="tabstatus" title=${melding.meldingTitle} bgcolor=${melding.color}>${melding.sjekklistesaksbehandling}</td> 
   			</#list>
@@ -275,6 +275,7 @@
   <button type="submit" id="btnsorteringdatohendt" value="sorteringdatohendt"  name="sorteringdatohendt" class="btn btn-primary" style="display: none" > getValue </button>
   <button type="submit" id="btnsorteringdatomeldt" value="sorteringdatomeldt"  name="sorteringdatomeldt" class="btn btn-primary" style="display: none" > getValue </button>
   <button type="submit" id="btnsorteringstatus" value="btnsorteringstatus"  name="btnsorteringstatus" class="btn btn-primary" style="display: none" > getValue </button>
+  <button type="submit" id="btnsorteringmtype" value="btnsorteringmtype"  name="btnsorteringmtype" class="btn btn-primary" style="display: none" > getValue </button>
   <button type="submit" id="btntilbake" value="tilbake"  name="tilbake" class="btn btn-primary" style="display: none" > getValue </button>
 
     

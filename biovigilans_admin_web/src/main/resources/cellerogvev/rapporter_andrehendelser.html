@@ -96,7 +96,7 @@
 		
 			}
 			if (reqFlag == 'block'){
-			//	alert(reqFlag + " Setter req false");
+//				alert(reqFlag + " Setter req false");
 				document.getElementById('hendelsen-date').required = false;
 				document.getElementById("hendelse_beskrivelse").required = false;
 				document.getElementById("tab-prosess").required = false;
@@ -122,6 +122,7 @@
 		        var month = ("0" + (now.getMonth() + 1)).slice(-2);
 		        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
 		        $('#hendelsen-date').attr('max', today);
+
 		});
 		
 /* 		 function homePage(){
@@ -525,17 +526,19 @@
 			<div class="bg-success" style="display: ${display}">
 				<label>Tidligere beskrivelse av hendelsen </label>
 					<div>
- 					<label>${annenHendelse.komplikasjonbeskrivelse}</label>
+ 					<label>${annenHendelse.komplikasjonbeskrivelse}</label><br>
+					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.komplikasjonbeskrivelse)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
  					</div>
 			</div>				
 				<div class="form-group" >
 				<label>Beskrivelse av hendelsen</label>
-					<textarea class="form-control" name="beskrivelse" rows="3"  id="hendelse_beskrivelse"></textarea>
+					<textarea class="form-control" name="beskrivelse" rows="3"  id="hendelse_beskrivelse" ></textarea>
 				</div>
 			<div class="bg-success" style="display: ${display}">
 				<label>Tidligere oppgitt hovedprosess </label>
 					<div>
- 					<label>${annenHendelse.hovedprosess}</label>
+ 					<label>${annenHendelse.hovedprosess}</label><br>
+					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.hovedprosess)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
  					</div>
 			</div>					
 				<div class="form-group">
@@ -550,7 +553,8 @@
 			<div class="bg-success" style="display: ${display}">
 				<label>Tidligere oppgitt primærårsak </label>
 					<div>
- 					<label>${annenHendelse.avvikarsak}</label>
+ 					<label>${annenHendelse.avvikarsak}</label><br>
+					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.avvikarsak)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
  					</div>
 			</div>		
 				<div class="form-group">
@@ -566,7 +570,8 @@
 				<label>Tidligere oppgitt klassifikasjon </label>
 					<div>
  					<label>${annenHendelse.klassifikasjon}</label>
- 					<label>${annenHendelse.delkode}</label>
+ 					<label>${annenHendelse.delkode}</label><br>
+ 					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.klassifikasjon)!}${(tidligere.delkode)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
  					</div>
 			</div>		
 			    <div class="bg-success" style="display: ${display}">
@@ -1068,7 +1073,8 @@
 		<div class="bg-success" style="display: ${display}">
 				<label>Tidligere oppgitt Definisjon alvorlig hendelse</label>
 					<div>
- 					<label>${annenHendelse.komplikasjondefinisjon}</label>
+ 					<label>${annenHendelse.komplikasjondefinisjon}</label><br>
+					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.komplikasjondefinisjon)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
  					</div>
 			</div>	
 				<div class="form-group">
@@ -1083,7 +1089,8 @@
 				<div class="bg-success" style="display: ${display}">
 				<label>Tidligere oppgitt hvordan hendelsen ble oppdaget </label>
 					<div>
- 					<label>${annenHendelse.oppdaget}</label>
+ 					<label>${annenHendelse.oppdaget}</label><br>
+					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.oppdaget)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
  					</div>
 			</div>	
 				<div class="form-group">
@@ -1098,7 +1105,8 @@
 			<div class="bg-success" style="display: ${display}">
 				<label>Tidligere oppgitt tiltak </label>
 					<div>
- 					<label>${annenHendelse.tiltak}</label>
+ 					<label>${annenHendelse.tiltak}</label><br>
+					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.tiltak)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
  					</div>
 			</div>		
 				<div class="form-group">
@@ -1108,7 +1116,8 @@
 			<div class="bg-success" style="display: ${display}">
 				<label>Tidligere oppgitt kommentar </label>
 					<div>
- 					<label>${annenHendelse.kommentar}</label>
+ 					<label>${annenHendelse.kommentar}</label><br>
+ 					<label><#list andreHendelse.tidligereAnnenkomp as tidligere><img alt="OBS" title="${(tidligere.kommentar)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
  					</div>
 			</div>		
 				<div class="form-group">
@@ -1120,7 +1129,8 @@
 		<div class="bg-success" style="display: ${display}">
 			<label>Tidligere oppgitt ytterligere opplysninger</label>
 			<div>
-				<label>${andreHendelse.vigilansmelding.kladd}</label>
+				<label>${andreHendelse.vigilansmelding.kladd}</label><br>
+ 				<label><#list andreHendelse.tidligereVigilans as tidligere><img alt="OBS" title="${(tidligere.kladd)!}"  src="${ikonImportant}" style="display: ${displayorgInfo}; height:20px;width:20px;"></#list></label>
 			</div>
 		</div>			
 			<label>Ytterligere opplysninger følger</label>
