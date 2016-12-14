@@ -42,7 +42,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
 	 	 SimpleScalar simple = new SimpleScalar(meldingsText);
 		 dataModel.put( meldeTxtId,simple);
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
-                 "/hemovigilans");
+                 "/cellerogvev");
 	    
 	     LocalReference localUri = new LocalReference(reference);
 	
@@ -53,7 +53,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
     	 melderwebModel.distributeTerms();
     	 
 	     dataModel.put(melderId, melderwebModel);
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/passord.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/passord.html"));
 	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 
 	     sessionAdmin.setSessionObject(getRequest(), melderwebModel,melderId);
@@ -149,7 +149,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
 	 dataModel.put( meldeTxtId,simple);
 	
 		//Feil passord går til startside.
- 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/passord.html"));
+ 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/passord.html"));
 		Representation pasientkomplikasjonFtl = clres2.get();
 		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 				MediaType.TEXT_HTML);

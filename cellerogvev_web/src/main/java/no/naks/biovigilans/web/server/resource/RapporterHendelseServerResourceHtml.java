@@ -262,6 +262,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	     transfusjon.setAccountRef(ref);
 	     transfusjon.distributeTerms();
 
+
 	     
 /*
  * En Hashmap benyttes dersom en html side henter data fra flere javaklasser.	
@@ -411,6 +412,30 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    			result.saveValues(); //Pasient og sykdommer
 	    		
 	    			transfusjon.saveValues(); // Transfusjon  og pasientkomplikasjoner
+/*
+ * Ekstra verdi for indikasjon (Type celler og vev) OLJ 8.12.16	 
+ * Og for annen avdeling til pasient   			
+ */
+	    			String autolog = transfusjon.getTransfusjon().getFeiltranfudert();
+	    			if (transfusjon.getTransfusjon().getTildigerKomplikasjon().equals(autolog))
+	    				transfusjon.getTransfusjon().setTildigerKomplikasjon("Nei");
+	    			String[] keys = transfusjon.getFormNames();
+	    			String key = keys[350];
+	    			String userValue = (String)transfusjon.getFormMap().get(key);
+	    			if (userValue != null && !userValue.isEmpty()){
+	    				String cellvev = transfusjon.getTransfusjon().getIndikasjon();
+	    				cellvev = cellvev + ";" + userValue;
+	    				transfusjon.getTransfusjon().setIndikasjon(cellvev);
+	    			}
+	    			keys = result.getFormNames();
+	    			key = keys[351];
+	    			userValue = (String)result.getFormMap().get(key);
+	    			if (userValue != null && !userValue.isEmpty()){
+	    				String avdeling = result.getPasient().getAvdeling();
+	    				avdeling = avdeling + ";" + userValue;
+	    				result.getPasient().setAvdeling(avdeling);
+	    			}
+// ===============================	    			
 	    			result.getPasient().getTransfusjoner().put(transfusjon.getTransfusjon().getTransDato(), transfusjon.getTransfusjon());
 	    			Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
 	    			melding.setDatoforhendelse(transfusjon.getTransfusjon().getTransfusionDate());
