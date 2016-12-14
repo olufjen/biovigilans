@@ -1738,6 +1738,19 @@ protected void sorterMeldinger(Map<String,List>alleMeldinger,List<Vigilansmeldin
 		}
 	}
 	/**
+	* sorterMeldingermeldingstype
+	* Denne rutinen sørger for at et uttrekk av meldinger blir sortert etter meldingstype.
+	* @param meldinger Liste over vigilansmeldinger
+	*/
+	protected void sorterMeldingermeldingstype(List<Vigilansmelding>meldinger){
+		List<Vigilansmelding> localMeldinger = new ArrayList();
+		localMeldinger.addAll(meldinger);
+		meldinger.sort((vm1, vm2)->vm1.getMeldingstype().compareTo(vm2.getMeldingstype()));
+		if (meldinger.equals(localMeldinger)){
+			meldinger.sort((vm1, vm2)->vm2.getMeldingstype().compareTo(vm1.getMeldingstype()));
+		}
+	}	
+	/**
 	* sorterMeldingerstatus
 	* Denne rutinen sørger for at et uttrekk av meldinger blir sortert etter status.
 	* @param meldinger Liste over vigilansmeldinger
@@ -1837,6 +1850,7 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 	 * getmeldingsNokkelsak
 	 * Denne rutinen returnerer meldeid fra første melding med samme meldingsnøkkel andre meldinger
 	 * @since 29.09.16 Finner frem til orginal melding. Håndterer intil 9999 meldinger
+	 * @since 21.11.16 Header i melding tar hensyn til flere meldeordninger
 	 * @param nokkel
 	 * @return
 	 */
@@ -1845,7 +1859,10 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 		Request request = getRequest();
 		dobleMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request, dobleKey);
 		char sep = 'm';
+		char sepv = 'v';
 		String mKey = extractString(nokkel, sep, -1);
+		if (mKey == null)
+			mKey = extractString(nokkel, sepv, -1);
 		if (dobleMeldingene != null && !dobleMeldingene.isEmpty()){
 			for (Vigilansmelding melding : dobleMeldingene){
 				long mid = melding.getMeldeid().longValue();
