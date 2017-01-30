@@ -60,5 +60,7 @@ public interface Vigilansmelding {
 	
 	public String getMeldingHead();
 	public void setMeldingHead(String meldingHead);
-
+	
+	public String getSaksBehandler();
+	public void setSaksBehandler(String saksBehandler);
 }

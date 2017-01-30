@@ -80,12 +80,20 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	private String meldingTitle = "Ordinær melding";
 	
 	private String meldingHead = ""; // Meldingshode for hemovigilans = Hem, for Celler og vev = Cev, for Organer = Org (April 2016)
+	protected String saksBehandler = " "; // Saksbehandler som har satt siste status OJN 10.01.17
+	
 	protected int sekvensNr = 0; // Sekvensnummer som vises i oversikten dersom flere meldinger har samme meldingsnummer
 	
 	protected String[]vigilansKeys;	
 	protected Map<String,String>vigilansFields;
 
 	
+	public String getSaksBehandler() {
+		return saksBehandler;
+	}
+	public void setSaksBehandler(String saksBehandler) {
+		this.saksBehandler = saksBehandler;
+	}
 	public int getSekvensNr() {
 		return sekvensNr;
 	}
@@ -446,6 +454,8 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 			setDatooppdaget(null);
 			setDonasjonoverforing(null);
 			setDatoforhendelse(	getDatoforhendelse()); 
+			Date mDato = getMeldingsdato(); // Meldingsdato = null ved rapportering
+			setMeldingsdato(mDato); // Setter meldingsdato til opprinnelig meldingsdato ved reklassifisering OLJ 23.01.17
 			setMeldingsdato(null);
 			setKladd(null);
 			String supplerende = null;

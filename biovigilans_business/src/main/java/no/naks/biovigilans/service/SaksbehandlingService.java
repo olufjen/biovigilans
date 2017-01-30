@@ -46,6 +46,7 @@ public interface SaksbehandlingService {
 	public List<Regionstatistikk> collectForetakstatistikk(String startperiod,String endperiod,String type);
 	public List<Regionstatistikk> collectsykehusstatistikk(String startperiod,String endperiod,String type);
 	public List collectMessagesanonyme();
+	public List hentmeldingMerknader();
 	public void setAlterativeSource(String key);
 	
 }

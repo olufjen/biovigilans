@@ -12,12 +12,20 @@ import org.springframework.jdbc.core.SqlParameter;
 import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.Blodprodukt;
 import no.naks.biovigilans.model.Donasjon;
+import no.naks.biovigilans.model.Forebyggendetiltak;
+import no.naks.biovigilans.model.Giver;
 import no.naks.biovigilans.model.Giverkomplikasjon;
+import no.naks.biovigilans.model.Giveroppfolging;
+import no.naks.biovigilans.model.Komplikasjonsdiagnosegiver;
+import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.Produktegenskap;
+import no.naks.biovigilans.model.Sykdom;
+import no.naks.biovigilans.model.Symptomer;
 import no.naks.biovigilans.model.Tiltak;
 import no.naks.biovigilans.model.Transfusjon;
+import no.naks.biovigilans.model.Utredning;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.service.SaksbehandlingService;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
@@ -44,7 +52,8 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	private String selectvigilansMeldingsaksbehandlerSQL;
 	private String selectvigilansMeldingnokkelSQL;
 	private String selectvigilansMeldinganonymSQL;
-	
+	private String selectsakbehandlermerknadSQL; // SQL for å hente saksbehandler til merknader OLJ 11.01.17
+	private String[]vigilansakbehandlermerknadTableDefs;
 	private boolean timeperiodType = true; // Satt til true dersom forespurt tidsperiode er meldt
 	// satt til false dersom forespurt tidsperiode er når meldingen skjedde.
 	
@@ -139,13 +148,71 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	
 
 	private Map alleMeldinger = null;
-
+/*
+ * Lister for relaterte tabeller	
+ */
+	private List<Giver> alleGivere = null;
+	private List<Donasjon> alleDonasjoner = null;
+	private List<Giveroppfolging>alleGiveroppfolginger = null;
+	private List<Komplikasjonsdiagnosegiver>alleKomplikasjonsdiagnoser = null;
+	private List<Transfusjon>alleTransfusjoner = null;
+	private List<Pasient>allePasienter = null;
+	private List<Sykdom>alleSykdommer = null;
+	private List<Tiltak>alleTiltak = null;
+	private List<Forebyggendetiltak>alleforebyggendeTiltak = null;
+	private List<Blodprodukt>alleblodProdukter = null;
+	private List<Produktegenskap>alleProduktegenskaper = null;
+	private List<Utredning>alleUtredninger = null;
+	private List<Komplikasjonsklassifikasjon>alleKomplikasjonsklassifikasjoner = null;
+	private List<Symptomer>alleSymptomer = null;
+	
 
 	/* =====================000000000000000000*/
 	
 	
 	public String[] getGiverTableDefs() {
 		return giverTableDefs;
+	}
+
+
+	public SaksbehandlingDAOImpl() {
+		super();
+		alleGivere = new ArrayList();
+		alleDonasjoner = new ArrayList();
+		alleGiveroppfolginger = new ArrayList();
+		alleKomplikasjonsdiagnoser = new ArrayList();
+		alleTransfusjoner = new ArrayList();
+		allePasienter = new ArrayList();
+		alleSykdommer = new ArrayList();
+		alleTiltak = new ArrayList();
+		alleforebyggendeTiltak = new ArrayList();
+		alleblodProdukter = new ArrayList();
+		alleProduktegenskaper = new ArrayList();
+		alleUtredninger = new ArrayList();
+		alleKomplikasjonsklassifikasjoner = new ArrayList();
+		alleSymptomer = new ArrayList();
+		
+	}
+
+
+	public String getSelectsakbehandlermerknadSQL() {
+		return selectsakbehandlermerknadSQL;
+	}
+
+
+	public void setSelectsakbehandlermerknadSQL(String selectsakbehandlermerknadSQL) {
+		this.selectsakbehandlermerknadSQL = selectsakbehandlermerknadSQL;
+	}
+
+
+	public String[] getVigilansakbehandlermerknadTableDefs() {
+		return vigilansakbehandlermerknadTableDefs;
+	}
+
+
+	public void setVigilansakbehandlermerknadTableDefs(
+			String[] vigilansakbehandlermerknadTableDefs) {
+		this.vigilansakbehandlermerknadTableDefs = vigilansakbehandlermerknadTableDefs;
 	}
 
 
@@ -818,6 +885,7 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	/**
 	 * collectAnnenMeldinger
 	 * Denne rutinen henter all informasjon om alle meldinger gitt en liste over vigilansmeldinger
+	 * @since 16.01.17 Henter alle relaterte tabeller i egne lister før de legges i Map
 	 * @param meldinger En liste over vigilansmeldinger
 	 * @return Map En samling informasjon om alle meldinger
 	 */
@@ -844,6 +912,19 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 				giverMeldinger.add(delMelding.get(0));
 			}		
 		}
+		alleMeldinger.put(donasjonKey,alleDonasjoner);
+		alleMeldinger.put(giverenKey,alleGivere);
+		alleMeldinger.put(giverOppfolgingKey, alleGiveroppfolginger);
+		alleMeldinger.put(giverkomplikasjondiagnoseKey, alleKomplikasjonsdiagnoser);
+		alleMeldinger.put(transfusjonsKey,alleTransfusjoner);
+		alleMeldinger.put(pasientenKey,allePasienter);
+		alleMeldinger.put(sykdomKey,alleSykdommer);
+		alleMeldinger.put(tiltakKey,alleTiltak);
+		alleMeldinger.put(forebyggendetiltakKey, alleforebyggendeTiltak);
+		alleMeldinger.put(blodproduktKey, alleblodProdukter);
+		alleMeldinger.put(utredningKey, alleUtredninger);
+		alleMeldinger.put(produktegenskapKey, alleProduktegenskaper);
+		alleMeldinger.put(symptomerKey,alleSymptomer);
 		alleMeldinger.put(andreKey, andreMeldinger);
 		alleMeldinger.put(pasientKey, pasientMeldinger);
 		alleMeldinger.put(giverKey, giverMeldinger);
@@ -896,9 +977,22 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 		return alleMeldinger;
 	}
 	/**
+	 * hentmeldingMerknader
+	 * Denne rutinen henter alle vigilansmeldinger med status opplysninger etterspurt eller under behandling
+	 * Dette for å vise saksbehandler
+	 * @since 11.01.17 OLJ
+	 * @return Liste av vigilansmeldinger
+	 */
+	public List hentmeldingMerknader(){
+		VigilansmerknadSelect merknadSelect = new VigilansmerknadSelect(getDataSource(),selectsakbehandlermerknadSQL,vigilansakbehandlermerknadTableDefs);
+		List meldinger = merknadSelect.execute();
+		return meldinger;
+	}
+	/**
 	 * velgMeldinger
 	 * Denne rutinen henter en delmelding til en vigilansmelding basert på meldingsid.
 	 * En delmelding er enten av type annenkomplikasjon,pasientkomplikasjon eller giverkomplikasjon
+	 * Rutinen henter også all nødvendig informasjon fra relaterte tabeller
 	 * @param mId  meldingsid
 	 * @param nType
 	 * @return
@@ -924,33 +1018,39 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 				pasientKomplikasjon = (Pasientkomplikasjon)delMeldinger.get(0);
 				Long tId = pasientKomplikasjon.getTransfusjonsId();
 				List transfusjoner = velgTransfusjon(tId, nType);
+				alleTransfusjoner.addAll(transfusjoner);
 				alleMeldinger.put(transfusjonsKey, transfusjoner);
 				Transfusjon transfusjon = null;
 				if(transfusjoner != null && !transfusjoner.isEmpty()){
 					transfusjon = (Transfusjon)transfusjoner.get(0);
 					Long pId = transfusjon.getPasient_Id();
 					List pasienter =  velgPasient(pId, nType);
+					allePasienter.addAll(pasienter);
 					alleMeldinger.put(pasientenKey,pasienter);
 					Pasient pasient = null;
 					if(pasienter != null && !pasienter.isEmpty()){
 						pasient = (Pasient)pasienter.get(0);
 						List sykdommer = velgSykdom(pId, nType);
+						alleSykdommer.addAll(sykdommer);
 						alleMeldinger.put(sykdomKey,sykdommer);
 						List tiltak = velgTiltak(pId, nType);
+						alleTiltak.addAll(tiltak);
 						if (tiltak != null && !tiltak.isEmpty()){
 							alleMeldinger.put(tiltakKey, tiltak);
 							Tiltak tiltaket = (Tiltak)tiltak.get(0);
 							Long ftId = tiltaket.getTiltakid();
 							List forebyggendeTiltak =  velgforebyggendeTiltak(ftId, nType);
+							alleforebyggendeTiltak.addAll(forebyggendeTiltak);
 							if (forebyggendeTiltak != null && !forebyggendeTiltak.isEmpty()){
 								alleMeldinger.put(forebyggendetiltakKey, forebyggendeTiltak);
 							}
-							
 						}
 					}
 					List<Blodprodukt> blodprodukter = velgblodProdukter(tId, nType);
+					alleblodProdukter.addAll(blodprodukter);
 					alleMeldinger.put(blodproduktKey, blodprodukter);
 					List utredninger = velgUtredning(mId, nType);
+					alleUtredninger.addAll(utredninger);
 					alleMeldinger.put(utredningKey, utredninger);
 					List produktEgenskaper = new ArrayList<Produktegenskap>();
 					if (blodprodukter != null && !blodprodukter.isEmpty()){
@@ -960,13 +1060,14 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 							produktEgenskaper.addAll(egenskaper);
 						}						
 					}
-				
+					alleProduktegenskaper.addAll(produktEgenskaper);
 					alleMeldinger.put(produktegenskapKey, produktEgenskaper);
 				}
 				List klassifikasjoner = velgKomplikasjonklassifikasjon(mId, nType,komplikasjonSQL);
 				String klasskey = klassifikasjonKey + String.valueOf(mId.longValue());
 				alleMeldinger.put(klassifikasjonKey,klassifikasjoner);
 				List symptomer = velgSymptomer(mId, nType);
+				alleSymptomer.addAll(symptomer);
 				alleMeldinger.put(symptomerKey,symptomer);
 				
 			}
@@ -982,6 +1083,7 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 				komplikasjon = (Giverkomplikasjon) delMeldinger.get(0);
 				Long dId = komplikasjon.getDonasjonid();
 				List donasjoner = velgDonasjon(dId,nType);
+				alleDonasjoner.addAll(donasjoner);
 				alleMeldinger.put(donasjonKey,donasjoner);
 				Donasjon donasjon = null;
 				if (donasjoner != null && !donasjoner.isEmpty()){
@@ -989,10 +1091,13 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 					int gId = donasjon.getGiveId();
 					Long giverId = new Long(gId);
 					List givere = velgGiver(giverId,nType);
+					alleGivere.addAll(givere);
 					alleMeldinger.put(giverenKey,givere);
 				}
 				List giveroppfolginger = velgGiveroppfolging(mId, nType);
+				alleGiveroppfolginger.addAll(giveroppfolginger);
 				List komplikasjonsdiagnoser = velgkomplikasjonsdiagnoseGiver(mId, nType);
+				alleKomplikasjonsdiagnoser.addAll(komplikasjonsdiagnoser);
 				alleMeldinger.put(giverOppfolgingKey, giveroppfolginger);
 				alleMeldinger.put(giverkomplikasjondiagnoseKey, komplikasjonsdiagnoser);
 				

@@ -1,5 +1,7 @@
 package no.naks.biovigilans.dao;
 
+import java.util.Date;
+
 import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
@@ -84,7 +86,8 @@ public class AnnenkomplikasjonDAOImpl extends AbstractAdmintablesDAO implements 
 	public void saveAnnenKomplikasjon(Annenkomplikasjon annenKomplikasjon){
 		Vigilansmelding melding = (Vigilansmelding)annenKomplikasjon;
 		melding.setMeldingHead(meldingHead);
-		melding.setMeldingsdato(null);
+		Date mDato = melding.getMeldingsdato(); // Meldingsdato = null ved rapportering
+		melding.setMeldingsdato(mDato); // Setter meldingsdato til opprinnelig meldingsdato ved reklassifisering OLJ 23.01.17
 		melding.setMeldingParams();
 		melding.setMeldingTypes();
 		int[]meldingTypes = melding.getTypes();

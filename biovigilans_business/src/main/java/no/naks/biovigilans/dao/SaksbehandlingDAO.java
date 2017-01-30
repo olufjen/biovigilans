@@ -337,4 +337,10 @@ public interface SaksbehandlingDAO {
 
 	public Map<String,List> selectMeldingetternokkel (String meldeid);
 	public void setAlternativeSource(JdbcTemplate alternativeSource);
+	public String getSelectsakbehandlermerknadSQL();
+	public void setSelectsakbehandlermerknadSQL(String selectsakbehandlermerknadSQL);
+	public String[] getVigilansakbehandlermerknadTableDefs();
+	public void setVigilansakbehandlermerknadTableDefs(
+			String[] vigilansakbehandlermerknadTableDefs);
+	public List hentmeldingMerknader();
 }

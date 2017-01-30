@@ -128,7 +128,9 @@ public class SaksbehandlingServiceImpl extends BusinessService implements Saksbe
 	public List collectMessagesanonyme(){
 		return saksbehandlingDAO.collectMessagesanonyme();
 	}
-
+	public List hentmeldingMerknader(){
+		return saksbehandlingDAO.hentmeldingMerknader();
+	}
 	@Override
 	public void setAlterativeSource(String key) {
 		super.setAlterativeDBSource(key);
