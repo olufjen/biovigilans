@@ -217,7 +217,7 @@
         <property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
         <property name="alvorligAnnenhendelse" value="${alvorligannenhendelse}"></property>
         <property name="alvorligGiverhendelse" value="${systemiskoption3},${systemiskoption5},${systemiskoption6}"></property>
-        <property name="alvorligGivervarighet" value="${varighetSkadeoption8},${varighetSkadeoption9},${varighetSkadeoption10},${varighetSkadeoption11},${varighetSkadeoption12},${varighetSkadeoption13}"></property>
+        <property name="alvorligGivervarighet" value="${alvorliggivervarighetdummy},${alvorliggivervarighetdummy},${alvorliggivervarighetdummy},${alvorliggivervarighetdummy},${alvorliggivervarighetdummy},${alvorliggivervarighetdummy}"></property>
   		<property name="alvorligHendelsegiver" value="${alvorlighendelsegiver},${alvorlighendelsegiverja}"></property>
   		<property name="alvorligHendelsegivergrad" value="${alvorlighendelsegivergrad1},${alvorlighendelsegivergrad2},${alvorlighendelsegivergrad3}"></property>
   		<property name="alvorligHendelsegiverutfall" value="${alvorlighendelsegiverutfall1},${alvorlighendelsegiverutfall2},${alvorlighendelsegiverutfall3}"></property>

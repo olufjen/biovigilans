@@ -66,6 +66,8 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	private String utvalgKey = "valgt";
 	private String merknadlisteKey = "merknadvalgt";
 	
+	private String listeutvalgKey = "utvalg"; // Denne benyttes som session key dersom bruker har valgt å se på meldinger som har sammen meldingsnøkkel OLJ 26.1.17
+	
 	public String getMeldeTxtId() {
 		return meldeTxtId;
 	}
@@ -157,22 +159,23 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	    	 meldinger = hendelseWebService.collectMeldinger(melderId); // Henter alle vigilansmeldinger til bruker/melder
 	    	 alleMeldinger = melderWebService.collectAnnenMeldinger(meldinger); // Henter alle meldingsdetaljer fra vigilansmeldingene
 	    	 sorterMeldinger(alleMeldinger,meldinger); // Fjerner doble meldinger
-	    	 sessionAdmin.setSessionObject(request,andreMeldingene, andreMeldingKey);
+	    	 sessionAdmin.setSessionObject(request,andreMeldingene, andreMeldingKey); //Oppfølgingsmeldinger settes i sesjon
 	    	 sessionAdmin.setSessionObject(request,giverMeldingene, giverMeldingKey);
 	    	 sessionAdmin.setSessionObject(request,pasientMeldingene, pasientMeldingKey);
 	 	    List<Annenkomplikasjon> annenListe =(List) alleMeldinger.get(andreKey);
 		    List<Pasientkomplikasjon> pasientListe = (List) alleMeldinger.get(pasientKey);
 		    List<Giverkomplikasjon> giverListe = (List)  alleMeldinger.get(giverKey);
-		    sessionAdmin.setSessionObject(request,annenListe, andreKey);
+		    sessionAdmin.setSessionObject(request,annenListe, andreKey); // Aktuelle meldinger settes i sesjon
 		    sessionAdmin.setSessionObject(request,pasientListe, pasientKey);
 		    sessionAdmin.setSessionObject(request,giverListe, giverKey);
 		    sessionAdmin.setSessionObject(request,alleMeldinger, allemeldingerMap);
 		    sessionAdmin.setSessionObject(request,meldinger, vigilansmeldinger);
 		    List<Diskusjon> diskusjoner = null;
+    		meldinger = hentMeldingstyper(meldinger);
 		    for (Vigilansmelding melding: meldinger){
-		    	melding.setMeldingstype("Ukjent");
+//		    	melding.setMeldingstype("Ukjent"); Dette settes i hentmeldingstyper
 /*
- * Lagt til for å vise kommentar til meldingen		    	
+ * Lagt til for å vise kommentar til meldingen		    OLJ Desember 2016	
  */
 		    	Long meldeId = melding.getMeldeid();
 		    	Map<String,List> diskusjonene = saksbehandlingWebservice.collectDiskusjoner(meldeId);
@@ -189,7 +192,8 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 /*
  * 		    	
  */
-		    	for (Annenkomplikasjon annenKomplikasjon : annenListe){
+/*	Fjernet fordi dette gjøres i hentmeldingstyper
+ * 	    	for (Annenkomplikasjon annenKomplikasjon : annenListe){
 		    		if (melding.getMeldeid().longValue() == annenKomplikasjon.getMeldeid().longValue()){
 		    			melding.setMeldingstype("Annen hendelse");
 		    		
@@ -206,7 +210,7 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 		    			melding.setMeldingstype("Giverkomplikasjon");
 		    		
 		    		}
-		    	}
+		    	} Fjernet fordi dette gjøres i hentmeldingstyper*/
 		    }
 	    	 Vigilansmelding[] meldingene = new Vigilansmelding[meldinger.size()];
 	    	 int index = 0;
@@ -253,21 +257,27 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	     * Denne listen inneholder nå bare oppfølgingsmelding (dersom det finnes oppfølging)
 	     * Dersom en meldingsnøkkel bare har en melding, så inneholder den denne.	     
 	     */
-	    	     List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request,vigilansmeldinger);
+	    List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request,vigilansmeldinger);
+        Map<String, List> alleMeldinger = (Map)sessionAdmin.getSessionObject(request,allemeldingerMap);
+
 		Parameter sokMelding = form.getFirst("meldingsnokkelsok"); // Bruker etterspør en gitt melding
-		Parameter oversikt = form.getFirst("oversikt"); // Bruker etterspør en gitt melding	
+		Parameter oversikt = form.getFirst("oversikt"); // Bruker går tilbake til opprinnelig oversikt	
 		displayPart = "block";
 	 	 SimpleScalar simpleDisplay = new SimpleScalar(displayPart);
  	    String meldingsID = null;
+ 	     meldingsID = (String)sessionAdmin.getSessionObject(request, listeutvalgKey);
+ 	     if (meldingsID != null){
+ 	    	meldinger = (List)sessionAdmin.getSessionObject(request,meldingsID);
+ 	     }
  	   if (oversikt != null){ // Dersom bruker ønsker tilbake til oversikt
  		   	displayPart = "none";
  		 	 SimpleScalar simpleDisp = new SimpleScalar(displayPart);
+ 		 	 meldinger = (List)sessionAdmin.getSessionObject(request,vigilansmeldinger);
  		     andreMeldingene = (List)sessionAdmin.getSessionObject(request,andreMeldingKey);
  		     giverMeldingene = (List)sessionAdmin.getSessionObject(request,giverMeldingKey);
  		     pasientMeldingene = (List)sessionAdmin.getSessionObject(request,pasientMeldingKey);
- 		     
- 		     Map<String, List> alleMeldinger = (Map)sessionAdmin.getSessionObject(request,allemeldingerMap);
-
+ 		     sessionAdmin.removesessionObject(request, listeutvalgKey);
+ 
  	/*
  	 * Disse listene inneholder alle meldingene som annenliste, pasientliste og giverliste	     
  	 */
@@ -309,7 +319,9 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
  	    		meldinger = (List) meldingDetaljene.get(meldingsID);
  	    		meldinger = hentMeldingstyper(meldinger);
  			}
- 			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
+ 			
+ 			sessionAdmin.setSessionObject(request, meldingsID,listeutvalgKey);
+ 			sessionAdmin.setSessionObject(request, meldinger, meldingsID); // Lagrer meldingsutvalg i session med meldngsnøkkel som nøkkel
   		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
 //			makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
  		 	SimpleScalar simple = new SimpleScalar(utvalg);
@@ -355,7 +367,7 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	     giverMeldingene = (List)sessionAdmin.getSessionObject(request,giverMeldingKey);
 	     pasientMeldingene = (List)sessionAdmin.getSessionObject(request,pasientMeldingKey);
 	     
-	     Map<String, List> alleMeldinger = (Map)sessionAdmin.getSessionObject(request,allemeldingerMap);
+//	     Map<String, List> alleMeldinger = (Map)sessionAdmin.getSessionObject(request,allemeldingerMap);
 
 /*
  * Disse listene inneholder alle meldingene som annenliste, pasientliste og giverliste	     
