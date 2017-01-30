@@ -102,12 +102,18 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
  * Ferdig alternativeSource		
  */
 	    List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request, meldingsId); // For å vise tidligere valgt liste
+	    List<Vigilansmelding> meldingermerknader = (List)sessionAdmin.getSessionObject(request,meldingMerknad); // For å vise meldinger som er under behandling/opplysninger etterspurt OLJ 11.01.17
+	    if (meldingermerknader == null){
+	    	meldingermerknader = hentmeldingerMerknader();
+      	    sessionAdmin.setSessionObject(request, meldingermerknader, meldingMerknad);
+	    }
 	    if (meldinger == null){
 	    	meldinger = hentMeldingene(statusflag[0]);
 	    	sortermeldingerMeldt(meldinger); // Sorter listen etter dato meldt
 	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
 	    }
-	     Map<String, Object> dataModel = new HashMap<String, Object>();
+	    setsaksbehandlerMerknader(meldinger,meldingermerknader);
+	    Map<String, Object> dataModel = new HashMap<String, Object>();
 		 sessionAdmin.setSessionObject(request, meldinger, meldingsId);
 //	 	 sessionAdmin.setSessionObject(request,dobleMeldingene,dobleMeldingKey); // Er allerede satt ved dobleKey
 	 	 SimpleScalar simpleDisplay = new SimpleScalar(displayPart);
@@ -144,15 +150,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
      * @param form
      * @return
      */
-    /**
-     * @param form
-     * @return
-     */
-    /**
-     * @param form
-     * @return
-     */
-    @Post
+     @Post
     public Representation storeHemovigilans(Form form) {
         Map<String, Object> dataModel = new HashMap<String, Object>();
         Reference reference = new Reference(getReference(),"..").getTargetRef();
@@ -160,6 +158,11 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
         setDBSource(request);
 //	     String db =  sessionAdmin.getChosenDB(request);
   	    List<Vigilansmelding> meldinger = (List)sessionAdmin.getSessionObject(request, meldingsId);
+	    List<Vigilansmelding> meldingermerknader = (List)sessionAdmin.getSessionObject(request,meldingMerknad); // For å vise meldinger som er under behandling/opplysninger etterspurt OLJ 11.01.17
+	    if (meldingermerknader == null){
+	    	meldingermerknader = hentmeldingerMerknader();
+      	    sessionAdmin.setSessionObject(request, meldingermerknader, meldingMerknad);
+	    }
   	    dobleMeldingene = (List)sessionAdmin.getSessionObject(request,dobleKey);
   	    login = (LoginModel) sessionAdmin.getSessionObject(request, loginKey);
   	    dataModel.put(meldeKey,meldinger);
@@ -205,6 +208,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
   		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
+  		    setsaksbehandlerMerknader(meldinger,meldingermerknader);
  		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
@@ -267,6 +271,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
  			makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering. Dette blir feil dersom listen over doble ikke er oppdatert
  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
   		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
+  		    setsaksbehandlerMerknader(meldinger,meldingermerknader);
  		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
@@ -288,6 +293,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
  			sessionAdmin.setSessionObject(request, meldinger, meldingsId);
   		 	sessionAdmin.setSessionObject(request,dobleMeldingene,dobleKey);
+  		    setsaksbehandlerMerknader(meldinger,meldingermerknader);
  		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
@@ -350,6 +356,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
   			meldinger = hentMeldingene(meldtUtvalgetstart, meldtUtvalgetslutt);
 //	    	sortermeldingerMeldt(meldinger); // Sorter listen etter dato meldt
 	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
+		    setsaksbehandlerMerknader(meldinger,meldingermerknader);
    		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
@@ -367,11 +374,15 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     		return templatemapRep;
   		}
   		if (formValue != null){ // Begrense utvalget etter status
+  			String utvalget2 = "";
   			for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals(""))){
     					System.out.println(entry.getName() + "=" + entry.getValue());
     					if (entry.getName().equals("nystatus") )
     						utvalget = entry.getValue();
+    					if (utvalget != null && utvalget.equals("Melde Helsedirektoratet")){
+    						utvalget2 = "Meldt Helsedirektoratet";
+    					}
     			}
     		}
  /*
@@ -389,7 +400,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 /*
  * Nullstiller meldingsdetaljer OJN 12.12.16 		
  * Dette sørger for at alle lister blir oppdatert	
- * 
+ * Dette kan flyttes til egen rutine, og også brukes når man begrenser utvalget på annen måte? OJN 15.12.16
  */   			
 	  		List<Annenkomplikasjon> annenListe =(List) sessionAdmin.getSessionObject(request,reportAndreKey);
 		    List<Pasientkomplikasjon> pasientListe = (List)	sessionAdmin.getSessionObject(request,reportPasientKey);	
@@ -400,8 +411,13 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
 		    sessionAdmin.setSessionObject(request, giverListe, reportGiverKey);
 		    
   			meldinger = hentMeldingene(utvalget);
+ 			if (!utvalget2.equals("")){
+  				List<Vigilansmelding> fleremeldinger = hentMeldingene(utvalget2);
+  				meldinger.addAll(fleremeldinger);
+  			}
 //	    	sortermeldingerMeldt(meldinger); // Sorter listen etter dato meldt
 	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
+		    setsaksbehandlerMerknader(meldinger,meldingermerknader);
   			utvalg = utvalget;
   		 	SimpleScalar simple = new SimpleScalar(utvalg);
   		 	dataModel.put(utvalgKey, simple);
@@ -420,17 +436,27 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     		return templatemapRep;
   			
   		}
+  	
   		if (formMerknad != null){ // Begrense utvalget etter saksmerknader
+  			String utvalget2 = "";
   			for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals(""))){
     					System.out.println(entry.getName() + "=" + entry.getValue());
     					if (entry.getName().equals("merkn") )
     						utvalget = entry.getValue();
+    					if (utvalget != null && utvalget.equals("Meldt Helsedirektoratet")){
+    						utvalget2 = "Melde til Helsedirektoratet";
+    					}
     			}
     		}
   			meldinger = hentMeldingMerknader(utvalget);
+  			if (!utvalget2.equals("")){
+  				List<Vigilansmelding> fleremeldinger = hentMeldingMerknader(utvalget2);
+  				meldinger.addAll(fleremeldinger);
+  			}
 //	    	sortermeldingerMeldt(meldinger); // Sorter listen etter dato meldt
 	    	makeSequence(request, meldinger);// Sett sekvensnummer på oppfølging/reklassifisering
+		    setsaksbehandlerMerknader(meldinger,meldingermerknader);
   			merknadValg = utvalget;
   		 	 SimpleScalar merk = new SimpleScalar(merknadValg);
   		 	 dataModel.put(merknadlisteKey, merk);

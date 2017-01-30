@@ -36,6 +36,7 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	protected String[] aldergruppeGiver;
 	protected String[] merknader; // Inneholder tilgjengelige merknader som kan resulterer i at saksstatus endres
 	protected String meldeKey = "meldinger";
+	protected String meldingMerknad ="meldingmerknad"; // Nøkkel for meldinger som er under behandling/opplysninger etterspurt OLJ 11.01.17
 
 	protected String statusflagKey = "statusflag";
 	protected String sakModelKey = "sakModel";
@@ -254,7 +255,9 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	public void setGiverSession(String[] giverSession) {
 		this.giverSession = giverSession;
 	}
-
+	protected List hentmeldingerMerknader(){
+		return saksbehandlingWebservice.hentmeldingMerknader();
+	}
 	/**
 	 * setMeldertext
 	 * Setter riktig tekst til melder for celler og vev
@@ -427,8 +430,21 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 		meldinger = hentMeldingstyper(meldinger);// Lager egne lister for alle meldingstyper
 		sorterMeldinger(meldinger); // Og sorterer disse og fjerner doble før valgt utvalg hentes
 
-		if (status != null && !status.equals(statusflag[6])){
+		if (status != null && !status.equals(statusflag[6]) && !status.equals(statusflag[10])){
 			meldinger = saksbehandlingWebservice.collectMessages(status); 
+		}
+		if (status != null && status.equals(statusflag[10])){ // Henter arbeidslisten
+			List<Vigilansmelding> levert = saksbehandlingWebservice.collectMessages(statusflag[0]);
+			List<Vigilansmelding> underbeh = saksbehandlingWebservice.collectMessages(statusflag[2]);
+			List<Vigilansmelding> meldHdir = saksbehandlingWebservice.collectMessages(statusflag[4]);
+			List<Vigilansmelding> tillegge = saksbehandlingWebservice.collectMessages(statusflag[5]);
+			List<Vigilansmelding> tilleggm = saksbehandlingWebservice.collectMessages(statusflag[7]);
+			meldinger.clear();
+			meldinger.addAll(levert);
+			meldinger.addAll(underbeh);
+			meldinger.addAll(meldHdir);
+			meldinger.addAll(tillegge);
+			meldinger.addAll(tilleggm);
 		}
 /*		else
 			meldinger = saksbehandlingWebservice.collectMessages(); // Henter alle meldinger
@@ -641,5 +657,21 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 		 melding.setSupplerendeopplysninger(giverModel.getVigilansmelding().getSupplerendeopplysninger());
 		 melding.setMelderId(giverModel.getVigilansmelding().getMelderId());
 		
+	}
+	/**
+	 * setsaksbehandlerMerknader
+	 * Denne rutinen setter saksbehandlernavn på meldinger som er under saksbehandling eller tilleggsopplysninger etterspurt
+	 * @since 11.01.17 OLJ
+	 * @param meldinger
+	 * @param meldingermerknader
+	 */
+	protected void setsaksbehandlerMerknader(List<Vigilansmelding> meldinger,List<Vigilansmelding> meldingermerknader){
+		for (Vigilansmelding melding:meldinger){
+			for (Vigilansmelding merknadMelding:meldingermerknader){
+				if (melding.getMeldeid().longValue() == merknadMelding.getMeldeid().longValue() ){
+					melding.setSaksBehandler(merknadMelding.getSaksBehandler());
+				}
+			}
+		}
 	}
 }

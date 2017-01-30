@@ -61,6 +61,12 @@ import no.naks.biovigilans.felles.model.PasientKomplikasjonWebModel;
 import no.naks.biovigilans.felles.model.TransfusjonWebModel;
 import no.naks.biovigilans.felles.server.resource.SessionServerResource;
 import no.naks.biovigilans.felles.control.SaksbehandlingWebService;
+
+/**
+ * Denne klassen benyttes til å generere rapporter til Excel
+ * @author olj
+ *
+ */
 public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer {
 
 
@@ -146,12 +152,25 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
   		Parameter datoHSort   = form.getFirst("sorteringdatohendt");
 		Parameter datoMSort   = form.getFirst("sorteringdatomeldt"); 
 		Parameter excelDoc = form.getFirst("excel");
+		Parameter tilbake = form.getFirst("tilbake"); // Bruker returnerer til hovedside
 		
   		String meldtUtvalgetstart = null;
   		String meldtUtvalgetslutt = null;
   		boolean toPDF = false;
   		String page = "";
   		String path = "";
+  		if (tilbake != null){
+ 	  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
+
+    		// Load the FreeMarker template
+    		Representation pasientkomplikasjonFtl = clres2.get();
+
+    		TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+    				MediaType.TEXT_HTML);
+    		String backPage = "../hemovigilans/hemovigilansadmin.html";
+    		  redirectPermanent(backPage);
+    		return templatemapRep;
+  		}
   		if (excelDoc != null){ // Rapporter utvalg til excel
   			for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals(""))){
@@ -161,7 +180,7 @@ public class RapporteringServerResourceHTML extends SaksbehandlingSessionServer 
     				System.out.println(entry.getName()); 
     			}
   			}
-  			List<Regionstatistikk> statistikk = null;
+ 			List<Regionstatistikk> statistikk = null;
   			List<Regionstatistikk> sykehusStatistikk = null;
   			List<Regionstatistikk> foretakStatistikk = null;
   			String startPeriod =(String) sessionAdmin.getSessionObject(request, startPeriodKey);
