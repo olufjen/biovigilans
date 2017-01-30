@@ -126,6 +126,9 @@ public class SaksbehandlingWebServiceImpl extends MasterWebServiceImpl
 	public List<Vigilansmelding> collectanonymemeldinger(){
 		return saksbehandlingService.collectMessagesanonyme();
 	}
+	public List hentmeldingMerknader(){
+		return saksbehandlingService.hentmeldingMerknader();
+	}
 	public void setAlterativeSource(String key){
 		saksbehandlingService.setAlterativeSource(key);
 		melderTableService.setAlternativeSource(key);

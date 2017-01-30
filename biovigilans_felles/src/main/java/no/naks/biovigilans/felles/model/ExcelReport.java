@@ -25,6 +25,8 @@ import org.restlet.Request;
 
 import no.naks.biovigilans.felles.control.SessionAdmin;
 import no.naks.biovigilans.model.Annenkomplikasjon;
+import no.naks.biovigilans.model.Giver;
+import no.naks.biovigilans.model.GiverImpl;
 import no.naks.biovigilans.model.Giverkomplikasjon;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.Regionstatistikk;
@@ -51,6 +53,16 @@ public class ExcelReport<T> {
 	
 	protected SessionAdmin sessionAdmin = null;
 	
+	/**
+	 * Nøkler hentet fra SessionServerResource
+	 */
+	private String giverenKey="giver";
+	private String donasjonKey = "donasjonen";
+	private String giverkomplikasjonKey = "giverkomplikasjonen"; 	// Benyttes som nøkkel for giverkomplikasjon
+	private String giverOppfolgingKey = "giveroppfolging";
+	private String giverkomplikasjondiagnoseKey = "giverkomplikasjondiagnose";
+	private String allemeldingerMap = "allemeldinger"; // Nøkkel til en Map som inneholder alle meldingsdetaljer	
+
 	public ExcelReport(		
 			SessionAdmin sessionAdmin) {
 		super();
@@ -92,7 +104,10 @@ public class ExcelReport<T> {
 	public String createBook(List<Vigilansmelding> meldinger, String annenKey,String giverKey,String pasientKey,Request request) {
 		annenListe = (List)sessionAdmin.getSessionObject(request,annenKey); 
 		giverListe = (List)sessionAdmin.getSessionObject(request,giverKey); 
-		pasientListe = (List)sessionAdmin.getSessionObject(request,pasientKey); 
+		pasientListe = (List)sessionAdmin.getSessionObject(request,pasientKey);
+		Map alleMeldinger = (HashMap)sessionAdmin.getSessionObject(request,allemeldingerMap); // Inneholder alle meldingsdetaljer
+  		    
+		    
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		  String sheetName = "Alle meldinger";
 		  String header1 = "Beskrivelse";
@@ -123,7 +138,7 @@ public class ExcelReport<T> {
 	           meldtype.setCellValue(melding.getMeldingstype());
 	           Cell meldstatus = row.createCell(++columnCount);
 	           String status = melding.getSjekklistesaksbehandling();
-	           if (status != null && !status.equals("Avvist"))
+	           if (status != null && !status.equals("Avvist")&&!status.equals("Erstattet"))
 	        	   nTeller++;
 	           meldstatus.setCellValue(melding.getSjekklistesaksbehandling());
  	          teller ++;
@@ -137,11 +152,12 @@ public class ExcelReport<T> {
 	      sumCount.setCellValue(teller);
 	      Row ssrow = sheet.createRow(++rc);
 	      Cell nsummer = ssrow.createCell(2);
-	      nsummer.setCellValue("Antall ikke avviste meldinger");
+	      nsummer.setCellValue("Antall mledinger som ikke er avvist eller erstattet");
 	      Cell sumnCount = ssrow.createCell(3);
 	      sumnCount.setCellValue(nTeller);
 	      createAnnen(meldinger, workbook);
 	      createGiver(meldinger, workbook);
+	      createGiverstatistikk(workbook, alleMeldinger);
 	      createPasient(meldinger, workbook);
 	      createStatistikk(workbook);
 	 	File temp = null;
@@ -189,6 +205,40 @@ public class ExcelReport<T> {
 		}
 	    return path;   
 	     	
+	}
+	protected void createGiverstatistikk(XSSFWorkbook workbook,Map meldingsdetaljer){
+		  String sheetName = "Statistikk givermeldinger";
+		  String header1 = "Alder";
+		  String header2 = "Kjønn";
+		  String header3 = "Givererfaring";
+		  String header4 = "Tidligere komplikasjoner";
+		  String header5 = "Beskrivelse av komplikasjoner";
+		  String header6 = "Erfaring afarese";
+		  String[] headers = {header1,header2,header3,header4,header5,header6};
+		  XSSFSheet sheet = createHeader(workbook, sheetName,headers);
+		  int rc = 3;
+		  Row toprow = sheet.createRow(rc);
+		  Cell giverTopp = toprow.createCell(1);
+		  List<Giver>givere = (List)meldingsdetaljer.get(giverenKey);
+		  givere.sort((Giver g1,Giver g2)-> g1.getAlder().compareTo(g2.getAlder()));
+		  for (Giver giver:givere){
+			  Row row = sheet.createRow(++rc);
+    		  int columnCount = 3;
+    		  Cell alder = row.createCell(++columnCount);
+    		  alder.setCellValue(giver.getAlder());
+    		  Cell kjonn = row.createCell(++columnCount);
+    		  kjonn.setCellValue(giver.getKjonn());
+    		  Cell erfaring = row.createCell(++columnCount);
+    		  erfaring.setCellValue(giver.getGivererfaring());
+    		  Cell tidlreaksjon = row.createCell(++columnCount);
+    		  tidlreaksjon.setCellValue(giver.getTidligerekomlikasjonjanei());
+    		  Cell tidlrbeskrivelse = row.createCell(++columnCount);
+    		  tidlrbeskrivelse.setCellValue(giver.getTidligerekomplikasjonforklaring());
+    		  Cell afarese = row.createCell(++columnCount);
+    		  afarese.setCellValue(giver.getGivererfaringaferese());
+  
+		  }
+		  
 	}
 	protected void createStatistikk(XSSFWorkbook workbook){
 		  String sheetName = "Statistikk regioner og foretak";
@@ -269,7 +319,7 @@ public class ExcelReport<T> {
 					break;
 				}
 			}
-			if (!flag.equals("Avvist")){
+			if (!flag.equals("Avvist")&&!flag.equals("Erstattet")){
 				if (classifyP.test(komp)){
 					result.add(komp);
 
@@ -285,7 +335,15 @@ public class ExcelReport<T> {
 		  String sheetName = "Andre hendelser";
 		  String header1 = "Klassifikasjon";
 		  String header2 = "Delklassifikasjon";
-		  String headers[] = {header1,header2};
+		  String header3 = "Hvordan oppdaget";
+		  String header4 = "Årsak";
+		  String header5 = "Definisjon";
+		  String header6 = "Hovedprosess";
+		  String header7 = "Beskrivelse";
+		  String header8 = "Tiltak";
+		  String header9 = "Kommentar";
+		  String header10 = "Pasientopplysninger";
+		  String headers[] = {header1,header2,header3,header4,header5,header6,header7,header8,header9,header10};
 //		  String code = "";
 			Map<List<T>,String> aclassification = new HashMap();
 		  XSSFSheet sheet = createHeader(workbook, sheetName,headers);
@@ -293,6 +351,14 @@ public class ExcelReport<T> {
 	      int teller = 0;
 	      int nTeller = 0;
 //	      Row toprow = sheet.createRow(rc-1);
+	      String hvordanoppdaget = "";
+	      String arsak = "";
+	      String definisjon = "";
+	      String hovedprosess = "";
+	      String kompBeskrivelse = "";
+	      String tiltak = "";
+	      String kommentar = "";
+	      String pasientopplysninger = "";
 	      for (Vigilansmelding melding : meldinger){
 	    	  if (melding.getMeldingstype().equals("Annen hendelse")){
 	    		  Annenkomplikasjon komplikasjonen = null;
@@ -300,9 +366,18 @@ public class ExcelReport<T> {
 	    			  for (Annenkomplikasjon komplikasjon : annenListe){
 	    				  if (komplikasjon.getMeldeid().equals(melding.getMeldeid())){
 	    					  komplikasjonen = komplikasjon;
-	    					  if (!melding.getSjekklistesaksbehandling().equals("Avvist")){
+	    					  hvordanoppdaget = komplikasjonen.getOppdaget();
+	    					  arsak = komplikasjonen.getAvvikarsak();
+	    					  definisjon = komplikasjonen.getKomplikasjondefinisjon();
+	    					  hovedprosess = komplikasjonen.getHovedprosess();
+	    					  kompBeskrivelse = komplikasjonen.getKomplikasjonbeskrivelse();
+	    					  tiltak = komplikasjonen.getTiltak();
+	    					  kommentar = komplikasjonen.getKommentar();
+	    					  pasientopplysninger = komplikasjonen.getPasientopplysninger();
+	    					  if (!melding.getSjekklistesaksbehandling().equals("Avvist")&&!melding.getSjekklistesaksbehandling().equals("Erstattet")){
 	    						  String code = komplikasjonen.getDelkode();
 	    						  Long aId = komplikasjonen.getMeldeid();
+	    		
 	    						  /*
 	    						   * Finn hvilke andre meldinger som har samme klassifikasjon som denne meldingen.
 	    						   * - Og som ikke er avvist!?
@@ -335,10 +410,27 @@ public class ExcelReport<T> {
 	    		  beskrivelse.setCellValue(klassifikasjon);
 	    		  Cell meldtype = row.createCell(++columnCount);
 	    		  meldtype.setCellValue(delkode);
+	    		  Cell oppdaget = row.createCell(++columnCount);
+	    		  oppdaget.setCellValue(hvordanoppdaget);
+	    		  Cell arsaktil = row.createCell(++columnCount);
+	    		  arsaktil.setCellValue(arsak);
+	    		  Cell def = row.createCell(++columnCount);
+	    		  def.setCellValue(definisjon);
+	    		  Cell prosess = row.createCell(++columnCount);
+	    		  prosess.setCellValue(hovedprosess);
+	    		  Cell beskrive = row.createCell(++columnCount);
+	    		  beskrive.setCellValue(kompBeskrivelse);
+	    		  Cell tiltaks = row.createCell(++columnCount);
+	    		  tiltaks.setCellValue(tiltak);
+	    		  Cell komm = row.createCell(++columnCount);
+	    		  komm.setCellValue(kommentar);
+	    		  Cell pasientopp = row.createCell(++columnCount);
+	    		  pasientopp.setCellValue(pasientopplysninger);
 	    		  Cell meldstatus = row.createCell(++columnCount);
+	    		  
 	    		  meldstatus.setCellValue(melding.getSjekklistesaksbehandling());
 	              String status = melding.getSjekklistesaksbehandling();
-		           if (status != null && !status.equals("Avvist"))
+		           if (status != null && (!status.equals("Avvist") && (!status.equals("Erstattet"))))
 		        	   nTeller++;
 	    		  teller ++; 
 	    	  }
@@ -354,7 +446,7 @@ public class ExcelReport<T> {
 	      Row ssrow = sheet.createRow(++rc);
 	      ssrow.setRowStyle(cellStyle);
 	      Cell nsummer = ssrow.createCell(2);
-	      nsummer.setCellValue("Antall ikke avviste meldinger");
+	      nsummer.setCellValue("Antall meldinger som ikke er avvist eller erstattet");
 	      Cell sumnCount = ssrow.createCell(3);
 	      sumnCount.setCellValue(nTeller);
 	      Function<Annenkomplikasjon,String> classification = (Annenkomplikasjon s) -> s.getDelkode();
@@ -454,7 +546,7 @@ public class ExcelReport<T> {
 	    		  celltillegg.setCellValue(tillegg);
 	    		  Cell meldstatus = row.createCell(++columnCount);
 	              String status = melding.getSjekklistesaksbehandling();
-		           if (status != null && !status.equals("Avvist"))
+		           if (status != null && !status.equals("Avvist")&&!status.equals("Erstattet"))
 		        	   nTeller++;
 	    		  meldstatus.setCellValue(melding.getSjekklistesaksbehandling());
 	    		  teller ++; 
@@ -471,7 +563,7 @@ public class ExcelReport<T> {
 	      Row ssrow = sheet.createRow(++rc);
 	      ssrow.setRowStyle(cellStyle);
 	      Cell nsummer = ssrow.createCell(2);
-	      nsummer.setCellValue("Antall ikke avviste meldinger");
+	      nsummer.setCellValue("Antall meldinger som ikke er avvist eller erstattet");
 	      Cell sumnCount = ssrow.createCell(3);
 	      sumnCount.setCellValue(nTeller);
 	}	
@@ -492,7 +584,7 @@ public class ExcelReport<T> {
 	    			  for (Pasientkomplikasjon komplikasjon : pasientListe){
 	    				  if (komplikasjon.getMeldeid().equals(melding.getMeldeid())){
 	    					  komplikasjonen = komplikasjon;
-	    					  if (!melding.getSjekklistesaksbehandling().equals("Avvist")){
+	    					  if (!melding.getSjekklistesaksbehandling().equals("Avvist")&&!melding.getSjekklistesaksbehandling().equals("Erstattet")){
 	    						  String lcode = komplikasjonen.getKlassifikasjon();
 	    						  if (lcode == null)
 	    							  lcode = "";
@@ -529,10 +621,11 @@ public class ExcelReport<T> {
 	    		  beskrivelse.setCellValue(klassifikasjon);
 	    		  Cell meldtype = row.createCell(++columnCount);
 	    		  meldtype.setCellValue(delkode);
+	    		  columnCount++;
 	    		  Cell meldstatus = row.createCell(++columnCount);
 	    		  meldstatus.setCellValue(melding.getSjekklistesaksbehandling());
 	              String status = melding.getSjekklistesaksbehandling();
-		           if (status != null && !status.equals("Avvist"))
+		           if (status != null && !status.equals("Avvist")&& !status.equals("Erstattet"))
 		        	   nTeller++;
 	    		  teller ++; 
 	    	  }
@@ -548,7 +641,7 @@ public class ExcelReport<T> {
 	      Row ssrow = sheet.createRow(++rc);
 	      ssrow.setRowStyle(cellStyle);
 	      Cell nsummer = ssrow.createCell(2);
-	      nsummer.setCellValue("Antall ikke avviste meldinger");
+	      nsummer.setCellValue("Antall meldinger som ikke er avvist eller erstattet");
 	      Cell sumnCount = ssrow.createCell(3);
 	      sumnCount.setCellValue(nTeller);
 	      Function<Pasientkomplikasjon,String> classification = (Pasientkomplikasjon s) -> s.getKlassifikasjon();
@@ -563,7 +656,7 @@ public class ExcelReport<T> {
 		  Font headerFont = workbook.createFont();
 		  headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		  cellStyle.setFont(headerFont);
-		  
+		  int lhlengt = headers.length+3;
 	      Row header = sheet.createRow(2);
 	 
 	      Cell hendelse = header.createCell(1);
@@ -576,7 +669,7 @@ public class ExcelReport<T> {
 	  	      Cell nokkel = header.createCell(3);
 	  	      nokkel.setCellValue("Meldingsnøkkel");
 	  	      nokkel.setCellStyle(cellStyle);
-	  	      Cell status = header.createCell(6);
+	  	      Cell status = header.createCell(++lhlengt);
 		      status.setCellValue("Status");
 		      status.setCellStyle(cellStyle);
 	      }

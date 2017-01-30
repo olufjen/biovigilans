@@ -1560,6 +1560,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			    andreMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request, andreMeldingKey);
 			    giverMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request,giverMeldingKey);
 			    pasientMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request, pasientMeldingKey);
+			    Map<String, List> alleMeldinger = (Map)sessionAdmin.getSessionObject(request,allemeldingerMap);
 			    boolean aset = false;boolean pset = false;boolean gset = false;
 			    if (andreMeldingene == null){
 			    	andreMeldingene = new ArrayList<Vigilansmelding>();
@@ -1574,14 +1575,15 @@ public class SessionServerResource extends ProsedyreServerResource {
 			    	pset = true;
 			    }
 			    if (annenListe == null && pasientListe == null && giverListe == null){
-				    Map andreMeldinger = saksbehandlingWebservice.collectAnnenMeldinger(meldinger);// Henter alle meldingsdetaljer fra vigilansmeldingene
-				    annenListe =(List) andreMeldinger.get(andreKey);
-				    pasientListe = (List) andreMeldinger.get(pasientKey);
-				    giverListe = (List)  andreMeldinger.get(giverKey);
+			    	if (alleMeldinger == null) // Annen gang kall for å hente utvalg gir et annet resultat????? OLJ 26.1.16
+			    		alleMeldinger = saksbehandlingWebservice.collectAnnenMeldinger(meldinger);// Henter alle meldingsdetaljer fra vigilansmeldingene
+				    annenListe =(List) alleMeldinger.get(andreKey);
+				    pasientListe = (List) alleMeldinger.get(pasientKey);
+				    giverListe = (List)  alleMeldinger.get(giverKey);
 				    sessionAdmin.setSessionObject(request, annenListe, reportAndreKey);
 				    sessionAdmin.setSessionObject(request, pasientListe, reportPasientKey);
 				    sessionAdmin.setSessionObject(request, giverListe, reportGiverKey);
-				    sessionAdmin.setSessionObject(request, andreMeldinger, allemeldingerMap);
+				    sessionAdmin.setSessionObject(request, alleMeldinger, allemeldingerMap);
 			    }
 
 			    for (Vigilansmelding melding: meldinger){
