@@ -209,10 +209,11 @@
       
       function homePage(){
       	var curAddr = document.location.href;
+    	$("#btntilbake").click();
       //	 alert(curAddr);
       	var newAddr = curAddr.replace("rapportering.html","");
       //	alert(newAddr);
-      	document.location = newAddr;
+      //	document.location = newAddr;
 
       }
       var Spinner1;
@@ -372,6 +373,7 @@
   <button type="submit" id="btndatohendt" value="datohendt"  name="datohendt" class="btn btn-primary" style="display: none" > getValue </button>
   <button type="submit" id="btnsorteringdatohendt" value="sorteringdatohendt"  name="sorteringdatohendt" class="btn btn-primary" style="display: none" > getValue </button>
   <button type="submit" id="btnsorteringdatomeldt" value="sorteringdatomeldt"  name="sorteringdatomeldt" class="btn btn-primary" style="display: none" > getValue </button>
+  <button type="submit" id="btntilbake" value="tilbake"  name="tilbake" class="btn btn-primary" style="display: none" > getValue </button>
        
     
 </div><!--sluttsak-->
