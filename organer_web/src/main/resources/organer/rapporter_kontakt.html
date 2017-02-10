@@ -1,0 +1,443 @@
+<html>
+<head>
+
+  <title>Rapporter hendelse - Hemovigilans</title>
+   <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html;">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta content="Kunnskapssenteret oppsummerer forskning om effekt av helsetiltak, gjør helseøkonomiske analyser, måler kvalitet, og arbeider med kvalitetsforbedring og pasientsikkerhet. " name="description">
+
+  <link href="/organer_web/resources/css/main.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link href="/organer_web/resources/css/biovigilans.css" rel="stylesheet">
+  
+ 
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" /><!-- Viktig for dato !! -->
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> <!-- Viktig for dato !! -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" ></script>
+
+</head>
+
+<body onload="setSelectListValue();">
+ <header>
+    <div class="container">
+      <figure class="main-logo">        
+        <img alt="Logo Helsedirektoratet" src="/organer_web/resources/css/logo.png">        
+      </figure>
+    </div>    
+  </header>
+
+  <div class="container">
+      <div class="left hidden-print">        
+        <button type="button" class="btn btn-default btn-lg btn-back" onclick="homePage()">Tilbake</button>        
+      </div>
+<form id="rapport" action="?method=PUT" method="post"> 
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->  
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+var Spinner1;
+var foo;
+var reqFlag =  "${display}";
+var sndPwd = "";
+var newpwd = "";
+var kontaktButton = "${lagre}";
+
+$( document ).ready(function(){
+	if (reqFlag == 'none'){
+	//		alert(reqFlag);
+			document.getElementById('k-passordsjekk').required = false;
+	/* 		document.getElementById('k-helseregion').required = true
+			document.getElementById('k-helseforetak').required = true;
+			document.getElementById('k-helseforetak').required = true;
+			document.getElementById('k-sykehus').required = true; */
+	}
+	if (reqFlag == 'block'){
+	//	alert(reqFlag);
+		document.getElementById('k-passordsjekk').required = false; // Slått av inntil videre (OLJ 15.09.15)
+	}
+	if (kontaktButton == 'disable'){
+	 	$("#lagrekontakt").prop("disabled", true);
+	 	$("#lagreanonymt").prop("disabled", true);
+	}
+
+	if (kontaktButton == 'enable'){
+	 	$("#lagrekontakt").prop("disabled", false);
+	 	$("#lagreanonymt").prop("disabled", false);
+	}
+
+//	document.getElementById("k-passordsjekk").setAttribute("value", newpwd);
+});
+
+function toggleDisplay(id, displayvalue)
+{    
+	 if ( displayvalue == 1 ) {
+    	    document.getElementById(id).style.display = 'block';
+     } else if (displayvalue == 0) {
+         document.getElementById(id).style.display = 'none';
+    //     alert("step 3");
+    }
+ //   alert("step 4");
+}
+
+/**
+ * set and display the helseforetak and sykehus list value
+ */
+function setSelectListValue(){
+	//alert("status");
+	var region = document.getElementById("k-helseregion").value;
+	if(region != ''){
+		 document.getElementById("helseforetak").style.display = 'block';
+	}
+	var foretak = document.getElementById("k-helseforetak").value;
+	if(foretak != ''){
+		 document.getElementById("helseforetak").style.display = 'block';
+		document.getElementById("sykehus").style.display = 'block';
+	}
+}
+
+function initialize()
+{
+    var SpinnerValue_Changed = function() {
+       alert("event captured");
+    };
+   
+    Spinner1 = document.getElementById("p-blod-erytrocytt");
+    foo = document.getElementById("foo");
+   // alert("step 1");
+    foo.hidden ="false";
+  //  Spinner1.addEventListener("change", SpinnerValue_Changed, false);
+ //  alert("step 2");
+}
+
+function GetLoginInfo()
+{
+	var epost = document.getElementById("k-epost").value;
+	$.ajax({
+	type: "POST",
+	url: "melder/saveToMelder",
+	data: "{'parameter:'epost}",
+	contentType: "application/json; charset=utf-8",
+	dataType: "json",
+	async: true,
+	cache: false,
+	});
+}
+function checkepost(){
+	var orgemail = document.getElementById("k-epost").value;
+	var newemail = document.getElementById("k-epostsjekk").value;
+	if (orgemail == newemail){
+		//alert("passord ok");
+		toggleDisplay("lagrekontakt", 1);
+		toggleDisplay("nyttpassord", 0);
+	}
+	if (orgemail != newemail){
+		toggleDisplay("lagrekontakt", 0);
+		toggleDisplay("nyttpassord", 1);
+		alert("Feil epost adresse, vennligst prøv igjen");
+	}	
+}
+function checkpassword(){
+	var orgpwd = document.getElementById("k-passord").value;
+	var newpwd = document.getElementById("k-passordsjekk").value;
+	if (orgpwd == newpwd){
+		//alert("passord ok");
+		toggleDisplay("lagrekontakt", 1);
+		toggleDisplay("nyttpassord", 0);
+	}
+	if (orgpwd != newpwd){
+		toggleDisplay("lagrekontakt", 0);
+		toggleDisplay("nyttpassord", 1);
+		alert("Feil passord, vennligst prøv igjen");
+	}	
+}
+function formsubmitpany(){
+	document.getElementById('k-passordsjekk').required = false;
+	$("#btnprovny").click();
+}
+function formsubmitpassord(){
+	document.getElementById('k-passordsjekk').required = false;
+	var a = document.createElement("p");
+	a.setAttribute("class","text-primary");
+	var tx = document.createTextNode("Passord sendes!!");
+	a.appendChild(tx);
+	var place = document.getElementById("pwdchecksub");
+	var parent = place.parentNode;
+	parent.insertBefore(a,place);
+//	document.body.appendChild(a);	 
+//	document.write('<div id="Passord sendes" style="color:#0000FF"><p>Passord sendes</p></div>');
+	$("#btnhentpassord").click();
+}
+function formSubmit(){
+	
+//alert("formSubmit");	
+
+	$("#btnKontak").click();
+
+}
+function passwordsubmit(){
+	//document.getElementById("k-passord").innerHTML = event.keyCode;
+	 $("#lagrekontakt").prop("disabled", false);
+	 $("#lagreanonymt").prop("disabled", false);
+//	 sjekksykehus();
+}
+function formsubmitnymelder(){
+	$("#btnnymelder").click();
+}
+function regionValgt(){
+	var region = document.getElementById("k-helseregion").value;
+//	document.getElementById("k-passordsjekk").setAttribute("value", newpwd);
+	var tt = document.getElementById("k-passordsjekk").value;
+	document.getElementById('k-helseregion').required = false;
+//	 alert("sjekker region region valgt:"+region);
+//	alert(newpwd+" "+tt);
+	 if (region == ''){
+//		 document.getElementById('k-helseregion').required = true;
+//		 alert("region er tom region valgt");
+	 }
+	if(region != ''){
+		/* document.getElementById('k-helseforetak').required = true;
+		document.getElementById('k-sykehus').required = true; */
+//		alert("Click btnRegion");
+		$("#btnRegion").click();
+	}
+	
+}
+function foretakValgt(){
+	var foretak = document.getElementById("k-helseforetak").value;
+//	document.getElementById("k-passordsjekk").setAttribute("value", newpwd);
+	 if (foretak == ''){
+//		 alert("foretak er tomt");
+	 }
+
+	 if (foretak != ''){
+//		 alert("foretak er ikke tomt ");
+		 $("#btnForetak").click();
+	 }
+	
+}
+function leveranseValgt(){
+	$("#btnleveranse").click();
+//	 alert("Leveranse valgt");
+	//document.location("leveranse.html");
+	$("#btnleveranseb").click();
+}
+function sjekkregion(){
+	var region = document.getElementById("k-helseregion").value;
+//	alert("sjekker region:"+region);
+	document.getElementById('k-helseregion').required = false;
+	 if (region == ''){
+		 document.getElementById('k-helseregion').required = true;
+//		 alert("region er tom");
+	 }
+}
+function sjekkforetak(){
+	var foretak = document.getElementById("k-helseforetak").value;
+//	alert("sjekker foretak:"+foretak);
+	 if (foretak == ''){
+		 document.getElementById('k-helseforetak').required = true;
+//		 alert("foretak er tomt");
+	 }
+}
+function sjekksykehus(){
+	var sykehus = document.getElementById('k-sykehus').value;
+	if (sykehus == ''){
+	 document.getElementById('k-sykehus').required = true;
+//	 alert("foretak er tomt");
+	}
+}
+function anonymKnappen(){
+// Skaper problemer dersom man har en forhåndsutfylt epost adresse i kontaktskjema og ønsker å melde anonymnt!	 
+	 var epost = document.getElementById("k-epost").value;
+	 document.getElementById("k-epost").value = ""; // Derfor er dette kommentert ut. Det vil ivareta om man
+//     													Fyller ut epost adresse og passord, og deretter trykker retur tasten.
+//														Resultatet blir at anonymknappen velges!
+	 var nepost = document.getElementById("k-epost").value;
+//	 alert("anonym knapp valgt " + epost + " etter "+ nepost);
+}
+function homePage(){
+	var curAddr = document.location.href;
+//	 alert(curAddr);
+	var newAddr = curAddr.replace("rapporter_kontakt.html","");
+//	alert(newAddr);
+	document.location = newAddr;
+
+}
+function setanonymDefault(){
+	document.getElementById("k-anonym").checked = 0;
+	document.getElementById("k-ikkeanonym").checked = 1;
+}
+//window.onload=initialize();
+</script>
+
+<h1>Rapporter hendelse– Organer</h1>
+   <ul class="pager">
+    <li class="previous" title="Ved startsiden velger du ny melding eller oppfølgingsmelding "><a href="#">Start</a></li>
+    <li class="previous" title="Her velger du type melding "><a href="#">Type hendelse</a></li>
+    <li class="previous" title="Her fyller du inn detaljer om meldingen "><a href="#">Hendelsesdetaljer</a></li>
+    <li class="previous" title="Du er ved kontaktinformasjon. Her fyller du inn kontaktinformasjon "><a href="#"><strong><span style="color:black">Kontaktinformasjon</span></strong></a></li>
+    <li class="previous" title="Her vises kvitteringen for meldingen "><a href="#">Kvittering</a></li>
+  </ul> 
+<!-- Nav tabs 
+<ul class="nav nav-tabs">
+  <li ><a href="rapporter_hendelse_main.html" data-toggle="tab">Meld fra om</a></li>
+  <li class="active"><a href="#kontakt1" data-toggle="tab">Kontaktinformasjon</a></li>
+ --> 
+  <!-- 
+  <li><a href="rapporter_giver.html" data-toggle="tab">Komplikasjoner ved tapping av blodgivere</a></li>
+  <li><a href="rapporter_transfusjon.html"  data-toggle="tab">Transfusjonskomplikasjoner</a></li>
+  <li><a href="rapporter_andrehendelser.html" data-toggle="tab">Andre uønskede hendelser</a></li>
+ 
+</ul>  -->
+
+   
+<div  class="tab-pane" id="kontakt1">
+<div id="funnet" style="display: ${funnet}">
+<h3>Melder funnet, men feil eller intet passord oppgitt. Du har tre valg:</h3>
+   <input name="k-funnetpass" type="radio" id="k-funnetpass" value="k-funnetpass" onclick="formsubmitpassord();"/>
+         <b>Ønsker du passord  tilsendt på epost? </b>     
+    <br>
+	<input name="k-funnet" type="radio" id="k-funnet" value="k-funnet" onclick="formsubmitnymelder();"/>
+         <b>Ønsker du å registrere deg som bruker på flere blodbanker, men med samme epost adresse alle stedene? (I så fall må du ha flere passord, ett for hvert av stedene du melder fra)</b>
+    <br>
+ 
+    <input name="k-provnytt" type="radio" id="k-provnytt" value="k-provnytt" onclick="formsubmitpany();"/>
+         <b>Ingen av delene, jeg prøver på nytt </b>                
+</div> 
+<br>
+	<div class="form-group">
+        <label for="k-epost">Melders epost:</label>
+        <div>
+          <input name="k-epost" type="email" value="${melder.melderepost}" class="form-control" id="k-epost" placeholder="Email"   />
+        </div>
+       
+      </div>
+      <div class="form-group" id="pwdcheck">
+        <label for="k-passord">Melders passord:</label>
+        <div id="pwdchecksub">
+          <input title="Husk, benytt tab-tast (ikke returtast)"  name="k-passord" type="password" value="${melder.melderPassord}"  class="form-control" id="k-passord" placeholder="Passord" onblur="formSubmit();" />
+        </div>
+      </div>
+      <div class="form-group"  style="display: ${extra}">
+         <label for="k-epostsjekk"> Ny melder vennligst gjenta epost adresse:</label>
+        <div>
+          <input name="k-epostsjekk" type="email" value="${melder.checkemail}" class="form-control" id="k-epostsjekk" placeholder="Sjekk av epost" onblur="checkepost();"/>
+        </div>
+        <label for="k-passordsjekk"> Ny melder vennligst gjenta passord:</label>
+        <div>
+          <input name="k-passordsjekk" type="password" value="${melder.checkPassword}" class="form-control" id="k-passordsjekk" placeholder="Sjekk av passord" onblur="checkpassword();"/>
+        </div>
+      </div>      
+      <div class="form-group">
+        <label for="k-navn">Melders navn:</label>
+        <div>
+          <input name="k-navn" type="text" value="${melder.meldernavn}"  class="form-control" id="k-navn" placeholder="Navn"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="k-helseregion">Helseregion:</label>
+        <div>
+        	<select name ="k-helseregion" id="k-helseregion" class="form-control" onchange="regionValgt();" >
+						<option selected="selected" >${melder.helseregion}</option>
+			       		<#list melder.helseRegionene as helseregion>
+			       				<option>${helseregion} </option>
+			       		 </#list>
+	     		   	</select>
+<!--  
+          <input name="k-helseregion" type="text" value="${melder.helseregion}" class="form-control" id="k-helseregion" placeholder="Helseregion">
+-->          
+        </div>
+      </div>
+      <div class="form-group" id="helseforetak" style="display: none">
+        <label for="k-helseforetak">Helseforetak:</label>
+        <div>
+        <select name ="k-helseforetak" id="k-helseforetak" class="form-control"  onchange="foretakValgt();"  >
+						<option selected="selected" >${melder.helseforetak}</option>
+			       		<#list melder.valgtRegion as region>
+			       				<option>${region} </option>
+			       		 </#list>
+	     		   	</select>
+<!--  	     		   	
+           <input name="k-helseforetak" type="text" value="${melder.helseforetak}" class="form-control" id="k-helseforetak" placeholder="Helseforetak">
+-->
+        </div>
+      </div>
+      <div class="form-group" id="sykehus" style="display: none">
+        <label for="k-sykehus">Institusjon/sykehus:</label>
+        <div>
+           <select name ="k-sykehus" id="k-sykehus" class="form-control">
+						<option selected="selected" >${melder.sykehus}</option>
+			       		<#list melder.valgtHFsykehus as sykehus>
+			       				<option>${sykehus} </option>
+			       		 </#list>
+	     		   	</select>   
+<!--        
+          <input name="k-sykehus" type="text" value="${melder.sykehus}" class="form-control" id="k-sykehus" placeholder="Institusjon/sykehus">
+ -->
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="k-tlf">Telefonnummer:</label>
+        <div>
+          <input name="k-tlf" type="text" value="${melder.meldertlf}" class="form-control" id="k-tlf" placeholder="Telefonnummer" onblur="passwordsubmit();">
+        </div>
+      </div>
+<!-- Ny melding oppfølgingsmelding i startskjema     
+      <div class="radio">
+          <label>
+            <input name="k-nymelding" type="radio" id="k-nymelding" value="ny-melding" onclick="toggleDisplay('passord-div',0)" />
+            Ny melding
+          </label>
+      </div>
+      <div class="radio">
+          <label>
+            <input name="k-nymelding" type="radio" id="k-oppfolging" value="oppfølgningsmelding" onclick="toggleDisplay('passord-div',this.checked)"/>
+            Oppfølgningsmelding
+          </label>
+      </div>
+      <div class="form-group" id="passord-div" style="display:none">
+        <label for="k-passord">Meldingsnøkkel (ved oppfølging):</label>
+        <div>
+          <input name="k-passord" type="text" class="form-control" id="k-passord" placeholder="Passord">
+        </div>
+      </div>
+ -->       
+		<br/>
+		<!--
+          <button name="avbrytkontakt" type="submit" class="btn btn-default"  onclick="homePage()">Avbryt</button>
+   -->     
+          <button name="lagrekontakt" type="submit" id="lagrekontakt" class="btn btn-primary" onclick="sjekkregion();sjekkforetak();" >Send inn</button>
+          <button name="nyttpassord" type="submit" id="nyttpassord" class="btn btn-primary" style="display: none" >Glemt passord?</button>
+          
+ 		  <button type="submit" id="btnprovny" value="provny"  name="provnytt" class="btn btn-primary btn-lg" style="display: none" > getValue </button>
+ 		  <button type="submit" id="btnhentpassord" value="passord"  name="hentpassord" class="btn btn-primary btn-lg" style="display: none" > getValue </button>
+ 		  <button type="submit" id="btnnymelder" value="nymelder"  name="nymelder" class="btn btn-primary btn-lg" style="display: none" > getValue </button>
+		  <button type="submit" id="btnKontak" value="kontakValue"  name="formValue" class="btn btn-primary btn-lg" style="display: none" > getValue </button>
+		  <button type="submit" id="btnRegion" value="regionValue"  name="regionValue" class="btn btn-primary btn-lg" style="display: none" > getValue </button>
+		  <button type="submit" id="btnForetak" value="foretakValue"  name="foretakValue" class="btn btn-primary btn-lg" style="display: none" > getValue </button>
+		  <button name="lagrekontakt" id="btnleveranse" type="submit"  class="btn btn-primary btn-lg" style="display: none" >getValue</button>
+		  <button name="lagrekontaktb" id="btnleveranseb" type="button" onclick="document.location='leveranse.html';" style="display: none" class="btn btn-primary btn-lg" >getValue</button>
+</div> <!--slutt på Kontaktinformasjon-->
+<!--  <div class="radio">
+          <label >
+            <input name="k-anonym" type="radio" id="k-anonym" value="k-anonym" onclick="toggleDisplay('kontakt1',0);toggleDisplay('anonymbutton',this.checked);passwordsubmit();"/>
+            Ønsker å melde anonymt
+          </label>
+ </div>
+ <div id="anonymbutton" style="display:none" >
+   <label><b>Når du melder anonymt, mister du muligheten til å se meldingen i ettertid og til å få tilbakemelding fra Celler og vev gruppen.</b><br><br>
+            <input name="k-anonym" type="radio" id="k-ikkeanonym" value="k-ikkeanonym" checked onclick="toggleDisplay('kontakt1',this.checked);toggleDisplay('anonymbutton',0)"/>
+            Ønsker å melde normalt
+   </label><br>
+ 	 <button name="lagreanonymt" id="lagreanonymt" type="submit" onclick="anonymKnappen();" class="btn btn-primary btn-lg" >Lagre</button>
+</div> -->
+</form>
+</div>
+</body>
+</html>
