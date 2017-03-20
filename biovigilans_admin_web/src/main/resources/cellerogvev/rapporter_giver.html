@@ -411,7 +411,17 @@
 	   $('#dato-hendelse').attr('min', dateDonasjon);
 	 }
 		function setStatus(){
-			$("#btnstatuschange").click();
+			toggleDisplayid('kommentartilmelding', 0);
+			var statusValg = $("#nystatus").val();
+			if (statusValg=="Avvist"){
+				toggleDisplayid('kommentartilmelding', 1);
+//				document.getElementById('kommentartilmelding')setAttribute("value","Til melder;");
+				$("#statusvalg7").attr("checked",true);
+				tilMelderflag = true;
+			}else{
+				$("#btnstatuschange").click();
+			}
+	
 	}
 	 function enableReclassification(){
 		 /*
@@ -1339,7 +1349,7 @@ uttas.</h4>
 	      
 	      <div class="radio">
 	          <label title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
-	          	<input type="radio"  name="tab-klinisk" id="tab-klinisk"  value="ingen-sekvele" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse."/>
+	          	<input type="radio"  name="tab-klinisk" id="tab-klinisk"  value="Fullstendig helbredelse" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse."/>
 	          	Fullstendig helbredelse
 	          </label>
 		    </div>

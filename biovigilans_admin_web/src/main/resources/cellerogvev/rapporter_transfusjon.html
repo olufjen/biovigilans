@@ -395,7 +395,17 @@ function showtext(id,thetext){
 
   
 	function setStatus(){
-		$("#btnstatuschange").click();
+		toggleDisplayid('kommentartilmelding', 0);
+		var statusValg = $("#nystatus").val();
+		if (statusValg=="Avvist"){
+			toggleDisplayid('kommentartilmelding', 1);
+//			document.getElementById('kommentartilmelding')setAttribute("value","Til melder;");
+			$("#statusvalg7").attr("checked",true);
+			tilMelderflag = true;
+		}else{
+			$("#btnstatuschange").click();
+		}
+
 	}
 
 	function toggleDisplayid(id, displayvalue)

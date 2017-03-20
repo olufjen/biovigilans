@@ -78,8 +78,8 @@
 				document.getElementById('hendelsen-date').required = true;
 				document.getElementById('hendelse_beskrivelse').required = true;
 				document.getElementById('tab-prosess').required = true;
-				document.getElementById('tab-kvalitetskrav').required = true;
-				document.getElementById('k-1').required = true;
+ 				document.getElementById('tab-kvalitetskrav').required = true; 
+/* 				document.getElementById('k-1').required = true; */
 				document.getElementById('k-2').required = true;
 				document.getElementById('k-3').required = true;
 				document.getElementById('k-4').required = true;
@@ -96,12 +96,13 @@
 		
 			}
 			if (reqFlag == 'block'){
-//				alert(reqFlag + " Setter req false");
+/* 				alert(reqFlag + " Setter req false"); */
+				sendInn('sendinn');
 				document.getElementById('hendelsen-date').required = false;
 				document.getElementById("hendelse_beskrivelse").required = false;
 				document.getElementById("tab-prosess").required = false;
 				document.getElementById('tab-kvalitetskrav').required = false;
-				document.getElementById('k-1').required = false;
+/* 				document.getElementById('k-1').required = false; */
 				document.getElementById('k-2').required = false;
 				document.getElementById('k-3').required = false;
 				document.getElementById('k-4').required = false;
@@ -115,14 +116,14 @@
 				document.getElementById('hendelseoppdaget').required = false;
 				document.getElementById('planlagtetiltak').required = false;
 				document.getElementById('k-11').required = false;
-	
+/* 				alert(reqFlag + " Setter req false END"); */
 			}			
 			 	var now = new Date();
 			 	var day = ("0" + now.getDate()).slice(-2);
 		        var month = ("0" + (now.getMonth() + 1)).slice(-2);
 		        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
 		        $('#hendelsen-date').attr('max', today);
-
+/* 				alert(reqFlag + "Document ready END"); */
 		});
 		
 /* 		 function homePage(){
@@ -269,7 +270,16 @@
 					}
 				}
 				function setStatus(){
-					$("#btnstatuschange").click();
+					toggleDisplayid('kommentartilmelding', 0);
+					var statusValg = $("#nystatus").val();
+					if (statusValg=="Avvist"){
+						toggleDisplayid('kommentartilmelding', 1);
+//						document.getElementById('kommentartilmelding')setAttribute("value","Til melder;");
+						$("#statusvalg7").attr("checked",true);
+						tilMelderflag = true;
+					}else{
+						$("#btnstatuschange").click();
+					}
 				}
 
 				function toggleDisplayid(id, displayvalue)
@@ -308,7 +318,7 @@
  					$("#hendelsekommentar").attr('readonly',reclasflag); */
  					
 					
-					$("#k-1").attr('disabled',reclasflag);
+/* 					$("#k-1").attr('disabled',reclasflag); */
 					$("#1").attr('disabled',reclasflag);
 					$("#2").attr('disabled',reclasflag);
 					$("#3").attr('disabled',reclasflag);
@@ -1147,7 +1157,8 @@
 			</div>
 				
 				<button type="submit" name="btnAvbryt" id="btnAvbryt" value="avbryt" class="btn btn-default btn-lg" onclick="return sendInn('avbryt');"><span id="avbrytTxt">Avbryt</span> </button>
-	      		<button type="submit" name="btnSendinn" id="btnSendinn" value="sendinn" class="btn btn-primary btn-lg"  onclick="validateForm();return sendInn('sendinn');" > <span id="sendinnTxt">Kontroll før innsending</span></button>
+	      		<button type="submit" name="btnSendinn" id="btnSendinn" value="sendinn" class="btn btn-primary"   > <span id="sendinnTxt">Godkjent</span></button>
+<
 			</div> <!-- End div andre hendelser -->
 		</form>
 	</div>	
