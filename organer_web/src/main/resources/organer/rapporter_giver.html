@@ -560,7 +560,7 @@ uttas.</h4>
 			</div>
 	</div>	
 	 <div class="form-group">
-	      <label>Skandianummer</label>
+	      <label>Scandiatransplant nummer</label>
 	            <input type="text" class="form-control"  name ="tab-behandlingsstedx" id="skandia" ></input>
 
 	</div>
@@ -588,13 +588,13 @@ uttas.</h4>
     <div id="blod-egenskapererytrocytt"  class="form-group">
       <div class="checkbox">
         <label>
-          <input name="type-tapping" type="checkbox" id="p-antistoff-erytrocytt" value="Nyre LD">
+          <input name="type-tapping" type="checkbox" id="p-antistoff-erytrocytt"  value="Nyre LD">
           Nyre LD
         </label>
       </div>
       <div class="checkbox">
         <label>
-          <input name="type-tapping1" type="checkbox" id="p-antistoff-hla" value="Nyre DD">
+          <input name="type-tapping1" type="checkbox" id="p-antistoff-hla"  value="Nyre DD">
           Nyre DD
         </label>
       </div>
@@ -652,6 +652,16 @@ uttas.</h4>
           Tarm
         </label>
       </div>
+        <div class="checkbox">
+        <label>
+          <input name="type-tappingjanei" type="checkbox" id="p-hemolysetextannet" onclick="toggleDisplay('annetorgan',this.checked);" value="Annet"> <!-- p-hemolysetext  -->
+          Annet organ
+        </label>
+      </div>
+       <div id="annetorgan" style="display: none" >
+       <label>Beskriv annet organ</label>
+					<textarea class="form-control" name="type-tapping11" rows="1"  id="hendelse_beskrivelse"></textarea>
+       </div>
       </div> 
 
 

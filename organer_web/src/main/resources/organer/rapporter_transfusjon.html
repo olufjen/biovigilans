@@ -158,7 +158,13 @@ function geterytrocytt(){
 function toggleDisplay(id, displayvalue)
 {    
   // alert("step 1 "+ id +" "+displayvalue);
-  
+  var styleVer = document.getElementById(id).style.display;
+/* 	var newStyleverdi = "block";
+	var dispVerdi = 1;
+	if (styleVer == 'block'){
+		newStyleverdi = "none";
+		dispVerdi = 0;
+	} */
     if ( displayvalue == 1 ) {
          document.getElementById(id).style.display = 'block';
     //     alert("step 2");
@@ -471,7 +477,25 @@ function showtext(id,thetext){
           </#list>
         </select>
       </div>
-
+    <div class="form-group" style="display: ${display}">
+			<label>Tidligere oppgitt Transfusjonsdato</label>
+			<div>
+				<label>${transfusjon.transfusionDate?date}</label><br>
+			</div>
+	</div>   
+    <label>Transplantasjonsdato </label>
+	<div class="form-group">
+		<input type="date" name="transfusjon-date" id="transfusjon-date">
+	</div>
+      <div class="form-group" style="display: ${display}">
+        <label>Tidligere oppgitt Scandiatransplant nummer: </label>     
+            <div>${transfusjon.hastegrad}</div>
+      </div>
+	 <div class="form-group">
+	      <label>Scandiatransplant nummer</label>
+	            <input type="text" class="form-control"  name ="p-transfusjon-hg" id="skandia" ></input>
+<!-- Lagres til hastegrad tabell transfusjon  -->
+	</div>
       <div class="form-group" style="display: ${display}">
         <table border=1 >
           <tr>
@@ -841,6 +865,16 @@ function showtext(id,thetext){
           Tarm
         </label>
       </div>
+      <div class="checkbox">
+        <label>
+          <input name="p-antistoffjanei" type="checkbox" id="p-hemolysetextannet" onclick="toggleDisplay('annetorgan',this.checked);" value="Annet"> <!-- p-hemolysetext  -->
+          Annet organ
+        </label>
+      </div>
+       <div id="annetorgan" style="display: none" >
+       <label>Beskriv annet organ</label>
+					<textarea class="form-control" name="p-antistoff-transfusjon9" rows="1"  id="hendelse_beskrivelse"></textarea>
+       </div>
       </div>    
 <!--     <div class="form-group">
       <label>Type organer </label>
@@ -3381,7 +3415,7 @@ og/eller
     <div class="form-group">
       <div class="radio">
         <label title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
-          <input type="radio" name="klinisk-res"  id="utfall" value="ingensekvele" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
+          <input type="radio" name="klinisk-res"  id="utfall" value="ingen sekvele" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
           Fullstendig helbredelse
         </label>
       </div>
@@ -3482,26 +3516,26 @@ og/eller
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-forholdutstyr" type="checkbox" id="p-forhold"  value="vevcellefeil" 
+      <input name="p-forholdutstyr" type="checkbox" id="p-forhold"  value="feil ved organet" 
       onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Feil ved organet  
     </label>
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-uforlikeligprodukt" type="checkbox" id="p-forhold"  value="feilvedutstyr" 
+      <input name="p-uforlikeligprodukt" type="checkbox" id="p-forhold"  value="feil ved utstyr" 
       onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Feil ved utstyret  
     </label>
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-feilblodtrans" type="checkbox" id="p-forhold" value="menneskeligfeil"  
+      <input name="p-feilblodtrans" type="checkbox" id="p-forhold" value="menneskelig feil"  
       onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', this.checked)"/>Menneskelig feil   
     </label>
     <div id="gikkgalt" class="form-group" style="margin-left: 0.5cm; display: none">
      <label>Hva gikk galt?</label>
      <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-betillingrekvirering" id="p-betillingrekvirering" value="bestillingrekvirering" />Indikasjonsstilling/rekvirering
+        <input type="checkbox" name="p-betillingrekvirering" id="p-betillingrekvirering" value="indikasjonsstilling rekvirering" />Indikasjonsstilling/rekvirering
       </label>
     </div>
     <div class="radio">
@@ -3516,33 +3550,33 @@ og/eller
     </div>
      <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-feilmerkingror" id="p-feilmerkingror" value="feilmerkingror" />Feilmerking av prøverør
+        <input type="checkbox" name="p-feilmerkingror" id="p-feilmerkingror" value="feilmerking ror" />Feilmerking av prøverør
       </label>
     </div>
     
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-forveksling" id="p-forveksling" value="forvekslingprover" />Forveksling av prøver/ resultater
+        <input type="checkbox" name="p-forveksling" id="p-forveksling" value="forveksling prover" />Forveksling av prøver/ resultater
       </label>
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-pretransfusjonstesting" id="p-pretransfusjonstesting" value="pretransfusjonstesting" />Pretransfusjonstesting i institusjon
+        <input type="checkbox" name="p-pretransfusjonstesting" id="p-pretransfusjonstesting" value="Analysering av blodprøver" />Analysering av blodprøver
       </label>
     </div>    
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-mangelfullbehandlingblod" id="p--mangelfullbehandlingblod" value="-mangelfullbehandlingorganer" />Feil/ mangelfull behandling av organer
+        <input type="checkbox" name="p-mangelfullbehandlingblod" id="p--mangelfullbehandlingblod" value="-mangelfull behandling organer" />Feil/ mangelfull behandling av organer
       </label>
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-utleveringblodblodbank" id="p-utleveringblodblodbank" value="utleveringorganer" />Valg/utlevering av organer
+        <input type="checkbox" name="p-utleveringblodblodbank" id="p-utleveringblodblodbank" value="utlevering organer" />Valg/utlevering av organer
       </label>
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-hentingblodblodbank" id="p-hentingblodblodbank" value="hentingorganer" />Henting av organer
+        <input type="checkbox" name="p-hentingblodblodbank" id="p-hentingblodblodbank" value="henting organer" />Henting av organer
       </label>
     </div>
 <!--   <div class="checkbox">
@@ -3557,22 +3591,22 @@ og/eller
     </div> -->
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-identitestkontroll" id="p-identitestkontroll" value="identitestkontrollikkefulgt" />Rutiner for identitetskontroll ved transfusjon ikke fulgt
+        <input type="checkbox" name="p-identitestkontroll" id="p-identitestkontroll" value="identitestkontroll ved transplantasjon ikke fulgt" />Rutiner for identitetskontroll ved transplantasjon ikke fulgt
       </label>
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-mangelfullkomm" id="p-mangelfullkomm" value="mangelfullkommunikasjon" />Mangelfull kommunikasjon
+        <input type="checkbox" name="p-mangelfullkomm" id="p-mangelfullkomm" value="mangelfull kommunikasjon" />Mangelfull kommunikasjon
       </label>
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-intetavvik" id="p-intetavvik" value="intetavvik" />Intet avvik
+        <input type="checkbox" name="p-intetavvik" id="p-intetavvik" value="intet avvik" />Intet avvik
       </label>
     </div>
   <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-vetikkegikkgalt" id="p-vetikkegikkgalt" value="vetikkegikkgalt" />Vet ikke
+        <input type="checkbox" name="p-vetikkegikkgalt" id="p-vetikkegikkgalt" value="vetikke gikkgalt" />Vet ikke
       </label>
     </div>
   </div>    
@@ -3581,7 +3615,7 @@ og/eller
      <label>Besvar også</label>
      <div class="radio">
       <label>
-        <input type="radio" name="p-blodkrav" id="p-blodkrav" value="blodkravikkeoppfylt" />?????????Blodproduktet oppfylte ikke spesifiserte krav
+        <input type="radio" name="p-blodkrav" id="p-blodkrav" value="blodkrav ikke oppfylt" />?????????Blodproduktet oppfylte ikke spesifiserte krav
       </label>
     </div>
     <div class="radio">
@@ -3611,7 +3645,7 @@ og/eller
     </div> -->
   <div class="checkbox">
     <label>
-      <input name="p-annetskjedde" type="checkbox" id="p-forhold1"  value="annetskjedde" 
+      <input name="p-annetskjedde" type="checkbox" id="p-forhold1"  value="annet skjedde" 
       onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0);toggleDisplay('p-forhold2',this.checked)"/>Annet  
     </label>
    </div>
@@ -3622,7 +3656,7 @@ og/eller
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-vetikkeskjedde" type="checkbox" id="p-forhold"  value="vetikkeskjedde" 
+      <input name="p-vetikkeskjedde" type="checkbox" id="p-forhold"  value="vet ikke skjedde" 
       onclick="resetRequired('p-forhold');toggleDisplay('gikkgalt', 0)"/>Vet ikke  
     </label>
     </div>      
@@ -3692,12 +3726,12 @@ og/eller
     </div>
       <div class="radio">
       <label>
-        <input type="radio" name="p-forebyggtitak" id="p-orebygg-3" value="forebyggnei" onclick="toggleDisplay('forebyggtiltak', 0)"/>Nei
+        <input type="radio" name="p-forebyggtitak" id="p-orebygg-3" value="forebyggende nei" onclick="toggleDisplay('forebyggtiltak', 0)"/>Nei
       </label>
     </div>  
     <div class="radio">
       <label>
-        <input type="radio" name="p-forebyggtitak" id="p-orebygg-4" value="forebyggvetikke" onclick="toggleDisplay('forebyggtiltak', 0)"/>Vet ikke
+        <input type="radio" name="p-forebyggtitak" id="p-orebygg-4" value="forebyggende vetikke" onclick="toggleDisplay('forebyggtiltak', 0)"/>Vet ikke
       </label>
     </div>    
 <div id="forebyggtiltak" class="form-group" style="display: none">  
@@ -3705,17 +3739,17 @@ og/eller
   
   <div class="checkbox">
     <label>
-      <input name="p-paregnelig" type="checkbox" id="g" value="tiltaknestebehandling" />Tiltak ved neste behandling av denne pasienten  
+      <input name="p-paregnelig" type="checkbox" id="g" value="tiltak neste behandling" />Tiltak ved neste behandling av denne pasienten  
     </label>
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-forebyggendetiltakblodbank" type="checkbox" id="p-annetskjedde" value="forebyggendetiltakinstitusjon" />Forebyggende tiltak ved institusjon  
+      <input name="p-forebyggendetiltakblodbank" type="checkbox" id="p-annetskjedde" value="forebyggende tiltak institusjon" />Forebyggende tiltak ved institusjon  
     </label>
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-forebyggendetiltakavdeling" type="checkbox" id="p-forebyggendetiltakavdeling" value="forebyggendetiltakavdeling" />Forebyggende tiltak ved aktuell klinisk avdeling  
+      <input name="p-forebyggendetiltakavdeling" type="checkbox" id="p-forebyggendetiltakavdeling" value="forebyggende tiltak avdeling" />Forebyggende tiltak ved aktuell klinisk avdeling  
     </label>
     </div>   
     <div class="checkbox">
@@ -3725,17 +3759,17 @@ og/eller
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-opplaring" type="checkbox" id="p-p-opplaring" value="p-opplaring" />Opplæring/ kompetanseheving  
+      <input name="p-opplaring" type="checkbox" id="p-p-opplaring" value="opplaring" />Opplæring/ kompetanseheving  
     </label>
     </div>
   <div class="checkbox">
     <label>
-      <input name="p-sykehuskvalitet" type="checkbox" id="p-sykehuskvalitet" value="sykehuskvalitet" />Tatt opp i sykehusets kvalitetsutvalg  
+      <input name="p-sykehuskvalitet" type="checkbox" id="p-sykehuskvalitet" value="sykehusets kvalitetsutvalg" />Tatt opp i sykehusets kvalitetsutvalg  
     </label>
     </div>           
   <div class="checkbox">
     <label>
-      <input name="p-tiltakannet" type="checkbox" id="p-tiltakannet" value="tiltakannet" />Annet  
+      <input name="p-tiltakannet" type="checkbox" id="p-tiltakannet" value="Annet tiltak" />Annet  
     </label>
     </div>    
    <label>Beskriv ev. forebyggende tiltak</label>

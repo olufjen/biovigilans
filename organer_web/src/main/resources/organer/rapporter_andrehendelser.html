@@ -140,9 +140,14 @@
 					/* document.getElementById('giver').style.display = 'none'; */
 					document.getElementById('transport').style.display = 'none';
 					document.getElementById('merking').style.display = 'none';
-					document.getElementById('annet').style.display = 'none';
-					
-					document.getElementById(id).style.display = 'block';
+		//			document.getElementById('annet').style.display = 'none';
+					var styleVer = document.getElementById(id).style.display;
+		//			alert("Feltverdi "+styleVer);
+					var newStyleverdi = "block";
+					if (styleVer == 'block'){
+						newStyleverdi = "none";
+					}
+					document.getElementById(id).style.display = newStyleverdi;
 					
 					if(id !='feilblod'){
 						$("input:checkbox[name='tab-hvagikkgalt']").each(function(i) {
@@ -500,7 +505,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-2"  value="Smitte ved testing"   />Smitte påvist ved testing
+			          	<input type="radio" name="tab-klassifikasjon" id="k-2"  onclick="toggleDisplay('annet');" value="Smitte ved testing"   />Smitte påvist ved testing
 			          </label>
 			          <div id="smitte" style="display: none" >
 				           <div class="radio">
@@ -565,7 +570,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-4"  value="giveren fyller ikke krav men organet blir likevel brukt"  />Giveren fyller ikke kravene, men organet blir likevel brukt
+			          	<input type="radio" name="tab-klassifikasjon" id="k-4" onclick="toggleDisplay('annet');" value="giveren fyller ikke krav men organet blir likevel brukt"  />Giveren fyller ikke kravene, men organet blir likevel brukt
 			          </label>
 				<!-- 
 				      <div id="giver" style="display: none" >
@@ -589,7 +594,7 @@
 				     </div>
 				     <div class="radio">
 			     	  <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-5"  value="Det kommer det informasjon om donor som gjør at organer ikke kan brukes"  />Det kommer det informasjon om donor som gjør at organer ikke kan brukes
+			          	<input type="radio" name="tab-klassifikasjon" id="k-5" onclick="toggleDisplay('annet');" value="Det kommer informasjon om donor som gjør at organer ikke kan brukes"  />Det kommer det informasjon om donor som gjør at organer ikke kan brukes
 			          </label>
 			          <!--  
 				      <div id="giveren" style="display: none" >    
@@ -625,7 +630,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-6"  value="Utstyr"  />Utstyr 
+			          	<input type="radio" name="tab-klassifikasjon" id="k-6" onclick="toggleDisplay('annet');" value="Utstyr"  />Utstyr 
 			          </label>
 			          <div id="utstyr" style="display: none" >
 				          <div class="radio">	 
@@ -649,7 +654,7 @@
 			          
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-7"   onclick="checkUncheck();" value="IKT"  /> IKT (utstyr og programvare)
+			          	<input type="radio" name="tab-klassifikasjon" id="k-7"   onclick="checkUncheck();toggleDisplay('annet');" value="IKT"  /> IKT (utstyr og programvare)
 			          </label>
 			          
 			          
@@ -658,7 +663,7 @@
 			        
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-8"  value="Analyser"  />Analyser
+			          	<input type="radio" name="tab-klassifikasjon" id="k-8" onclick="toggleDisplay('annet');" value="Analyser"  />Analyser
 			          </label>
 			          <div id="analyser" style="display: none" >
 				          <div class="radio">	 
@@ -721,7 +726,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-9"  value="Henting og transport"  />Henting og transport
+			          	<input type="radio" name="tab-klassifikasjon" id="k-9" onclick="toggleDisplay('annet');" value="Henting og transport"  />Henting og transport
 			          </label>
 			          <div id="transport" style="display: none" >
 				          <div class="radio">	 
@@ -739,7 +744,7 @@
 				    </div>
 				    <div class="radio">
 		              <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-10" value="Merking feil"  />Feilmerking
+			          	<input type="radio" name="tab-klassifikasjon" id="k-10" onclick="toggleDisplay('annet'); " value="Merking feil"  />Feilmerking
 			          </label>
 			         	<div id="merking" style="display: none" >
 				          <div class="radio">	 
@@ -754,14 +759,14 @@
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon-sub" id="41"   value="Poser merket feil"  />Pasienter merket feil
+				          		<input type="radio" name="tab-klassifikasjon-sub" id="41" onclick="toggleDisplay('annet');"  value="Poser merket feil"  />Pasienter merket feil
 				          	 </label>
 				          </div>
 				        </div>
 				    </div>
 				   <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-klassifikasjon" id="41"   value="Manglende sporbarhet"  />Manglende sporbarhet
+				          		<input type="radio" name="tab-klassifikasjon" id="41"  onclick="toggleDisplay('annet'); " value="Manglende sporbarhet"  />Manglende sporbarhet
 				          	 </label>
 				    </div>
 				    <div class="radio">
