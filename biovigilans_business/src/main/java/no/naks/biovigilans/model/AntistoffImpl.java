@@ -28,12 +28,13 @@ public class AntistoffImpl extends AbstractAntistoff implements Antistoff {
 	 * setantistofffieldMaps
 	 * Denne rutinen setter opp hvilke skjermbildefelter som hører til hvilke databasefelter
 	 * @param userFields En liste over skjermbildefelter
+	 * @since 31.01.17 Bruker antistoff tabellen i organer, og utvidet antall felter til 10 OLJ
 	 */
 	public void setantistofffieldMaps(String[]userFields){
 
 		keys = userFields;
-		
-		for (int i = 0; i<7;i++){
+		int ll = userFields.length;
+		for (int i = 0; i<ll;i++){
 			antistoffFields.put(userFields[i],null);
 		}
 	

@@ -96,7 +96,9 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 			setFeiltranfudert(null); // OBS Rekkefølgen på disse to kall er viktig !! 
 		}
 		if (getTransfusjonsId() != null){
-			String hastegrad = new String (getHastegrad());
+			String hastegrad = new String(""); // Hastegrad fjernet fra organer
+			if (getHastegrad() != null)
+				hastegrad = new String (getHastegrad());
 			String indikasjon = new String(getIndikasjon());
 			String tidligere = new String(getTildigerKomplikasjon());
 			Date transDato = getTransfusionDate();

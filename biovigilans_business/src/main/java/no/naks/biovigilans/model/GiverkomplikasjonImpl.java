@@ -14,8 +14,10 @@ import com.ibm.icu.util.Calendar;
 
 
 /**
- * En givekomplikasjon er en komplikasjon som oppst�r hos giver etter at hun har gitt blod eller andre organer
+ * En givekomplikasjon er en komplikasjon som oppstår hos giver etter at hun har gitt blod eller andre organer
  * 
+ * @since 02.02.17
+ * Bruker feltet behandlingssted for skandianummer  (Organer) OLJ 02.02.17
  */
 
 public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vigilansmelding,Giverkomplikasjon{
@@ -185,7 +187,8 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 			tidfratappingtilkompliasjon = userEntries.get(field);
 			if (tidfratappingtilkompliasjon == null){
 				tidfratappingtilkompliasjon = "";
-			}		}
+			}
+		}
 		this.tidfratappingtilkompliasjon = tidfratappingtilkompliasjon;
 	}
 
@@ -195,7 +198,13 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 
 	public void setBehandlingssted(String behandlingssted) {
 		if(behandlingssted == null){
-			behandlingssted="";
+			Map<String,String> userEntries = getKomplikasjonsFields();
+			String field = "tab-behandlingsstedx";
+			behandlingssted = userEntries.get(field);
+			if (behandlingssted == null){
+				behandlingssted = "";
+			}
+			
 		}
 		this.behandlingssted = behandlingssted;
 	}
