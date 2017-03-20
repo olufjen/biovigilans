@@ -194,6 +194,8 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String[] hendelsenoppdaget;
 	protected String[] cellerogvevhovedprosesslist; // Lagt til for Celler og vev 05.09.16
 	protected String[] cellerogvevfeilelleravvik;	// Lagt til for Celler og vev 05.09.16
+	protected String[] organerhovedprosesslist; // Lagt til for organer 06.02.17
+	protected String[] organerfeilelleravvik;	// Lagt til for organer 06.02.17
 	/**
 	 * Session objekter for kontakt	
 	 */
@@ -271,6 +273,22 @@ public class SessionServerResource extends ProsedyreServerResource {
 
 	public void setCellerogvevfeilelleravvik(String[] cellerogvevfeilelleravvik) {
 		this.cellerogvevfeilelleravvik = cellerogvevfeilelleravvik;
+	}
+
+	public String[] getOrganerhovedprosesslist() {
+		return organerhovedprosesslist;
+	}
+
+	public void setOrganerhovedprosesslist(String[] organerhovedprosesslist) {
+		this.organerhovedprosesslist = organerhovedprosesslist;
+	}
+
+	public String[] getOrganerfeilelleravvik() {
+		return organerfeilelleravvik;
+	}
+
+	public void setOrganerfeilelleravvik(String[] organerfeilelleravvik) {
+		this.organerfeilelleravvik = organerfeilelleravvik;
 	}
 
 	public String[] getAlvorligHendelsepasientgrad() {
@@ -992,6 +1010,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected void setlinkMap(){
 		  Request request = getRequest();
 		  LinkedHashMap<String, String> formLinkHashmap = null;
+		  String organer = "organer";
 		  String db = sessionAdmin.getChosenDB(request);
 		  transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(request,transfusjonId);
 		  annenModel = (AnnenKomplikasjonwebModel)sessionAdmin.getSessionObject(request, andreHendelseId);
@@ -1050,6 +1069,10 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  if (tidligereKomp == null)
 				  tidligereKomp = "Nei";
 			  formLinkHashmap.put("Tidligere oppgitt transfusjonskomplikasjoner", tidligereKomp);
+			  if (db != null && db.equals(organer)){
+				  formLinkHashmap.put("Tidligere oppgitt bivirkning", tidligereKomp);
+				  formLinkHashmap.remove("Tidligere oppgitt transfusjonskomplikasjoner");
+			  }
 			  String hastegrad = transfusjonen.getHastegrad();
 			  String innePoli = pasient.getInneliggendePoli();
 			  if (innePoli == null)
@@ -1057,7 +1080,11 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  formLinkHashmap.put("Inneliggene/Poliklinisk", innePoli);
 			  if (hastegrad == null)
 				  hastegrad = "";
-			  formLinkHashmap.put("Hastegrad", hastegrad);
+			  String hastegradKey = "Hastegrad";
+			  if (db != null && db.equals(organer)){
+				  hastegradKey = "Scandiatransplant nummer";
+			  }
+			  formLinkHashmap.put(hastegradKey, hastegrad);
 			  String avd = pasient.getAvdeling();
 			  if (avd == null)
 				  avd = "";
@@ -1071,6 +1098,9 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  String typeHeader = "Indikasjon for transfusjonen";
 			  if (db != null && db.equals("cellerogvev")){
 				  typeHeader = "Type celler og vev";
+			  }
+			  if (db != null && db.equals(organer)){
+				  typeHeader = "Transplanterte organer";
 			  }
 			  if (indikasjon == null)
 				  indikasjon = "";
@@ -1165,7 +1195,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  if (tiltakene != null && !tiltakene.isEmpty()){
 				  int ctp = 0;
 				  for (Tiltak tiltak :tiltakene){
-					  String egenskapKey = "Tiltak ";// + String.valueOf(ctp);
+					  String egenskapKey = "Gjennomførte tiltak ";// + String.valueOf(ctp);
 					  String egenskap = tiltak.getBeskrivelse();
 					  if (egenskap == null)
 						  egenskap = "";
@@ -1177,7 +1207,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  if (forebyggtiltakene != null && !forebyggtiltakene.isEmpty()){
 				  int ctp = 0;
 				  for (Forebyggendetiltak tiltak :forebyggtiltakene){
-					  String egenskapKey = "Tiltak ";// + String.valueOf(ctp);
+					  String egenskapKey = "Forebyggende tiltak ";// + String.valueOf(ctp);
 					  String egenskap = tiltak.getTiltakbeskrivelse();
 					  if (egenskap == null)
 						  egenskap = "";
@@ -1212,7 +1242,11 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  if (mDate != null)
 				  rmDate = df.format(mDate);
 			  formLinkHashmap.put("Meldt dato", rmDate);
-			  formLinkHashmap.put("Dato for hendelsen", rDate);
+			  String datoHeader = "Dato for hendelsen";
+			  if (db != null && (db.equals("cellerogvev")||db.equals(organer))){
+				  datoHeader = "Donasjonsdato";
+			  }
+			  formLinkHashmap.put(datoHeader, rDate);
 			  String kjonn = giver.getKjonn();
 			  if (kjonn == null)
 				  kjonn = "";
@@ -1226,6 +1260,9 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  if (v != null && v.longValue() != 0)
 				  vekt = String.valueOf(v.longValue());
 			  formLinkHashmap.put("Vekt", vekt);
+			  if (db != null && db.equals(organer)){
+				  formLinkHashmap.remove("Vekt");
+			  }
 			  String erfaring = giver.getGivererfaring();
 			  if (erfaring == null)
 				  erfaring = "";
@@ -1234,7 +1271,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  String stedHeader = "Sted for tapping";
 			  if (sted == null)
 				  sted = "";
-			  if (db != null && db.equals("cellerogvev")){
+			  if (db != null && (db.equals("cellerogvev")||db.equals(organer))){
 				  stedHeader = "Donorsted";
 			  }
 			  formLinkHashmap.put(stedHeader,sted);
@@ -1245,7 +1282,14 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  if (db != null && db.equals("cellerogvev")){
 				  typeHeader = "Type celler og vev";
 			  }
+			  if (db != null && db.equals(organer)){
+				  typeHeader = "Organer";
+			  }
 			  formLinkHashmap.put(typeHeader,type);
+			  String skandiaHeader = "Scandiatransplant nummer";
+			  if (db != null && db.equals(organer)){
+				  formLinkHashmap.put(skandiaHeader,giverkomplikasjon.getBehandlingssted());
+			  }
 			  String gerfaring = giver.getGivererfaringaferese();
 			  if (gerfaring == null)
 				  gerfaring = "";
@@ -1266,7 +1310,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  String hvorskjeddeHeader = "Hvor skjedde reaksjonen";
 			  if (stedkomp == null)
 				  stedkomp = "";
-			  if (db != null && db.equals("cellerogvev")){
+			  if (db != null && (db.equals("cellerogvev")||db.equals(organer))){
 				  hvorskjeddeHeader = "Beskrivelse av reaksjon hos donor";
 			  }		
 			  formLinkHashmap.put(hvorskjeddeHeader,stedkomp);
@@ -1274,12 +1318,15 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  String srDate = "";
 			  if (sDate != null)
 				  srDate = df.format(sDate);
-			  formLinkHashmap.put("Dato for reaksjon", srDate);
+			  if (db != null && !db.equals("cellerogvev") && !db.equals(organer)){
+				  formLinkHashmap.put("Dato for reaksjon", srDate);
+			  }
+			  
 			  String tidfratap = giverkomplikasjon.getTidfratappingtilkompliasjon();
 			  String tidfraHeader = "Tid fra tapping til reaksjon";
 			  if (tidfratap == null)
 				  tidfratap = "";
-			  if (db != null && db.equals("cellerogvev")){
+			  if (db != null && (db.equals("cellerogvev")||db.equals(organer))){
 				  tidfraHeader = "Tid fra donasjon til reaksjon";
 			  }	
 			  formLinkHashmap.put(tidfraHeader, tidfratap);
@@ -1326,7 +1373,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  String hendelse = giverModel.getVigilansmelding().getSupplerendeopplysninger();
 			  if (hendelse == null)
 				  hendelse = "";
-			  formLinkHashmap.put("Eventuelle kommentarer", hendelse);
+			  formLinkHashmap.put("Eventuelle kommentarer - egen beskrivelse", hendelse);
 			  String oppfbeskrivelse = giveroppfolging.getGiveroppfolgingbeskrivelse();
 			  if (oppfbeskrivelse == null)
 				  oppfbeskrivelse = "";
@@ -1349,10 +1396,15 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  Annenkomplikasjon annenKomplikasjon = annenModel.getAnnenKomplikasjon();
 			  SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 			  Date hDate = annenModel.getVigilansmelding().getDatoforhendelse();
+			  Date mDate = annenModel.getVigilansmelding().getMeldingsdato();
 			  String rDate = "";
+			  String rmDate = "";
 			  if (hDate != null)
 				  rDate = df.format(hDate);
+			  if (mDate != null)
+				  rmDate = df.format(mDate);
 			  formLinkHashmap.put("Dato for hendelsen", rDate);
+			  formLinkHashmap.put("Dato meldt", rmDate);
 			  String beskrivelse = annenModel.getVigilansmelding().getSupplerendeopplysninger();
 			  if (beskrivelse == null || beskrivelse.equals("Ikke angitt")){
 				  beskrivelse = annenKomplikasjon.getKomplikasjonbeskrivelse();
@@ -1374,16 +1426,27 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  String klasse = annenKomplikasjon.getKlassifikasjon();
 			  if (klasse == null)
 				  klasse = "";
-			  formLinkHashmap.put("Klassifikasjoner", klasse);
+			  String klasseKey = "Klassifikasjoner";
+			  if (db != null && db.equals("organer")){	  
+				  klasseKey = "Klassifikasjon";
+			  }
+			  formLinkHashmap.put(klasseKey, klasse);
 			  String delkode = annenKomplikasjon.getDelkode();
 			  if (delkode == null)
 				  delkode = "";
-			  formLinkHashmap.put("Delkode", delkode);
+			  String delklassekey = "Delkode";
+			  if (db != null && db.equals("organer")){	  
+				  delklassekey = "Fritekst klassifikasjon";
+			  }			  
+			  formLinkHashmap.put(delklassekey, delkode);
 			  String pasientopp = annenKomplikasjon.getPasientopplysninger();
 			  if (pasientopp == null || pasientopp.equals("")|| pasientopp.equals("null;null")|| pasientopp.equals("null;"))
 				  pasientopp = "Ikke angitt";
 			  if (pasientopp != null)
 				  formLinkHashmap.put("Pasientopplysninger", pasientopp);
+			  if (db != null && db.equals(organer)){
+				  formLinkHashmap.remove("Pasientopplysninger");
+			  }
 			  String def = annenKomplikasjon.getKomplikasjondefinisjon();
 			  List<Komplikasjonsklassifikasjon> klassifikasjoner = (List)sessionAdmin.getSessionObject(request,klassifikasjonKey);
 			  List<String>hvagikk = annenModel.getHvagikkgaltList();// lagt til 21.06.16 OLJ
@@ -1428,7 +1491,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  String tiltak = annenKomplikasjon.getTiltak();
 			  if (tiltak == null)
 				  tiltak = "";
-			  formLinkHashmap.put("Tiltak",tiltak);
+			  formLinkHashmap.put("Forebyggende Tiltak",tiltak);
 			  String komm = annenKomplikasjon.getKommentar();
 			  if (komm == null)
 				  komm = "";
@@ -1862,9 +1925,12 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 		dobleMeldingene = (List<Vigilansmelding>)sessionAdmin.getSessionObject(request, dobleKey);
 		char sep = 'm';
 		char sepv = 'v';
+		char sepo = 'g';
 		String mKey = extractString(nokkel, sep, -1);
 		if (mKey == null)
 			mKey = extractString(nokkel, sepv, -1);
+		if (mKey == null)
+			mKey = extractString(nokkel, sepo, -1);
 		if (dobleMeldingene != null && !dobleMeldingene.isEmpty()){
 			for (Vigilansmelding melding : dobleMeldingene){
 				long mid = melding.getMeldeid().longValue();
@@ -1873,9 +1939,9 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 				if (melding.getMeldingsnokkel().equals(nokkel)){
 					if (mid < 10)
 						inLen = 1;
-					if (mid >10 && mid <100)
+					if (mid >=10 && mid <100)
 						inLen = 2;
-					if (mid >1000 && mid <10000)
+					if (mid >=1000 && mid <10000)
 						inLen = 4;
 					mKey = mKey.substring(0,inLen);
 					rKey = mid == Long.valueOf(mKey).longValue();
@@ -1944,6 +2010,10 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 			headerText = "Celler og vev";
 			trans = "Overføring ";
 		}
+		if (db != null && db.equals("organer")){
+			headerText = "Organtransplantasjon";
+			trans = "Transplantasjon ";
+		}
 		VigilansModel melding = checkMessageType();
 		 Map<String, Object> dataModel = new HashMap<String, Object>();
 	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(getRequest(),melderId);
@@ -2006,6 +2076,9 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
     		 linkHashmap.put("Hva gikk galt", hvagikkgaltString); kommentert ut 21.06.16 OLJ se rutine setlinkMap*/
     		 
     		 String heading ="Rapporter Andre Hendelser " + headerText;
+    		 if (db != null && db.equals("organer")){
+    			 heading = "Andre uønskede hendelser - " + headerText;
+    		 }
      		 table = createTable(heading,nokkel);
     		
         }
@@ -2027,6 +2100,9 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
  			setMelderinfo(melder);
     		 String nokkel = giverModel.getMeldingsNokkel();
     		 String heading ="Rapporter Giver " + headerText;
+    		 if (db != null && db.equals("organer")){
+    			 heading ="Rapporter donor " + headerText;
+    		 }
  			 table = createTable(heading,nokkel);
  	    }
     	 document.add(table);

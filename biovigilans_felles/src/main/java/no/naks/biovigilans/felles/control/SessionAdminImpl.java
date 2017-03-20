@@ -20,10 +20,12 @@ public class SessionAdminImpl implements SessionAdmin {
 	 * Peker til valgt database
 	 */
 	private JdbcTemplate cellerogvevjdbcTemplate; //  @since 30.03.2016 OLJ
+	private JdbcTemplate organerjdbcTemplate; //  @since 04.02.2017 OLJ
 	private String chosenDB = "";
 	private String dbKey = "key";
 	private String jdbccellerKey = "jdbccellerkey";
 	private String jdbchemoKey = "jdbchemokey";
+	private String jdbcorganerKey = "jdbcorganerkey";
 	private JdbcTemplate chosenTemplate = null;
 	
 	public SessionAdminImpl() {
@@ -33,6 +35,7 @@ public class SessionAdminImpl implements SessionAdmin {
 
 	/* getChosenDB
 	 * Denne rutinen returnerer nøkkel til hvilken database som er valgt
+	 * @Since 03.02.17 Tilpasset med organer OLJ
 	 */
 	public String getChosenDB(Request req) {
 		String idKey = dbKey+"hemovigilans";
@@ -41,7 +44,10 @@ public class SessionAdminImpl implements SessionAdmin {
 			idKey = dbKey+"cellerogvev";
 			chosenDB = (String)getSessionObject(req, idKey);
 		}
-			
+		if (chosenDB == null){
+			idKey = dbKey+"organer";
+			chosenDB = (String)getSessionObject(req, idKey);
+		}
 		return chosenDB;
 	}
 
@@ -58,6 +64,18 @@ public class SessionAdminImpl implements SessionAdmin {
 			setSessionObject(req, hemovigilansjdbcTemplate,jdbchemoKey );
 
 		}
+		if (chosenDB != null && chosenDB.equals("organer")){
+			setSessionObject(req, organerjdbcTemplate,jdbcorganerKey );
+
+		}
+	}
+
+	public JdbcTemplate getOrganerjdbcTemplate() {
+		return organerjdbcTemplate;
+	}
+
+	public void setOrganerjdbcTemplate(JdbcTemplate organerjdbcTemplate) {
+		this.organerjdbcTemplate = organerjdbcTemplate;
 	}
 
 	public JdbcTemplate getChosenTemplate() {

@@ -71,6 +71,7 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	 * createModelobjects
 	 * Denne rutinen lager database modellobjekter.
 	 * Den kalles dersom disse objektene ikke finnes fra  før (som i en oppfølgingsmelding)
+	 * @Since 02.02.17 Behandlingssted får verdi
 	 */
 	public void createModelobjects(){
 		giver = new GiverImpl();
@@ -82,6 +83,7 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
    	 	giver.setTidligerekomlikasjonjanei("ukjent");
 //		vigilansmelding = new AbstractVigilansmelding();
 		giverKomplikasjon = new GiverkomplikasjonImpl();
+		giverKomplikasjon.setBehandlingssted("ukjent");
 		giverKomplikasjon.setTidfratappingtilkompliasjon("ukjent");
 		giverKomplikasjon.setStedforkomplikasjon("ukjent");
 		giverKomplikasjon.setVarighetkomplikasjon("ukjent");
