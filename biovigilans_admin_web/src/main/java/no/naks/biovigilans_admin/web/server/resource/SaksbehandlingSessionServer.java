@@ -61,12 +61,12 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	protected String tilsakbehandlereMsg;	//Standard melding til saksbehandlere 
 	protected String tilMeldermsgCEV;
 	protected String tilMeldertilleggCEV;
-	
+	protected String tilMeldermsgORG;
+	protected String tilMeldertilleggORG;	
 	protected String[] flaggNames; // Inneholder navn på input felt i skjermbildet. Bruker velger ett eller flere saksflagg
 /*
  * Benyttet til excel rapporter
  */
-
 	protected String startPeriodKey = "startperiod"; //Session nøkler for start og slutt på angitt periode
 	protected String endPeriodKey = "endperiod";
 /*
@@ -81,9 +81,32 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	protected String andrehendelserskjema = "/hemovigilans/rapporter_andrehendelser.html";
 	protected String giverhendelsesskjema = "/hemovigilans/rapporter_giver.html";
 	protected String transfusjonhendelseskjema = "/hemovigilans/rapporter_transfusjon.html";
-
+	protected String organerandrehendelser = "/organer/rapporter_andrehendelser.html";
+	protected String organergiverhendelser = "/organer/rapporter_giver.html";
+	protected String organertransfusjonhendelse = "/organer/rapporter_transfusjon.html";
+	
 	protected String imagesrcImportant = "/biovigilans_admin_web/resources/images/important.png"; // Peker til ikon for tidligere info
+	protected String imagesrcQuestion = "/biovigilans_admin_web/resources/images/helpicon.png"; // Peker til ikon for tidligere info
 	protected String imageImportantkey = "ikonImportant";
+	protected String imageQuestionkey = "ikonQuestion";
+	
+	
+	public String getTilMeldermsgORG() {
+		return tilMeldermsgORG;
+	}
+
+	public void setTilMeldermsgORG(String tilMeldermsgORG) {
+		this.tilMeldermsgORG = tilMeldermsgORG;
+	}
+
+	public String getTilMeldertilleggORG() {
+		return tilMeldertilleggORG;
+	}
+
+	public void setTilMeldertilleggORG(String tilMeldertilleggORG) {
+		this.tilMeldertilleggORG = tilMeldertilleggORG;
+	}
+
 	public String getTilMeldermsgCEV() {
 		return tilMeldermsgCEV;
 	}
@@ -263,17 +286,46 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 	 * Setter riktig tekst til melder for celler og vev
 	 * @since 05.09.16
 	 * Setter også riktig nedtrekk for saksbehandling
+	 * @since 06.02.17
+	 * Inkluderer saksbehandling for organer
 	 * @param dbKey
 	 */
 	protected void setMeldertext(String dbKey){
 		if (dbKey.equals("cellerogvev")){
 			tilMeldermsg = tilMeldermsgCEV;
 			tilMeldertillegg = tilMeldertilleggCEV;
+			int ll = hovedprosesslist.length;
+			int lf = feilelleravvik.length;
+			for (int i = 0;i<ll;i++){
+				hovedprosesslist[i] = "";
+			}
+			for (int i = 0;i<lf;i++){
+				feilelleravvik[i] = ""; 
+			}
 			for (int i = 0;i<cellerogvevhovedprosesslist.length;i++){
 				hovedprosesslist[i] = cellerogvevhovedprosesslist[i];
 			}
 			for (int i = 0;i<cellerogvevfeilelleravvik.length;i++){
 				feilelleravvik[i] = cellerogvevfeilelleravvik[i];
+			}
+			
+		}
+		if (dbKey.equals("organer")){
+			tilMeldermsg = tilMeldermsgORG;
+			tilMeldertillegg = tilMeldertilleggORG;
+			int ll = hovedprosesslist.length;
+			int lf = feilelleravvik.length;
+			for (int i = 0;i<ll;i++){
+				hovedprosesslist[i] = "";
+			}
+			for (int i = 0;i<lf;i++){
+				feilelleravvik[i] = ""; 
+			}
+			for (int i = 0;i<organerhovedprosesslist.length;i++){
+				hovedprosesslist[i] = organerhovedprosesslist[i];
+			}
+			for (int i = 0;i<organerfeilelleravvik.length;i++){
+				feilelleravvik[i] = organerfeilelleravvik[i];
 			}
 			
 		}

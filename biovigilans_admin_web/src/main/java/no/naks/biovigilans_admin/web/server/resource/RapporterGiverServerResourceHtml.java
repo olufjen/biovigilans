@@ -145,8 +145,10 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
 	     Request request = getRequest();
 	     setDBSource(request);
 	     String db =  sessionAdmin.getChosenDB(request);
-	     if (db != null && !db.equals("hemovigilans"))
+	     if (db != null && db.equals("cellerogvev"))
 	    	 giverhendelsesskjema = cellerogvevgiverhendelser;
+	     if (db != null && db.equals("organer"))
+	    	 giverhendelsesskjema = organergiverhendelser;
 	    /* LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
 	    
@@ -396,8 +398,10 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
     	Request request = getRequest();
     	setDBSource(request);
 	     String db =  sessionAdmin.getChosenDB(request);
-	     if (db != null && !db.equals("hemovigilans"))
+	     if (db != null && db.equals("cellerogvev"))
 	    	 giverhendelsesskjema = cellerogvevgiverhendelser;
+	     if (db != null && db.equals("organer"))
+	    	 giverhendelsesskjema = organergiverhendelser;
     	if (form == null){
     		sessionAdmin.getSession(request,giverkomplikasjonId).invalidate();
     		sessionAdmin.getSession(request, donasjonId).invalidate();

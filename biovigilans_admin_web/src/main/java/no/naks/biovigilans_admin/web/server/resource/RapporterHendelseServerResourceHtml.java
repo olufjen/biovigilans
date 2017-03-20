@@ -217,8 +217,11 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 	     Request request = getRequest();
 	     setDBSource(request);
 	     String db =  sessionAdmin.getChosenDB(request);
-	     if (db != null && !db.equals("hemovigilans"))
+	     if (db != null && db.equals("cellerogvev"))
 	    	 transfusjonhendelseskjema = cellerogvevtransfusjonhendelse;
+	     if (db != null && db.equals("organer"))
+	    	 transfusjonhendelseskjema = organertransfusjonhendelse;
+	     
 	     FileInputStream adrFile = null;
 	     SakModel sakModel = (SakModel)sessionAdmin.getSessionObject(request,  sakModelKey);
 	     if (sakModel == null){
@@ -338,7 +341,7 @@ public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionSe
 				   			List histutredning = histMeldingsdetaljer.get(utredningKey);
 				   			List histblodprodukter = histMeldingsdetaljer.get(blodproduktKey);
 				   			List histproduktegenskaper = histMeldingsdetaljer.get(produktegenskapKey);
-							String klasskey = klassifikasjonKey + oMKey;
+							String klasskey = klassifikasjonKey; // + oMKey; Kommentert bort 09.03.17 OLJ 
 							List histklassifikasjoner = histMeldingsdetaljer.get(klasskey);
 				   			if (histblodprodukter != null)
 				   				result.getTidligereBlodprodukter().addAll(histblodprodukter);

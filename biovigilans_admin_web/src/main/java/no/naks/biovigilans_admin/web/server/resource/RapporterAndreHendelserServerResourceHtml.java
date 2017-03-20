@@ -119,8 +119,10 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
     	 SimpleScalar tilsakbehandel = new SimpleScalar(sakbehandlerShow);
      	 SimpleScalar iconImportant = new SimpleScalar(imagesrcImportant);
+     	 SimpleScalar iconQuestion = new SimpleScalar(imagesrcQuestion);
 		 SimpleScalar orgInfo = new SimpleScalar(displayorgInfo);
     	 dataModel.put(imageImportantkey,iconImportant);
+    	 dataModel.put(imageQuestionkey,iconQuestion);
       	 dataModel.put(displayorgInfoKey, orgInfo);
     	 dataModel.put(tilsakbehandler, tilsakbehandel);
     	 dataModel.put(flaggKey,flaggs);
@@ -230,9 +232,10 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	     Request request = getRequest();
 	     setDBSource(request);
 	     String db =  sessionAdmin.getChosenDB(request);
-	     if (db != null && !db.equals("hemovigilans"))
+	     if (db != null && db.equals("cellerogvev"))
 	    	 andrehendelserskjema = cellereogvevandrehendelser;
-	     
+	     if (db != null && db.equals("organer"))
+	    	 andrehendelserskjema = organerandrehendelser;
 	 	hvagikkgaltList.clear(); // Lagt til 31.10.16 OLJ
 
 	     SakModel sakModel = (SakModel)sessionAdmin.getSessionObject(request,  sakModelKey);
@@ -373,6 +376,12 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 		 SimpleScalar orgInfo = new SimpleScalar(displayorgInfo);
     	 SimpleScalar tilMelder = new SimpleScalar(tilMelderPart);
     	 SimpleScalar iconImportant = new SimpleScalar(imagesrcImportant);
+    	 
+      	 SimpleScalar iconQuestion = new SimpleScalar(imagesrcQuestion);
+
+    	 dataModel.put(imageImportantkey,iconImportant);
+    	 dataModel.put(imageQuestionkey,iconQuestion);    	 
+    	 
     	 dataModel.put(imageImportantkey,iconImportant);
     	 dataModel.put(tilMelding,tilMelder);
     	 dataModel.put(displayorgInfoKey, orgInfo);
@@ -421,8 +430,11 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	     sakbehandlerShow = "none";
 	     setDBSource(request);
 	     String db =  sessionAdmin.getChosenDB(request);
-	     if (db != null && !db.equals("hemovigilans"))
+	     if (db != null && db.equals("cellerogvev"))
 	    	 andrehendelserskjema = cellereogvevandrehendelser;
+	     if (db != null && db.equals("organer"))
+	    	 andrehendelserskjema = organerandrehendelser;
+	     
     	if (form != null){
     		Map<String, Object> dataModel = new HashMap<String, Object>();
 
@@ -474,6 +486,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	    	melder = hentMelder(annenModel.getVigilansmelding());
     		Parameter lagre = form.getFirst("btnSendinn");
     		Parameter lagreFlagg = form.getFirst("btnlagreflagg");
+    		Parameter statusReklassifisering = form.getFirst("btnstatusendring");
     		Parameter statusChange = form.getFirst("btnstatuschange");
     		Parameter avslutt = form.getFirst("btnavslutt");
     		Parameter sendTilmelder = form.getFirst("btnsend");
