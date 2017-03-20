@@ -55,7 +55,35 @@
 		var reclasflag = false;
 		var reclasflagtemp = true;
 		var tilMelderflag = false;
-			/**
+		var hjelpeTxt1 = "Fullblodtapping: Blodgiverutvelgelse kommer her hvis det ikke er tydelig at det var en aferesegiver\r\n"+
+		"Distribusjon:	Blodbanken utleverer blod som ikke fyller kravene, f.eks. blod med antistoff eller ubestrålt blod.\r\n"+
+		"Prøvetaking: Både av pasient og av givere\r\n"+
+		"Transfusjon: Blod gitt til feil pasient\r\n"+
+		"Bestilling av blod: Feil eller mangelfull bestilling.";
+		var hjelpeTxt2 = "En defekt i blodproduktet:	Koagler i blodposen\r\n"+
+		"En feil ved utstyret: Noen hendelser der det er tappet for mye\r\n"+
+		"Menneskelig feil: Noen hendelser der det er tappet for mye.\r\n Noen blodgiverutvelgelse, f.eks. tappet selv om ikke fyller kravene.\r\n"+
+		"Ingen feil: Dyrkning positiv etter at blodet er gitt ut\r\n"+
+		"Annet:	Blodgiverutvelgelse der blodgiver ikke har opplyst.\r\n Risiko som spørreskjemaet ikke fanger opp.";
+		var hjelpeTxt3 = "Feil blod transfundert: Blod transfundert til feil pasient.\r\n Blod transfundert som ikke oppfylte kravene, f.eks, om bestråling.\r\n"+
+		"Smitte påvist ved testing:	Smitte påvist ved testing\r\n Smitte påvist ved nyregistrering\r\n"+
+		"Ved intervju fremkommer det informasjon som hadde påvirket avgjørelsen om forrige og ev. tidligere tappinger:	Smitte,\r\n Blodtypeantistoff,\r\n Allergi,\r\n Medisiner,\r\n Sykdom,\r\n Reise,"+
+		"\r\n Spørreskjemaet spør ikke om annen viktig informasjon,\r\n Annen smitterisiko"+
+		"Giveren fyller ikke kravet, men blir likevel tappet: Blodgiver har svart på spørreskjemaet på en måte som gjør at han skulle vært avvist.\r\n"+
+		"Hemoglobin ikke målt før tapping og hemoglobin målt etter tapping var for lav,\r\n Påkrevet smittetesting ikke utført,\r\n Andre krav som ikke ble oppfylt,"+
+		"Giveren informerer kort tid etter tapping om noe som gjør at blodet ikke skal brukes:	Sykdom,\r\n Smitterisiko,\r\n Reise,\r\n Medisiner,\r\n Annen informasjon,"+
+		"Utstyr: Tappet for mye,\r\n Teknisk svikt utstyr,\r\n Utstyr annet,\r\n"+
+		"Analyser:	Smittetester ikke utført,\r\n Blodtypesvar feil,\r\n Blodtypekontroller ikke brukt,\r\n Teknisk svikt reagenser,\r\n Ikke gyldig typing og/eller screening,\r\n Rekvirert tilleggstekst ikke tatt hensyn til,\r\n"+
+		" Feil test brukt,\r\n Analysen feil registrert eller ikke registrert,\r\n Ikke tatt hensyn til blodtypeantistoff,\r\n Feil prøverør brukt,Analyse annet"+
+		"Henting og transport:	Feil blod utlevert (blodbankpersonell)\r\n Feil blod hentet (annet enn blodbankpersonell)"+
+		"Merking feil: Prøver merket feil\r\n Poser merket feil\r\n Pasienter merket feil"+
+		"Annet: Feil med blodprodukt,\r\n Feil utstyr eller reagens brukt,\r\n Bestilt blod til feil pasient,\r\n Blod ut av karantene uten at kravene til frigivning er oppfylt,\r\n Blod ikke bestilt,"+
+		"\r\n Problem med hjelpenummer/nødnummer,\r\n Blod klargjort av sykepleier til feil pasient,\r\n Blodbanken feiltolket bestillingen (pasient eller produkt),\r\n Annet";
+		var hjelpeTxt4 = "Transfusjon eller bruk av blodkomponent som ikke tilfredsstiller sikkerhets- eller kvalitetskrav: Blod er transfundert. Ved dette intervjuet forteller giveren noe som hadde påvirket tidligere utvelgelser. Blodet fra tidligere tappinger er transfundert.\r\n"+
+		"Distribusjon av blodkomponent som ikke tilfredsstiller sikkerhets- eller kvalitetskrav: Blodet er ikke transfundert, men har blitt sendt til avdelingen/posten. Avdelingen oppdager at bestråling ikke er utført og transfunderer ikke blodet.\r\n"+
+		"Frigivning fra karantene av blodkomponent som ikke tilfredsstiller krav til frigivning: Blodet er ikke transfundert eller distribuert, men det står klart til bruk på blodbanken. Frigitt selv om virustesting ikke var gjort. Frigitt på grunnlag av feil svar fra mikrobiologen.\r\n"+
+		"En hendelse som kunne ha skadet blodgiveren: Tappet for mye.\r\n Tappet giver med hjertesykdom.";
+		/**
 			This  function set the calender for date to the browsers those doesn't support html5 input type date.
 			
 			*/
@@ -75,6 +103,10 @@
 		
 		 $( document ).ready(function(){ 
 			// alert(reqFlag);
+			document.getElementById('hjelp').setAttribute('title', hjelpeTxt1);
+			document.getElementById('hjelparsak').setAttribute('title', hjelpeTxt2);
+			document.getElementById('hjelpklasse').setAttribute('title', hjelpeTxt3);
+			document.getElementById('hjelpdef').setAttribute('title', hjelpeTxt4);
 			if (reqFlag == 'none'){
 			//	alert(reqFlag);
 				document.getElementById('hendelsen-date').required = true;
@@ -212,8 +244,9 @@
 						if(btnValue=="sendinn"){
 							$("input[type=radio]").attr('disabled', true);
 							$("input[type=checkbox]").attr('disabled', true);
-							$('div').find('input, textarea, select').attr('readonly', true);
-							$('div').find('select').attr('disabled', true);	
+							$('div').find('input, textarea').attr('readonly', true);
+					//		$('div').find('input, textarea, select').attr('readonly', true);
+					//		$('div').find('select').attr('disabled', true);	
 							$("#nystatus").attr('disabled',false);
 							$("#statusvalg").attr('disabled',false);	
 							$("#statusvalg1").attr('disabled',false);
@@ -223,6 +256,8 @@
 							$("#statusvalg5").attr('disabled',false);
 							$("#statusvalg6").attr('disabled',false);
 							$("#statusvalg7").attr('disabled',false);
+							$("#btnstatusendring").attr('disabled',false);
+							$("#rstatusendring").attr('disabled',false);
 							$("#sendinnTxt").html('Godkjent');
 							$("#avbrytTxt").html('Avbryt');							
 							$("#btnAvbryt").val('ikkeGodkjent');
@@ -392,7 +427,16 @@
 					alert("enable");
 					$("#meldingtilhelsedir").attr('disabled',true);
 				} */
-				
+				function chooseStatus(){
+		//			alert("Skal velge status for melding 1");
+					var statusValg = $("#statusvalg6").attr('checked');
+					if (statusValg == 'checked'){
+						alert("Skal velge status for melding 2 "+statusValg);
+						$("#btnstatusendring").click();
+						$("#rstatusendring").attr('checked','checked');
+					}
+					
+				}
 			</script>
 <form id="rapport" name="rapport" action="?method=PUT" method="post"  > 
 			<h1>Rapportert Annen Hendelse</h1>
@@ -415,6 +459,9 @@
     
      </select>
 <button type="submit" id="btnstatuschange" value="statuschange"  name="btnstatuschange" class="btn btn-primary btn-lg" style="display: none" > getValue </button>
+	<button type="submit" name="btnstatusendring" id="btnstatusendring" value="statusendring" class="btn btn-primary btn-lg" style="display: none"  >getValue</button>
+	<input type="radio" id="rstatusendring" name="rstatusendring" value="statusendring" style="display: none" >
+
 <br>
 <button type="submit" id="btnavslutt" value="avslutt"  name="btnavslutt" class="btn btn-primary btn-lg" >Avslutt saksbehandling </button>
      
@@ -453,7 +500,7 @@
   </label>
   
   <label>
-	<input title="Husk å gjøre reklassifisering!" type="checkbox" name="statusvalg6" id="statusvalg6" onchange="enableReclassification();" value="Reklassifisering av melding" />
+	<input title="Husk å gjøre reklassifisering!" type="checkbox" name="statusvalg6" id="statusvalg6"  onchange="enableReclassification();" value="Reklassifisering av melding" />
   		Reklassifisering av melding
   </label>
 <!-- Kommentar til meldingen 31.05.16 -->   
@@ -466,7 +513,7 @@
 	<label>Melding til Helsedirektoratet</label>
   	<textarea id="meldingtilhelsedir" class="form-control" name="meldingtilhelsedir" rows="2" ></textarea>
   </div>	
-	<button type="submit" name="btnlagreflagg" id="btnlagreflagg" value="lagreflagg" class="btn btn-primary"   > <span id="sendinnflag">Lagre merknader</span></button>
+	<button type="submit" name="btnlagreflagg" id="btnlagreflagg" value="lagreflagg" class="btn btn-primary" onclick="chooseStatus();"  > <span id="sendinnflag">Lagre merknader</span></button>
 	<br>
 	<button type="submit" name="btnsend" id="btnsend" value="sendemelding" class="btn btn-warning" style="display: ${tilmelder}"  > <span id="sendinnflag">Send melding til melder</span></button>
   
@@ -539,7 +586,7 @@
   					</div>
 			</div>					
 				<div class="form-group">
-					<label>Hvilken hovedprosess gjaldt hendelsen?</label>
+					<label>Hvilken hovedprosess gjaldt hendelsen?</label><img id="hjelp" alt="OBS"  src="${ikonQuestion}" style="display: 'block'; height:20px;width:20px;">
 					<select name ="tab-prosess" id="tab-prosess" class="form-control" >
 						<option ></option>
 				       		<#list andreHendelse.hovedprosesslist as hovedprosess>
@@ -555,7 +602,7 @@
  					</div>
 			</div>		
 				<div class="form-group">
-					<label>Primærårsak til feil eller avvik </label>
+					<label>Primærårsak til feil eller avvik </label><img id="hjelparsak" alt="OBS"  src="${ikonQuestion}" style="display: 'block'; height:20px;width:20px;">
 					<select name ="tab-kvalitetskrav"  id="tab-kvalitetskrav" class="form-control">
 						<option  ></option>
 			       		<#list andreHendelse.feilelleravvik as feilelleravvik>
@@ -587,7 +634,7 @@
 				</div>			
 				
 				<div class="form-group">
-					<label>Klassifikasjon av feilen eller avviket</label>
+					<label>Klassifikasjon av feilen eller avviket</label><img id="hjelpklasse" alt="OBS"  src="${ikonQuestion}" style="display: 'block'; height:20px;width:20px;">
 					<div class="radio">
 				          <label>
 				          	<input type="radio" name="tab-klassifikasjon" id="k-1"   value="Feil blod transfundert"  onclick="toggleDisplay('feilblod'); checkUncheck();setRequired('pas-kjonn')"   />Feil blod transfundert
@@ -1077,7 +1124,7 @@
  					</div>
 			</div>	
 				<div class="form-group">
-					<label>Definisjon av alvorlig hendelse</label>
+					<label>Definisjon av alvorlig hendelse</label><img id="hjelpdef" alt="OBS"  src="${ikonQuestion}" style="display: 'block'; height:20px;width:20px;">
 					 <select name ="tab-hendelse"  id="tab-hendelse" class="form-control">
 						<option selected="selected" ></option>
 			       		<#list andreHendelse.alvorligHendelse as alvorlig>
