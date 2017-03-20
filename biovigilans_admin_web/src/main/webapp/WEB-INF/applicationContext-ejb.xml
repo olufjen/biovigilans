@@ -24,6 +24,17 @@
 	<bean id="jdbcTemplatecellerogvev" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSourcecellerogvev"></property>
 	</bean>	
+	<bean id="dataSourceorganer" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${database.driver}"></property>
+		<property name="url" value="${database.url.organer}"></property>
+		<property name="username" value="${database.username}"></property>
+		<property name="password" value="${database.password}"></property>
+	</bean>
+
+	<bean id="jdbcTemplateorganer" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSourceorganer"></property>
+	</bean>	
+		
   	<bean id="domainDictionary" class="no.naks.framework.web.control.DomainDictionaryImpl">
   	</bean>
  
@@ -355,6 +366,7 @@
   		 		<map>
   		 			<entry key="hemovigilans" value-ref="jdbcTemplatebiovigilans"></entry>
   		 			<entry key="cellerogvev" value-ref="jdbcTemplatecellerogvev"></entry>
+  		 			<entry key="organer" value-ref="jdbcTemplateorganer"></entry>
   		 		</map>
   		 	</property>
   		 </bean>

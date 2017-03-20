@@ -161,6 +161,17 @@
               <property name="tilMeldertillegg" value="${tilmeldertillegg.text}"></property>
               <property name="tilMeldermsgCEV" value="${cevtilmelder.text}"></property>
               <property name="tilMeldertilleggCEV" value="${cevtilmeldertillegg.text}"></property>
+              <property name="tilMeldermsgORG" value="${orgtilmelder.text}"></property>
+               <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
+      ${hovedprosessoption10},${hovedprosessoption11}"></property>
+      	  		<property name="cellerogvevhovedprosesslist" value="${cellerhovedprosessoption1},${cellerhovedprosessoption2},${cellerhovedprosessoption3},${cellerhovedprosessoption4},${cellerhovedprosessoption5},
+	  ${cellerhovedprosessoption6},${cellerhovedprosessoption7},${cellerhovedprosessoption8},${cellerhovedprosessoption9},${cellerhovedprosessoption10},${cellerhovedprosessoption11}"></property>
+     <property name="organerhovedprosesslist" value="${organerandrealvorlighendelsenoption1},${organerandrealvorlighendelsenoption2},${organerandrealvorlighendelsenoption3},${organerandrealvorlighendelsenoption4},${organerandrealvorlighendelsenoption5}"></property>
+	 <property name="organerfeilelleravvik" value="${organerfeilelleravvikoption1},${organerfeilelleravvikoption2},${organerfeilelleravvikoption3},${organerfeilelleravvikoption4},${organerfeilelleravvikoption8}"></property>
+      <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7},${feilelleravvikoption8}"></property> 
+      <property name="cellerogvevfeilelleravvik" value="${cellerfeilelleravvikoption1},${cellerfeilelleravvikoption2},${cellerfeilelleravvikoption3},${cellerfeilelleravvikoption4},${cellerfeilelleravvikoption8}"></property> 
+              
+              <property name="tilMeldertilleggORG" value="${orgtilmeldertillegg.text}"></property>
               <property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
               <property name="emailWebService" ref="emailWebService"></property>
         </bean>
@@ -466,6 +477,8 @@
       ${hovedprosessoption10},${hovedprosessoption11}"></property>
       	  <property name="cellerogvevhovedprosesslist" value="${cellerhovedprosessoption1},${cellerhovedprosessoption2},${cellerhovedprosessoption3},${cellerhovedprosessoption4},${cellerhovedprosessoption5},
 	  ${cellerhovedprosessoption6},${cellerhovedprosessoption7},${cellerhovedprosessoption8},${cellerhovedprosessoption9},${cellerhovedprosessoption10},${cellerhovedprosessoption11}"></property>
+     <property name="organerhovedprosesslist" value="${organerandrealvorlighendelsenoption1},${organerandrealvorlighendelsenoption2},${organerandrealvorlighendelsenoption3},${organerandrealvorlighendelsenoption4},${organerandrealvorlighendelsenoption5}"></property>
+	 <property name="organerfeilelleravvik" value="${organerfeilelleravvikoption1},${organerfeilelleravvikoption2},${organerfeilelleravvikoption3},${organerfeilelleravvikoption4},${organerfeilelleravvikoption8}"></property>
       <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7},${feilelleravvikoption8}"></property> 
       <property name="cellerogvevfeilelleravvik" value="${cellerfeilelleravvikoption1},${cellerfeilelleravvikoption2},${cellerfeilelleravvikoption3},${cellerfeilelleravvikoption4},${cellerfeilelleravvikoption8}"></property> 
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
@@ -498,6 +511,8 @@
 	  <property name="cellerogvevhovedprosesslist" value="${cellerhovedprosessoption1},${cellerhovedprosessoption2},${cellerhovedprosessoption3},${cellerhovedprosessoption4},${cellerhovedprosessoption5},
 	  ${cellerhovedprosessoption6},${cellerhovedprosessoption7},${cellerhovedprosessoption8},${cellerhovedprosessoption9},${cellerhovedprosessoption10},${cellerhovedprosessoption11}"></property>
       <property name="cellerogvevfeilelleravvik" value="${cellerfeilelleravvikoption1},${cellerfeilelleravvikoption2},${cellerfeilelleravvikoption3},${cellerfeilelleravvikoption4},${cellerfeilelleravvikoption8}"></property> 
+     <property name="organerhovedprosesslist" value="${organerandrealvorlighendelsenoption1},${organerandrealvorlighendelsenoption2},${organerandrealvorlighendelsenoption3},${organerandrealvorlighendelsenoption4},${organerandrealvorlighendelsenoption5}"></property>
+	 <property name="organerfeilelleravvik" value="${organerfeilelleravvikoption1},${organerfeilelleravvikoption2},${organerfeilelleravvikoption3},${organerfeilelleravvikoption4},${organerfeilelleravvikoption8}"></property>
       <property name="icd10WebService" ref="ICD10WebService"></property>
        <property name="annenKomplikasjonWebService" ref="annenKomplikasjonWebService"></property>
       <!-- 
@@ -639,6 +654,8 @@
  	  <property name="cellerogvevhovedprosesslist" value="${cellerhovedprosessoption1},${cellerhovedprosessoption2},${cellerhovedprosessoption3},${cellerhovedprosessoption4},${cellerhovedprosessoption5},
 	  ${cellerhovedprosessoption6},${cellerhovedprosessoption7},${cellerhovedprosessoption8},${cellerhovedprosessoption9},${cellerhovedprosessoption10},${cellerhovedprosessoption11}"></property>
       <property name="cellerogvevfeilelleravvik" value="${cellerfeilelleravvikoption1},${cellerfeilelleravvikoption2},${cellerfeilelleravvikoption3},${cellerfeilelleravvikoption4},${cellerfeilelleravvikoption8}"></property> 
+     <property name="organerhovedprosesslist" value="${organerandrealvorlighendelsenoption1},${organerandrealvorlighendelsenoption2},${organerandrealvorlighendelsenoption3},${organerandrealvorlighendelsenoption4},${organerandrealvorlighendelsenoption5}"></property>
+	 <property name="organerfeilelleravvik" value="${organerfeilelleravvikoption1},${organerfeilelleravvikoption2},${organerfeilelleravvikoption3},${organerfeilelleravvikoption4},${organerfeilelleravvikoption8}"></property>
       </bean> 
         
   <bean name="/hemovigilans/rapporter_giver.html" id="rapportergiverServerResource" autowire="byName" scope="prototype"
@@ -683,6 +700,8 @@
  	  <property name="cellerogvevhovedprosesslist" value="${cellerhovedprosessoption1},${cellerhovedprosessoption2},${cellerhovedprosessoption3},${cellerhovedprosessoption4},${cellerhovedprosessoption5},
 	  ${cellerhovedprosessoption6},${cellerhovedprosessoption7},${cellerhovedprosessoption8},${cellerhovedprosessoption9},${cellerhovedprosessoption10},${cellerhovedprosessoption11}"></property>
       <property name="cellerogvevfeilelleravvik" value="${cellerfeilelleravvikoption1},${cellerfeilelleravvikoption2},${cellerfeilelleravvikoption3},${cellerfeilelleravvikoption4},${cellerfeilelleravvikoption8}"></property> 
+     <property name="organerhovedprosesslist" value="${organerandrealvorlighendelsenoption1},${organerandrealvorlighendelsenoption2},${organerandrealvorlighendelsenoption3},${organerandrealvorlighendelsenoption4},${organerandrealvorlighendelsenoption5}"></property>
+	 <property name="organerfeilelleravvik" value="${organerfeilelleravvikoption1},${organerfeilelleravvikoption2},${organerfeilelleravvikoption3},${organerfeilelleravvikoption4},${organerfeilelleravvikoption8}"></property>
   </bean>  
           <bean id="emailWebService" class="no.naks.biovigilans.felles.control.EmailWebServiceImpl">
         	<property name="mailer" ref="mailer" ></property>
