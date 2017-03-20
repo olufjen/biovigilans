@@ -430,7 +430,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    			    		String organ = donasjonMap.get(dKey);
 	    			    		if (organ == null)
 	    			    			organ = "";
-	    			    		for (int dn = 1;dn<9;dn++){
+	    			    		for (int dn = 1;dn<10;dn++){
 	    			    	  		dKey = "p-antistoff-transfusjon" + String.valueOf(dn);
 	    			    	  		String temp =  donasjonMap.get(dKey);
 	    			    	  		if (temp != null)

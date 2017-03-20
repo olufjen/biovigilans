@@ -295,7 +295,7 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     		String organ = donasjonMap.get(dKey);
     		if (organ == null)
     			organ = "";
-    		for (int dn = 1;dn<11;dn++){
+    		for (int dn = 1;dn<12;dn++){
     	  		dKey = "type-tapping" + String.valueOf(dn);
     	  		String temp =  donasjonMap.get(dKey);
     	  		if (temp != null)
