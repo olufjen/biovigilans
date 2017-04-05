@@ -141,7 +141,7 @@ public class VigilansModel {
 	}
 
 
-	public LinkedHashMap<String, String> getFormLinkHashmap() {
+	public LinkedHashMap<String,String> getFormLinkHashmap() {
 		return formLinkHashmap;
 	}
 
@@ -174,12 +174,6 @@ public class VigilansModel {
 	public void setVigilans(Vigilansmelding vigilans) {
 		this.vigilans = vigilans;
 	}
-	
-	/*public void distributeTerms(){
-		String[] formFields = getFormNames();
-		String donasjonFields[] = {formFields[6],formFields[7],formFields[8],formFields[9],formFields[10],formFields[11],formFields[12],formFields[25]};
-		//vigilans.set .setDonasjonsfieldMaps(donasjonFields);
-	}
-	*/
+
 	
 }
