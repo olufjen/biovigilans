@@ -576,6 +576,11 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
     		}
   
     	}
+    	char separator = ',';
+    	String mxId = extractString(meldingsID, separator, 0);
+    	String mx2Id = extractString(meldingsID, separator,-1);
+    	if (mxId != null && mx2Id != null)
+    		meldingsID = mxId+mx2Id;
     	Map<String,List> meldingDetaljene = null;
     	Map<String,List> histMeldingsdetaljer = null; // Dette inneholder historiske meldingsdetaljer når flere meldinger har samme nøkkel
     	String histmeldingsNokkel = null;

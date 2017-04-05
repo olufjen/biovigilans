@@ -127,7 +127,13 @@
       	}
       function sorterdatohendelse(){
       	alert("sorter etter hendelsesdato");
-      }	
+      }
+      function removeCommas(meldenummer) {
+    	  alert("id inn "+ meldenummer);
+    	  meldenummer = meldenummer.replace(/\D/g,'');
+   	    alert("id retur "+ meldenummer);
+    	return meldenummer;
+    	};
       //window.onload=initialize();
       </script>
 
@@ -256,7 +262,7 @@
      	<table class="table table-hover" border=1>
   		<tr><th>Til PDF</th><th>Detaljer</th><th >Meldingsnøkkel</th><th><a href="javascript:formSubmit('btnsorteringdatohendt');">Dato for hendelse</a> </th><th><a href="javascript:formSubmit('btnsorteringdatomeldt');">Meldingsdato</a></th><th><a href="javascript:formSubmit('btnsorteringmtype');">Meldingstype</th><th><a href="javascript:formSubmit('btnsorteringstatus');">Status</th>
   			<#list meldinger as melding>
-  			<tr id="nokkelr"><td><button type="submit" id="btnpdf" name="pdf" value="${melding.meldeid}"  class="btn btn-success btn-lg">Til PDF</button></td><td><button type="submit" id="btnleveranse" name="lukk1" value="${melding.meldeid}"  class="btn btn-default">Velg</button></td><td id="nokkel" title="${melding.sekvensNr}(${melding.meldeid})" >${melding.formatNokkel}</td><td>${melding.datoforhendelse?date}</td><td>${melding.meldingsdato?date}</td><td>${melding.meldingstype}</td><td id="tabstatus" title=${melding.saksBehandler},${melding.meldingTitle} bgcolor=${melding.color}>${melding.sjekklistesaksbehandling}</td> 
+  			<tr id="nokkelr"><td><button type="submit" id="btnpdf" name="pdf" value="${melding.meldeid}"  class="btn btn-success btn-lg">Til PDF</button></td><td><button type="submit" id="btnleveranse" name="lukk1"  value="${melding.meldeid}"  class="btn btn-default">Velg</button></td><td id="nokkel" title="${melding.sekvensNr},${melding.meldeid})" >${melding.formatNokkel}</td><td>${melding.datoforhendelse?date}</td><td>${melding.meldingsdato?date}</td><td>${melding.meldingstype}</td><td id="tabstatus" title=${melding.saksBehandler},${melding.meldingTitle} bgcolor=${melding.color}>${melding.sjekklistesaksbehandling}</td> 
   			</#list>
 		</table>  
      </div>
