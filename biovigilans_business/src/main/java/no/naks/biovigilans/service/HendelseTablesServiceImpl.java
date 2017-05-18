@@ -15,8 +15,8 @@ import no.naks.rammeverk.kildelag.service.BusinessService;
 
 /**
  * Denne klassen er en implementasjon av klassen HendelseTablesService og 
- * håndterer lagring/oppdatering av Vigilansmeldinger
- * Følgende tabeller blir berørt i db:
+ * håndterer lagring/oppdatering av Vigilansmeldinger type pasienthenselser
+ * @author olj
  * 		
  **/
 public class HendelseTablesServiceImpl extends BusinessService implements HendelseTablesService {

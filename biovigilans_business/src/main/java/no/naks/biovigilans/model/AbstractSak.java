@@ -5,9 +5,9 @@ import java.util.Date;
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 /**
- * @author olj
  * Denne klassen representerer sakstabellen i db.
  * En sak opprettes når saksbehandler setter et eller flere flagg til en melding, eller fortsetter en dialog med melder
+ * @author olj
  */
 public abstract class AbstractSak extends AbstractModel implements Sak{
 

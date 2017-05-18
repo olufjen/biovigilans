@@ -4,6 +4,11 @@ import no.naks.biovigilans.dao.DonasjonDAO;
 import no.naks.biovigilans.model.Donasjon;
 import no.naks.rammeverk.kildelag.service.BusinessService;
 
+/**
+ * Denne singleton tjenesten benyttes til oppslag mot og lagring av informasjon om donasjonen
+ * @author olj
+ *
+ */
 public class DonasjonTableServiceImpl extends BusinessService implements DonasjonTableService {
 
 	private DonasjonDAO  donasjonDAO;

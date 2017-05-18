@@ -17,6 +17,12 @@ import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
 
 
+/**
+ * Denne DAO tjenesten lagrer meldinger av typen Giverhendelse
+ * Den lagrer også informasjon om Giver og giveroppfølgng
+ * @author olj
+ *
+ */
 public class GiverDAOImpl extends AbstractAdmintablesDAO implements GiverDAO {
 
 	private String meldingHead = "";  // Meldingshode for hemovigilans = Hem, for Celler og vev = Cev, for Organer = Org (April 2016)

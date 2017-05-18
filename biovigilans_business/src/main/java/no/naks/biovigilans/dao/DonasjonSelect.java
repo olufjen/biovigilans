@@ -10,6 +10,11 @@ import no.naks.biovigilans.model.Donasjon;
 import no.naks.biovigilans.model.DonasjonImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot tabellen donasjon
+ * @author olj
+ *
+ */
 public class DonasjonSelect extends AbstractSelect {
 
 	public DonasjonSelect(DataSource dataSource, String sql, String[] tableDefs) {

@@ -3,6 +3,11 @@ package no.naks.biovigilans.model;
 import java.sql.Types;
 import java.util.HashMap;
 
+/**
+ * Ikke i bruk i denne versjonen av Biovigilans
+ * @author olj
+ *
+ */
 public class HemolyseImpl extends AbstractHemolyse implements Hemolyse {
 
 	public HemolyseImpl() {

@@ -5,6 +5,11 @@ import java.util.HashMap;
 
 import org.apache.commons.httpclient.methods.GetMethod;
 
+/**
+ * Implementasjonen av AbstractKomplikasjonsdiagnoseGiver
+ * @author olj
+ *
+ */
 public class KomplikasjonsdiagnosegiverImpl extends
 		AbstractKomplikasjonsdiagnosegiver implements Komplikasjonsdiagnosegiver {
 

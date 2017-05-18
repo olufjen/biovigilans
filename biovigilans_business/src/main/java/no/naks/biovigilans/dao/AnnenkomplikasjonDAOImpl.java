@@ -8,6 +8,11 @@ import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
+/**
+ * Denne DAO tjenesten lagrer meldinger av typen Annen hendelse
+ * @author olj
+ *
+ */
 public class AnnenkomplikasjonDAOImpl extends AbstractAdmintablesDAO implements AnnenKomplikasjonDAO {
 
 	private String meldingHead = "";  // Meldingshode for hemovigilans = Hem, for Celler og vev = Cev, for Organer = Org (April 2016)

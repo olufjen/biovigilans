@@ -13,6 +13,11 @@ import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
+/**
+ * Denne DAO tjenesten lagrer klassifikasjon av komplikasjonen for pasienter
+ * @author olj
+ *
+ */
 public class KomplikasjonsklassifikasjonDAOImpl extends AbstractAdmintablesDAO implements KomplikasjonsklassifikasjonDAO {
 	
 	private String insertKomplikasjonsklassifikasjonSQL;

@@ -6,6 +6,11 @@ import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
+/**
+ * Denne DAO tjenesten lagrer informasjon om komplikasjonsdiagnose for givere
+ * @author olj
+ *
+ */
 public class KomplikasjonsdiagnosegiverDAOImpl extends AbstractAdmintablesDAO implements
 		KomplikasjonsdiagnosegiverDAO {
 	

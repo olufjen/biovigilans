@@ -4,6 +4,11 @@ import no.naks.biovigilans.dao.AnnenKomplikasjonDAO;
 import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.rammeverk.kildelag.service.BusinessService;
 
+/**
+ * Denne singleton tjenesten benyttes til oppslag mot og lagring av meldinger  type andre hendelser
+ * @author olj
+ *
+ */
 public class AnnenKomplikasjonTableServiceImpl extends BusinessService implements
 		AnnenKomplikasjonTableService {
 

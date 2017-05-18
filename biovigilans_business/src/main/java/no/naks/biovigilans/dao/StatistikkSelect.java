@@ -9,6 +9,11 @@ import no.naks.biovigilans.model.Regionstatistikk;
 import no.naks.biovigilans.model.RegionstatistikkImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot ulike tabeller som grunnlag for statistikk
+ * @author olj
+ *
+ */
 public class StatistikkSelect extends AbstractSelect {
 
 	public StatistikkSelect(DataSource dataSource, String sql,

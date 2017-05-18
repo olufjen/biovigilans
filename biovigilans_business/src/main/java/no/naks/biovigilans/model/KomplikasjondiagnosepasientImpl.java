@@ -2,6 +2,11 @@ package no.naks.biovigilans.model;
 
 import java.sql.Types;
 
+/**
+ * Ikke i bruk. Se Komplikasjonsklassifikasjon
+ * @author olj
+ *
+ */
 public class KomplikasjondiagnosepasientImpl extends
 		AbstractKomplikasjondiagnosepasient implements
 		Komplikasjondiagnosepasient {

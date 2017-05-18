@@ -3,6 +3,11 @@ package no.naks.biovigilans.model;
 import java.sql.Types;
 import java.util.HashMap;
 
+/**
+ * Implementasjonen av AbstractProduktegenskap
+ * @author olj
+ *
+ */
 public class ProduktegenskapImpl extends AbstractProduktegenskap implements Produktegenskap {
 	private String egenskapType = ""; // Er av typen erytrocytt, trombocytt eller plasma
 	private String[] egenskapTyper;   // Plasma kan være en av flere

@@ -9,6 +9,11 @@ import no.naks.biovigilans.model.Blodprodukt;
 import no.naks.biovigilans.model.BlodproduktImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot tabellen blodprodukter
+ * @author olj
+ *
+ */
 public class BlodproduktSelect extends AbstractSelect {
 
 	public BlodproduktSelect(DataSource dataSource, String sql,

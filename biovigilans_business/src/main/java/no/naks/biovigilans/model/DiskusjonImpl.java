@@ -6,8 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @author olj
+ *
  * Dette er implementasjonen av klassen Diskusjon
+ * @author olj
  */
 public class DiskusjonImpl extends AbstractDiskusjon implements Diskusjon {
 

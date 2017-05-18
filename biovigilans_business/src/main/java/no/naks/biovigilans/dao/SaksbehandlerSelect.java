@@ -9,6 +9,11 @@ import no.naks.biovigilans.model.Saksbehandler;
 import no.naks.biovigilans.model.SaksbehandlerImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot tabellen saksbehandler
+ * @author olj
+ *
+ */
 public class SaksbehandlerSelect extends AbstractSelect {
 
 	

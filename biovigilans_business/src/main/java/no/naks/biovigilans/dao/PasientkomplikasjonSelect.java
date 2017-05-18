@@ -9,6 +9,11 @@ import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.PasientkomplikasjonImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot tabellen pasientkomplikasjon
+ * @author olj
+ *
+ */
 public class PasientkomplikasjonSelect extends AbstractSelect {
 
 	public PasientkomplikasjonSelect(DataSource dataSource, String sql,

@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * En PasientkomplikasjonImpl er en komplikasjon som har oppstått hos pasienten som følge av en transfusjon (overføring).
- * 
+ * @author olj
  */
 
 public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements Vigilansmelding,Pasientkomplikasjon {

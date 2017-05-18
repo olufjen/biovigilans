@@ -10,6 +10,11 @@ import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.service.BusinessService;
 
+/**
+ * Denne singleton tjenesten benyttes til oppslag mot og lagring av melders opplysninger
+ * @author olj
+ *
+ */
 public class MelderTableServiceImpl extends BusinessService implements MelderTableService {
 
 	private MelderDAO melderDAO;

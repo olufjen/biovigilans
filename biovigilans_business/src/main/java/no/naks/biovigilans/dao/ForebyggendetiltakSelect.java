@@ -10,6 +10,11 @@ import no.naks.biovigilans.model.Forebyggendetiltak;
 import no.naks.biovigilans.model.ForebyggendetiltakImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot tabellen forebyggende tiltak
+ * @author olj
+ *
+ */
 public class ForebyggendetiltakSelect extends AbstractSelect {
 
 	public ForebyggendetiltakSelect(DataSource dataSource, String sql,

@@ -7,7 +7,8 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 
 /**
- * 
+ * Denne klassen representerer en komplikasjonsdiagnose for en giver.
+ * @author olj
  */
 
 public abstract class AbstractKomplikasjonsdiagnosegiver extends AbstractModel implements Komplikasjonsdiagnosegiver{

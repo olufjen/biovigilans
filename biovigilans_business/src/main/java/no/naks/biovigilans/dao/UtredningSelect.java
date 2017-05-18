@@ -9,6 +9,11 @@ import no.naks.biovigilans.model.Utredning;
 import no.naks.biovigilans.model.UtredningImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot tabellen utredning
+ * @author olj
+ *
+ */
 public class UtredningSelect extends AbstractSelect {
 
 	public UtredningSelect(DataSource dataSource, String sql, String[] tableDefs) {

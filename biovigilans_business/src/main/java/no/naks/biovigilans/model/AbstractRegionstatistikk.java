@@ -3,9 +3,9 @@ package no.naks.biovigilans.model;
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 /**
- * @author olj
  * Regionstatistikk
  * Inneholder antall ikke avviste meldinger pr region
+ * @author olj
  */
 public abstract class AbstractRegionstatistikk extends AbstractModel implements Regionstatistikk{
 

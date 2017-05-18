@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author olj
- *
  * Denne klassen representerer en konkret pasient
+ * @author olj
  */
 
 public class PasientImpl extends AbstractPasient implements Pasient {

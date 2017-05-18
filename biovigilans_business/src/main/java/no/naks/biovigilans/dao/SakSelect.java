@@ -10,6 +10,11 @@ import no.naks.biovigilans.model.Sak;
 import no.naks.biovigilans.model.SakImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot tabellen sak
+ * @author olj
+ *
+ */
 public class SakSelect extends AbstractSelect {
 
 	public SakSelect(DataSource dataSource, String sql, String[] tableDefs) {

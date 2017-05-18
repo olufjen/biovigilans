@@ -2,6 +2,11 @@ package no.naks.biovigilans.model;
 
 import java.sql.Types;
 
+/**
+ * Ikke i bruk. Se Melder
+ * @author olj
+ *
+ */
 public class KontaktImpl extends AbstractKontakt implements Kontakt {
 
 	public KontaktImpl() {

@@ -18,10 +18,10 @@ import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
 /**
- * @author olj
  *  SakDAOImpl
  *  Denne klassen håndterer oppslag/lagring til tabellene Sak og Diskusjon
  *  Den henter også saksbehandlere
+ * @author olj
  */
 public class SakDAOImpl extends AbstractAdmintablesDAO implements SakDAO{
 	private String insertDiskusjonSQL;

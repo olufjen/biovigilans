@@ -30,6 +30,13 @@ import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.service.SaksbehandlingService;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
 
+/**
+ * Denne DAO tjenesten benyttes til oppslag og lagring mot ulike tabeller 
+ * i forbindese med saksbehandlingen.
+ * Denne tjenesen benyttes også i forbindelse med melders saksbehandling av egne meldinger, og dialogen mellom melder og saksbehandler
+ * @author olj
+ *
+ */
 public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 		SaksbehandlingDAO{
 

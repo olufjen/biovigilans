@@ -14,6 +14,11 @@ import no.naks.biovigilans.model.Transfusjon;
 import no.naks.biovigilans.model.Utredning;
 import no.naks.rammeverk.kildelag.service.BusinessService;
 
+/**
+ * Denne singleton tjenesten benyttes til oppslag og lagring av pasientopplydninger og om pasientens transfusjoner
+ * @author olj
+ *
+ */
 public class PasientTableServiceImpl extends BusinessService implements PasientTableService {
 
 	private PasientDAO pasientDAO;

@@ -9,6 +9,11 @@ import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.MelderImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot tabellen melder
+ * @author olj
+ *
+ */
 public class MelderSelect extends AbstractSelect {
 
 	public MelderSelect(DataSource dataSource, String sql, String[] tableDefs) {

@@ -4,6 +4,11 @@ import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Implementasjonen av AbstractMelder
+ * @author olj
+ *
+ */
 public class MelderImpl extends AbstractMelder implements Melder {
 
 	private Map<String,Vigilansmelding> meldinger;

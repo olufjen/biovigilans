@@ -4,7 +4,7 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 
 /**
- * Kontaktperson for prosedyren
+ * Kontaktperson for prosedyren. Benyttes ikke i Biovigilans. (Se Melder)
  * 
  */
 

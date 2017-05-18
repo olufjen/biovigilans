@@ -4,6 +4,11 @@ import no.naks.biovigilans.dao.KomplikasjonsdiagnosegiverDAO;
 import no.naks.biovigilans.model.Komplikasjonsdiagnosegiver;
 import no.naks.rammeverk.kildelag.service.BusinessService;
 
+/**
+ * Denne singleton tjenesten benyttes til oppslag mot og lagring av diagnoser for giver ved en giverhendelse
+ * @author olj
+ *
+ */
 public class KomDiagnosegiverTableServiceImpl extends BusinessService implements
 		KomDiagnosegiverTableService {
 

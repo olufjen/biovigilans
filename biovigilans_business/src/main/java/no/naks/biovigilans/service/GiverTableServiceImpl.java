@@ -7,6 +7,11 @@ import no.naks.biovigilans.model.Giveroppfolging;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.service.BusinessService;
 
+/**
+ * Denne singleton tjenesten benyttes til oppslag mot og lagring av meldinger  type giverhendelser
+ * @author olj
+ *
+ */
 public class GiverTableServiceImpl extends BusinessService implements GiverTableService {
 
 	private GiverDAO giverDAO;

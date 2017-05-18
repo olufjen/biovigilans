@@ -10,6 +10,11 @@ import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.DiskusjonImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot tabellen diskusjon
+ * @author olj
+ *
+ */
 public class DiskusjonSelect extends AbstractSelect {
 
 	

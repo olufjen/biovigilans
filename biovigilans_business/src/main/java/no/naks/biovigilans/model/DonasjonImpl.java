@@ -8,6 +8,11 @@ import java.util.Map;
 
 import com.ibm.icu.util.Calendar;
 
+/**
+ * Implementasjonen av AbstractDonasjon
+ * @author olj
+ *
+ */
 public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 
 	public DonasjonImpl() {

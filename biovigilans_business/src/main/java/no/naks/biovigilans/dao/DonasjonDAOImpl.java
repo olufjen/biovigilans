@@ -7,6 +7,11 @@ import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
+/**
+ * Denne DAO tjenesten lagrer lagrer informasjon om donasjonen til en giver
+ * @author olj
+ *
+ */
 public class DonasjonDAOImpl extends AbstractAdmintablesDAO implements DonasjonDAO {
 
 

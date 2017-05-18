@@ -4,6 +4,11 @@ import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Implementasjonen av AbstractGiver
+ * @author olj
+ *
+ */
 public class GiverImpl extends AbstractGiver implements Giver {
 
 	public GiverImpl() {

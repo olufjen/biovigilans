@@ -10,6 +10,11 @@ import no.naks.biovigilans.model.AnnenkomplikasjonImpl;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot tabellen annenkomplikasjon
+ * @author olj
+ *
+ */
 public class AnnenkomplikasjonSelect extends AbstractSelect {
 
 	public AnnenkomplikasjonSelect(DataSource dataSource, String sql,

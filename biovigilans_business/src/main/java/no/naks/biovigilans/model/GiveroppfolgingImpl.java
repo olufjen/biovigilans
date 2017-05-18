@@ -3,6 +3,11 @@ package no.naks.biovigilans.model;
 import java.sql.Types;
 import java.util.HashMap;
 
+/**
+ * Implementasjonen av AbstractGiveroppfolging
+ * @author olj
+ *
+ */
 public class GiveroppfolgingImpl extends AbstractGiveroppfolging implements Giveroppfolging {
 
 	public GiveroppfolgingImpl(){

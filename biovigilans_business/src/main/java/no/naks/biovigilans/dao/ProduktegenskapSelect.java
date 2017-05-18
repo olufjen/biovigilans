@@ -9,6 +9,11 @@ import no.naks.biovigilans.model.Produktegenskap;
 import no.naks.biovigilans.model.ProduktegenskapImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot tabellen produktegenskap (blod)
+ * @author olj
+ *
+ */
 public class ProduktegenskapSelect extends AbstractSelect {
 
 	public ProduktegenskapSelect(DataSource dataSource, String sql,

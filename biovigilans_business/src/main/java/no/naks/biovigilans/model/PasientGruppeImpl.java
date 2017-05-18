@@ -2,6 +2,11 @@ package no.naks.biovigilans.model;
 
 import java.sql.Types;
 
+/**
+ * Ikke i bruk. Se PasientImpl
+ * @author olj
+ *
+ */
 public class PasientGruppeImpl extends AbstractPasientgruppe implements
 		Pasientgruppe {
 

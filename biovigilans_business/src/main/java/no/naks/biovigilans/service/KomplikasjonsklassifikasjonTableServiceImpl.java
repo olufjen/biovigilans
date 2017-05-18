@@ -6,6 +6,11 @@ import no.naks.biovigilans.dao.KomplikasjonsklassifikasjonDAO;
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 import no.naks.rammeverk.kildelag.service.BusinessService;
 
+/**
+ * Denne singleton tjenesten benyttes til oppslag mot og lagring av klassifikasjon av komplikasjonsdiagnoser for pasient ved en pasienthendelse
+ * @author olj
+ *
+ */
 public class KomplikasjonsklassifikasjonTableServiceImpl extends BusinessService implements
 		KomplikasjonsklassifikasjonTableService {
 

@@ -3,6 +3,11 @@ package no.naks.biovigilans.model;
 import java.sql.Types;
 import java.util.HashMap;
 
+/**
+ * Implementasjonen av AbstractKomplikasjonsklassifikasjon
+ * @author olj
+ *
+ */
 public class KomplikasjonsklassifikasjonImpl extends
 		AbstractKomplikasjonsklassifikasjon implements Komplikasjonsklassifikasjon {
 

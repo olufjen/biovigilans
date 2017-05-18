@@ -9,6 +9,11 @@ import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 import no.naks.biovigilans.model.KomplikasjonsklassifikasjonImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot tabellen komplikasjonsklassifikasjon
+ * @author olj
+ *
+ */
 public class KomplikasjonklassifikasjonSelect extends AbstractSelect {
 
 	public KomplikasjonklassifikasjonSelect(DataSource dataSource, String sql,

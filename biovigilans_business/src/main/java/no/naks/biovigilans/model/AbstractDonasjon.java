@@ -11,7 +11,8 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 
 /**
- * 
+ * Denne klassen representerer en donasjon fra en giver.
+ * @author olj
  */
 
 public abstract class AbstractDonasjon extends AbstractModel implements Donasjon{

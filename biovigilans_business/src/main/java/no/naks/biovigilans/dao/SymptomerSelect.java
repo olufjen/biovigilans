@@ -9,6 +9,11 @@ import no.naks.biovigilans.model.Symptomer;
 import no.naks.biovigilans.model.SymptomerImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractSelect;
 
+/**
+ * Denne klassen gjør oppslag mot tabellen symptomer
+ * @author olj
+ *
+ */
 public class SymptomerSelect extends AbstractSelect {
 
 	public SymptomerSelect(DataSource dataSource, String sql, String[] tableDefs) {
