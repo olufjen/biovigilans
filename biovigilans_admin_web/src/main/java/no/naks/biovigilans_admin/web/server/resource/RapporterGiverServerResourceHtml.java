@@ -47,8 +47,9 @@ import com.ibm.icu.util.Calendar;
 import freemarker.template.SimpleScalar;
 
 /**
+ * Denne resursen er knyttet til siden for å saksbehandle giverhendelser 
  * @author olj
- *  Denne resursen er knyttet til siden for å rapportere giverhendelser 
+ *  
  */
 public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServer {
 	
@@ -257,7 +258,7 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
 	    	 diskusjoner = diskusjonene.get(mmKey);	    	 
 	    	 if (diskusjoner == null)
 	    		 diskusjoner = new ArrayList<Diskusjon>();
-	    	 if (orgdiskusjoner != null)
+	    	 if (orgdiskusjoner != null && !sameKey) // I opprinnelig melding, viser doble sett med kommentarer OLJ 25.04.17
 	    		 diskusjoner.addAll(orgdiskusjoner);
 	    	 if (!diskusjoner.isEmpty()){
 	    		 checkDiskusjoner(diskusjoner);

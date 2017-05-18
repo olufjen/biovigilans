@@ -31,6 +31,13 @@ import org.restlet.resource.Post;
 
 import freemarker.template.SimpleScalar;
 
+/**
+ * MeldingtilMelderServerResourceHTML
+ * Denne Resursklassen håndterer brukstilfellet Dialog melder.
+ * Dersom saksbehandler har behov for ytterligere opplysinger om en Biovigilanbsmelding, så kan saksbehandler sende en melding til melder og be ham/henne svare med supplerende informasjon.
+ * @author olj
+ *
+ */
 public class MeldingtilMelderServerResourceHTML extends
 		SaksbehandlingSessionServer {
 	private Vigilansmelding melding;

@@ -22,7 +22,7 @@ import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.felles.control.SaksbehandlingWebService;
 /**
  * SaksbehandlingSessionServer
- * Denne klassen er superklassen til sakbehandling.
+ * Denne klassen er superklassen til alle resursklassene i sakbehandling.
  * Den muliggjør saksbehandling av tre typer meldinger:
  * Pasientmeldinger (transfusjoner)
  * Givermeldinger

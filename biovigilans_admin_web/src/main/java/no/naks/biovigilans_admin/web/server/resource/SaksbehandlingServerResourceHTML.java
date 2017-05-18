@@ -59,6 +59,13 @@ import no.naks.biovigilans.felles.model.PasientKomplikasjonWebModel;
 import no.naks.biovigilans.felles.model.TransfusjonWebModel;
 import no.naks.biovigilans.felles.server.resource.SessionServerResource;
 import no.naks.biovigilans.felles.control.SaksbehandlingWebService;
+/**
+ * SaksbehandlingServerResourceHTML
+ * Denne resursklassen henter frem oversikt over alle mottatte meldinger og gir bruker anledning til å saksbehandle meldingene
+ * Klassen sørger også for å velge riktig database for den meldeordningen brukeren har valgt.
+ * @author olj
+ *
+ */
 public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServer {
 
 
@@ -146,7 +153,7 @@ public class SaksbehandlingServerResourceHTML extends SaksbehandlingSessionServe
      * storeHemovigilans
      * Denne rutinen tar imot meldingsnøkkel fra bruker og henter frem meldingsinformasjon basert på 
      * oppgitt meldingsnøkkel
-     * Bruker kan også velge å endre listeutvalg
+     * Bruker kan også velge å endre listeutvalg, eller søke frem en valgt meldingsnøkkel.
      * @param form
      * @return
      */

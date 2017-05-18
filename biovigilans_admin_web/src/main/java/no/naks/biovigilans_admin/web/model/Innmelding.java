@@ -19,8 +19,10 @@ import org.restlet.data.Parameter;
 import edu.unc.ils.mrc.hive2.api.HiveConcept;
 
 /**
- * @author olj
  * For Restlet er dette representation klassen for Innmelding
+ * Denne klassen er ikke i bruk OLJ 07.04.17
+ * @author olj
+ * 
  * 
  */
 public class Innmelding  implements Serializable {

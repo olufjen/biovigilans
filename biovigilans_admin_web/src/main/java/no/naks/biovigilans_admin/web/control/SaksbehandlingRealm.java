@@ -23,7 +23,7 @@ import org.restlet.Request;
 /**
  * SaksbehandlingRealm
  * Denne klassen henter brukerinformasjon basert på et login skjermbilde og sjekker mot informasjon i db
- * 
+ * Den benytter Apache shiro rammeverk til autentisering
  * @author olj
  *
  */

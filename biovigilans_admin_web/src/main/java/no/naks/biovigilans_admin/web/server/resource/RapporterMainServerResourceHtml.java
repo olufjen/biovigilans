@@ -27,6 +27,11 @@ import org.restlet.resource.Post;
 
 import no.naks.biovigilans.felles.server.resource.SessionServerResource;
 
+/**
+ * Denne klassen henter frem hovedsiden for saksbehandling i Biovigilans.
+ * @author olj
+ *
+ */
 public class RapporterMainServerResourceHtml extends SaksbehandlingSessionServer {
 
 	public RapporterMainServerResourceHtml() {

@@ -62,10 +62,11 @@ import freemarker.template.SimpleScalar;
 //import edu.unc.ils.mrc.hive2.api.HiveConcept;
 
 /**
+ * Denne resursen håndterer all saksbehandling av transfusjonskomplikasjoner Biovigilans
  * Resurser blir instansiert for hver kall fra klient
  * 
  * @author olj
- * Denne resursen håndterer all dialog for rapportering av transfusjonskomplikasjoner hemovigilans
+ * 
  * 
  */
 public class RapporterHendelseServerResourceHtml extends SaksbehandlingSessionServer{

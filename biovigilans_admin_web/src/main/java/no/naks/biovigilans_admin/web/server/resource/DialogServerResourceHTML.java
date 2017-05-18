@@ -37,9 +37,10 @@ import org.restlet.resource.Post;
 import freemarker.template.SimpleScalar;
 
 /**
- * @author olj
  * Denne resursen er knyttet til dialog mellom saksbehandlere
  * 
+ * @author olj
+
  */
 public class DialogServerResourceHTML extends
 		SaksbehandlingSessionServer {

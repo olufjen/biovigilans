@@ -13,9 +13,11 @@ import org.restlet.resource.ClientResource;
 import org.restlet.resource.Get;
 import no.naks.biovigilans.felles.server.resource.SessionServerResource;
 /**
- * @author oluf
  * RapporterAnalyseServerResourceHTML
+ * Denne klassen er ikke i bruk OLJ 07.04.17
  * Denne klassen er Resource for Analysesidene
+ * @author oluf
+
  * 
  */
 public class RapporterAnalyseServerResourceHTML extends SessionServerResource {
