@@ -2510,4 +2510,28 @@ protected void sorterMeldinger(List<Vigilansmelding>meldinger){
 
 		}
 	}
+	/**
+	 * velgTilbakemelding
+	 * Denne rutinen sørger for riktig status til meldingen, når melder svarer på forespørsel.
+	 *  Melder kommenterer på meldinger som er erstattet. 10.5.17: 
+	 *  Erstattet Kommentar kommer på siste melding (ikke den som er erstattet).
+	 * @param status
+	 * @return
+	 */
+	protected Vigilansmelding velgTilbakemelding(Request request,String meldingsnokkel){
+		List<Vigilansmelding> meldinger = new ArrayList<Vigilansmelding>();
+		Map<String,List> meldingDetaljene = null;
+		if (meldingsnokkel != null){
+	    	 meldingDetaljene = (Map<String,List>)saksbehandlingWebservice.selectMeldingetternokkel(meldingsnokkel);
+	    }
+		if (meldingDetaljene != null){
+	    	meldinger = (List) meldingDetaljene.get(meldingsnokkel);
+	    	meldinger = hentMeldingstyper(meldinger);
+		}
+		if (meldinger.size() > 1)
+			meldinger.sort((vm1, vm2)->vm2.getMeldeid().compareTo(vm1.getMeldeid()));
+
+		return meldinger.get(0);
+		
+	}
 }

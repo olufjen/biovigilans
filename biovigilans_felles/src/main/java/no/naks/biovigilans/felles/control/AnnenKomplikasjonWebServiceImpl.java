@@ -15,7 +15,7 @@ public class AnnenKomplikasjonWebServiceImpl implements
 	/**
 	 * Forretningslaget singleton tjeneste
 	 */
-	AnnenKomplikasjonTableService annenKomplikasjonTableService;
+	private AnnenKomplikasjonTableService annenKomplikasjonTableService;
 
 	public AnnenKomplikasjonTableService getAnnenKomplikasjonTableService() {
 		return annenKomplikasjonTableService;

@@ -12,10 +12,10 @@ import no.naks.biovigilans.model.SakImpl;
 import no.naks.biovigilans.model.Saksbehandler;
 
 /**
- * @author olj
  *  SakModel
  *  Denne web model klassen benyttes til saksgang i administrasjonen
  *  Den benyttes for lagring av all informasjon til tabellene sak og diskusjon
+ *  @author olj
  */
 public class SakModel extends VigilansModel {
 

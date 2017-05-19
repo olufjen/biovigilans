@@ -13,7 +13,7 @@ import no.naks.biovigilans.model.Saksbehandler;
 import no.naks.biovigilans.model.SaksbehandlerImpl;
 
 /**
- * Denne klasses benyttes til å sende meldinger til melder.
+ * Denne klassen benyttes til å sende meldinger til melder.
  * Disse meldingene blir lagret som en del av diskusjonen til en sak (melding)
  * 
  * @author olj

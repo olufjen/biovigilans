@@ -172,7 +172,8 @@ public class ICD10WebServiceImpl implements ICD10WebService {
 			e.printStackTrace();
 		}
 	//	letters = icd10Index.getLetter();
-		 nivaa1 = noICD10.getTematiskGruppeNivaa1();
+		if (noICD10 != null)
+			nivaa1 = noICD10.getTematiskGruppeNivaa1();
 	}
 
 /*	

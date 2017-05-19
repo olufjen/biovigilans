@@ -41,7 +41,7 @@ import no.naks.semweb.model.SemantiskTree;
  * WEB-FLOW
  * Denne tjenesten fungerer som en controller for MeSh vocabulary
  * Den initialiserer alle modellobjekter som benyttes for MeSH
- * Denne singelton tjenesesten er ikke i bruk i dette prosjektet
+ * Denne singelton tjenesesten er ikke i bruk i dette Biovigilans.
  * 
  * @author olj
  *

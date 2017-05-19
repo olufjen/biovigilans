@@ -23,7 +23,7 @@ import no.naks.biovigilans.model.Vigilansmelding;
 
 
 /**
- * Denn web modellklassen representer felter i skjermbildet for giverkomplikasjoner
+ * Denne web modellklassen representer felter i skjermbildet for giverkomplikasjoner
  * @author olj
  *
  */

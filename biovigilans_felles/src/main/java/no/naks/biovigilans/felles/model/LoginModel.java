@@ -6,7 +6,7 @@ import no.naks.biovigilans.model.Saksbehandler;
 import no.naks.biovigilans.model.SaksbehandlerImpl;
 
 /**
- * Denne web modellklassen rpepresenterer login skjermbildet for saksbehandler
+ * Denne web modellklassen representerer login skjermbildet for saksbehandler
  * @author olj
  *
  */
