@@ -90,12 +90,12 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
 		 giverKomplikasjon = (Giverkomplikasjon)giverModel.getGiverKomplikasjon();
 	     if (giverModel.getVigilansmelding().getMeldingsnokkel() != null){
 	    	 displayPart = "block";
-	    	 datePart = "none";
+	    	 datePart = "block"; // Skal også vise donalsonsdato felt OLJ 25.04.17 Var tidligere satt til none
 	    	 Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
-	    	 giverModel.setVigilansmelding(melding);
-			 giverModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
- 			 hendelseWebService.updateVigilansmelding(giverModel.getVigilansmelding());
- 			giverModel.getVigilansmelding().setSjekklistesaksbehandling(null);
+//	    	 giverModel.setVigilansmelding(melding); Flyttet til storeHemovigilans OLJ 02.05.17
+//			 giverModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
+// 			 hendelseWebService.updateVigilansmelding(giverModel.getVigilansmelding());
+// 			giverModel.getVigilansmelding().setSjekklistesaksbehandling(null);
 	    	 if(giverKomplikasjon.getDatosymptomer() == null){
 	    			Calendar kalender = Calendar.getInstance();
 	    			int month = kalender.get(Calendar.MONTH);
@@ -294,6 +294,12 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     		Parameter lagre = form.getFirst("btnSendinn");
     		Parameter lagrex = form.getFirst("lagreskjema");
     		if(lagre!=null){
+    			if (giverModel.getVigilansmelding().getMeldeid() != null){
+    				 giverModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
+    	 			 hendelseWebService.updateVigilansmelding(giverModel.getVigilansmelding());
+    			}
+ 			 Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon(); // Flytter ny melding for lagring (insert) OLJ 02.05.17
+	    	 giverModel.setVigilansmelding(melding); //Flyttet til storeHemovigilans OLJ 02.05.17
     			giverModel.saveValues();
        			giverModel.savekomplikasjonsValues();
     			giverWebService.saveGiver(giverModel);

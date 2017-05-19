@@ -92,8 +92,8 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	    	 datePart = "none";
 	    	 Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
 	    	 annenKomplikasjon = annenModel.getAnnenKomplikasjon();
-			 annenModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
- 			 hendelseWebService.updateVigilansmelding(annenModel.getVigilansmelding());
+//			 annenModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
+// 			 hendelseWebService.updateVigilansmelding(annenModel.getVigilansmelding()); Flyttet til storeHemovigilans OLJ 02.05.17
 /*
  * OLJ 03.05.16 Flytter alle nødvendige data fra vigilansmelding til annenkomplikasjon	Dette er gjort i MelderRapportServerResourceHTML    	 
  */
@@ -194,7 +194,10 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     		//Parameter ikkegodkjet = form.getFirst("ikkegodkjent");
     		//Parameter godkjet = form.getFirst("godkjent");
     		if(lagre != null){
-    			
+    			if (annenModel.getVigilansmelding().getMeldeid() != null){
+    	   			 annenModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
+    	 			 hendelseWebService.updateVigilansmelding(annenModel.getVigilansmelding());
+    			}
     			//giverModel.getVigilansmelding().saveToVigilansmelding();
     			String strDate = form.getValues("hendelsen-date");
     			

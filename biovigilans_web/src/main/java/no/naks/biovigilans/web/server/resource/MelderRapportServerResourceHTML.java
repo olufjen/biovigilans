@@ -48,7 +48,7 @@ import org.restlet.resource.Post;
 import freemarker.template.SimpleScalar;
 
 /**
- * Denne resource henter frem alle meldinger knyttet til en melder.
+ * Denne resursen henter frem alle meldinger knyttet til en melder.
  * Den er knyttet til siden melder_rapport
  * @author olj
  *

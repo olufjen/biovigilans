@@ -207,8 +207,8 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    	 datePart = "none";
 	    	 Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
 //	    	 transfusjon.setVigilansmelding(melding);
-			 transfusjon.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
- 			 hendelseWebService.updateVigilansmelding(transfusjon.getVigilansmelding());
+//			 transfusjon.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
+// 			 hendelseWebService.updateVigilansmelding(transfusjon.getVigilansmelding()); // Dette er flyttet til storeHemovigilans OLJ 02.05.17
 	    	 transfusjon.setHendelseDato(melding.getDatoforhendelse());
 	    	 result.setHendelseDato(melding.getDatoforhendelse());
 	    	 transfusjon.setMeldingsNokkel(melding.getMeldingsnokkel());
@@ -404,6 +404,10 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 */	    	    
 	    		Parameter lagre = form.getFirst("btnSendinn");
 	    		if (lagre != null){
+	    			if (transfusjon.getVigilansmelding().getMeldeid() != null){
+	   	   			 	transfusjon.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
+	   	   			 	hendelseWebService.updateVigilansmelding(transfusjon.getVigilansmelding());
+	    			}
 	    			result.saveValues(); //Pasient og sykdommer
 	    		
 	    			transfusjon.saveValues(); // Transfusjon  og pasientkomplikasjoner

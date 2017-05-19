@@ -35,12 +35,14 @@ import org.restlet.resource.Post;
 import freemarker.template.SimpleScalar;
 
 /**
- * @author olj
+ * 
  * Denne resursen er knyttet til siden meldingframelder (I dialog med saksbehandlere)
+ * Her kan melder svare på henvendelser fra saksbehandlere.
+ * @author olj
  */
 public class MeldingfraMelderServerResourceHTML extends
 		SessionServerResource {
-	protected SaksbehandlingWebService saksbehandlingWebservice;
+//	protected SaksbehandlingWebService saksbehandlingWebservice;
 	private Vigilansmelding melding;
 	private String  meldingsType;
 	
@@ -60,14 +62,7 @@ public class MeldingfraMelderServerResourceHTML extends
 		
 	}
 	
-	public SaksbehandlingWebService getSaksbehandlingWebservice() {
-		return saksbehandlingWebservice;
-	}
 
-	public void setSaksbehandlingWebservice(
-			SaksbehandlingWebService saksbehandlingWebservice) {
-		this.saksbehandlingWebservice = saksbehandlingWebservice;
-	}
 
 	private void findMessageType(Request request){
 		 meldingsType =	(String) sessionAdmin.getSessionObject(request,meldingstypeKey);
@@ -248,9 +243,10 @@ public class MeldingfraMelderServerResourceHTML extends
 					 String deltema = extractString(tema, sep, -1);
 					 String header = extractString(tema, sep,0);
 					 tema = header + deltema;
-					 meldingsDiskusjon.getDiskusjon().setTema(tema);					 
-					 
-		     		melding.setSjekklistesaksbehandling("Tilleggsopplysninger mottatt");
+					 meldingsDiskusjon.getDiskusjon().setTema(tema);
+					 melding = velgTilbakemelding(request, melding.getMeldingsnokkel());
+//		     		melding.setSjekklistesaksbehandling(tilb);
+			    	melding.setSjekklistesaksbehandling("Tilleggsopplysninger mottatt");
 		     		hendelseWebService.updateVigilansmelding(melding);
 		    		 displayPart = "none";
 		        	 datePart = "none";

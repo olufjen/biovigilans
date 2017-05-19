@@ -38,10 +38,8 @@ import edu.unc.ils.mrc.hive2.api.HiveConcept;
 
 /**
  * Resurser blir instansiert for hver kall fra klient
- * 
- * @author olj
  * Denne resursen er knyttet til hovedsiden /hemovigilans
- * 
+ * @author olj
  */
 public class HemovigilansServerResourceHtml extends SessionServerResource {
 		
