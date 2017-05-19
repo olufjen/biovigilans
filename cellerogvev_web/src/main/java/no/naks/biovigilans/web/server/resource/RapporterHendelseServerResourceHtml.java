@@ -409,6 +409,10 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 */	    	    
 	    		Parameter lagre = form.getFirst("btnSendinn");
 	    		if (lagre != null){
+	    			if (transfusjon.getVigilansmelding().getMeldeid() != null){
+	   	   			 	transfusjon.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
+	   	   			 	hendelseWebService.updateVigilansmelding(transfusjon.getVigilansmelding());
+	    			}
 	    			result.saveValues(); //Pasient og sykdommer
 	    		
 	    			transfusjon.saveValues(); // Transfusjon  og pasientkomplikasjoner
