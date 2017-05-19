@@ -727,6 +727,7 @@
                         ${blodproduktfrysetørret},${cellerogvev6}">
          </property>
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
+        <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusframelder},${statusalleunntattavvist},${statuserstattet}"></property><!-- lagt til 6.10.16 -->
         <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
         <!-- Reaksjonsgruppe er tappetype for donasjon -->
         <property name="reaksjonengruppe" value="${cellerogvev3},${blodproduktplasmaoctaplas},${cellerogvev4},${blodproduktannen},${blodproduktpatogeninaktivert},
@@ -755,6 +756,7 @@
                 ${andrehendelser.pasientopplysninger},${andrehendelser.kjonn},${andrehendelser.alder}">
         
         </property>
+        <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusframelder},${statusalleunntattavvist},${statuserstattet}"></property><!-- lagt til 6.10.16 -->
         <property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient3},${aldergruppepasient4},${aldergruppepasient5},
                         ${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}">
          </property>
@@ -764,6 +766,8 @@
       ${hovedprosessoption10},${hovedprosessoption11}"></property>
       <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption8}"></property>  
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
+      <property name="tablewebservice" ref="tableWebService"></property>
+      <property name="innmeldingWebService" ref="hendelseWebService"></property>
       <property name="icd10WebService" ref="ICD10WebService"></property>
       <!-- 
 	      <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
@@ -786,6 +790,7 @@
         ${cellerogvev5},${blodproduktuniplas},${blodproduktflerepatogeninaktivert},${blodproduktferskplasma},${blodproduktkarantene},${cellerogvev2},
                         ${blodproduktfrysetørret},${cellerogvev6}">
          		</property>
+  		        <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusframelder},${statusalleunntattavvist},${statuserstattet}"></property><!-- lagt til 6.10.16 -->
                 <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
                 <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
                 <property name="sessionParams" value="${pasientkomplikasjon.kjonnmann},${pasientkomplikasjon.kjonnkvinne},${pasientkomplikasjon.alder},${pasientkomplikasjon.antistoffja},${pasientkomplikasjon.antistoffnei},
