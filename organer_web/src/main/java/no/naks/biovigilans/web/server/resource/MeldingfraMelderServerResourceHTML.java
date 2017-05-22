@@ -34,6 +34,11 @@ import org.restlet.resource.Post;
 
 import freemarker.template.SimpleScalar;
 
+/**
+ * Denne tjenesten brukes til dialog melder/saksbehandler
+ * @author olj
+ *
+ */
 public class MeldingfraMelderServerResourceHTML extends
 		SessionServerResource {
 	private Vigilansmelding melding;
