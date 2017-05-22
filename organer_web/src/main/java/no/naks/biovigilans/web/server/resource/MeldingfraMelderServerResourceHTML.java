@@ -36,7 +36,6 @@ import freemarker.template.SimpleScalar;
 
 public class MeldingfraMelderServerResourceHTML extends
 		SessionServerResource {
-	protected SaksbehandlingWebService saksbehandlingWebservice;
 	private Vigilansmelding melding;
 	private String  meldingsType;
 	
@@ -56,15 +55,6 @@ public class MeldingfraMelderServerResourceHTML extends
 		
 	}
 	
-	public SaksbehandlingWebService getSaksbehandlingWebservice() {
-		return saksbehandlingWebservice;
-	}
-
-	public void setSaksbehandlingWebservice(
-			SaksbehandlingWebService saksbehandlingWebservice) {
-		this.saksbehandlingWebservice = saksbehandlingWebservice;
-	}
-
 	private void findMessageType(Request request){
 		 meldingsType =	(String) sessionAdmin.getSessionObject(request,meldingstypeKey);
 		 if (meldingsType != null){
@@ -230,6 +220,7 @@ public class MeldingfraMelderServerResourceHTML extends
 		     		meldingsDiskusjon.saveDiskusjon();
 		     		meldingsDiskusjon.getDiskusjon().setMeldeid(melding.getMeldeid());
 		     		saksbehandlingWebservice.saveDiskusjon(meldingsDiskusjon.getDiskusjon());
+					melding = velgTilbakemelding(request, melding.getMeldingsnokkel());
 		     		melding.setSjekklistesaksbehandling("Tilleggsopplysninger mottatt");
 		     		hendelseWebService.updateVigilansmelding(melding);
 		    		 displayPart = "none";

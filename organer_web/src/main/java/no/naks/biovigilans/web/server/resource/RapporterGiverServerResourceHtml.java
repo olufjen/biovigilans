@@ -95,7 +95,7 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
 	    	 displayPart = "block";
 	    	 datePart = "none";
 	    	 Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
-	    	 giverModel.setVigilansmelding(melding);
+//	    	 giverModel.setVigilansmelding(melding);
 	    	 
 	    	 if(giverKomplikasjon.getDatosymptomer() == null){
 	    			Calendar kalender = Calendar.getInstance();
@@ -310,6 +310,12 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     		Parameter lagre = form.getFirst("btnSendinn");
     		Parameter lagrex = form.getFirst("lagreskjema");
     		if(lagre!=null){
+       			if (giverModel.getVigilansmelding().getMeldeid() != null){
+   				 	giverModel.getVigilansmelding().setSjekklistesaksbehandling(statusflag[8]); //Sett gammel melding til Erstattet OLJ 01.10.16
+   				 	hendelseWebService.updateVigilansmelding(giverModel.getVigilansmelding());
+    			}
+      			Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon(); // Flytter ny melding for lagring (insert) OLJ 02.05.17
+    	    	giverModel.setVigilansmelding(melding); //Flyttet til storeHemovigilans OLJ 02.05.17
     			giverModel.saveValues();
        			giverModel.savekomplikasjonsValues();
     			giverWebService.saveGiver(giverModel);

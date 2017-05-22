@@ -726,6 +726,7 @@
         ${cellerogvev5},${blodproduktuniplas},${blodproduktflerepatogeninaktivert},${blodproduktferskplasma},${blodproduktkarantene},${cellerogvev2},
                         ${blodproduktfrysetørret},${cellerogvev6}">
          </property>
+        <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusframelder},${statusalleunntattavvist},${statuserstattet}"></property><!-- lagt til 6.10.16 -->
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
         <!-- Reaksjonsgruppe er tappetype for donasjon -->
@@ -749,12 +750,16 @@
   </bean>   
   <bean name="/organer/rapporter_andrehendelser.html" id="rapporterhendelserServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterAndreHendelserServerResourceHtml">
+         <property name="sessionAdmin" ref="sessionAdmin"></property>
+         <property name="tablewebservice" ref="tableWebService"></property>
+         <property name="innmeldingWebService" ref="hendelseWebService"></property>    
         <property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
                 ${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
                 ${andreHendelser.planlagte},${andreHendelser.kommentar},${andreHendelser.klassifikasjon-sub},${andreHendelser.hvagikkgalt},${andrehendelser.ytterligereopplysninger},
                 ${andrehendelser.pasientopplysninger},${andrehendelser.kjonn},${andrehendelser.alder}">
         
         </property>
+        <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusframelder},${statusalleunntattavvist},${statuserstattet}"></property><!-- lagt til 6.10.16 -->
         <property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient3},${aldergruppepasient4},${aldergruppepasient5},
                         ${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}">
          </property>
@@ -786,7 +791,8 @@
         ${cellerogvev5},${blodproduktuniplas},${blodproduktflerepatogeninaktivert},${blodproduktferskplasma},${blodproduktkarantene},${cellerogvev2},
                         ${blodproduktfrysetørret},${cellerogvev6}">
          		</property>
-                <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
+		        <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusframelder},${statusalleunntattavvist},${statuserstattet}"></property><!-- lagt til 6.10.16 -->
+                 <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
                 <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
                 <property name="sessionParams" value="${pasientkomplikasjon.kjonnmann},${pasientkomplikasjon.kjonnkvinne},${pasientkomplikasjon.alder},${pasientkomplikasjon.antistoffja},${pasientkomplikasjon.antistoffnei},
                         ${pasientkomplikasjon.antistoff-erytrocytt},${pasientkomplikasjon.antistoff-hla},${pasientkomplikasjon.antistoff-trombocytt},${pasientkomplikasjon.antistoff-leukocytt},
