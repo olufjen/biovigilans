@@ -1,5 +1,8 @@
 package no.naks.biovigilans_admin.web.server.resource;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -647,9 +650,23 @@ public class RapporterGiverServerResourceHtml extends SaksbehandlingSessionServe
     		}
     		//Parameter ikkegodkjet = form.getFirst("ikkegodkjent");
     		//Parameter godkjet = form.getFirst("godkjent");
-    		if (lagreFlagg != null){
+    		if (lagreFlagg != null){ // Bruker velger å lagre merknader
        			melding = (Vigilansmelding) giverModel.getGiverKomplikasjon();
     			Date datoforhendelse =  melding.getDatoforhendelse();
+    			String strDate = form.getValues("dato-donasjon");
+/*
+ *   	OLJ 22.11.17 Ved reklassifisering og dato for hendelsen er endret.		
+ */
+     			if(strDate != null && !strDate.equals("")){
+ 					try {
+ 						DateFormat dateFormat =  new SimpleDateFormat("yyyy-MM-dd");
+ 						datoforhendelse = dateFormat.parse(strDate);
+    								} catch (ParseException e) {
+    									System.out.println("date format problem: " + e.toString());
+    				
+    								}
+    			}
+// ===================================    			
     			melding.setDatoforhendelse(datoforhendelse);
     			sakModel.setLoginSaksbehandler(login.getSaksbehandler());
 

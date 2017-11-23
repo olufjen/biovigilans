@@ -592,7 +592,23 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     		//Parameter godkjet = form.getFirst("godkjent");
     		if (lagreFlagg != null){ // Bruker har valgt å sette saksmerknader
        		//	Vigilansmelding melding = (Vigilansmelding) annenModel.getAnnenKomplikasjon();
-    			Date datoforhendelse =  melding.getDatoforhendelse();
+/*
+ *   	OLJ 22.11.17 Ved reklassifisering og dato for hendelsen er endret.		
+ */
+    			String strDate = form.getValues("hendelsen-date");
+    			Date datoforhendelse =  melding.getDatoforhendelse(); //Dersom dato for hendelsen er endret, sett ny dato. OLJ 22.11.17
+     			if(strDate != null && !strDate.equals("")){
+ 					try {
+ 						DateFormat dateFormat =  new SimpleDateFormat("yyyy-MM-dd");
+ 						datoforhendelse = dateFormat.parse(strDate);
+    								} catch (ParseException e) {
+    									System.out.println("date format problem: " + e.toString());
+    				
+    								}
+    			}
+// ===================================
+     			//    			datoforhendelse =  melding.getDatoforhendelse();
+     			
     			melding.setDatoforhendelse(datoforhendelse);
     			sakModel.setLoginSaksbehandler(login.getSaksbehandler());
     	

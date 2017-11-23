@@ -650,6 +650,12 @@
 		  	<textarea class="form-control" name="tab-reaksjon-beskriv" rows="3"></textarea>
 	 </div>
 	    <h3>Donasjon</h3>
+	 	<div class="bg-success" style="display: ${display}">
+			<label>Tidligere oppgitt donasjonsdato</label>
+			<div>
+				<label><label>${giverkomplikasjon.hendelseDato?date}</label></label><br>
+			</div>
+		</div>	   
 	    <div class="form-group" style="display: ${displaydate}">
 	    	<label>Donasjonsdato</label><br>
 	    	<input type="date"  name="dato-donasjon" id="dato-donasjon" onchange="dateValidation();"  />
