@@ -175,6 +175,7 @@
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
   	<property name="insertMelderSQL" value="${melder.insertmelder}"></property>
   	<property name="updateMelderSQL" value="${melder.updatemelder}"></property>
+  	<property name="updateMelderPWSQL" value="${melder.updatemelderpw}"></property>
   	<property name="melderPrimaryKey" value="${primarykey.melder}"></property>
   	<property name="melderprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	<property name="selectMeldingSQL" value="${melder.selectmelder}"></property>
@@ -314,6 +315,7 @@
   	<property name="selectvigilansMeldingnokkelSQL" value="${vigilansmeldingnokkel.select}"></property> 	
   	<property name="selectvigilansMeldinganonymSQL" value="${vigilansmeldinganonym.select}"></property> 
   	<property name="selectsakbehandlermerknadSQL" value="${sakbehandlermerknad.select}"></property>	
+  	<property name="updatesaksbehandlerPWSQL" value="${saksbehandler.updatesaksbehandlerpw}"></property>
   	<property name="vigilansakbehandlermerknadTableDefs" value="${vigilansmerknad.meldeid},${vigilansmerknad.meldingsnokkel},${vigilansmerknad.sjekklistesaksbehandling},${vigilansmerknad.behandlernavn},${vigilansmerknad.meldedato}"></property>
   </bean>
   <bean id="sakDAO" class="no.naks.biovigilans.dao.SakDAOImpl">
