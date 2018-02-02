@@ -344,6 +344,7 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 		komplikasjonsklassifikasjonWebService.setAlterativeSource(db);
 		komDiagnosegiverWebService.setAlterativeSource(db);
 		hendelseWebService.setAlterativeSource(db);
+		adminWebService.setAlterativeSource(db);
 //		melderWebService.setAlterativeSource(db);// MeldertableService er i saksbehandlerWebservice !!??? 
 		setAlternativeSource(sessionAdmin.getChosenTemplate());
 		setMeldertext(db);

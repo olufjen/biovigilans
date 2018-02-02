@@ -3,9 +3,11 @@ package no.naks.biovigilans_admin.web.control;
 import java.util.ArrayList;
 import java.util.List;
 
+import no.naks.biovigilans.felles.control.AdminWebService;
 import no.naks.biovigilans.felles.control.SessionAdmin;
 import no.naks.biovigilans.model.Saksbehandler;
 import no.naks.biovigilans.felles.control.SaksbehandlingWebService;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -39,7 +41,7 @@ public class SaksbehandlingRealm extends AuthorizingRealm {
 	private List<SimpleAccount> accounts;
 	private String accountKey = "accountKey";
 	private Request request;
-
+	private AdminWebService adminWebService;
 
 	public SaksbehandlingRealm() {
 		super();
@@ -91,6 +93,14 @@ public class SaksbehandlingRealm extends AuthorizingRealm {
 		return endAccount;
 	}
 	
+	public AdminWebService getAdminWebService() {
+		return adminWebService;
+	}
+
+	public void setAdminWebService(AdminWebService adminWebService) {
+		this.adminWebService = adminWebService;
+	}
+
 	public Request getRequest() {
 		return request;
 	}
@@ -115,9 +125,11 @@ public class SaksbehandlingRealm extends AuthorizingRealm {
 		this.saksbehandlingWebservice = saksbehandlingWebservice;
 		saksbehandlere = this.saksbehandlingWebservice.collectSaksbehandlere();
 		for (Saksbehandler saksbehandler: saksbehandlere){
+//			String decryptPW = "oluf";
+			String decryptPW = adminWebService.decryptsaksbehandlerPassword(saksbehandler.getBehandlerpassord());
 			principals.add(saksbehandler.getBehandlerepost());
-			credentials.add(saksbehandler.getBehandlerpassord());
-			SimpleAccount account = new SimpleAccount(saksbehandler.getBehandlerepost(),saksbehandler.getBehandlerpassord(),"dbrealm");
+			credentials.add(decryptPW);
+			SimpleAccount account = new SimpleAccount(saksbehandler.getBehandlerepost(),decryptPW,"dbrealm");
 		
 			accounts.add(account);
 		}
