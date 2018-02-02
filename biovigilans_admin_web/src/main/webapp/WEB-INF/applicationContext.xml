@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <beans
     xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -90,6 +89,7 @@
 <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
  <bean id="saksbehandlerRealm" class="no.naks.biovigilans_admin.web.control.SaksbehandlingRealm">
    <property name="sessionAdmin" ref="sessionAdmin"></property>
+   <property name="adminWebService" ref="adminWebService"></property>
    <property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
  </bean>
  
@@ -146,6 +146,8 @@
         <bean name="/hemovigilans/analyse_admin_main.html" id="analyseServerResourceHTML" autowire="byName" scope="prototype"
             class="no.naks.biovigilans_admin.web.server.resource.RapporterAnalyseServerResourceHTML">
         <property name="sessionAdmin" ref="sessionAdmin"></property>
+        <property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
+        <property name="adminWebService" ref="adminWebService"></property>
         </bean>
         <!-- Lagt tim 23.05.16 OLJ -->
        <bean name="/hemovigilans/hemovigilansadmin.html" id="logoutServerResourceHTML" autowire="byName" scope="prototype"
@@ -537,6 +539,14 @@
 			<property name="saksbehandlingService" ref="saksbehandlingService"></property>
 			<property name="melderTableService" ref="melderTableService"></property>
 		</bean>
+		<bean id="adminWebService" class="no.naks.biovigilans.felles.control.AdminWebServiceImpl">
+		       <property name="melderWebService" ref="melderWebService"></property>
+		       <property name="saksbehandlingService" ref="saksbehandlingService"></property>
+		</bean>
+	    <bean id="melderWebService" class="no.naks.biovigilans.felles.control.MelderWebServiceImpl">
+			<property name="melderTableService" ref="melderTableService"></property>
+		</bean>
+	
        <bean name="/hemovigilans/rapporter_transfusjon.html" id="rapporterServerResource" autowire="byName" scope="prototype"
                   class="no.naks.biovigilans_admin.web.server.resource.RapporterHendelseServerResourceHtml">
                         <property name="sessionAdmin" ref="sessionAdmin"></property>
