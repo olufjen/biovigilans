@@ -16,5 +16,6 @@ public interface MelderTableService {
 	public Map collectAnnenMeldinger(List<Vigilansmelding>meldinger);
 	public List<Melder> collectMeldere();
 	public List<Vigilansmelding> collectMeldersmeldinger(String melderIds);
+	public void updateMelderPW(List<Melder>  meldere);
 	public void setAlternativeSource(String key);
 }

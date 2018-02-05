@@ -34,5 +34,10 @@ public interface Melder {
 	public void setMeldinger(Map<String, Vigilansmelding> meldinger);
 	public String getMelderPassord();
 	public void setMelderPassord(String melderPassord);
+	public int[] getPwtypes();
+	public void setPwtypes(int[] pwtypes);
+	public Object[] getPwParams();
+	public void setPwParams(Object[] pwParams);
+
 	
 }

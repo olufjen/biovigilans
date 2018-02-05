@@ -10,6 +10,7 @@ import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.Regionstatistikk;
 import no.naks.biovigilans.model.Sak;
+import no.naks.biovigilans.model.Saksbehandler;
 import no.naks.biovigilans.model.Vigilansmelding;
 
 public interface SaksbehandlingService {
@@ -47,6 +48,7 @@ public interface SaksbehandlingService {
 	public List<Regionstatistikk> collectsykehusstatistikk(String startperiod,String endperiod,String type);
 	public List collectMessagesanonyme();
 	public List hentmeldingMerknader();
+	public void updateSaksbehandlerPW(List<Saksbehandler> saksbehandlere);
 	public void setAlterativeSource(String key);
 	
 }

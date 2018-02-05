@@ -10,6 +10,7 @@ import no.naks.biovigilans.model.Diskusjon;
 import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.Regionstatistikk;
 import no.naks.biovigilans.model.Sak;
+import no.naks.biovigilans.model.Saksbehandler;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.service.BusinessService;
 
@@ -19,7 +20,8 @@ import no.naks.rammeverk.kildelag.service.BusinessService;
  * Den er en grenseflate mellom Webservice klasser og DAO.
  * @since April 2016
  * Tilpasset flere databasekilder setAlterativeSource(String key)
- * 
+ * @since Januar 2018
+ * Oppdaterer saksbehandlers passord
  * @author olj
  *
  */
@@ -140,5 +142,15 @@ public class SaksbehandlingServiceImpl extends BusinessService implements Saksbe
 			statistikkDAO.setAlternativeSource(getJdbctemplatesDAO().getAlternativeSource());
 		}
 		
+	}
+	/**
+	 * updateSaksbehandlerPW
+	 * Denne rutinen oppdaterer saksbehandlers assord
+	 * updateSaksbehandlerPW
+	 * updateSaksbehandlerPW
+	 * @param saksbehandlere
+	 */
+	public void updateSaksbehandlerPW(List<Saksbehandler> saksbehandlere){
+		saksbehandlingDAO.updatesaksbehandlerPW(saksbehandlere);
 	}
 }

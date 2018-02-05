@@ -50,7 +50,9 @@ public class MelderTableServiceImpl extends BusinessService implements MelderTab
 	public List<Vigilansmelding> collectMeldersmeldinger(String melderIds){
 		return melderDAO.meldersMeldinger(melderIds);
 	}
-
+	public void updateMelderPW(List<Melder>  meldere){
+		melderDAO.updateMelderPW(meldere);
+	}
 	@Override
 	public void setAlternativeSource(String key) {
 		super.setAlterativeDBSource(key);

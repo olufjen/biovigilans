@@ -21,6 +21,11 @@ public interface Saksbehandler {
 	public Map<String, String> getBehandlerFields();
 	public void setBehandlerFields(Map<String, String> behandlerFields);
 	public void savetoSaksbehandler();
+	public Object[] getPwParams();
+	public void setPwParams(Object[] pwParams);
+	public int[] getPwtypes();
+	public void setPwtypes(int[] pwtypes);
+	
 	public String getDbChoice();
 	public void setDbChoice(String dbChoice);
 	

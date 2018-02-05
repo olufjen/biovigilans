@@ -6,20 +6,41 @@ import java.util.Map;
 
 /**
  * Implementasjonen av AbstractMelder
+ * @since 08.01.18
+ * Endring og lagring av kryptert passord OLJ
  * @author olj
  *
  */
 public class MelderImpl extends AbstractMelder implements Melder {
 
 	private Map<String,Vigilansmelding> meldinger;
-	
+	private int[] pwtypes;
+	private Object[] pwParams;
 	public MelderImpl(){
 		super();
+		pwtypes = new int[]{Types.VARCHAR,Types.INTEGER};
 		types = new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR};
 		utypes = new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		pwParams = new Object[]{getMelderPassord(),getMelderId()};
 		melderFields = new HashMap<String,String>();
 	}
 	
+	public int[] getPwtypes() {
+		return pwtypes;
+	}
+
+	public void setPwtypes(int[] pwtypes) {
+		this.pwtypes = pwtypes;
+	}
+
+	public Object[] getPwParams() {
+		return pwParams;
+	}
+
+	public void setPwParams(Object[] pwParams) {
+		this.pwParams = pwParams;
+	}
+
 	public void setParams(){
 		Long id = getMelderId();
 		if(id==null){
