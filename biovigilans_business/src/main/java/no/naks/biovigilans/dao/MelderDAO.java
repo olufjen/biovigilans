@@ -109,4 +109,5 @@ import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 	public List<Melder> hentMeldere();
 	public List<Vigilansmelding> meldersMeldinger (String melderIDs);
 	public void setAlternativeSource(JdbcTemplate alternativeSource);
+	public void updateMelderPW(List<Melder>  meldere);
 }

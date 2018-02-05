@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import no.naks.biovigilans.model.Saksbehandler;
 import no.naks.biovigilans.model.Vigilansmelding;
 
 public interface SaksbehandlingDAO {
@@ -334,7 +335,9 @@ public interface SaksbehandlingDAO {
 	public void setSelectvigilansMeldinganonymSQL(
 			String selectvigilansMeldinganonymSQL);
 	public List collectMessagesanonyme();
-
+	public void updatesaksbehandlerPW(List<Saksbehandler>  saksbehandlere);
+	public String getUpdatesaksbehandlerPWSQL();
+	public void setUpdatesaksbehandlerPWSQL(String updatesaksbehandlerPWSQL);
 	public Map<String,List> selectMeldingetternokkel (String meldeid);
 	public void setAlternativeSource(JdbcTemplate alternativeSource);
 	public String getSelectsakbehandlermerknadSQL();

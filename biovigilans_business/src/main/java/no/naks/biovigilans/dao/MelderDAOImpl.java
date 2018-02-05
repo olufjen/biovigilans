@@ -25,6 +25,9 @@ import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
 /**
  * Denne klassen administrerer meldertabellen og meldinger knyttet til en melder
+ * @since 08.01.18
+ * Tillegg for endring av passord OLJ
+ * updateMelderPW
  * @author olj
  *
  */
@@ -32,6 +35,7 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	
 	private String insertMelderSQL;
 	private String updateMelderSQL;
+	private String updateMelderPWSQL;
 	private String selectMeldingSQL;
 	private String melderPrimaryKey;
 	private String[] melderprimarykeyTableDefs;
@@ -132,6 +136,12 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	
 	
 	
+	public String getUpdateMelderPWSQL() {
+		return updateMelderPWSQL;
+	}
+	public void setUpdateMelderPWSQL(String updateMelderPWSQL) {
+		this.updateMelderPWSQL = updateMelderPWSQL;
+	}
 	public String getTiltakSQL() {
 		return tiltakSQL;
 	}
@@ -399,6 +409,27 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	}
 	public void setSelectMeldingSQL(String selectMeldingSQL) {
 		this.selectMeldingSQL = selectMeldingSQL;
+	}
+	/**
+	 * updateMelderPW
+	 * Denne rutinen oppdaterer melders passord med kryptert passord
+	 * Den benyttes for kryptering av passord
+	 * @param meldere
+	 */
+	public void updateMelderPW(List<Melder>  meldere){
+
+		 for (Melder melder : meldere ){
+				int[] types= melder.getPwtypes();
+//				Object[] params = melder.getPwParams(); OBS: Disse er initialisert til null
+				String sql = updateMelderPWSQL;
+//				if (melder.getMelderId().longValue() == 1){
+					Object[] params = {melder.getMelderPassord(),melder.getMelderId()};
+					melder.setPwParams(params);
+					tablesUpdate = new TablesUpdateImpl(getDataSource(), sql, types);
+					tablesUpdate.insert(params);
+//				}
+
+		 }
 	}
 	public void saveMelder(Melder melder){
 		melder.setParams();

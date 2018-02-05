@@ -18,9 +18,11 @@ import no.naks.biovigilans.model.Giverkomplikasjon;
 import no.naks.biovigilans.model.Giveroppfolging;
 import no.naks.biovigilans.model.Komplikasjonsdiagnosegiver;
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
+import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.Produktegenskap;
+import no.naks.biovigilans.model.Saksbehandler;
 import no.naks.biovigilans.model.Sykdom;
 import no.naks.biovigilans.model.Symptomer;
 import no.naks.biovigilans.model.Tiltak;
@@ -29,11 +31,15 @@ import no.naks.biovigilans.model.Utredning;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.service.SaksbehandlingService;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
+import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
+import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
 /**
  * Denne DAO tjenesten benyttes til oppslag og lagring mot ulike tabeller 
  * i forbindese med saksbehandlingen.
- * Denne tjenesen benyttes også i forbindelse med melders saksbehandling av egne meldinger, og dialogen mellom melder og saksbehandler
+ * Denne tjenesten benyttes også i forbindelse med melders saksbehandling av egne meldinger, og dialogen mellom melder og saksbehandler
+ * @since 19.01.18
+ * Tjenesten benyttes også til oppdatering/endring av saksbehandlers passord (kryptering/decryptering)
  * @author olj
  *
  */
@@ -44,7 +50,7 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	private String[] pasientMeldingTableDefs;
 	private String[] giverMeldingTableDefs;
 	private String[] annenMeldingTableDefs;
-	
+	private String updatesaksbehandlerPWSQL;
 	private String selectvigilansMeldingSQL;
 	private String selectvigilansMeldingidSQL;
 	private String selectvigilansMeldingtypesSQL;
@@ -127,7 +133,7 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 	private SymptomerSelect symptomerSelect = null;
 	private TiltakSelect tiltakSelect = null;
 	private ForebyggendetiltakSelect forebyggendetiltakSelect = null;
-	
+	private Tablesupdate tablesUpdate = null;
 	/*
 	 * Nøkler for giverkomplikasjoner	
 	 */
@@ -199,6 +205,16 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 		alleKomplikasjonsklassifikasjoner = new ArrayList();
 		alleSymptomer = new ArrayList();
 		
+	}
+
+
+	public String getUpdatesaksbehandlerPWSQL() {
+		return updatesaksbehandlerPWSQL;
+	}
+
+
+	public void setUpdatesaksbehandlerPWSQL(String updatesaksbehandlerPWSQL) {
+		this.updatesaksbehandlerPWSQL = updatesaksbehandlerPWSQL;
 	}
 
 
@@ -994,6 +1010,27 @@ public class SaksbehandlingDAOImpl extends AbstractAdmintablesDAO implements
 		VigilansmerknadSelect merknadSelect = new VigilansmerknadSelect(getDataSource(),selectsakbehandlermerknadSQL,vigilansakbehandlermerknadTableDefs);
 		List meldinger = merknadSelect.execute();
 		return meldinger;
+	}
+	/**
+	 * updatesaksbehandlerPW
+	 * Denne rutinen oppdaterer saksbehandlers passord med kryptert passord
+	 * Den benyttes for kryptering av passord
+	 * @param meldere
+	 */
+	public void updatesaksbehandlerPW(List<Saksbehandler>  saksbehandlere){
+
+		 for (Saksbehandler saksbehandler : saksbehandlere ){
+				int[] types= saksbehandler.getPwtypes();
+//				Object[] params = melder.getPwParams(); OBS: Disse er initialisert til null
+				String sql = updatesaksbehandlerPWSQL;
+//				if (melder.getMelderId().longValue() == 1){
+					Object[] params = {saksbehandler.getBehandlerpassord(),saksbehandler.getSakbehandlerid()};
+					saksbehandler.setPwParams(params);
+					tablesUpdate = new TablesUpdateImpl(getDataSource(), sql, types);
+					tablesUpdate.insert(params);
+//				}
+
+		 }
 	}
 	/**
 	 * velgMeldinger
