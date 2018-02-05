@@ -142,7 +142,11 @@ public class PassordServerResourceHTML extends SessionServerResource {
 			}
 			if (melderid != null && melder != null ){
 				emailWebService.setSubject("Passord");
-     	    	emailWebService.setEmailText("Ditt passord er: "+melder.getMelderPassord());
+/*
+ * Decrypt passord før sending OLJ 26.01.18				
+ */
+				passord = adminWebService.decryptMelderPassword(melder);
+     	    	emailWebService.setEmailText("Ditt passord er: "+passord);
     	    	 emailWebService.setMailTo(melder.getMelderepost());
     	    	 emailWebService.sendEmail("");
 				meldingsText = "Melding med passord er sendt til oppgitt adresse";

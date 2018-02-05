@@ -208,7 +208,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
         String page = "../hemovigilans/melder_rapport.html"; 
     	for (Parameter entry : form) {
 			if (entry.getValue() != null && !(entry.getValue().equals(""))){
-					System.out.println(entry.getName() + "=" + entry.getValue());
+//					System.out.println(entry.getName() + "=" + entry.getValue());
 					if (entry.getName().equals("k-melderepost")){
 						melderEpost = entry.getValue();
 					}
@@ -232,6 +232,10 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 						name = row.get("meldernavn").toString();
 					if (row.get("melderpassord") != null)
 						passord = row.get("melderpassord").toString();
+/*
+ * Decrypting password OLJ 10.01.18					
+ */
+					passord = adminWebService.decryptMelderPassword(passord);
 					if (melderPassord != null && melderPassord.equals(passord)){
 						Melder melder = new MelderImpl();
 						melder.setMelderId(melderid);

@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import no.naks.biovigilans.model.Melder;
+import no.naks.biovigilans.model.MelderImpl;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.felles.server.resource.SessionServerResource;
 import no.naks.biovigilans.felles.control.EmailWebService;
@@ -626,6 +627,10 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		
     		if(lagre != null){								// Lagre kontaktskjema
     			melderwebModel.saveValues();
+/*
+ * Encrypt passord for ny melder OLJ 23.01.18    			
+ */
+    			adminWebService.encryptMelderpassord(melderwebModel.getMelder());
     			melderWebService.saveMelder(melderwebModel);
     			SaveSkjema();
     			sessionAdmin.setSessionObject(request, melderwebModel, melderId);
@@ -744,9 +749,38 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 				if(!epost.equalsIgnoreCase("")){
 					List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
 					if(rows.size() > 0){
+/*
+ * Tilpasset kryptering OLJ 22.01.18						
+ */
+						String passord = "";
+						String name = "";
+						Long melderid = null;
+						for(Map row:rows){
+							melderid = Long.parseLong(row.get("melderid").toString());
+							if (row.get("meldernavn") != null)
+								name = row.get("meldernavn").toString();
+							if (row.get("melderpassord") != null)
+								passord = row.get("melderpassord").toString();
+//							row.put(arg0, arg1)
+						}
+						String encryptedPW = new String(passord);
+						Melder melder = melderwebModel.getMelder();
+						melder.setMelderId(melderid);
+						melder.setMeldernavn(name);
+						melder.setMelderPassord(passord);
+						melder.setMelderepost(epost);
+						passord = adminWebService.decryptMelderPassword(melder);
+						melder.setMelderPassord(passord);
+						
+/*
+ * Tilpasset kryptering END						
+ */
 						found = melderwebModel.kontaktValues( rows); // Found er true dersom riktig oppgitt passord og melder finnes fra før
-						if (found)
+						if (found){
 							melderwebModel.saveValues();
+							melder.setMelderPassord(encryptedPW); // Tilpasset kryptering END	
+						}
+							
 						newMelder = false;
 						buttonValue = "enable";
 			    	}

@@ -381,6 +381,7 @@
         <property name="donasjonWebService" ref="donasjonWebService"></property>
         <property name="komDiagnosegiverWebService" ref="komDiagnosegiverWebService"></property>
         <property name="melderWebService" ref="melderWebService"></property>
+        <property name="adminWebService" ref="adminWebService"></property>
   </bean>  
     
    <bean name="/hemovigilans/rapportert_melding.html" id="rapportertemeldingerServerResource" autowire="byName" scope="prototype"
@@ -676,7 +677,7 @@
         <property name="innmeldingWebService" ref="hendelseWebService"></property>
         <property name="icd10WebService" ref="ICD10WebService"></property>
         <property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf},${kontakt.passord}"></property> 
-        
+       <property name="adminWebService" ref="adminWebService"></property>       
   </bean>   
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
@@ -956,7 +957,9 @@
         <bean id="melderWebService" class="no.naks.biovigilans.felles.control.MelderWebServiceImpl">
 			<property name="melderTableService" ref="melderTableService"></property>
 		</bean>
-	
+		<bean id="adminWebService" class="no.naks.biovigilans.felles.control.AdminWebServiceImpl">
+		       <property name="melderWebService" ref="melderWebService"></property>
+		</bean>
 <!-- Exception handling -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="error/exception" />
