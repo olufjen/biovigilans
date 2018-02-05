@@ -1,5 +1,6 @@
 package no.naks.biovigilans.felles.server.resource;
 
+import no.naks.biovigilans.felles.control.AdminWebService;
 import no.naks.biovigilans.felles.control.AnnenKomplikasjonWebService;
 import no.naks.biovigilans.felles.control.DonasjonWebService;
 import no.naks.biovigilans.felles.control.GiverWebService;
@@ -40,6 +41,7 @@ public class ProsedyreServerResource extends ServerResource {
 	protected DonasjonWebService donasjonWebService;
 	protected MelderWebService melderWebService;
 	protected KomDiagnosegiverWebService komDiagnosegiverWebService;
+	protected AdminWebService adminWebService;
 
 	protected KomplikasjonsklassifikasjonWebService komplikasjonsklassifikasjonWebService;
 	/**
@@ -130,6 +132,12 @@ public class ProsedyreServerResource extends ServerResource {
 	public void setKomDiagnosegiverWebService(
 			KomDiagnosegiverWebService komDiagnosegiverWebService) {
 		this.komDiagnosegiverWebService = komDiagnosegiverWebService;
+	}
+	public AdminWebService getAdminWebService() {
+		return adminWebService;
+	}
+	public void setAdminWebService(AdminWebService adminWebService) {
+		this.adminWebService = adminWebService;
 	}
 	
 	

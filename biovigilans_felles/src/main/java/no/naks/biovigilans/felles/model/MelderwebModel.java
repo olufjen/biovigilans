@@ -792,9 +792,10 @@ public class MelderwebModel extends VigilansModel {
 			nyPassord = (String) getFormMap().get("k-passord");
 			boolean found = false;
 			for(Map row:rows){
-				String pwd = "";
-				if (row.get("melderpassord") != null)
-					pwd = row.get("melderpassord").toString();
+//				String pwd = "";
+				String pwd = melder.getMelderPassord(); // Bruker decryptert passord OLJ 22.01..18
+//				if (row.get("melderpassord") != null)
+//					pwd = row.get("melderpassord").toString(); Bruker decryptert passord OLJ 22.01..18
 				this.setMelderPassord(pwd);
 				Long id = Long.parseLong(row.get("melderid").toString());
 				melder.setMelderId(id);

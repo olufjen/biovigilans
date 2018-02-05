@@ -3,6 +3,7 @@ package no.naks.biovigilans.felles.control;
 import java.util.List;
 import java.util.Map;
 
+import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.service.MelderTableService;
 import no.naks.biovigilans.felles.model.MelderwebModel;
@@ -36,7 +37,9 @@ public class MelderWebServiceImpl implements MelderWebService {
 		
 		melderTableService.saveMelder(melderwebModel.getMelder());
 	}
-	
+	public void updateMelderPW(List<Melder>  meldere){
+		melderTableService.updateMelderPW(meldere);
+	}
 	public List selectMelder(String epost){
 		return melderTableService.selectMelder(epost);
 	}
