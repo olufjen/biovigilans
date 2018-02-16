@@ -235,6 +235,10 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 						name = row.get("meldernavn").toString();
 					if (row.get("melderpassord") != null)
 						passord = row.get("melderpassord").toString();
+/*
+* Decrypting password OLJ 10.01.18					
+*/
+					passord = adminWebService.decryptMelderPassword(passord);					
 					if (melderPassord != null && melderPassord.equals(passord)){
 						Melder melder = new MelderImpl();
 						melder.setMelderId(melderid);

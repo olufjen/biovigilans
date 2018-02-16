@@ -53,7 +53,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
     	 melderwebModel.distributeTerms();
     	 
 	     dataModel.put(melderId, melderwebModel);
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/passord.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/organer/passord.html"));
 	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 
 	     sessionAdmin.setSessionObject(getRequest(), melderwebModel,melderId);
@@ -137,7 +137,11 @@ public class PassordServerResourceHTML extends SessionServerResource {
 			}
 			if (melderid != null && melder != null ){
 				emailWebService.setSubject("Passord");
-     	    	emailWebService.setEmailText("Ditt passord er: "+melder.getMelderPassord());
+/*
+ * Decrypt passord før sending OLJ 26.01.18				
+*/
+				passord = adminWebService.decryptMelderPassword(melder);				
+     	    	emailWebService.setEmailText("Ditt passord er: "+passord);
     	    	 emailWebService.setMailTo(melder.getMelderepost());
     	    	 emailWebService.sendEmail("");
 				meldingsText = "Melding med passord er sendt til oppgitt adresse";
@@ -149,7 +153,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
 	 dataModel.put( meldeTxtId,simple);
 	
 		//Feil passord går til startside.
- 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/passord.html"));
+ 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/organer/passord.html"));
 		Representation pasientkomplikasjonFtl = clres2.get();
 		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 				MediaType.TEXT_HTML);
