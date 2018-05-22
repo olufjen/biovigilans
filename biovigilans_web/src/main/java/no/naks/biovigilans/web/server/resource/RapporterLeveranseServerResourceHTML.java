@@ -59,7 +59,8 @@ import freemarker.template.SimpleScalar;
  * RapporterLeveranseServerResourceHTML
  * Denne klassen er knyttet til leveranse.html
  * Det er den endelige kvitteringssiden for en melding til Hemovigilans
- * 
+ * @since  Mai 2018:
+ * Melder må endre passord i hht. HDIR sine regler.
  * @author olj
  *
  * 
@@ -265,6 +266,15 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	    SimpleScalar datoSimple = new SimpleScalar(datoLevert);
     	    dataModel.put(datoId, datoSimple);
     	    String melderEpost = melderwebModel.getMelder().getMelderepost();
+    	    if (!melderwebModel.getMelder().isPwStrength()){ //Sjekker passord styrke og snder ekstra epost
+    	    	if(melderEpost != null || !melderEpost.equals("")){
+       	    	 emailWebService.setMailTo(melderEpost);
+       	    	 emailWebService.setSubject("Hemovigilans Endring av passord");
+       	    	 emailWebService.setEmailText("For å bedre sikkerheten ved meldeordningen, ber vi deg endre ditt passord, slik at det følger Helsedirektoratets regler for passord"
+       	    	 		+ "%nVi ber om at du endrer ditt passord så snart det er praktisk mulig. %nVelg Oppfølgingsmelding/Meldingsoversikt. Der står det beskrevet hvordan du skal endre passordet");
+       	    	 emailWebService.sendEmail(meldingsNokkel); //Kommentert bort til stage !!
+    	    	}
+    	    }
     	    if(melderEpost != null || !melderEpost.equals("")){
     	    	 emailWebService.setMailTo(melderEpost);
     	    	 emailWebService.setSubject("Hemovigilans Meldeordningen");
