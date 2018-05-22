@@ -17,6 +17,9 @@ import no.naks.biovigilans.felles.model.PasientKomplikasjonWebModel;
 
 
 
+import no.naks.biovigilans.model.Melder;
+import no.naks.biovigilans.model.MelderImpl;
+
 import org.restlet.Request;
 import org.restlet.data.Form;
 import org.restlet.data.LocalReference;
@@ -39,6 +42,8 @@ import edu.unc.ils.mrc.hive2.api.HiveConcept;
 /**
  * Resurser blir instansiert for hver kall fra klient
  * Denne resursen er knyttet til hovedsiden /hemovigilans
+ * @since 05.04.18
+ * Fjernet unødig kode OLJ
  * @author olj
  */
 public class HemovigilansServerResourceHtml extends SessionServerResource {
@@ -100,7 +105,14 @@ public class HemovigilansServerResourceHtml extends SessionServerResource {
  */	    
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
-	    
+
+/* DEtte er en test av passordstryrke rutinen OLJ 05.04.18
+ * 	     Melder melder = new MelderImpl();
+	     melder.setMeldernavn("oluf");
+	     melder.setMelderPassord("oluf%");	     
+	     boolean pwstrength = adminWebService.checkStrenghtPassword(melder);
+	     */
+	     
 	     LocalReference localUri = new LocalReference(reference);
 //	     sessionAdmin.setSessionObject(getRequest(), result,"pasientkomplikasjon");
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
@@ -115,22 +127,7 @@ public class HemovigilansServerResourceHtml extends SessionServerResource {
 	                MediaType.TEXT_HTML);
 		 return templateRep;
 	 }
-	    @Put
-	    public Representation store(Form form) {
-	    	
-	        for (Parameter entry : form) {
-	            System.out.println(entry.getName() + "=" + entry.getValue());
-	            result.setValues(entry);
-	            
-	        }
-//	        System.out.println("Status = "+result.getStatus());
-	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
-	    	//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
-	    	        TemplateRepresentation  templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, result,
-	    	                MediaType.TEXT_HTML);
-	    	return templateRep;
-	      
-	    }
+
 	    /**
 	     * storepasientkomplikasjon
 	     * Denne rutinen tar imot alle ny informasjon fra bruker om ny fagprosedyre.

@@ -769,6 +769,9 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 						melder.setMeldernavn(name);
 						melder.setMelderPassord(passord);
 						melder.setMelderepost(epost);
+// Sjekker styrken på passord og setter flagg OLJ Mars 2018						
+						boolean pwstrength = adminWebService.checkStrenghtPassword(melder);
+						melder.setPwStrength(pwstrength);
 						passord = adminWebService.decryptMelderPassword(melder);
 						melder.setMelderPassord(passord);
 						
