@@ -27,6 +27,11 @@ import org.restlet.Request;
  * Denne klassen henter brukerinformasjon basert på et login skjermbilde og sjekker mot informasjon i db
  * Den benytter Apache shiro rammeverk til autentisering
  * @author olj
+ * @since February 2018
+ * Passord for saksbehandlere er kryptert. Passordet må dekryteres før det legges tilbake i listen over saksbehandlere
+ * Ellers kan org.apache.shiro.subject.Subject gi følgende feilmelding:
+ * Unknown accountRealm [no.naks.biovigilans_admin.web.control.SaksbehandlingRealm@7477ccf2]
+ * was unable to find account data for the submitted AuthenticationToken [org.apache.shiro.authc.UsernamePasswordToken....
  *
  */
 public class SaksbehandlingRealm extends AuthorizingRealm {
@@ -127,10 +132,12 @@ public class SaksbehandlingRealm extends AuthorizingRealm {
 		for (Saksbehandler saksbehandler: saksbehandlere){
 //			String decryptPW = "oluf";
 			String decryptPW = adminWebService.decryptsaksbehandlerPassword(saksbehandler.getBehandlerpassord());
+			String lPw = new String(saksbehandler.getBehandlerpassord());
+			saksbehandler.setBehandlerpassord(decryptPW);
 			principals.add(saksbehandler.getBehandlerepost());
 			credentials.add(decryptPW);
 			SimpleAccount account = new SimpleAccount(saksbehandler.getBehandlerepost(),decryptPW,"dbrealm");
-		
+//			System.out.println("PW "+lPw+" "+ saksbehandler.getBehandlerpassord()+ " Decrypt: "+decryptPW);
 			accounts.add(account);
 		}
 		

@@ -294,13 +294,29 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 		if (dbKey.equals("cellerogvev")){
 			tilMeldermsg = tilMeldermsgCEV;
 			tilMeldertillegg = tilMeldertilleggCEV;
-			int ll = hovedprosesslist.length;
-			int lf = feilelleravvik.length;
+			int ll = 0;
+			if (hovedprosesslist != null)
+				ll = hovedprosesslist.length;
+			int lf = 0;
+			if(feilelleravvik != null)
+				lf = feilelleravvik.length;
+			int alf = 0;
+			if(alvorligHendelse != null)
+				alf = alvorligHendelse.length;
+			int hlop = 0;
+			if(hendelsenoppdaget != null)
+				hlop = hendelsenoppdaget.length;
 			for (int i = 0;i<ll;i++){
 				hovedprosesslist[i] = "";
 			}
 			for (int i = 0;i<lf;i++){
 				feilelleravvik[i] = ""; 
+			}
+			for (int i = 0;i<alf;i++){
+				alvorligHendelse[i] = "";
+			}
+			for (int i = 0;i<hlop;i++){
+				hendelsenoppdaget[i] = "";
 			}
 			for (int i = 0;i<cellerogvevhovedprosesslist.length;i++){
 				hovedprosesslist[i] = cellerogvevhovedprosesslist[i];
@@ -308,18 +324,39 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 			for (int i = 0;i<cellerogvevfeilelleravvik.length;i++){
 				feilelleravvik[i] = cellerogvevfeilelleravvik[i];
 			}
-			
+			for (int i = 0;i<cellerogvevandrealvorlighendelsenoption.length;i++){
+				alvorligHendelse[i] = cellerogvevandrealvorlighendelsenoption[i];
+			}
+			for (int i = 0;i<cellerhendelsenoppdagetoption.length;i++){
+				hendelsenoppdaget[i] = cellerhendelsenoppdagetoption[i];
+			}
 		}
 		if (dbKey.equals("organer")){
 			tilMeldermsg = tilMeldermsgORG;
 			tilMeldertillegg = tilMeldertilleggORG;
-			int ll = hovedprosesslist.length;
-			int lf = feilelleravvik.length;
+			int ll = 0;
+			if (hovedprosesslist != null)
+				ll = hovedprosesslist.length;
+			int lf = 0;
+			if(feilelleravvik != null)
+				lf = feilelleravvik.length;
+			int alf = 0;
+			if(alvorligHendelse != null)
+				alf = alvorligHendelse.length;
+			int hlop = 0;
+			if(hendelsenoppdaget != null)
+				hlop = hendelsenoppdaget.length;
 			for (int i = 0;i<ll;i++){
 				hovedprosesslist[i] = "";
 			}
 			for (int i = 0;i<lf;i++){
 				feilelleravvik[i] = ""; 
+			}
+			for (int i = 0;i<alf;i++){
+				alvorligHendelse[i] = "";
+			}
+			for (int i = 0;i<hlop;i++){
+				hendelsenoppdaget[i] = "";
 			}
 			for (int i = 0;i<organerhovedprosesslist.length;i++){
 				hovedprosesslist[i] = organerhovedprosesslist[i];
@@ -327,7 +364,12 @@ public class SaksbehandlingSessionServer extends SessionServerResource {
 			for (int i = 0;i<organerfeilelleravvik.length;i++){
 				feilelleravvik[i] = organerfeilelleravvik[i];
 			}
-			
+			for (int i = 0;i<organerandrealvorlighendelsenoption.length;i++){
+				alvorligHendelse[i] = organerandrealvorlighendelsenoption[i];
+			}
+			for (int i = 0;i<organerhendelsenoppdagetoption.length;i++){
+				hendelsenoppdaget[i] = organerhendelsenoppdagetoption[i];
+			}
 		}
 	}
 	/**
