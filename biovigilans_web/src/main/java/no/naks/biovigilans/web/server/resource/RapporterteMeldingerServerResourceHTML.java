@@ -32,7 +32,7 @@ import freemarker.template.SimpleScalar;
  * Dette er resource for rapporterte meldinger.
  * Den aktiveres når bruker velger oppfølgingsmelding/meldingsoversikt.
  * Her oppgir bruker sin epostadresse og passord
- * Er riktig epostadresse og passord angitt, så fr bruker en oversikt over sine meldinger.
+ * Er riktig epostadresse og passord angitt, så får bruker en oversikt over sine meldinger.
  * @author olj
  *
  */

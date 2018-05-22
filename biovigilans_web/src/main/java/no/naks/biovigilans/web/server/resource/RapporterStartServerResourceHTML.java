@@ -197,12 +197,13 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
     	String melderEpost = null;
     	String melderPassord = null;
     	String meldingsNokkel = null;
+    	Melder melder = new MelderImpl();
 /*
  * Verdier fra database
  */
 		String name ="";
 		String passord = "";
-
+		String epost = "";
     	Long melderid = null; 
     	Parameter nyttPassord = form.getFirst("nyttpassord");
         String page = "../hemovigilans/melder_rapport.html"; 
@@ -232,21 +233,33 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 						name = row.get("meldernavn").toString();
 					if (row.get("melderpassord") != null)
 						passord = row.get("melderpassord").toString();
+
+/*
+ * OLJ April 2018
+ * Hente alle opplysninger om melder fra DB!?					
+ */
+					if (row.get("melderepost") != null)
+						epost = row.get("melderepost").toString();			
 /*
  * Decrypting password OLJ 10.01.18					
  */
 					passord = adminWebService.decryptMelderPassword(passord);
 					if (melderPassord != null && melderPassord.equals(passord)){
-						Melder melder = new MelderImpl();
+//						Melder melder = new MelderImpl();
 						melder.setMelderId(melderid);
 						melder.setMeldernavn(name);
 						melder.setMelderPassord(passord);
+						melder.setMelderepost(epost);
 						sessionAdmin.setSessionObject(request, melder, melderNokkel); 
 						break;
 					}
 				}
 			}
 			if (melderPassord != null && melderPassord.equals(passord)){
+				boolean pwstrength = adminWebService.checkStrenghtPassword(melder);
+				melder.setPwStrength(pwstrength);
+				if (!pwstrength)
+					page = "../hemovigilans/changepassord.html"; 
 	     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
