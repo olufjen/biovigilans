@@ -167,6 +167,14 @@
   	<property name="komplikasjonsklassifikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	<property name="komplikasjonsklassifikasjonPrimaryKey" value="${primarykey.komplikasjonsklassifikasjon}" ></property>
   	<property name="deleteKomplikasjonsklassifikasjonSQL" value="${komplikasjonsklassifikasjon.delete}"></property>
+  	<property name="classificationText" value="${feilblodtrans},${indikasjon},${bestilling},${provetaking},${feilmerking},${forveksling},${pretransfusjonstesting},
+  	${feilmangelfull},${valgutlevering},${hentingavblod},${hentingavblodfryser},${hentingavblodrorpost},${rutinerikkefulgt},${mangelfullkommunikasjon},
+  	${intetavvik},${transfusjonvetikke},${oppfylteikkekrav},${tiltenktannenpasient},${feilblodtype},${blodgittpåfeilindikasjon},
+  	${forholdpasient},${forholdutstyr},${uforlikeligblodprodukt},${paregneligrisiko},${annenarsak},${vetikkearsak}"></property>
+  	<property name="classificationCode" value="${komplikasjonskode1},${komplikasjonskode2},${komplikasjonskode3},${komplikasjonskode4},${komplikasjonskode5},${komplikasjonskode6},
+  	${komplikasjonskode7},${komplikasjonskode8},${komplikasjonskode9},${komplikasjonskode10},${komplikasjonskode11},${komplikasjonskode12},${komplikasjonskode13},${komplikasjonskode14},${komplikasjonskode15},
+  	${komplikasjonskode16},${komplikasjonskode17},${komplikasjonskode18},${komplikasjonskode19},${komplikasjonskode20},${komplikasjonskode21},${komplikasjonskode22},
+  	${komplikasjonskode23},${komplikasjonskode24},${komplikasjonskode25},${komplikasjonskode26}"></property>
   </bean>
   <bean id="hendelsehemovigilansDAO" class="no.naks.biovigilans.dao.HendelsehemovigilansDAOImpl">
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
