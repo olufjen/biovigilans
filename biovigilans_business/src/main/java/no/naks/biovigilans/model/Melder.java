@@ -38,6 +38,7 @@ public interface Melder {
 	public void setPwtypes(int[] pwtypes);
 	public Object[] getPwParams();
 	public void setPwParams(Object[] pwParams);
-
+	public boolean isPwStrength();
+	public void setPwStrength(boolean pwStrength);
 	
 }

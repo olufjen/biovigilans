@@ -8,12 +8,15 @@ import java.util.Map;
  * Implementasjonen av AbstractMelder
  * @since 08.01.18
  * Endring og lagring av kryptert passord OLJ
+ * @since 05.04.18
+ * En indikator for passordstyrke
  * @author olj
  *
  */
 public class MelderImpl extends AbstractMelder implements Melder {
 
 	private Map<String,Vigilansmelding> meldinger;
+	private boolean pwStrength = false; // Indikator for sterkt passord OLJ 05.04.18
 	private int[] pwtypes;
 	private Object[] pwParams;
 	public MelderImpl(){
@@ -25,6 +28,14 @@ public class MelderImpl extends AbstractMelder implements Melder {
 		melderFields = new HashMap<String,String>();
 	}
 	
+	public boolean isPwStrength() {
+		return pwStrength;
+	}
+
+	public void setPwStrength(boolean pwStrength) {
+		this.pwStrength = pwStrength;
+	}
+
 	public int[] getPwtypes() {
 		return pwtypes;
 	}
