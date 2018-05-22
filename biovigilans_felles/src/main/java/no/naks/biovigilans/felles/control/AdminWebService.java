@@ -18,4 +18,7 @@ public interface AdminWebService {
 	public void encryptMelderpassord(Melder melder);
 	public void setMelderWebService(MelderWebService melderWebService);
 	public void setAlterativeSource(String key);
+	public boolean checkStrenghtPassword(Melder melder);
+	public boolean isPwEncrypted();
+	public void setPwEncrypted(boolean pwEncrypted);
 }

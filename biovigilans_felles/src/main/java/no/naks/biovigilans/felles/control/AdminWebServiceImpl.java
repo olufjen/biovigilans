@@ -34,6 +34,7 @@ public class AdminWebServiceImpl implements AdminWebService {
 	private SaksbehandlingService saksbehandlingService;
 	private byte[] salt;
 	private String password = "pss";
+	private boolean pwEncrypted = false; // Satt til true dersom passord er encrypted
 	
 	public AdminWebServiceImpl() {
 		super();
@@ -57,6 +58,15 @@ public class AdminWebServiceImpl implements AdminWebService {
 	public void setMelderWebService(MelderWebService melderWebService) {
 		this.melderWebService = melderWebService;
 	}
+	
+	public boolean isPwEncrypted() {
+		return pwEncrypted;
+	}
+
+	public void setPwEncrypted(boolean pwEncrypted) {
+		this.pwEncrypted = pwEncrypted;
+	}
+
 	/* encyptsaksbehandler
 	 * Denne rutinen krypterer saksbehandlers passord
 	 * @see no.naks.biovigilans.felles.control.AdminWebService#encyptsaksbehandler(java.util.List)
@@ -287,7 +297,8 @@ public class AdminWebServiceImpl implements AdminWebService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//        System.out.println("Decrypted password: " + decryptedPassword);	    	
+//        System.out.println("Decrypted password: " + decryptedPassword);	  
+		pwEncrypted = !decryptedPassword.equals(encryptedPassword);
 		return decryptedPassword;
 	}
 	/**
@@ -318,7 +329,8 @@ public class AdminWebServiceImpl implements AdminWebService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
- //       System.out.println("Decrypted password: " + decryptedPassword);	    	
+ //       System.out.println("Decrypted password: " + decryptedPassword);
+
 		return decryptedPassword;
 	}
 	/**
@@ -349,8 +361,21 @@ public class AdminWebServiceImpl implements AdminWebService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
- //       System.out.println("Decrypted password: " + decryptedPassword);	    	
+ //       System.out.println("Decrypted password: " + decryptedPassword);	
+		pwEncrypted = !decryptedPassword.equals(pw);
 		return decryptedPassword;
+	}
+	/**
+	 * checkStrenghtPassword
+	 * Denne rutinen sjekker om passordet inneholder spesialtegn
+	 * @param melder
+	 * @return
+	 */
+	public boolean checkStrenghtPassword(Melder melder){
+		String decryptedPassword = decryptMelderPassword(melder);
+//		String decryptedPassword = "oluf#";
+		boolean change = decryptedPassword.matches("(.*)[!@#$&*%=?](.*)");
+		return change;
 	}
 	public void setAlterativeSource(String key){
 		saksbehandlingService.setAlterativeSource(key);

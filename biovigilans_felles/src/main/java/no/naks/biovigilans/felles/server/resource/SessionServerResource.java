@@ -196,6 +196,12 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String[] cellerogvevfeilelleravvik;	// Lagt til for Celler og vev 05.09.16
 	protected String[] organerhovedprosesslist; // Lagt til for organer 06.02.17
 	protected String[] organerfeilelleravvik;	// Lagt til for organer 06.02.17
+	
+	protected String[] cellerogvevandrealvorlighendelsenoption; // Lagt til for celler og vev andre hendelser 26.02.18
+	protected String[] cellerhendelsenoppdagetoption; // Lagt til for celler og vev andre hendelser 26.02.18
+	protected String[] organerandrealvorlighendelsenoption; // Lagt til for organer andre hendelser 26.02.18
+	protected String[] organerhendelsenoppdagetoption; // Lagt til for organer andre hendelser 26.02.18
+	
 	/**
 	 * Session objekter for kontakt	
 	 */
@@ -257,6 +263,42 @@ public class SessionServerResource extends ProsedyreServerResource {
 
 	public void setStatusflag(String[] statusflag) {
 		this.statusflag = statusflag;
+	}
+
+	public String[] getCellerogvevandrealvorlighendelsenoption() {
+		return cellerogvevandrealvorlighendelsenoption;
+	}
+
+	public void setCellerogvevandrealvorlighendelsenoption(
+			String[] cellerogvevandrealvorlighendelsenoption) {
+		this.cellerogvevandrealvorlighendelsenoption = cellerogvevandrealvorlighendelsenoption;
+	}
+
+	public String[] getCellerhendelsenoppdagetoption() {
+		return cellerhendelsenoppdagetoption;
+	}
+
+	public void setCellerhendelsenoppdagetoption(
+			String[] cellerhendelsenoppdagetoption) {
+		this.cellerhendelsenoppdagetoption = cellerhendelsenoppdagetoption;
+	}
+
+	public String[] getOrganerandrealvorlighendelsenoption() {
+		return organerandrealvorlighendelsenoption;
+	}
+
+	public void setOrganerandrealvorlighendelsenoption(
+			String[] organerandrealvorlighendelsenoption) {
+		this.organerandrealvorlighendelsenoption = organerandrealvorlighendelsenoption;
+	}
+
+	public String[] getOrganerhendelsenoppdagetoption() {
+		return organerhendelsenoppdagetoption;
+	}
+
+	public void setOrganerhendelsenoppdagetoption(
+			String[] organerhendelsenoppdagetoption) {
+		this.organerhendelsenoppdagetoption = organerhendelsenoppdagetoption;
 	}
 
 	public String[] getCellerogvevhovedprosesslist() {
@@ -820,6 +862,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 
 	    	 List<Komplikasjonsklassifikasjon> klassifikasjoner = new ArrayList<Komplikasjonsklassifikasjon>();
 	    	 klassifikasjoner.add( transfusjon.getKomplikasjonsklassifikasjon());
+//	    	 transfusjon.getKomplikasjonsklassifikasjon().getKlassifikasjonsbeskrivelse();
 	    	 sessionAdmin.setSessionObject(request, klassifikasjoner,klassifikasjonKey);
 	  //  	 transfusjon.setHemolyseParametre(hemolyseParametre);
 	     }
