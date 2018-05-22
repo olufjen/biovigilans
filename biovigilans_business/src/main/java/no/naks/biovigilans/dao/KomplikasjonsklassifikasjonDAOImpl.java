@@ -15,6 +15,7 @@ import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
 /**
  * Denne DAO tjenesten lagrer klassifikasjon av komplikasjonen for pasienter
+ * @since 09.03.18 OLJ Lagt til to tabeller for å gi klassifikasjonskode til tabellen komplikasjonsklassifikasjon (Ref Jira Meld-33) 
  * @author olj
  *
  */
@@ -22,6 +23,10 @@ public class KomplikasjonsklassifikasjonDAOImpl extends AbstractAdmintablesDAO i
 	
 	private String insertKomplikasjonsklassifikasjonSQL;
 	private String[] komplikasjonsklassifikasjonprimarykeyTableDefs;
+	
+	private String[] classificationText; // lagt til 09.03.18
+	private String[] classificationCode;// lagt til 09.03.18
+	
 	private String komplikasjonsklassifikasjonPrimaryKey;
 	private String deleteKomplikasjonsklassifikasjonSQL;
 	private Tablesupdate tablesUpdate = null;
@@ -29,6 +34,20 @@ public class KomplikasjonsklassifikasjonDAOImpl extends AbstractAdmintablesDAO i
 	private List<Komplikasjonsklassifikasjon> komplikasjonsklassifikasjoner = null;
 	
 	
+	
+	public String[] getClassificationText() {
+		return classificationText;
+	}
+	public void setClassificationText(String[] classificationText) {
+		this.classificationText = classificationText;
+	}
+
+	public String[] getClassificationCode() {
+		return classificationCode;
+	}
+	public void setClassificationCode(String[] classificationCode) {
+		this.classificationCode = classificationCode;
+	}
 	public List<Komplikasjonsklassifikasjon> getKomplikasjonsklassifikasjoner() {
 		return komplikasjonsklassifikasjoner;
 	}
@@ -79,7 +98,8 @@ public class KomplikasjonsklassifikasjonDAOImpl extends AbstractAdmintablesDAO i
 		komplikasjonsklassifikasjoner = new ArrayList();
 		
 		for(String klassifikasjon:klassifikasjonList){
-			komplikasjonsklassifikasjon.setKlassifikasjon(klassifikasjon);
+//			komplikasjonsklassifikasjon.setKlassifikasjon(klassifikasjon);
+			komplikasjonsklassifikasjon.setKlassifikasjon(MakeComplicationCode(klassifikasjon));// lagt til 09.03.18
 			komplikasjonsklassifikasjon.setKlassifikasjonsbeskrivelse(klassifikasjon);
 			Komplikasjonsklassifikasjon komplikasjon = new KomplikasjonsklassifikasjonImpl();
 			komplikasjon.setKlassifikasjon(klassifikasjon);
@@ -93,7 +113,23 @@ public class KomplikasjonsklassifikasjonDAOImpl extends AbstractAdmintablesDAO i
 			tablesUpdate.insert(params);
 		}	
 	}
-	
+	/**
+	 * MakeComplicationCode
+	 * Denne rutinen returnerer riktig komplkasjonskode (Ref Jira Meld-33)
+	 * @since 09.03.18 OLJ
+	 * @param komplicationText
+	 * @return
+	 */
+	private String MakeComplicationCode(String komplicationText){
+		int i = 0;
+		for (String classText:classificationText){
+			if (komplicationText.equals(classText)){
+				return classificationCode[i];
+			}
+			i++;
+		}
+		return "";
+	}
 	
 
 }

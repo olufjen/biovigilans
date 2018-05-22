@@ -25,4 +25,9 @@ public interface KomplikasjonsklassifikasjonDAO {
 	public void setKomplikasjonsklassifikasjoner(
 			List<Komplikasjonsklassifikasjon> komplikasjonsklassifikasjoner);
 	public void setAlternativeSource(JdbcTemplate alternativeSource);
+	public String[] getClassificationText();
+	public void setClassificationText(String[] classificationText);
+
+	public String[] getClassificationCode();
+	public void setClassificationCode(String[] classificationCode);
 }
