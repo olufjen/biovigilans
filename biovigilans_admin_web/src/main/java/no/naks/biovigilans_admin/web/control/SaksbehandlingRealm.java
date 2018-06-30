@@ -132,6 +132,7 @@ public class SaksbehandlingRealm extends AuthorizingRealm {
 		for (Saksbehandler saksbehandler: saksbehandlere){
 //			String decryptPW = "oluf";
 			String decryptPW = adminWebService.decryptsaksbehandlerPassword(saksbehandler.getBehandlerpassord());
+			saksbehandler.setBehandlerpassord(decryptPW);
 			principals.add(saksbehandler.getBehandlerepost());
 			credentials.add(decryptPW);
 			SimpleAccount account = new SimpleAccount(saksbehandler.getBehandlerepost(),decryptPW,"dbrealm");
