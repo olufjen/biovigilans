@@ -166,6 +166,8 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
      * Denne rutinen rutinen kjøres dersom epost og passord er gitt fra bruker.
      * Den tar imot epost og passord og henter frem riktig meldingsinformasjon fra
      * databasen basert på melders id
+     * @since 12.09.18
+     * Dersom passordfeltet er tomt eller null, be om nytt passord: OBS Dette kan være et sikkerhetshull !!!
      * @param form
      * @return
      */
@@ -266,7 +268,18 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 	    				MediaType.TEXT_HTML);	
 				redirectPermanent(page);
 				return templateRep;
-			}else{ // Feil passord går til startside.
+			}else if(melderPassord == null || melderPassord.equals("")|| melderPassord.isEmpty()){
+				melder.setPwStrength(false);
+				sessionAdmin.setSessionObject(request, melder, melderNokkel);
+				page = "../hemovigilans/changepassord.html"; 
+	     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
+	    		Representation pasientkomplikasjonFtl = clres2.get();
+	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+	    				MediaType.TEXT_HTML);	
+				redirectPermanent(page);
+				return templateRep;
+			}
+			else{ // Feil passord går til startside.
 	     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,

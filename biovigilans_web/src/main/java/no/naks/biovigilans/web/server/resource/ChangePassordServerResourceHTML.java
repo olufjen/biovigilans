@@ -53,7 +53,10 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 		 dataModel.put( displayKey,tilOversikt);
 	     Melder melder = (Melder) sessionAdmin.getSessionObject(request,melderNokkel);
 	     
-	     String melderNavn = melder.getMeldernavn();
+	     String melderNavn = "";
+	     if (melder.getMeldernavn()!= null){
+	    	 melderNavn = melder.getMeldernavn();
+	     };
 	     String melderEpost = melder.getMelderepost();
 	     SimpleScalar meldNavn = new SimpleScalar(melderNavn);
 	     SimpleScalar meldEpost = new SimpleScalar(melderEpost);
