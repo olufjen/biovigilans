@@ -43,7 +43,7 @@ import edu.unc.ils.mrc.hive2.api.HiveConcept;
  * Resurser blir instansiert for hver kall fra klient
  * Denne resursen er knyttet til hovedsiden /hemovigilans
  * @since 05.04.18
- * Fjernet unødig kode OLJ
+ * Fjernet unødig kode OLJ og sekket mot repository
  * @author olj
  */
 public class HemovigilansServerResourceHtml extends SessionServerResource {
