@@ -651,7 +651,7 @@ function showtext(id,thetext){
         <label>Inneliggende/poliklinisk</label>
         <div class="radio">
           <label>
-            <input type="radio" name="p-transfusjon-inneliggende"  id="p-inneliggende" value="inneligg">
+            <input type="radio" name="p-transfusjon-inneliggende"  id="p-inneliggende" value="inneliggende">
             Inneliggende
           </label>
         </div>
@@ -3249,7 +3249,7 @@ og/eller
       </div>
       <div class="radio">
         <label title="Død som følge av skaden.">
-          <input type="radio" name="klinisk-res" id="utfall" value="dod" title="Død som følge av skaden."/>Død
+          <input type="radio" name="klinisk-res" id="utfall" value="død" title="Død som følge av skaden."/>Død
         </label>
       </div>
       <div class="radio">
@@ -3547,10 +3547,10 @@ og/eller
     </div>    
 <div id="forebyggtiltak" class="form-group" style="display: none">  
   <label><br />Hvis ja:</label>
-  
+  <!-- Endret fra p-paregnelig olj Sept 2018 Se også tables.properties-->
   <div class="checkbox">
     <label>
-      <input name="p-paregnelig" type="checkbox" id="g" value="Tiltak ved neste transfusjon av denne pasienten  (tiltaknestetransfusjon)" />Tiltak ved neste transfusjon av denne pasienten  
+      <input name="tiltaknestetrans" type="checkbox" id="tiltaknestetrans" value="Tiltak ved neste transfusjon av denne pasienten  (tiltaknestetransfusjon)" />Tiltak ved neste transfusjon av denne pasienten  
     </label>
     </div>
   <div class="checkbox">
