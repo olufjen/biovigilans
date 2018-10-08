@@ -124,8 +124,8 @@ public class TransfusjonWebModel extends VigilansModel {
 		utredning = new UtredningImpl();
 		hemolyseParametre = new ArrayList<String>();
 		hemoLyse = new HemolyseImpl();
-		produktEgenskap = new ProduktegenskapImpl("erytrocytt");
-		tromboEgenskap = new ProduktegenskapImpl("trombocytt");
+		produktEgenskap = new ProduktegenskapImpl("erytrocyttkonsentrat"); // Når benevning av blodprodukt endres, så må dette endres tilsvarende OLJ 08.10.18
+		tromboEgenskap = new ProduktegenskapImpl("trombocyttkonsentrat");
 
 		
 	}
