@@ -18,7 +18,7 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 	private String[] plasmaProdukter = {"Octaplas","Plasma fra enkeltgiver patogeninaktivert","Plasma fra flere givere patogeninaktivert",
 			"Plasma fra enkeltgiver karantene","Plasma fra enkeltgiver frysetørret","Plasma fra flere givere frysetørret","Plasma fra enkeltgiver ferskt (ikke frosset)",
 			"Ferskfrosset plasma","Uniplas","Annet plasma"};
-	private String[] produkter = {"erytrocytt","trombocytt","transfusjon","annenblod-erytrocytt","annenblod-trombocytt","blod-plasma","annenblod-plasma"};
+	private String[] produkter = {"erytrocyttkonsentrat","trombocyttkonsentrat","transfusjon","annet erytrocyttkonsentrat","annet trombocyttkonsentrat","plasma","annet plasma"};
 	private String[] tapping = {"aferese","fullblod","vetikke"};
 	private String[] suspensjonsValg = {"giverplasma","kunstig","vetikke"};
 	private String[] antallKeys = {"p-blod-antallerytrocytt","p-blod-antalltrombocytt","p-blod-antallplasma","p-annenblod-antallerytrocytt",
