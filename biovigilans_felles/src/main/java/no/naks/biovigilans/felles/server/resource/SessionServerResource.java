@@ -1120,6 +1120,10 @@ public class SessionServerResource extends ProsedyreServerResource {
 			  String innePoli = pasient.getInneliggendePoli();
 			  if (innePoli == null)
 				  innePoli = "";
+			  if (innePoli.equals("inneligg"))
+				  innePoli = innePoli + "ende";
+			  if (innePoli.equals("poliklin"))
+				  innePoli = innePoli + "isk";			  
 			  formLinkHashmap.put("Inneliggene/Poliklinisk", innePoli);
 			  if (hastegrad == null)
 				  hastegrad = "";
