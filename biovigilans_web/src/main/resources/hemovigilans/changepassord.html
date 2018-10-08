@@ -60,13 +60,13 @@ Det nye passordet ditt må inneholde minst 8 tegn og et av disse spesialtegnene:
   	    <label>Din Epost adresse:</label>
      	<label>${Mepost}</label>
      </div>  	
-        <label for="k-epost">Nytt passord:</label>
+        <label for="k-epost" style="display: ${start}">Nytt passord: </label>
         <div>
-          <input name="k-epost" type="password" value="" class="form-control" id="k-epost" placeholder="Passord"  />
+          <input name="k-epost" type="password" value="" class="form-control" id="k-epost" placeholder="Passord" style="display: ${start}" />
         </div>
-       <label for="k-epost">Gjenta passord:</label>
+       <label for="k-epost" style="display: ${start}">Gjenta passord:</label>
         <div>
-          <input name="k-gjentaepost" type="password" value="" class="form-control" id="k-gjentaepost" placeholder="Passord"  />
+          <input name="k-gjentaepost" type="password" value="" class="form-control" id="k-gjentaepost" placeholder="Passord" style="display: ${start}"  />
         </div>
      <div class="form-group" id="ingennokkel" >
        	<label>${melding}</label>
@@ -74,7 +74,7 @@ Det nye passordet ditt må inneholde minst 8 tegn og et av disse spesialtegnene:
       </div>
  
 
-  	<button name="passord" type="submit" value="passord" class="btn btn-primary">Endre passord</button>
+  	<button name="passord" type="submit" value="passord" class="btn btn-primary" style="display: ${start}">Endre passord</button>
   	<button name="meldoversikt" type="submit" value="meldoversikt" class="btn btn-primary" style="display: ${display}">Til meldingsoverikten</button>
 
 <div class="panel-group" id="accordion">

@@ -47,10 +47,14 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 	 	 String meldingsText = "";
 	  	 displayPart = "none";
+	  	 String displayOrd = "block";
+	  	 String startPagekey = "start";
+		 SimpleScalar startPage = new SimpleScalar(displayOrd);
 		 SimpleScalar tilOversikt = new SimpleScalar(displayPart);
 	 	 SimpleScalar simple = new SimpleScalar(meldingsText);
 		 dataModel.put( meldeTxtId,simple);
 		 dataModel.put( displayKey,tilOversikt);
+		 dataModel.put( startPagekey,startPage);
 	     Melder melder = (Melder) sessionAdmin.getSessionObject(request,melderNokkel);
 	     
 	     String melderNavn = "";
@@ -149,10 +153,14 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 				bStrenght = adminWebService.checkStrenghtPassword(melder);
 			}
 			if (!bStrenght){
+			  	 String displayOrd = "block";
+			  	 String startPagekey = "start";
+				 SimpleScalar startPage = new SimpleScalar(displayOrd);
 				 String melderNavn = melder.getMeldernavn();
 				 melderEpost = melder.getMelderepost();
 			     SimpleScalar meldNavn = new SimpleScalar(melderNavn);
 			     SimpleScalar meldEpost = new SimpleScalar(melderEpost);
+				 dataModel.put( startPagekey,startPage);
 			     dataModel.put(meldernavnID,meldNavn);
 			     dataModel.put(melderepostID,meldEpost);
 				 SimpleScalar simple = new SimpleScalar(meldingsText);
@@ -167,12 +175,16 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 			if (bStrenght){
 				meldingsText = "Passordet er godkjent og endret";
 			  	 displayPart = "block";
+			  	 String displayOrd = "none";
+			  	 String startPagekey = "start";
+				 SimpleScalar startPage = new SimpleScalar(displayOrd);
 				 SimpleScalar tilOversikt = new SimpleScalar(displayPart);
 				 dataModel.put( displayKey,tilOversikt);
 				 String melderNavn = melder.getMeldernavn();
 				 melderEpost = melder.getMelderepost();
 			     SimpleScalar meldNavn = new SimpleScalar(melderNavn);
 			     SimpleScalar meldEpost = new SimpleScalar(melderEpost);
+				 dataModel.put( startPagekey,startPage);
 			     dataModel.put(meldernavnID,meldNavn);
 			     dataModel.put(melderepostID,meldEpost);
 				 SimpleScalar simple = new SimpleScalar(meldingsText);
