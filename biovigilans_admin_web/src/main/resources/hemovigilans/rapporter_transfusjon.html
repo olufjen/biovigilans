@@ -1215,7 +1215,7 @@ function showtext(id,thetext){
  </div>
     <div class="checkbox">
       <label>
-        <input type="radio" name="p-blod-erytrocytt" id="p-blod"  value="erytrocytt" 
+        <input type="radio" name="p-blod-erytrocytt" id="p-blod"  value="erytrocyttkonsentrat" 
         onclick="seterotrocytt('ero');toggleDisplay('erytrocyttantall', 0);toggleDisplay('annetblodprodukt', 0);toggleDisplay('tappingtypetromb', this.checked);toggleDisplay('blod-egenskapererytrocytt', this.checked);toggleDisplay('blod-egenskapertrombocytt',0);toggleDisplay('blod-plasmagruppe', 0);toggleDisplay('blod-egenskaperplasma', 0)"/>Erytrocyttkonsentrat
       </label>
   	</div>
@@ -1228,7 +1228,7 @@ function showtext(id,thetext){
 
     <div class="checkbox">
       <label>
-        <input type="radio" name="p-blod-erytrocytt" id="p-blod" value="trombocytt" 
+        <input type="radio" name="p-blod-erytrocytt" id="p-blod" value="trombocyttkonsentrat" 
         onclick="seterotrocytt('');toggleDisplay('trombocyttantall', 0);toggleDisplay('annetblodprodukt', 0);toggleDisplay('tappingtypetromb', this.checked);toggleDisplay('blod-egenskapertrombocytt', this.checked);toggleDisplay('blod-egenskapererytrocytt', 0);toggleDisplay('blod-plasmagruppe', 0);toggleDisplay('blod-egenskaperplasma', 0)"/>Trombocyttkonsentrat
       </label>
     </div>
@@ -1444,7 +1444,7 @@ function showtext(id,thetext){
 
     <div id="annenblod-241" class="checkbox" style="display: none">
       <label>
-        <input type="checkbox" name="p-annenblod-erytrocytt" id="p-blod-erytrocytt" value="p-annenblod-erytrocytt" onclick="toggleDisplay('annenblod-erytrocyttantall',  this.checked)"/>Erytrocyttkonsentrat
+        <input type="checkbox" name="p-annenblod-erytrocytt" id="p-blod-erytrocytt" value="annet erytrocyttkonsentrat" onclick="toggleDisplay('annenblod-erytrocyttantall',  this.checked)"/>Erytrocyttkonsentrat
       </label>
   	</div>
     <div id="annenblod-erytrocyttantall" class="form-group"  style="display: none">
@@ -1453,7 +1453,7 @@ function showtext(id,thetext){
     </div>  	
     <div  id="annenblod-242" class="checkbox" style="display: none">
       <label>
-        <input type="checkbox" name="p-annenblod-trombocytt" id="p-blod-trombocytt" value="p-annenblod-trombocytt" onclick="toggleDisplay('annenblod-trombocyttantall',  this.checked)"/>Trombocyttkonsentrat
+        <input type="checkbox" name="p-annenblod-trombocytt" id="p-blod-trombocytt" value="annet trombocyttkonsentrat" onclick="toggleDisplay('annenblod-trombocyttantall',  this.checked)"/>Trombocyttkonsentrat
       </label>
     </div>
    <div id="annenblod-trombocyttantall" class="form-group" style="display: none">
@@ -1463,7 +1463,7 @@ function showtext(id,thetext){
           
    <div id="annenblod-245" class="checkbox" style="display: none">
       <label>
-        <input type="checkbox" name="p-annenblod-plasma" id="p-blod-plasma" value="p-annenblod-plasma" onclick="toggleDisplay('annenblod-plasmaantall',  this.checked)"/>Plasma
+        <input type="checkbox" name="p-annenblod-plasma" id="p-blod-plasma" value="annet plasma" onclick="toggleDisplay('annenblod-plasmaantall',  this.checked)"/>Plasma
       </label>
     </div>
     <div id="annenblod-plasmaantall" class="form-group" style="display: none">
