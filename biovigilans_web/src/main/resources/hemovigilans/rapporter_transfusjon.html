@@ -651,7 +651,7 @@ function showtext(id,thetext){
         <label>Inneliggende/poliklinisk</label>
         <div class="radio">
           <label>
-            <input type="radio" name="p-transfusjon-inneliggende"  id="p-inneliggende" value="inneliggende">
+            <input type="radio" name="p-transfusjon-inneliggende"  id="p-inneliggende" value="inneligg"><!-- DB felt tar bare 8 tegn !! -->
             Inneliggende
           </label>
         </div>
@@ -773,7 +773,7 @@ function showtext(id,thetext){
       <!-- Plasma -->
       <div class="radio">
         <label>
-          <input type="radio" name="p-blod-erytrocytt" id="p-blod" value="blod-plasma" 
+          <input type="radio" name="p-blod-erytrocytt" id="p-blod" value="plasma" 
         onclick="toggleDisplay('blod-plasmaantall',0);toggleDisplay('annetblodprodukt', 0);toggleDisplay('blod-plasmagruppe', this.checked);toggleDisplay('blod-egenskaperplasma', this.checked);toggleDisplay('blod-egenskapererytrocytt', 0);toggleDisplay('blod-egenskapertrombocytt', 0);toggleDisplay('tappingtypetromb', 0)">
         Plasma 
         </label>
@@ -797,7 +797,7 @@ function showtext(id,thetext){
       <!-- Erytrocyttkonsentrat -->
       <div class="radio">
         <label>
-          <input type="radio" name="p-blod-erytrocytt" id="p-blod" value="erytrocytt" 
+          <input type="radio" name="p-blod-erytrocytt" id="p-blod" value="erytrocyttkonsentrat" 
         onclick="seterotrocytt('ero');toggleDisplay('erytrocyttantall', 0);toggleDisplay('annetblodprodukt', 0);toggleDisplay('tappingtypetromb', this.checked);toggleDisplay('blod-egenskapererytrocytt', this.checked);toggleDisplay('blod-egenskapertrombocytt',0);toggleDisplay('blod-plasmagruppe', 0);toggleDisplay('blod-egenskaperplasma', 0)">
         Erytrocyttkonsentrat
         </label>
@@ -811,7 +811,7 @@ function showtext(id,thetext){
       <!-- Trombocyttkonsentrat -->
       <div class="radio">
         <label>
-          <input type="radio" name="p-blod-erytrocytt" id="p-blod" value="trombocytt" 
+          <input type="radio" name="p-blod-erytrocytt" id="p-blod" value="trombocyttkonsentrat" 
         onclick="seterotrocytt('');toggleDisplay('trombocyttantall', 0);toggleDisplay('annetblodprodukt', 0);toggleDisplay('tappingtypetromb', this.checked);toggleDisplay('blod-egenskapertrombocytt', this.checked);toggleDisplay('blod-egenskapererytrocytt', 0);toggleDisplay('blod-plasmagruppe', 0);toggleDisplay('blod-egenskaperplasma', 0)">
         Trombocyttkonsentrat
         </label>
@@ -1025,7 +1025,7 @@ function showtext(id,thetext){
 
       <div id="annenblod-241" class="checkbox" style="display: none">
         <label>
-          <input type="checkbox" name="p-annenblod-erytrocytt" id="p-blod-erytrocytt" value="annenblod-erytrocytt" onclick="toggleDisplay('annenblod-erytrocyttantall',  this.checked)">
+          <input type="checkbox" name="p-annenblod-erytrocytt" id="p-blod-erytrocytt" value="annet erytrocyttkonsentrat" onclick="toggleDisplay('annenblod-erytrocyttantall',  this.checked)">
           Erytrocyttkonsentrat
         </label>
       </div>
@@ -1035,7 +1035,7 @@ function showtext(id,thetext){
       </div>
       <div id="annenblod-242" class="checkbox" style="display: none">
         <label>
-          <input type="checkbox" name="p-annenblod-trombocytt" id="p-blod-trombocytt" value="annenblod-trombocytt" onclick="toggleDisplay('annenblod-trombocyttantall',  this.checked)">
+          <input type="checkbox" name="p-annenblod-trombocytt" id="p-blod-trombocytt" value="annet trombocyttkonsentrat" onclick="toggleDisplay('annenblod-trombocyttantall',  this.checked)">
           Trombocyttkonsentrat
         </label>
       </div>
@@ -1045,7 +1045,7 @@ function showtext(id,thetext){
       </div>          
       <div id="annenblod-245" class="checkbox" style="display: none">
         <label>
-          <input type="checkbox" name="p-annenblod-plasma" id="p-blod-plasma" value="annenblod-plasma" onclick="toggleDisplay('annenblod-plasmaantall',  this.checked)">
+          <input type="checkbox" name="p-annenblod-plasma" id="p-blod-plasma" value="annet plasma" onclick="toggleDisplay('annenblod-plasmaantall',  this.checked)">
           Plasma
         </label>
       </div>
