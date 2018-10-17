@@ -29,6 +29,7 @@ import no.naks.biovigilans.model.MelderImpl;
  */
 public class PassordServerResourceHTML extends SessionServerResource {
 	private String meldeTxtId = "melding";
+	private String changeId ="change"; // Flagg for å endre passord
 
 	/**
 	 * getHemovigilans
@@ -44,8 +45,11 @@ public class PassordServerResourceHTML extends SessionServerResource {
 	     Request request = getRequest();
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 	 	 String meldingsText = "";
+	 	 String pwFlag = "none";
 	 	 SimpleScalar simple = new SimpleScalar(meldingsText);
+	 	 SimpleScalar changePW = new SimpleScalar(pwFlag);
 		 dataModel.put( meldeTxtId,simple);
+		 dataModel.put(changeId, changePW);
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
 	    
@@ -116,6 +120,17 @@ public class PassordServerResourceHTML extends SessionServerResource {
 			
     	}
 		Parameter formValue = form.getFirst("passord"); // Bruker oppgir epostadresse
+		Parameter changePassword = form.getFirst("changepassord"); // Bruker oppgir epostadresse
+		boolean bStrenght = true;
+		if (changePassword != null ){
+			String page = "../hemovigilans/changepassord.html";
+		     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/passord.html"));
+		     Representation pasientkomplikasjonFtl = clres2.get();
+		        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+		                MediaType.TEXT_HTML);
+				redirectPermanent(page);
+			 return templatemapRep;	
+		}
 //	    String page = "../hemovigilans/melder_rapport.html"; 
 		if (formValue != null && melderEpost != null){
 			List<Map<String, Object>> rows = melderWebService.selectMelder(melderEpost);
@@ -151,18 +166,32 @@ public class PassordServerResourceHTML extends SessionServerResource {
     	    	 emailWebService.sendEmail("");
 				meldingsText = "Melding med passord er sendt til oppgitt adresse";
 			}
-	
+			bStrenght = adminWebService.checkStrenghtPassword(melder);
 	    
 		}
-	 SimpleScalar simple = new SimpleScalar(meldingsText);
-	 dataModel.put( meldeTxtId,simple);
+		if (bStrenght){
+			SimpleScalar simple = new SimpleScalar(meldingsText);
+		 	 String pwFlag = "block";
+		 	 SimpleScalar changePW = new SimpleScalar(pwFlag);
+			 dataModel.put( meldeTxtId,simple);
+			 dataModel.put(changeId, changePW);
 	
-		//Feil passord går til startside.
- 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/passord.html"));
-		Representation pasientkomplikasjonFtl = clres2.get();
-		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
-				MediaType.TEXT_HTML);
-		return templateRep;
+			//Feil passord går til startside.
+	 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/passord.html"));
+			Representation pasientkomplikasjonFtl = clres2.get();
+			templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+					MediaType.TEXT_HTML);
+			return templateRep;
+		} else {
+			String page = "../hemovigilans/changepassord.html";
+		     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/passord.html"));
+		     Representation pasientkomplikasjonFtl = clres2.get();
+		        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+		                MediaType.TEXT_HTML);
+				redirectPermanent(page);
+			 return templatemapRep;	
+		}
+
     }
     
 }

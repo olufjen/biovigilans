@@ -33,11 +33,20 @@
   </header>
 
   <div class="container">
-      <div class="left hidden-print">        
+  <div class="left hidden-print">        
         <button type="button" class="btn btn-default btn-lg btn-back" onclick="homePage()">Tilbake</button>        
-      </div><form action="?method=PUT" method="post">
+  </div><form action="?method=PUT" method="post">
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
+var reqFlag =  "${change}";
+$( document ).ready(function(){ 
+//	alert("ready:");
+//	alert(reqFlag);
+	  if (reqFlag == 'block'){
+		  var endre = 'endrepassord';
+		  toggleDisplay(endre,1);
+	  }
+});
 function homePage(){
 	var curAddr = document.location.href;
 //	 alert(curAddr);
@@ -46,10 +55,27 @@ function homePage(){
 	document.location = newAddr;
 
 }
+function toggleDisplay(id, displayvalue)
+{    
+// alert("step 1 "+ id +" "+displayvalue);
+
+  if ( displayvalue == 1 ) {
+       document.getElementById(id).style.display = 'block';
+  //     alert("step 2");
+  } else if (displayvalue == 0) {
+       document.getElementById(id).style.display = 'none';
+  //     alert("step 3");
+  }
+//   alert("step 4");
+}
 </script>
 
 <h1>Glemt passord </h1>
   	<div class="form-group">
+  	<h3>Her kan du også bytte passord.</h3>
+  	<h4>Er passordet ditt ikke i henhold til Helsedirektoratets regler, så vil du bli bedt om å bytte passord</h4>
+  	<h4>Vi anbefaler at du ved jevne mellomrom bytter passord.</h4>
+  	
         <label for="k-epost">Melders epost:</label>
         <div>
           <input name="k-epost" type="email" value="" class="form-control" id="k-epost" placeholder="Email"  />
@@ -60,8 +86,11 @@ function homePage(){
     <div class="form-group" id="ingennokkel" >
      	<label>${melding}</label>
      </div>
-
-  	<button name="passord" type="submit" value="passord" class="btn btn-primary">Hent passord</button>
+   <div class="form-group" id="endrepassord" style="display: none" >
+     	<label>Ønsker du å bytte passord?</label><br />
+     	<button name="changepassord" type="submit" value="changepassord" class="btn btn-primary">Bytte passord</button>
+     </div>
+  	<button name="passord" type="submit" value="passord" class="btn btn-primary" >Hent passord</button>
 
 <div class="panel-group" id="accordion">
 
