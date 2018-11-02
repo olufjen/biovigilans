@@ -100,6 +100,7 @@ public class MelderwebModel extends VigilansModel {
 	
 	private String checkemail = "";
 	private String chekemKey = "checkemail";
+	private String changePasswd =""; // Dette får en annen verdi når melder ønsker å endre passord fra meldingsoversikt OLJ 31.10.18
 	
 	public MelderwebModel(){
 		super();
@@ -116,6 +117,16 @@ public class MelderwebModel extends VigilansModel {
 	}
 
 	
+	public String getChangePasswd() {
+		return changePasswd;
+	}
+
+
+	public void setChangePasswd(String changePasswd) {
+		this.changePasswd = changePasswd;
+	}
+
+
 	public String getNyPassord() {
 		return nyPassord;
 	}
