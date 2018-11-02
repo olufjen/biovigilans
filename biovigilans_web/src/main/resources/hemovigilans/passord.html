@@ -39,6 +39,7 @@
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 var reqFlag =  "${change}";
+//var buttonTxt = "${buttonTxt}";
 $( document ).ready(function(){ 
 //	alert("ready:");
 //	alert(reqFlag);
@@ -87,10 +88,13 @@ function toggleDisplay(id, displayvalue)
      	<label>${melding}</label>
      </div>
    <div class="form-group" id="endrepassord" style="display: none" >
-     	<label>Ønsker du å bytte passord?</label><br />
-     	<button name="changepassord" type="submit" value="changepassord" class="btn btn-primary">Bytte passord</button>
+     	<label>Vennligst oppgi tilsendt passord</label><br />
+   
+          <input name="k-genpassword" type="password" value="" class="form-control" id="k-genpassword" placeholder="Passord" /><br />
+    
+     	<button name="changepassord" type="submit" value="changepassord" class="btn btn-primary">Bekreft tilsendt passord</button>
      </div>
-  	<button name="passord" type="submit" value="passord" class="btn btn-primary" >Hent passord</button>
+  	<button name="passord" type="submit" value="passord" class="btn btn-primary" >${buttonTxt}</button>
 
 <div class="panel-group" id="accordion">
 

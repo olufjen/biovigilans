@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.restlet.Request;
 import org.restlet.data.Form;
 import org.restlet.data.LocalReference;
@@ -24,12 +25,16 @@ import no.naks.biovigilans.model.MelderImpl;
 
 /**
  * Denne resursen sørger for at bruker får tilsendt sitt passord, dersom bruker har glemt dette.
+ * @since 17.10.18:
+ * Genererer et engangspassord som sendes til bruker
  * @author olj
  *
  */
 public class PassordServerResourceHTML extends SessionServerResource {
 	private String meldeTxtId = "melding";
 	private String changeId ="change"; // Flagg for å endre passord
+	private String buttonTxtId = "buttonTxt";
+	private String genPWId = "passwordID";
 
 	/**
 	 * getHemovigilans
@@ -46,8 +51,11 @@ public class PassordServerResourceHTML extends SessionServerResource {
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 	 	 String meldingsText = "";
 	 	 String pwFlag = "none";
+	 	 String buttonTxt = "Hent passord";
 	 	 SimpleScalar simple = new SimpleScalar(meldingsText);
 	 	 SimpleScalar changePW = new SimpleScalar(pwFlag);
+	 	 SimpleScalar hentPW = new SimpleScalar(buttonTxt);
+	 	 dataModel.put(buttonTxtId, hentPW);
 		 dataModel.put( meldeTxtId,simple);
 		 dataModel.put(changeId, changePW);
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
@@ -65,7 +73,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/passord.html"));
 	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 
-	     sessionAdmin.setSessionObject(getRequest(), melderwebModel,melderId);
+	     sessionAdmin.setSessionObject(request, melderwebModel,melderId);
 	        Representation pasientkomplikasjonFtl = clres2.get();
 	        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
 	                MediaType.TEXT_HTML);
@@ -82,9 +90,10 @@ public class PassordServerResourceHTML extends SessionServerResource {
     	TemplateRepresentation  templateRep = null;
  	    Map<String, Object> dataModel = new HashMap<String, Object>();
  	    String meldingsText = "Melders epost finnes ikke, prøv igjen";
-
+ 	    String result = "";
 	    Request request = getRequest();
-	    
+	    result = (String)sessionAdmin.getSessionObject(request,genPWId);
+	    melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 /*	    Map<String,List> alleMeldinger = new HashMap<String,List>();
  	    List<Vigilansmelding> meldinger = null;
  //	    List delMeldinger = null;
@@ -120,16 +129,35 @@ public class PassordServerResourceHTML extends SessionServerResource {
 			
     	}
 		Parameter formValue = form.getFirst("passord"); // Bruker oppgir epostadresse
-		Parameter changePassword = form.getFirst("changepassord"); // Bruker oppgir epostadresse
+		Parameter changePassword = form.getFirst("changepassord"); // Bruker oppgir å bytte passord
 		boolean bStrenght = true;
+		String genPW = "";
 		if (changePassword != null ){
-			String page = "../hemovigilans/changepassord.html";
-		     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/passord.html"));
-		     Representation pasientkomplikasjonFtl = clres2.get();
-		        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
-		                MediaType.TEXT_HTML);
-				redirectPermanent(page);
-			 return templatemapRep;	
+			for (Parameter entry : form) {
+				if (entry.getValue() != null && !(entry.getValue().equals(""))){
+					//	System.out.println(entry.getName() + "=" + entry.getValue()+" "+result);
+						if (entry.getName().equals("k-genpassword")){
+							genPW = entry.getValue();
+						}
+				
+				}
+				
+	    	}
+			if (result != null && result.equals(genPW)){
+				String page = "../hemovigilans/changepassord.html";
+				 String pwFlag = "none";
+				 melderwebModel.setChangePasswd("pw");
+				 sessionAdmin.setSessionObject(request,melderwebModel,melderId);
+			 	 SimpleScalar changePW = new SimpleScalar(pwFlag);
+			 	 dataModel.put(changeId, changePW);
+			     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/passord.html"));
+			     Representation pasientkomplikasjonFtl = clres2.get();
+			        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+			                MediaType.TEXT_HTML);
+					redirectPermanent(page);
+				 return templatemapRep;	
+			}
+
 		}
 //	    String page = "../hemovigilans/melder_rapport.html"; 
 		if (formValue != null && melderEpost != null){
@@ -161,17 +189,22 @@ public class PassordServerResourceHTML extends SessionServerResource {
  * Decrypt passord før sending OLJ 26.01.18				
  */
 				passord = adminWebService.decryptMelderPassword(melder);
-     	    	emailWebService.setEmailText("Ditt passord er: "+passord);
+			 	result = RandomStringUtils.randomAlphabetic(16);
+			 	sessionAdmin.setSessionObject(request,result,genPWId);
+     	    	emailWebService.setEmailText("Ditt engangspassord er: "+result+ " Du må nå oppgi dette passordet og velge Bytte passord.");
     	    	 emailWebService.setMailTo(melder.getMelderepost());
     	    	 emailWebService.sendEmail("");
-				meldingsText = "Melding med passord er sendt til oppgitt adresse";
+				meldingsText = "Melding med et generert passord er sendt til oppgitt adresse";
 			}
-			bStrenght = adminWebService.checkStrenghtPassword(melder);
+//			bStrenght = adminWebService.checkStrenghtPassword(melder);
 	    
 		}
 		if (bStrenght){
 			SimpleScalar simple = new SimpleScalar(meldingsText);
 		 	 String pwFlag = "block";
+		 	 String buttonTxt = "Hent passord på nytt";
+		 	 SimpleScalar hentPW = new SimpleScalar(buttonTxt);
+		 	 dataModel.put(buttonTxtId, hentPW);
 		 	 SimpleScalar changePW = new SimpleScalar(pwFlag);
 			 dataModel.put( meldeTxtId,simple);
 			 dataModel.put(changeId, changePW);
@@ -184,6 +217,8 @@ public class PassordServerResourceHTML extends SessionServerResource {
 			return templateRep;
 		} else {
 			String page = "../hemovigilans/changepassord.html";
+			melderwebModel.setChangePasswd("pw");
+			sessionAdmin.setSessionObject(request,melderwebModel,melderId);
 		     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/passord.html"));
 		     Representation pasientkomplikasjonFtl = clres2.get();
 		        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
