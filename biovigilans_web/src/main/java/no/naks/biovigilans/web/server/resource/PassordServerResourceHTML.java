@@ -35,6 +35,8 @@ public class PassordServerResourceHTML extends SessionServerResource {
 	private String changeId ="change"; // Flagg for å endre passord
 	private String buttonTxtId = "buttonTxt";
 	private String genPWId = "passwordID";
+	private String email = "";
+	private String emailID = "email";
 
 	/**
 	 * getHemovigilans
@@ -55,9 +57,11 @@ public class PassordServerResourceHTML extends SessionServerResource {
 	 	 SimpleScalar simple = new SimpleScalar(meldingsText);
 	 	 SimpleScalar changePW = new SimpleScalar(pwFlag);
 	 	 SimpleScalar hentPW = new SimpleScalar(buttonTxt);
+	 	 SimpleScalar epost = new SimpleScalar(email);
 	 	 dataModel.put(buttonTxtId, hentPW);
 		 dataModel.put( meldeTxtId,simple);
 		 dataModel.put(changeId, changePW);
+		 dataModel.put(emailID, epost);
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
 	    
@@ -128,6 +132,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
 			}
 			
     	}
+    	email = melderEpost;
 		Parameter formValue = form.getFirst("passord"); // Bruker oppgir epostadresse
 		Parameter changePassword = form.getFirst("changepassord"); // Bruker oppgir å bytte passord
 		boolean bStrenght = true;
@@ -206,9 +211,10 @@ public class PassordServerResourceHTML extends SessionServerResource {
 		 	 SimpleScalar hentPW = new SimpleScalar(buttonTxt);
 		 	 dataModel.put(buttonTxtId, hentPW);
 		 	 SimpleScalar changePW = new SimpleScalar(pwFlag);
+		 	 SimpleScalar eepost = new SimpleScalar(email);
 			 dataModel.put( meldeTxtId,simple);
 			 dataModel.put(changeId, changePW);
-	
+			 dataModel.put(emailID, eepost);
 			//Feil passord går til startside.
 	 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/passord.html"));
 			Representation pasientkomplikasjonFtl = clres2.get();

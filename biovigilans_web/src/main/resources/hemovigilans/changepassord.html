@@ -68,10 +68,12 @@ Det nye passordet ditt må inneholde minst 8 tegn og et av disse spesialtegnene:
   	    <label>Din Epost adresse:</label>
      	<label>${Mepost}</label>
      </div>  	
-     
-          	<label for="k-genpassword" style="display: ${engang}">Vennligst oppgi tilsendt passord</label><br />
+     <div class="form-group" id="tilsendtpw" style="display: ${engang}">
+          	<label for="k-genpassword" >Vennligst oppgi tilsendt passord</label><br />
    
           <input name="k-genpassword" type="password" value="" class="form-control" id="k-genpassword" placeholder="Passord" style="display: ${engang}" onchange="formSubmit('genpasswd');"/><br />
+    	<button name="passord" type="submit" value="passord" class="btn btn-primary">Bekreft tilsendt passord</button>
+    </div>
        <div class="form-group" id="ingennokkel" >
        	<label>${melding}</label>
       </div>     
@@ -89,6 +91,7 @@ Det nye passordet ditt må inneholde minst 8 tegn og et av disse spesialtegnene:
 
   	<button name="passord" type="submit" value="passord" class="btn btn-primary" style="display: ${start}">Endre passord</button>
   	<button name="meldoversikt" type="submit" value="meldoversikt" class="btn btn-primary" style="display: ${display}">Til meldingsoverikten</button>
+  		<button name="kontaktskjema" type="submit" value="kontaktskjema" class="btn btn-primary" style="display: ${kontakt}">Tilbake til kontaktskjema</button>
   	<button name="genpasswd" type="submit" value="genpasswd" class="btn btn-primary" style="display: none">Endre passord</button>
 
 <div class="panel-group" id="accordion">

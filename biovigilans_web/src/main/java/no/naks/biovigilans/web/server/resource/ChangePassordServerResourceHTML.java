@@ -33,7 +33,8 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	private String meldernavnID = "Mnavn";
 	private String melderepostID = "Mepost";
 	private String genPWId = "passwordID"; // Session ID for generert passord
-	private String engangPWID = "engang"; //Benes til bruker for å angi engangspassord
+	private String engangPWID = "engang"; //Denne til bruker for å angi engangspassord
+	private String tilKontaktId = "kontakt"; // denne brukes til å vise knapp for å gå tilbake til kontaktskjema
 	/**
 	 * getHemovigilans
 	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
@@ -57,7 +58,7 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	     Melder melder = (Melder) sessionAdmin.getSessionObject(request,melderNokkel);
 	     String chPW = melderwebModel.getChangePasswd();
 	     if (chPW != null && !chPW.isEmpty()){
-		  	 displayOrd = "block";
+		  	 displayOrd = "block"; // Kommer fra Melderoversikt, ikke fra kontaktskjema
 		  	 engangDisplay = "none";
 	     }
 		 SimpleScalar startPage = new SimpleScalar(displayOrd);
@@ -114,6 +115,8 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 
 	    Request request = getRequest();
 	    melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
+	    String chPW = melderwebModel.getChangePasswd();
+
 	    Melder melder = (Melder) sessionAdmin.getSessionObject(request,melderNokkel);
 	    String genPasswd = (String) sessionAdmin.getSessionObject(request,genPWId);
 	    List<Melder> meldere = new ArrayList<Melder>();
@@ -161,6 +164,7 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
     	}
 		Parameter formValue = form.getFirst("passord"); // Bruker har endret passord
 		Parameter meldOversikt = form.getFirst("meldoversikt"); // Bruker ønsker å gå til sin meldingsoversikt
+		Parameter tilKontaksSkjema = form.getFirst("kontaktskjema"); // Bruker ønsker å gå til tilbake til kontaktskjema
 //	    String page = "../hemovigilans/melder_rapport.html"; 
 		if (formValue != null && userGenpasswd != null){ // Bruker kommer fra kontaktskjema og oppgir tilsendt generert passord
 			if (genPasswd.equals(userGenpasswd)){
@@ -241,15 +245,24 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 				 return templatemapRep;
 			}
 			if (bStrenght){
-				meldingsText = "Passordet er godkjent og endret";
-			  	 displayPart = "block";
+				meldingsText = "Passordet er endret og lagret";
+				melder.setPwStrength(bStrenght);
+			  	 displayPart = "none";
 			  	 String displayOrd = "none";
 			  	 String startPagekey = "start";
 				 String engangDisplay = "none";
+				 String tilKontakt = "block";
+			     if (chPW != null && !chPW.isEmpty()){
+				  	 displayOrd = "block"; // Kommer fra Melderoversikt, ikke fra kontaktskjema
+				  	 engangDisplay = "none";
+				  	 displayPart = "block";
+				  	tilKontakt = "none";
+			     }
 				 SimpleScalar engangPage = new SimpleScalar(engangDisplay);
 				 dataModel.put(engangPWID, engangPage);
 				 SimpleScalar startPage = new SimpleScalar(displayOrd);
 				 SimpleScalar tilOversikt = new SimpleScalar(displayPart);
+				 SimpleScalar tilkontakt = new SimpleScalar(tilKontakt);
 				 dataModel.put( displayKey,tilOversikt);
 				 String melderNavn = melder.getMeldernavn();
 				 melderEpost = melder.getMelderepost();
@@ -258,10 +271,12 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 				 dataModel.put( startPagekey,startPage);
 			     dataModel.put(meldernavnID,meldNavn);
 			     dataModel.put(melderepostID,meldEpost);
+			     dataModel.put(tilKontaktId,tilkontakt);
 				 SimpleScalar simple = new SimpleScalar(meldingsText);
 				 dataModel.put( meldeTxtId,simple);
 			     dataModel.put(melderId, melderwebModel);
 			     adminWebService.encyptmeldere(meldere);
+
 			     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/changepassord.html"));
 			     Representation pasientkomplikasjonFtl = clres2.get();
 			        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
@@ -272,6 +287,15 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 		}
 		if(meldOversikt != null) {
 			String page = "../hemovigilans/melder_rapport.html";
+		     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/changepassord.html"));
+		     Representation pasientkomplikasjonFtl = clres2.get();
+		        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+		                MediaType.TEXT_HTML);
+				redirectPermanent(page);
+			 return templatemapRep;		
+		}
+		if(tilKontaksSkjema != null) {
+			String page = "../hemovigilans/rapporter_kontakt.html";
 		     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/changepassord.html"));
 		     Representation pasientkomplikasjonFtl = clres2.get();
 		        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,

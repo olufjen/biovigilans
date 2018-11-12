@@ -488,8 +488,9 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     	 melderwebModel.setFormNames(sessionParams);
     	 setMelderparams();
     	 melderwebModel.distributeTerms();
-    	 
-/*
+     	 String result = ""; // Inneholder generert passord, dersom bruker har endret sitt passord, og kommer tilbake for å lagre skjema
+
+ /*
  * En Hashmap benyttes dersom en html side henter data fra flere javaklasser.	
  * Hver javaklasse får en id (ex pasientkomplikasjonId) som er tilgjengelig for html
  *      
@@ -509,11 +510,24 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		giverModel = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(request,giverkomplikasjonId);
     		annenModel = (AnnenKomplikasjonwebModel) sessionAdmin.getSessionObject(request,andreHendelseId);
     		donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(request,donasjonId);
+    		String buttonValue = "disable";
 /*
- * 	     
- */
-
-	 
+ * Sjekker om melder kommer fra "endre passord" funksjonen  OLJ 07.11.18
+*/
+    		result = (String) sessionAdmin.getSessionObject(request, genPWId);
+    		boolean found = false;
+    		String encryptedPasswd = melderwebModel.getMelder().getMelderPassord();
+    		if (result != null && !result.isEmpty()){
+    			String epost = melderwebModel.getMelderepost();
+    			Melder melder = melderwebModel.getMelder();
+    			String passord = adminWebService.decryptMelderPassword(melder);
+    			melder.setMelderPassord(passord);
+    			List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
+    			found = melderwebModel.kontaktValues( rows); // Found er true dersom riktig oppgitt passord og melder finnes fra før
+    			buttonValue = "enable";
+    			melder.setMelderPassord(encryptedPasswd);
+    			dataModel.put(melderId, melderwebModel);
+    		}    		
 /*
  * En Hashmap benyttes dersom en html side henter data fra flere javaklasser.	
  * Hver javaklasse får en id (ex pasientkomplikasjonId) som er tilgjengelig for html
@@ -525,7 +539,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
        	 SimpleScalar melderFound = new SimpleScalar(displayFound);
       	 SimpleScalar simple = new SimpleScalar(displayPart);
        	 SimpleScalar extraPassord = new SimpleScalar(extrapwd);
-     	String buttonValue = "disable";
+     
 		SimpleScalar lagreButton = new SimpleScalar(buttonValue);
 		dataModel.put(enableLagre, lagreButton);
      	 dataModel.put(displayKey, simple);
@@ -617,7 +631,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		sessionAdmin.setSessionObject(request, melderwebModel, melderId);
     		dataModel.put(melderId, melderwebModel);
     		
-    		Parameter formValue = form.getFirst("formValue"); 		// Fill kontaktform on the base of epost and password
+    		Parameter formValue = form.getFirst("formValue"); 		// Bruker har oppgitt epost og password
     		Parameter lagre = form.getFirst("lagrekontakt"); 		// Bruker ønsker å lagre informasjonen
     		Parameter lagreAnonymt = form.getFirst("lagreanonymt"); // Bruker ønsker å melde anonymt
     		Parameter valgtRegion = form.getFirst("regionValue");   //Bruker har valgt region
