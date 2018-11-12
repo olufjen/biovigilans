@@ -796,10 +796,22 @@ public class MelderwebModel extends VigilansModel {
 		melder.setSykehus("nn");
 		melder.setMelderPassord("nn");
 	}
+	/**
+	 * kontaktValues
+	 * Denne rutinen henter frem melders opplysninger om region og sykehus etc
+	 * @param rows
+	 * @return
+	 */
 	public boolean kontaktValues(List<Map<String, Object>>  rows){
 			melderInfo = rows;
 			int nop = rows.size();
 			String gittPassord =(String) getFormMap().get("k-passord");
+/*
+ * OLJ 07.11.18: Dersom melder kommer fra nytt passord funksjonen, så må man benytte melders nye passord			
+ */
+			if (gittPassord == null || gittPassord.isEmpty()){
+				gittPassord = melder.getMelderPassord();
+			}
 			nyPassord = (String) getFormMap().get("k-passord");
 			boolean found = false;
 			for(Map row:rows){
