@@ -451,10 +451,22 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 		
 	}
 	
-	public List<Map<String, Object>> selectMelder(String epost){
+	/* (non-Javadoc)
+	 * @see no.naks.biovigilans.dao.MelderDAO#selectMelder(java.lang.String)
+	 * @Since 21.01.19 Endret rutine for oppslag
+	 *  */
+	public List selectMelder(String epost){
+		List melderne = null;
+		int type = Types.VARCHAR;
 		String sql = selectMeldingSQL;
+		melderSelect = new MelderSelect(getDataSource(),sql,meldertableDefs);
+		melderSelect.declareParameter(new SqlParameter(type));
+		melderne = melderSelect.execute(epost);
+//		melderne = melderSelect.execute();
+		return melderne;
+/*		String sql = selectMeldingSQL;
 		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql,epost);
-		return rows;
+		return rows;*/
 	}
 
 	public String getMeldereSQL() {
