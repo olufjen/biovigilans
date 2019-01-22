@@ -65,6 +65,7 @@
   	<property name="melderPrimaryKey" value="${primarykey.melder}"></property>
   	<property name="melderprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	<property name="selectMeldingSQL" value="${melder.selectmelder}"></property>
+ 	<property name="meldertableDefs" value="${melder.melderid},${melder.meldernavn},${melder.melderepost},${melder.meldertlf},${melder.melderpassord},${melder.helseregion},${melder.foretak},${melder.sykehus}"></property>
   	<property name="vigilandsMeldingTableDefs" value="${vigilans.meldeid},${vigilans.datoforhendelse},${vigilans.datooppdaget},${vigilans.donasjonsoverforing},
   	${vigilans.sjekklistesaksbehandling},${vigilans.supplerendeopplysninger},${vigilans.meldingsdato},${vigilans.meldingsnokkel},${vigilans.melderid},
   	${vigilans.kladd},${vigilans.godkjent},${vigilans.endringsdato}"></property>
