@@ -225,23 +225,26 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 		Parameter formValue = form.getFirst("formValue"); // Bruker oppgir epost og passord
 	
 		if (formValue != null && melderEpost != null){
-			List<Map<String, Object>> rows = melderWebService.selectMelder(melderEpost);
-
-			if(rows.size() > 0){
-				for(Map row:rows){
-					melderid = Long.parseLong(row.get("melderid").toString());
+//			List<Map<String, Object>> rows = melderWebService.selectMelder(melderEpost);
+			List<Melder> rows = melderWebService.selectMelder(melderEpost);
+			if(rows != null && rows.size() > 0){
+				for(Melder rowmelder :rows){
+					melderid = rowmelder.getMelderId();
 	
-					if (row.get("meldernavn") != null)
+/*					if (row.get("meldernavn") != null)
 						name = row.get("meldernavn").toString();
 					if (row.get("melderpassord") != null)
-						passord = row.get("melderpassord").toString();
+						passord = row.get("melderpassord").toString();*/
+					name = rowmelder.getMeldernavn();
+					passord = rowmelder.getMelderPassord();
+					epost = rowmelder.getMelderepost();
 
 /*
  * OLJ April 2018
  * Hente alle opplysninger om melder fra DB!?					
  */
-					if (row.get("melderepost") != null)
-						epost = row.get("melderepost").toString();			
+/*					if (row.get("melderepost") != null)
+						epost = row.get("melderepost").toString();		*/	
 /*
  * Decrypting password OLJ 10.01.18					
  */
@@ -261,7 +264,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 				boolean pwstrength = adminWebService.checkStrenghtPassword(melder);
 				melder.setPwStrength(pwstrength);
 				if (!pwstrength)
-					page = "../hemovigilans/changepassord.html"; 
+					page = "../hemovigilans/passord.html";  // endret fra changepassword.html OLJ 21.01.19 
 	     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
@@ -271,7 +274,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 			}else if(melderPassord == null || melderPassord.equals("")|| melderPassord.isEmpty()){
 				melder.setPwStrength(false);
 				sessionAdmin.setSessionObject(request, melder, melderNokkel);
-				page = "../hemovigilans/changepassord.html"; 
+				page = "../hemovigilans/passord.html"; // endret fra changepassword.html OLJ 21.01.19 
 	     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,

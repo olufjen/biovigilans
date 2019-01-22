@@ -55,6 +55,11 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	  	 String startPagekey = "start";
 	     String genPasswd = (String) sessionAdmin.getSessionObject(request,genPWId);
 	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
+	     if(melderwebModel == null){
+		     setMelderObject();
+	    	 melderwebModel.setFormNames(sessionParams);
+	    	 melderwebModel.distributeTerms();
+	     }
 	     Melder melder = (Melder) sessionAdmin.getSessionObject(request,melderNokkel);
 	     String chPW = melderwebModel.getChangePasswd();
 	     if (chPW != null && !chPW.isEmpty()){
