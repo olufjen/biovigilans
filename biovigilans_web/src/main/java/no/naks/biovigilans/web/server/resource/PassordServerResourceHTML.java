@@ -112,7 +112,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
  * Verdier angitt av bruker    	
  */
     	String melderEpost = null;
-    	String melderPassord = null;
+ //   	String melderPassord = null; Bruker oppgir ikke passord
     	String meldingsNokkel = null;
 /*
  * Verdier fra database
@@ -166,10 +166,45 @@ public class PassordServerResourceHTML extends SessionServerResource {
 		}
 //	    String page = "../hemovigilans/melder_rapport.html"; 
 		if (formValue != null && melderEpost != null){
-			List<Map<String, Object>> rows = melderWebService.selectMelder(melderEpost);
-			Melder melder = null;
-			if(rows.size() > 0){
-				for(Map row:rows){
+			List<Melder> rows = melderWebService.selectMelder(melderEpost);
+//			List<Map<String, Object>> rows = melderWebService.selectMelder(melderEpost);
+			Melder melder = new MelderImpl();
+//			Melder melder = null;
+			if(rows != null && rows.size() > 0){
+				for(Melder rowmelder :rows){
+					melderid = rowmelder.getMelderId();
+	
+/*					if (row.get("meldernavn") != null)
+						name = row.get("meldernavn").toString();
+					if (row.get("melderpassord") != null)
+						passord = row.get("melderpassord").toString();*/
+					name = rowmelder.getMeldernavn();
+					passord = rowmelder.getMelderPassord();
+					epost = rowmelder.getMelderepost();
+
+/*
+ * OLJ April 2018
+ * Hente alle opplysninger om melder fra DB!?					
+ */
+/*					if (row.get("melderepost") != null)
+						epost = row.get("melderepost").toString();		*/	
+/*
+ * Decrypting password OLJ 10.01.18					
+ */
+					passord = adminWebService.decryptMelderPassword(passord);
+					if (passord != null){
+//						Melder melder = new MelderImpl();
+						melder.setMelderId(melderid);
+						melder.setMeldernavn(name);
+						melder.setMelderPassord(passord);
+						melder.setMelderepost(epost);
+						sessionAdmin.setSessionObject(request, melder, melderNokkel); 
+						break;
+					}
+				}
+				
+				
+/*				for(Map row:rows){
 					melderid = Long.parseLong(row.get("melderid").toString());
 	
 					if (row.get("meldernavn") != null)
@@ -186,7 +221,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
 						sessionAdmin.setSessionObject(request, melder, melderNokkel); 
 						break;
 					
-				}
+				}*/
 			}
 			if (melderid != null && melder != null ){
 				emailWebService.setSubject("Passord");
@@ -201,7 +236,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
     	    	 emailWebService.sendEmail("");
 				meldingsText = "Melding med et generert passord er sendt til oppgitt adresse";
 			}
-//			bStrenght = adminWebService.checkStrenghtPassword(melder);
+			bStrenght = adminWebService.checkStrenghtPassword(melder);
 	    
 		}
 		if (bStrenght){
@@ -234,5 +269,4 @@ public class PassordServerResourceHTML extends SessionServerResource {
 		}
 
     }
-    
 }

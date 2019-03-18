@@ -522,7 +522,8 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     			Melder melder = melderwebModel.getMelder();
     			String passord = adminWebService.decryptMelderPassword(melder);
     			melder.setMelderPassord(passord);
-    			List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
+    			List<Melder> rows = melderWebService.selectMelder(epost); // Korrekt kall 
+//    			List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
     			found = melderwebModel.kontaktValues( rows); // Found er true dersom riktig oppgitt passord og melder finnes fra før
     			buttonValue = "enable";
     			melder.setMelderPassord(encryptedPasswd);
@@ -568,6 +569,10 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     /**
      * storeHemovigilans
      * Denne rutinen tar imot alle ny informasjon fra brukers kontaktinformasjon
+     * @param form
+     * @return
+     */
+    /**
      * @param form
      * @return
      */
@@ -642,6 +647,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		Parameter hentPassord = form.getFirst("hentpassord"); // Sender passord til bruker OLJ 22.10.18: Dette endres til engangspassord
     		Parameter nymelder = form.getFirst("nymelder");			// Bruker ønsker å registrere ny melder til en eksisterende epost adresse
     		String genPW = "";
+ 
     		if(lagre != null){								// Lagre kontaktskjema
     			melderwebModel.saveValues();
 /*
@@ -697,24 +703,32 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     			    				MediaType.TEXT_HTML);
     	    		return templateRep;
      			}
-				List<Map<String, Object>> rows = melderWebService.selectMelder(melder_epost);
+     			List<Melder> rows = melderWebService.selectMelder(melder_epost);
+//				List<Map<String, Object>> rows = melderWebService.selectMelder(melder_epost);
 				String name = "";
 				Long melderid = null;
-				if(rows.size() > 0){
+				if(rows != null && rows.size() > 0){
 /*
 * Tilpasset kryptering OLJ 22.01.18						
 */
 					String passord = "";
 					
 //					Long melderid = null;
-					for(Map row:rows){
+			   		String epost = "";
+					for(Melder rowmelder :rows){
+						melderid = rowmelder.getMelderId();
+						name = rowmelder.getMeldernavn();
+						passord = rowmelder.getMelderPassord();
+						epost = rowmelder.getMelderepost();
+					}
+/*					for(Map row:rows){
 						melderid = Long.parseLong(row.get("melderid").toString());
 						if (row.get("meldernavn") != null)
 							name = row.get("meldernavn").toString();
 						if (row.get("melderpassord") != null)
 							passord = row.get("melderpassord").toString();
 //						row.put(arg0, arg1)
-					}
+					}*/
 
 				}
     			Melder melder = melderwebModel.getMelder();
@@ -822,20 +836,21 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 		     	String buttonValue = "disable";
 				boolean newMelder = true;
 				if(!epost.equalsIgnoreCase("")){
-					List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
-					if(rows.size() > 0){
+					List<Melder> rows = melderWebService.selectMelder(epost);
+//					List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
+					if(rows != null && rows.size() > 0){
 /*
  * Tilpasset kryptering OLJ 22.01.18						
  */
 						String passord = "";
 						String name = "";
 						Long melderid = null;
-						for(Map row:rows){
-							melderid = Long.parseLong(row.get("melderid").toString());
-							if (row.get("meldernavn") != null)
-								name = row.get("meldernavn").toString();
-							if (row.get("melderpassord") != null)
-								passord = row.get("melderpassord").toString();
+						for(Melder row:rows){
+							melderid = row.getMelderId();
+							if (row.getMeldernavn() != null)
+								name = row.getMeldernavn();
+							if (row.getMelderPassord() != null)
+								passord = row.getMelderPassord();
 //							row.put(arg0, arg1)
 						}
 						String encryptedPW = new String(passord);
@@ -951,8 +966,8 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     			melderwebModel.setAnonymEpost(anonymEpost);
     			String epost = melderwebModel.getMelderepost();
     			if(!epost.equalsIgnoreCase("")){
-					List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
-					if(rows.size() > 0){
+					List<Melder> rows = melderWebService.selectMelder(epost);
+					if(rows != null && rows.size() > 0){
 						melderwebModel.kontaktValues( rows);
 						melderwebModel.saveAnonym();
 //						melderwebModel.saveValues();
