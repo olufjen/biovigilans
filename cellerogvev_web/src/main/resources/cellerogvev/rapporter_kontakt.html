@@ -22,7 +22,20 @@
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" ></script>
-
+<style>
+.button {
+    background-color: #555555; 
+    color: white;
+    border: none;
+    padding: 5px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 8px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+</style>
 </head>
 
 <body onload="setSelectListValue();">
@@ -241,21 +254,21 @@ function sjekkforetak(){
 	var foretak = document.getElementById("k-helseforetak").value;
 //	alert("sjekker foretak:"+foretak);
 	 if (foretak == ''){
-		 document.getElementById('k-helseforetak').required = true;
+		 document.getElementById('k-helseforetak').required = false;
 //		 alert("foretak er tomt");
 	 }
 }
 function sjekksykehus(){
 	var sykehus = document.getElementById('k-sykehus').value;
 	if (sykehus == ''){
-	 document.getElementById('k-sykehus').required = true;
+	 document.getElementById('k-sykehus').required = false;
 //	 alert("foretak er tomt");
 	}
 }
 function anonymKnappen(){
 // Skaper problemer dersom man har en forhåndsutfylt epost adresse i kontaktskjema og ønsker å melde anonymnt!	 
 	 var epost = document.getElementById("k-epost").value;
-	 document.getElementById("k-epost").value = ""; // Derfor er dette kommentert ut. Det vil ivareta om man
+//	 document.getElementById("k-epost").value = ""; // Derfor er dette kommentert ut. Det vil ivareta om man
 //     													Fyller ut epost adresse og passord, og deretter trykker retur tasten.
 //														Resultatet blir at anonymknappen velges!
 	 var nepost = document.getElementById("k-epost").value;
@@ -299,16 +312,16 @@ function setanonymDefault(){
    
 <div  class="tab-pane" id="kontakt1">
 <div id="funnet" style="display: ${funnet}">
-<h3>Melder funnet, men feil eller intet passord oppgitt. Du har tre valg:</h3>
-   <input name="k-funnetpass" type="radio" id="k-funnetpass" value="k-funnetpass" onclick="formsubmitpassord();"/>
+<h3>Melder funnet, men feil eller intet passord oppgitt. Du har to valg:</h3>
+<!--    <input name="k-funnetpass" type="radio" id="k-funnetpass" value="k-funnetpass" onclick="formsubmitpassord();"/>
          <b>Ønsker du passord  tilsendt på epost? </b>     
-    <br>
+    <br> -->
 	<input name="k-funnet" type="radio" id="k-funnet" value="k-funnet" onclick="formsubmitnymelder();"/>
          <b>Ønsker du å registrere deg som bruker på flere blodbanker, men med samme epost adresse alle stedene? (I så fall må du ha flere passord, ett for hvert av stedene du melder fra)</b>
     <br>
  
     <input name="k-provnytt" type="radio" id="k-provnytt" value="k-provnytt" onclick="formsubmitpany();"/>
-         <b>Ingen av delene, jeg prøver på nytt </b>                
+         <b>Nei, jeg prøver på nytt </b>                
 </div> 
 <br>
 <h4>Har du meldt tidligere, skal dine kontaktopplysninger komme opp automatisk straks du har skrevet inn epost-adresse og riktig passord. Fyll alltid ut disse to feltene og avslutt passordfeltet med å trykke TAB-tasten. Da knyttes meldingen til deg som melder straks du velger knappen "Send Inn".</h4>
@@ -316,13 +329,14 @@ function setanonymDefault(){
 	<div class="form-group">
         <label for="k-epost">Melders epost:</label>
         <div>
-          <input name="k-epost" type="email" value="${melder.melderepost}" class="form-control" id="k-epost" placeholder="Email"   />
+          <input required="required" name="k-epost" type="email" value="${melder.melderepost}" class="form-control" id="k-epost" placeholder="Email"   />
         </div>
        
       </div>
       <div class="form-group" id="pwdcheck">
         <label for="k-passord">Melders passord:</label>
         <div id="pwdchecksub">
+          <button name="glemtpass" type="submit" id="glemtpass"  class="btn btn-primary" title="Velger du Glemt passord, vil du få tilsendt et engangspassord som du må bruke for å sette nytt passord.">Glemt passord</button>
           <input title="Husk, benytt tab-tast (ikke returtast)"  name="k-passord" type="password" value="${melder.melderPassord}"  class="form-control" id="k-passord" placeholder="Passord" onblur="formSubmit();" />
         </div>
       </div>

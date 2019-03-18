@@ -730,22 +730,29 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 		     	String buttonValue = "disable";
 				boolean newMelder = true;
 				if(!epost.equalsIgnoreCase("")){
-					List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
-					if(rows.size() > 0){
+					List<Melder> rows = melderWebService.selectMelder(epost);
+//					List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
+					if(rows != null && rows.size() > 0){
 /*
  * Tilpasset kryptering OLJ 22.01.18						
 */
 						String passord = "";
 						String name = "";
 						Long melderid = null;
-						for(Map row:rows){
+						for(Melder rowmelder :rows){
+							melderid = rowmelder.getMelderId();
+							name = rowmelder.getMeldernavn();
+							passord = rowmelder.getMelderPassord();
+							epost = rowmelder.getMelderepost();
+						}
+/*						for(Map row:rows){
 							melderid = Long.parseLong(row.get("melderid").toString());
 							if (row.get("meldernavn") != null)
 								name = row.get("meldernavn").toString();
 							if (row.get("melderpassord") != null)
 								passord = row.get("melderpassord").toString();
 							//													row.put(arg0, arg1)
-						}
+						}*/
 						String encryptedPW = new String(passord);
 						Melder melder = melderwebModel.getMelder();
 						melder.setMelderId(melderid);
@@ -854,8 +861,9 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     			melderwebModel.setAnonymEpost(anonymEpost);
     			String epost = melderwebModel.getMelderepost();
     			if(!epost.equalsIgnoreCase("")){
-					List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
-					if(rows.size() > 0){
+    				List<Melder> rows = melderWebService.selectMelder(epost);
+//					List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
+					if(rows != null && rows.size() > 0){
 						melderwebModel.kontaktValues( rows);
 						melderwebModel.saveAnonym();
 //						melderwebModel.saveValues();

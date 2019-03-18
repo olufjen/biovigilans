@@ -211,6 +211,15 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	    dataModel.put(datoId, datoSimple);
     	    
     	    String melderEpost = melderwebModel.getMelder().getMelderepost();
+    	    if (!melderwebModel.getMelder().isPwStrength()){ //Sjekker passord styrke og snder ekstra epost
+    	    	if(melderEpost != null || !melderEpost.equals("")){
+       	    	 emailWebService.setMailTo(melderEpost);
+       	    	 emailWebService.setSubject("Organer Endring av passord");
+       	    	 emailWebService.setEmailText("For å bedre sikkerheten ved meldeordningen, ber vi deg endre ditt passord, slik at det følger Helsedirektoratets regler for passord"
+       	    	 		+ "%nVi ber om at du endrer ditt passord så snart det er praktisk mulig. %nVelg Oppfølgingsmelding/Meldingsoversikt. Der står det beskrevet hvordan du skal endre passordet");
+       	    	 emailWebService.sendEmail(""); //Kommentert bort til stage !!
+    	    	}
+    	    }    	    
     	    emailWebService.setEmailText(emailTxt);
     	    emailWebService.setSubject(emailSubject);
     	    if(melderEpost != null || !melderEpost.equals("")){
