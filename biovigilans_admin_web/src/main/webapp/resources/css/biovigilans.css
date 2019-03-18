@@ -19,7 +19,42 @@ h3 {
 .form-group {
     padding-bottom:20px;
 }
+/* The Modal (background) Added 07.03.19 olj */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 200px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 20%; /* Full width */
+  height: 20%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Content/Box Added 07.03.19 olj*/
+.modal-content {
+  background-color: #fefefe;
+   margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+/* The Close Button Added 07.03.19 olj*/
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
 
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 #tidligeretransfusjon, #blodkonsentrat, #temperaturstigning, #komp-annet-text, 
 #ahtr-valg0, #ahtr-valg1, #ahtr-valg2, #ahtr-valg3, #ahtr-valg4, #ahtr-valg5, 
 #ahtr1-valg0, #ahtr1-valg1, #ahtr1-valg2, #ahtr1-valg3, #ahtr1-valg4, #ahtr1-valg5, #ahtr1-valg6, #ahtr1-valg7,

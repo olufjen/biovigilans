@@ -162,6 +162,8 @@
 		        var month = ("0" + (now.getMonth() + 1)).slice(-2);
 		        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
 		        $('#hendelsen-date').attr('max', today);
+	/* 	        document.getElementById('viskommx').attr('disabled',false); // Added 15.03.19 Olj Virker ikke?
+		    	$("#viskommx").attr('disabled',false); */
 		});
 		
 				function toggleDisplay(id)
@@ -256,6 +258,7 @@
 							$("#statusvalg5").attr('disabled',false);
 							$("#statusvalg6").attr('disabled',false);
 							$("#statusvalg7").attr('disabled',false);
+							$("#viskommx").attr('disabled',false); // Added 15.03.19 olj Virker !!
 							$("#btnstatusendring").attr('disabled',false);
 							$("#rstatusendring").attr('disabled',false);
 							$("#sendinnTxt").html('Godkjent');
@@ -343,7 +346,7 @@
  					$("#planlagtetiltak").attr('readonly',reclasflag);
  					$("#hendelsekommentar").attr('readonly',reclasflag); */
  					
-					
+ 			    	$("#viskommx").attr('disabled',reclassflag); // Added olj 15.03.19
 					$("#k-1").attr('disabled',reclasflag);
 					$("#1").attr('disabled',reclasflag);
 					$("#2").attr('disabled',reclasflag);
@@ -437,6 +440,27 @@
 					}
 					
 				}
+				function showComment(){
+//					alert("Viser komm");
+//					document.getElementById("btnpopup").click();
+//				window.open("../hemovigilans/viskommentar.html");
+	// Get the modal
+				var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+					var btn = document.getElementById("visBtn");
+
+// Get the <span> element that closes the modal
+					var span = document.getElementsByClassName("close")[0];
+//					alert("Viser komm 2");
+					modal.style.display = "block";
+//					alert(txt);
+ 					span.onclick = function(){
+						modal.style.display = "none";
+					}
+//				var dialog = document.getElementById('kommx');
+//					dialog.show();
+				}
 			</script>
 <form id="rapport" name="rapport" action="?method=PUT" method="post"  > 
 			<h1>Rapportert Annen Hendelse</h1>
@@ -524,7 +548,22 @@
 					<table class="table table-hover" border=1 >
 					<tr><th>Dato</th><th>Saksmerknader</th><th>Satt av</th></tr>
 					<#list flaggliste as flagg>
-					<tr id="flagg"><td id="flaggene">${flagg.datoforkommentar?date}</td><td id="flaggene" title="${flagg.tema}">${flagg.kommentar}</td><td id="flaggenes">${flagg.saksbehandler}</td></tr> 
+					<tr id="flagg"><td id="flaggene">${flagg.datoforkommentar?date}</td><td id="flaggene" title="${flagg.tema}">
+					${flagg.kommentar}</td><td id="flaggenes">${flagg.saksbehandler}</td>
+					<td>
+					 <label>
+						<input type="checkbox" title="Viser detaljer" onclick="showComment();" name="viskommx" id="viskommx" value="Kommentarer" />
+  						Vis
+  					</label>
+<!-- 					<button id="visBtn" onclick="showComment();">Vis</button> -->
+					<div id="myModal" class="modal">
+					<div class="modal-content">
+    					<span class="close">&times;</span>
+    						<p>${flagg.tema}</p>
+  					</div>
+  					</div>
+					</td>
+					</tr> 
 					</#list>
 					</table> 
 		</div>	
@@ -1191,7 +1230,7 @@
 			      </label>
 			    </div>	
 			</div>
-				
+				<button type="submit" name="btnpopup" id="btnpopup" value="btnpopup" class="btn btn-warning" style="display:none"  > btnpopup</button>
 				<button type="submit" name="btnAvbryt" id="btnAvbryt" value="avbryt" class="btn btn-default" onclick="return sendInn('avbryt');"><span id="avbrytTxt">Avbryt</span> </button>
 	      		<button type="submit" name="btnSendinn" id="btnSendinn" value="sendinn" class="btn btn-primary"   > <span id="sendinnTxt">Godkjent</span></button>
 </div> <!-- End div andre hendelser -->

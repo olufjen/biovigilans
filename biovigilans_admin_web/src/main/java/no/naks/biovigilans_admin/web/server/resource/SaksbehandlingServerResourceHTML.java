@@ -829,6 +829,10 @@ Disse hentes i RapporterAnnenServerResource og RapporterPasientserverResource OL
 		    	 annenModel.setKlassifikasjoner(klassifikasjoner);
 
 		    	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
+		    	 SimpleScalar simple = new SimpleScalar(utvalg);
+			 	 SimpleScalar merk = new SimpleScalar(merknadValg);
+			 	 dataModel.put(merknadlisteKey, merk);
+		     	 dataModel.put(utvalgKey, simple);
 		    	 dataModel.put(displaydateKey, hendelseDate);
 				 dataModel.put(andreHendelseId, annenModel);
 				 dataModel.put(annenHendelseId, annenKomplikasjon);

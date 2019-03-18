@@ -52,6 +52,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	private String flaggKey = "saksbehandling";
 	private String tilsakbehandler = "tilsaksbehandler";
 	private String sakbehandlerShow = "none";
+	private String utvalgKey = "valgt";
 //    private Annenkomplikasjon orgAnnenkomplikasjon = null;
     private String orgKompKey = "orgkomp";
 //	private SaksbehandlingWebService saksbehandlingWebservice;
@@ -122,6 +123,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
      	 SimpleScalar iconImportant = new SimpleScalar(imagesrcImportant);
      	 SimpleScalar iconQuestion = new SimpleScalar(imagesrcQuestion);
 		 SimpleScalar orgInfo = new SimpleScalar(displayorgInfo);
+		 SimpleScalar sakshehandling = new SimpleScalar(utvalgKey); // Added from saksbehandling olj 11.03.19
     	 dataModel.put(imageImportantkey,iconImportant);
     	 dataModel.put(imageQuestionkey,iconQuestion);
       	 dataModel.put(displayorgInfoKey, orgInfo);
@@ -133,6 +135,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 	     dataModel.put(andreHendelseId, annenModel);
 	     dataModel.put(annenHendelseId, annenKomplikasjon);
 	     dataModel.put(klassifikasjonKey, klassifikasjoner);
+	 	 dataModel.put(utvalgKey, sakshehandling);// Added from saksbehandling olj 11.03.19 OBS: Unødvendig se saksbehandlingserverresource
 //	     dataModel.put(annenHendelseOrg, orgAnnenkomplikasjon);
 	  	 dataModel.put(tilmelderKey, melder);
 	     sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
@@ -491,7 +494,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
     		Parameter statusChange = form.getFirst("btnstatuschange");
     		Parameter avslutt = form.getFirst("btnavslutt");
     		Parameter sendTilmelder = form.getFirst("btnsend");
-    		
+    		Parameter popup = form.getFirst("btnpopup"); //Added 14.03 19 olj
     		if (sendTilmelder != null){ // Ønsker å sende melding til melder
     			setDiplayvalues(dataModel,melder);
     			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,andrehendelserskjema));
@@ -692,6 +695,15 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
 //        		invalidateSessionobjects();    			
         		return templateRep;  // Hvorfor er denne nødvendig? OLJ 28.07.15
     		}
+    		if (popup != null){
+    			setDiplayvalues(dataModel,melder);
+       			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,andrehendelserskjema));
+       			Representation andreHendelser = clres2.get();
+//       			invalidateSessionobjects();
+       			templateRep = new TemplateRepresentation(andreHendelser, dataModel,
+       					MediaType.TEXT_HTML);
+       			return templateRep; 
+    		}
     		if(lagre != null){ // Bruker har valgt å godkjenne meldingen
     			
     			//giverModel.getVigilansmelding().saveToVigilansmelding();
@@ -741,16 +753,20 @@ public class RapporterAndreHendelserServerResourceHtml extends SaksbehandlingSes
         		
     		}else{
 	    		//invalidateSessionobjects();
-	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/saksbehandling.html"));
-	    		Representation andreHendelser = clres2.get();
-	       		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
-	    				MediaType.TEXT_HTML);
-	    		
+       			setDiplayvalues(dataModel,melder);
+       			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,andrehendelserskjema));
+       			Representation andreHendelser = clres2.get();
+//       			invalidateSessionobjects();
+       			templateRep = new TemplateRepresentation(andreHendelser, dataModel,
+       					MediaType.TEXT_HTML);
+  
+       			return templateRep; 
     		}
-	    }
+	    } // End form != null
 /*
  * ==============================================================================================================    	
  */
+    	
     	return templateRep;
       
     }
