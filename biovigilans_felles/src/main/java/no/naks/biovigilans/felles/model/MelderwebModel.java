@@ -91,7 +91,7 @@ public class MelderwebModel extends VigilansModel {
 	private Map<String,List> sykehusene;			// Inneholder liste over sykehus til et gitt HF
 	private List<String> valgtRegion;				// Inneholder Liste over HF i Valgt region
 	private List<String> valgtHFsykehus;			// Inneholder liste over sykehus i valgt HF
-	private List<Map<String, Object>> melderInfo = null;
+	private List<Melder> melderInfo = null;
 	private String melderPassord;
 	private String nyPassord; // Nytt passord for eksistrende melder
 	
@@ -799,10 +799,11 @@ public class MelderwebModel extends VigilansModel {
 	/**
 	 * kontaktValues
 	 * Denne rutinen henter frem melders opplysninger om region og sykehus etc
+	 * @since 01.02.2019 Endret parameter fra Map rows til List<Melder> rows
 	 * @param rows
 	 * @return
 	 */
-	public boolean kontaktValues(List<Map<String, Object>>  rows){
+	public boolean kontaktValues(List<Melder>  rows){
 			melderInfo = rows;
 			int nop = rows.size();
 			String gittPassord =(String) getFormMap().get("k-passord");
@@ -814,13 +815,13 @@ public class MelderwebModel extends VigilansModel {
 			}
 			nyPassord = (String) getFormMap().get("k-passord");
 			boolean found = false;
-			for(Map row:rows){
+			for(Melder row:rows){
 //				String pwd = "";
 				String pwd = melder.getMelderPassord(); // Bruker decryptert passord OLJ 22.01..18
 //				if (row.get("melderpassord") != null)
 //					pwd = row.get("melderpassord").toString(); Bruker decryptert passord OLJ 22.01..18
 				this.setMelderPassord(pwd);
-				Long id = Long.parseLong(row.get("melderid").toString());
+				Long id = row.getMelderId();
 				melder.setMelderId(id);
 				melder.setMelderepost(this.getMelderepost());
 				melder.setMelderPassord(pwd);
@@ -828,24 +829,24 @@ public class MelderwebModel extends VigilansModel {
 					found = true;
 				
 					String name ="";
-					if (row.get("meldernavn") != null)
-						name = row.get("meldernavn").toString();
+					if (row.getMeldernavn() != null)
+						name = row.getMeldernavn();
 					String tlf = "";
 					this.setMeldernavn(name);
-					if (row.get("meldertlf") != null)
-						tlf = row.get("meldertlf").toString();
+					if (row.getMeldertlf()!= null)
+						tlf = row.getMeldertlf();
 					this.setMeldertlf(tlf);
 					String helseregion = "";
-					if (row.get("helseregion") != null)
-						helseregion = row.get("helseregion").toString();
+					if (row.getHelseregion() != null)
+						helseregion = row.getHelseregion();
 					this.setHelseregion(helseregion);
 					String helseforetak = "";
-					if (row.get("helseforetak") != null)
-						helseforetak = row.get("helseforetak").toString();
+					if (row.getHelseforetak() != null)
+						helseforetak = row.getHelseforetak();
 					this.setHelseforetak(helseforetak);
 					String sykehus = "";
-					if (row.get("sykehus") != null)
-						sykehus = row.get("sykehus").toString();
+					if (row.getSykehus()!= null)
+						sykehus = row.getSykehus();
 					this.setSykehus(sykehus);
 					break;
 				}
@@ -893,44 +894,47 @@ public class MelderwebModel extends VigilansModel {
 		valgtHFsykehus = sykehusene.get(melderSykehus);
 		helseforetak = melderSykehus;
 	}
+	/**
+	 * @since 01.02.2019 Endret parameter fra Map rows til List<Melder> rows
+	 */
 	private void setKontaktinfo(){
 		if (melderInfo != null){
-			for(Map row:melderInfo){
-				Long id = Long.parseLong(row.get("melderid").toString());
+			for(Melder row:melderInfo){
+				Long id = row.getMelderId();
 				melder.setMelderId(id);
 				String name = melder.getMeldernavn();
 				if (name == null)
 					name = "";
-				if (row.get("meldernavn") != null)
-					name = row.get("meldernavn").toString();
+				if (row.getMeldernavn() != null)
+					name = row.getMeldernavn();
 				this.setMeldernavn(name);
 				String tlf = melder.getMeldertlf();
 				if (tlf == null)
 					tlf = "";
-				if (row.get("meldertlf") != null)
-					tlf = row.get("meldertlf").toString();
+				if (row.getMeldertlf()!= null)
+					tlf = row.getMeldertlf();
 				this.setMeldertlf(tlf);
 				String pwd = "";
-				if (row.get("melderpassord") != null)
-					pwd = row.get("melderpassord").toString();
+				if (row.getMelderPassord()!= null)
+					pwd = row.getMelderPassord();
 				this.setMelderPassord(pwd);
 				String helseregion = melder.getHelseregion();
 				if (helseregion == null)
 					helseregion = "";
-				if (row.get("helseregion") != null)
-					helseregion = row.get("helseregion").toString();
+				if (row.getHelseregion()!= null)
+					helseregion = row.getHelseregion();
 				this.setHelseregion(helseregion);
 				String helseforetak = melder.getHelseforetak();
 				if (helseforetak == null)
 					helseforetak = "";
-				if (row.get("helseforetak") != null)
-					helseforetak = row.get("helseforetak").toString();
+				if (row.getHelseforetak() != null)
+					helseforetak = row.getHelseforetak();
 				this.setHelseforetak(helseforetak);
 				String sykehus = melder.getSykehus();
 				if (sykehus == null)
 					sykehus = "";
-				if (row.get("sykehus") != null)
-					sykehus = row.get("sykehus").toString();
+				if (row.getSykehus() != null)
+					sykehus = row.getSykehus();
 				this.setSykehus(sykehus);
 				
 
