@@ -248,8 +248,8 @@
                 ${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
                 ${andreHendelser.planlagte},${andreHendelser.kommentar},${andreHendelser.klassifikasjon-sub},${andreHendelser.hvagikkgalt},${andrehendelser.ytterligereopplysninger},
                 ${andrehendelser.pasientopplysninger}"></property>
-        <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
-      ${hovedprosessoption10},${hovedprosessoption11},,${hovedprosessoption12}"></property>
+        <property name="hovedprosesslist" value ="${hovedprosessoption13},${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
+      ${hovedprosessoption10},${hovedprosessoption11},${hovedprosessoption12}"></property>
       <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7,${feilelleravvikoption8}"></property>  
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
       <property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient3},${aldergruppepasient4},${aldergruppepasient5},
@@ -412,7 +412,7 @@
                 ${andrehendelser.pasientopplysninger}">
         </property>
       <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
-      <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
+      <property name="hovedprosesslist" value ="${hovedprosessoption13},${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
       ${hovedprosessoption10},${hovedprosessoption11},${hovedprosessoption12}"></property>
       <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7,${feilelleravvikoption8}"></property>  
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
@@ -779,7 +779,7 @@
          </property>
          
       <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
-      <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
+      <property name="hovedprosesslist" value ="${hovedprosessoption13},${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
       ${hovedprosessoption10},${hovedprosessoption11},${hovedprosessoption12}"></property>
       <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7},${feilelleravvikoption8}"></property>  
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
