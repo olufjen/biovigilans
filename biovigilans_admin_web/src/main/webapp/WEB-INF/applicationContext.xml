@@ -165,7 +165,7 @@
               <property name="tilMeldertilleggCEV" value="${cevtilmeldertillegg.text}"></property>
               <property name="tilMeldermsgORG" value="${orgtilmelder.text}"></property>
               <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
-               <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
+               <property name="hovedprosesslist" value ="${hovedprosessoption13},${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
       ${hovedprosessoption10},${hovedprosessoption11},${hovedprosessoption12}"></property>
             <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
      	  		<property name="cellerogvevhovedprosesslist" value="${cellerhovedprosessoption1},${cellerhovedprosessoption2},${cellerhovedprosessoption3},${cellerhovedprosessoption4},${cellerhovedprosessoption5},
@@ -339,7 +339,7 @@
          <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
          
       <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
-      <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
+      <property name="hovedprosesslist" value ="${hovedprosessoption13},${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
       ${hovedprosessoption10},${hovedprosessoption11},${hovedprosessoption12}"></property>
       <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7},${feilelleravvikoption8}"></property>  
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
@@ -480,7 +480,7 @@
          <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
          
       <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
-      <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
+      <property name="hovedprosesslist" value ="${hovedprosessoption13},${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
       ${hovedprosessoption10},${hovedprosessoption11},${hovedprosessoption12}"></property>
       	  <property name="cellerogvevhovedprosesslist" value="${cellerhovedprosessoption1},${cellerhovedprosessoption2},${cellerhovedprosessoption3},${cellerhovedprosessoption4},${cellerhovedprosessoption5},
 	  ${cellerhovedprosessoption6},${cellerhovedprosessoption7},${cellerhovedprosessoption8},${cellerhovedprosessoption9},${cellerhovedprosessoption10},${cellerhovedprosessoption11}"></property>
@@ -515,7 +515,7 @@
          <property name="statusflag" value="${Statuslevert},${statuslest},${statusunderbeh},${statusavvist},${statusmeldt},${statustillegg},${statusframelder},${statusalleunntattavvist},${statuserstattet},${statusarbeidslisten}"></property>
          <property name="tilsakbehandlereMsg" value="${tilsaksbehandler.text}"></property>
       <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
-      <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
+      <property name="hovedprosesslist" value ="${hovedprosessoption13},${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
       ${hovedprosessoption10},${hovedprosessoption11},${hovedprosessoption12}"></property>
       <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7},${feilelleravvikoption8}"></property>  
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
@@ -672,7 +672,7 @@
                         ${pasientkomplikasjon.arsak.utredning102},${pasientkompolikasjon.ytterligere},${pasientkomplikasjon.beskrivelsetransfusjon},${pasientkomplikasjon.hpaspesifitet}">
                 </property>
                 <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
-                <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
+                <property name="hovedprosesslist" value ="${hovedprosessoption13},${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
       ${hovedprosessoption10},${hovedprosessoption11},${hovedprosessoption12}"></property>
       <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7},${feilelleravvikoption8}"></property>  
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
@@ -725,7 +725,7 @@
         </property>
        <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
       <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
-       <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
+       <property name="hovedprosesslist" value ="${hovedprosessoption13},${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},
       ${hovedprosessoption10},${hovedprosessoption11},${hovedprosessoption12}"></property>
       <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4},${feilelleravvikoption5},${feilelleravvikoption6},${feilelleravvikoption7},${feilelleravvikoption8}"></property>  
  	  <property name="cellerogvevhovedprosesslist" value="${cellerhovedprosessoption1},${cellerhovedprosessoption2},${cellerhovedprosessoption3},${cellerhovedprosessoption4},${cellerhovedprosessoption5},

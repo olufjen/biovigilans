@@ -399,6 +399,15 @@
 		reclasflagtemp = xtemp;
 
 	}
+	function showComment(text){
+		var inp =document.createElement('input');
+		document.body.appendChild(inp);
+		inp.value =text;
+		inp.select();
+		document.execCommand('copy',false);
+		inp.remove();
+//		alert(text);
+	}
 	</script>
 
 	<form id="rapportgiver" action="?method=PUT" method="post"  >
@@ -493,7 +502,9 @@
 					<table class="table table-hover" border=1 >
 					<tr><th>Dato</th><th>Saksmerknader</th><th>Satt av</th></tr>
 					<#list flaggliste as flagg>
-					<tr id="flagg"><td id="flaggene">${flagg.datoforkommentar?date}</td><td id="flaggene" title="${flagg.tema}">${flagg.kommentar}</td><td id="flaggenes">${flagg.saksbehandler}</td></tr> 
+					<tr id="flagg"><td id="flaggene">${flagg.datoforkommentar?date}</td><td id="flaggene" title="${flagg.tema}">${flagg.kommentar}</td><td id="flaggenes">${flagg.saksbehandler}</td>
+					<td><button title="Kopierer kommentarer til utklippstavle" type="button" id="visBtn" onclick="showComment('${flagg.tema}');">Kopi</button></td>
+					</tr> 
 					</#list>
 					</table> 
 		</div>	

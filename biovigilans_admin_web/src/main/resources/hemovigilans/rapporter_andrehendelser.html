@@ -258,7 +258,7 @@
 							$("#statusvalg5").attr('disabled',false);
 							$("#statusvalg6").attr('disabled',false);
 							$("#statusvalg7").attr('disabled',false);
-							$("#viskommx").attr('disabled',false); // Added 15.03.19 olj Virker !!
+//							$("#viskommx").attr('disabled',false); // Added 15.03.19 olj Virker !!
 							$("#btnstatusendring").attr('disabled',false);
 							$("#rstatusendring").attr('disabled',false);
 							$("#sendinnTxt").html('Godkjent');
@@ -346,7 +346,7 @@
  					$("#planlagtetiltak").attr('readonly',reclasflag);
  					$("#hendelsekommentar").attr('readonly',reclasflag); */
  					
- 			    	$("#viskommx").attr('disabled',reclassflag); // Added olj 15.03.19
+ //			    	$("#viskommx").attr('disabled',reclassflag); // Added olj 15.03.19
 					$("#k-1").attr('disabled',reclasflag);
 					$("#1").attr('disabled',reclasflag);
 					$("#2").attr('disabled',reclasflag);
@@ -440,29 +440,22 @@
 					}
 					
 				}
-				function showComment(){
-//					alert("Viser komm");
-//					document.getElementById("btnpopup").click();
-//				window.open("../hemovigilans/viskommentar.html");
-	// Get the modal
-				var modal = document.getElementById('myModal');
-
-// Get the button that opens the modal
-					var btn = document.getElementById("visBtn");
-
-// Get the <span> element that closes the modal
-					var span = document.getElementsByClassName("close")[0];
-//					alert("Viser komm 2");
-					modal.style.display = "block";
-//					alert(txt);
- 					span.onclick = function(){
-						modal.style.display = "none";
-					}
-//				var dialog = document.getElementById('kommx');
-//					dialog.show();
+				function showComment(text){
+					var inp =document.createElement('input');
+					document.body.appendChild(inp);
+					inp.value =text;
+					inp.select();
+					document.execCommand('copy',false);
+					inp.remove();
+//					alert(text);
 				}
+				$("tr.trflagg").mouseover(function() {
+					   alert("text");
+					}).mouseout(function() {
+					    alert("text out");;
+					});				
 			</script>
-<form id="rapport" name="rapport" action="?method=PUT" method="post"  > 
+<form id="rapport" name="rapport" action="?method=PUT" method="post"> 
 			<h1>Rapportert Annen Hendelse</h1>
 <div id="sak" class="row" style="display: ${display};background-color:#b0c4de">
 <div class="col-sm-4">
@@ -548,21 +541,12 @@
 					<table class="table table-hover" border=1 >
 					<tr><th>Dato</th><th>Saksmerknader</th><th>Satt av</th></tr>
 					<#list flaggliste as flagg>
-					<tr id="flagg"><td id="flaggene">${flagg.datoforkommentar?date}</td><td id="flaggene" title="${flagg.tema}">
+					<tr id="flagg" ><td id="flaggene" >${flagg.datoforkommentar?date}</td><td id="flaggene" title="${flagg.tema}">
 					${flagg.kommentar}</td><td id="flaggenes">${flagg.saksbehandler}</td>
-					<td>
-					 <label>
-						<input type="checkbox" title="Viser detaljer" onclick="showComment();" name="viskommx" id="viskommx" value="Kommentarer" />
-  						Vis
-  					</label>
-<!-- 					<button id="visBtn" onclick="showComment();">Vis</button> -->
-					<div id="myModal" class="modal">
-					<div class="modal-content">
-    					<span class="close">&times;</span>
-    						<p>${flagg.tema}</p>
-  					</div>
-  					</div>
+					<td id="flaggtema" style="display:none">
+							${flagg.tema}
 					</td>
+					<td><button title="Kopierer kommentarer til utklippstavle" type="button" id="visBtn" onclick="showComment('${flagg.tema}');">Kopi</button></td>
 					</tr> 
 					</#list>
 					</table> 
