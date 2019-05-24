@@ -679,8 +679,9 @@
         <property name="icd10WebService" ref="ICD10WebService"></property>
         <property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf},${kontakt.passord}"></property> 
        <property name="adminWebService" ref="adminWebService"></property>       
-  </bean>   
-   <bean name="/hemovigilans/changepassord.html" id="changepassordServerResource"  autowire="byName" scope="prototype"
+  </bean> 
+  <!-- Endret fra changepassord OLJ 08.05.19 -->  
+   <bean name="/hemovigilans/endrepassord.html" id="changepassordServerResource"  autowire="byName" scope="prototype" 
    class="no.naks.biovigilans.web.server.resource.ChangePassordServerResourceHTML">
         <property name="sessionAdmin" ref="sessionAdmin"></property>
         <property name="emailWebService" ref="emailWebService"></property>
@@ -726,7 +727,7 @@
         <property name="sykehusHFFonna" value="${helsefonnahf1},${helsefonnahf2},${helsefonnahf3}"></property>
         <property name="sykehusHFstav" value="${helsestavhf1}"></property>
         <property name="sykehusHFVpriv" value="${helesprivvesthf1}"></property>
-        <property name="sykehusHFsorland" value="${helsesorhf1},${helsesorhf2},${helsesorhf3}"></property>
+        <property name="sykehusHFsorland" value="${helsesorhf1},${helsesorhf2},${helsesorhf3},${helsesorhf4}"></property>
         <property name="sykehusHFtele" value="${helsetelhf1},${helsetelhf2},${helsetelhf3}"></property>
         <property name="sykehusHFvestf" value="${helsevestfhf1},${helsevestfhf2},${helsevestfhf3}"></property>
         <property name="sykehusHFvviken" value="${helsevvikenhf1},${helsevvikenhf2},${helsevvikenhf3},${helsevvikenhf4}"></property>

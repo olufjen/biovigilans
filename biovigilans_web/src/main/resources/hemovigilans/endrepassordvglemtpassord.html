@@ -38,8 +38,7 @@
   </div><form action="?method=PUT" method="post">
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
-var reqFlag =  "${change}";
-//var buttonTxt = "${buttonTxt}";
+
 $( document ).ready(function(){ 
 //	alert("ready:");
 //	alert(reqFlag);
@@ -51,7 +50,7 @@ $( document ).ready(function(){
 function homePage(){
 	var curAddr = document.location.href;
 //	 alert(curAddr);
-	var newAddr = curAddr.replace("passord.html","");
+	var newAddr = curAddr.replace("endrepassord.html","");
 //	alert(newAddr);
 	document.location = newAddr;
 
@@ -71,29 +70,42 @@ function toggleDisplay(id, displayvalue)
 }
 </script>
 
-<h1>Glemt passord </h1>
+<h1>Endre passord </h1>
   	<div class="form-group">
-   	<h4>Klikk på knappen nedenfor for å få tilsendt et nytt engangspassord på e-post</h4>
- 
-  	
-        <label for="k-epost">Melders epost:</label>
+
+  	<h4>Du må nå opprette et nytt personlig passord. </h4>
+  	<h4>Det nye passordet ditt må inneholde minst 8 tegn og et av disse spesialtegnene: !@#$&*%=? </h4>
+     <div class="form-group" id="labelnavn" >
+  	    <label>Ditt navn:</label>
+     	<label>${Mnavn}</label>
+     </div>
+     <div class="form-group" id="labelepost" >
+  	    <label>Din Epost adresse:</label>
+     	<label>${Mepost}</label>
+     </div>   	
+<!--         <label for="k-epost">Din e-post adresse:</label>
         <div>
-          <input name="k-epost" type="email" value="${email}" class="form-control" id="k-epost" placeholder="Email"  />
-        </div>
-       
-      </div>
- 
-    <div class="form-group" id="ingennokkel" >
+          <input name="k-epost" type="email" value="" class="form-control" id="k-epost" placeholder="Email"  />
+        </div> -->
+       <div class="form-group" id="ingennokkel" >
      	<label>${melding}</label>
      </div>
-   <div class="form-group" id="endrepassord" style="display: none" >
-     	<label>Vennligst oppgi tilsendt passord</label><br />
-   
-          <input name="k-genpassword" type="password" value="" class="form-control" id="k-genpassword" placeholder="Passord" /><br />
-    
-     	<button name="changepassord" type="submit" value="changepassord" class="btn btn-primary">Bekreft tilsendt passord</button>
-     </div>
-  	<button name="passord" type="submit" value="passord" class="btn btn-primary" >${buttonTxt}</button>
+         <label for="k-newpwd">Nytt passord:</label>
+        <div>
+          <input name="k-newpwd" type="password" value="" class="form-control" id="k-newpwd" placeholder="Nytt passord"  />
+        </div>  
+        <label for="k-bekreftpwd">Bekreft nytt passord:</label>
+        <div>
+          <input name="k-bekreftpwd" type="password" value="" class="form-control" id="k-bekreftpwd" placeholder="Bekreft nytt passord"  />
+        </div> 
+
+        <br /><br />        
+       <button name="lagrenyttpassord" type="submit" value="lagrenyttpassord"  class="btn btn-default btn-lg btn-back" >Lagre</button>           
+        
+            
+      </div>
+ 
+ 
 
 <div class="panel-group" id="accordion">
 

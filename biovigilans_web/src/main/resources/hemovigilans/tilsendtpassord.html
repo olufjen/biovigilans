@@ -38,8 +38,7 @@
   </div><form action="?method=PUT" method="post">
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
-var reqFlag =  "${change}";
-//var buttonTxt = "${buttonTxt}";
+
 $( document ).ready(function(){ 
 //	alert("ready:");
 //	alert(reqFlag);
@@ -51,7 +50,7 @@ $( document ).ready(function(){
 function homePage(){
 	var curAddr = document.location.href;
 //	 alert(curAddr);
-	var newAddr = curAddr.replace("passord.html","");
+	var newAddr = curAddr.replace("endrepassord.html","");
 //	alert(newAddr);
 	document.location = newAddr;
 
@@ -71,29 +70,38 @@ function toggleDisplay(id, displayvalue)
 }
 </script>
 
-<h1>Glemt passord </h1>
+<h1>Glemt passord</h1>
   	<div class="form-group">
-   	<h4>Klikk på knappen nedenfor for å få tilsendt et nytt engangspassord på e-post</h4>
- 
-  	
-        <label for="k-epost">Melders epost:</label>
+
+  	<h4>Vi har nå sendt et nytt passord til e-postadressen du har oppgitt !!!!</h4>
+
+     <div class="form-group" id="labelnavn" >
+  	    <label>Ditt navn:</label>
+     	<label>${Mnavn}</label>
+     </div>
+     <div class="form-group" id="labelepost" >
+  	    <label>Din Epost adresse:</label>
+     	<label>${Mepost}</label>
+     </div>   	
+<!--         <label for="k-epost">Din e-post adresse:</label>
         <div>
-          <input name="k-epost" type="email" value="${email}" class="form-control" id="k-epost" placeholder="Email"  />
-        </div>
-       
+          <input name="k-epost" type="email" value="" class="form-control" id="k-epost" placeholder="Email"  />
+        </div> -->
+      <div class="form-group" id="tilsendtpw" style="display: ${engang}">
+          	<label for="k-genpassword" >Vennligst skriv inn tilsendt passord</label><br />
+   
+          <input name="k-genpassword" type="password" value="" class="form-control" id="k-genpassword" placeholder="Passord" style="display: ${engang}" onchange="formSubmit('genpasswd');"/><br />
+    	<button name="tilsendtpassord" type="submit" value="tilsendtpassord" class="btn btn-primary">Bekreft tilsendt passord</button>
+    </div>
+        <br /><br />        
+       <button name="passordpanytt" type="submit" value="passordpanytt"  class="btn btn-default btn-lg btn-back" >Send passord på nytt</button>           
+        
+            
       </div>
  
     <div class="form-group" id="ingennokkel" >
      	<label>${melding}</label>
      </div>
-   <div class="form-group" id="endrepassord" style="display: none" >
-     	<label>Vennligst oppgi tilsendt passord</label><br />
-   
-          <input name="k-genpassword" type="password" value="" class="form-control" id="k-genpassword" placeholder="Passord" /><br />
-    
-     	<button name="changepassord" type="submit" value="changepassord" class="btn btn-primary">Bekreft tilsendt passord</button>
-     </div>
-  	<button name="passord" type="submit" value="passord" class="btn btn-primary" >${buttonTxt}</button>
 
 <div class="panel-group" id="accordion">
 

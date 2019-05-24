@@ -622,7 +622,7 @@ function showtext(id,thetext){
             </div>
             <div id="trans-annet-text" class="form-group" style="display: none">
               <label>Hvis annet, beskriv nærmere i fritekst:</label>
-              <textarea class="form-control" name="p-transfusjontext" rows="3"></textarea>
+              <textarea class="form-control" name="p-transfusjontext" rows="3" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
             </div>
           </div>
         </div> <!-- Slutt på 'ja', grå bakgrunn -->
@@ -790,8 +790,8 @@ function showtext(id,thetext){
       </div>
 
       <div id="blod-plasmaantall" style="display: none" class="form-group">
-        <label>Antall</label> 
-        <input type="number" min="0" max="110" name="p-blod-antallplasma" size="80"  value="" class="form-control">
+        <label>Antall (Skriv kun tall)</label> 
+        <input type="number" min="0" max="110" name="p-blod-antallplasma" size="80" placeholder="Skriv kun tall" value="" class="form-control">
       </div>
      
       <!-- Erytrocyttkonsentrat -->
@@ -804,8 +804,8 @@ function showtext(id,thetext){
       </div>
 
       <div id="erytrocyttantall" style="display: none" class="form-group">
-        <label>Antall</label> 
-        <input type="text" name="p-blod-antallerytrocytt" size="80" value="" class="form-control">
+        <label>Antall (Skriv kun tall)</label> 
+        <input ttype="number" min="0" max="110" name="p-blod-antallerytrocytt" size="80" placeholder="Skriv kun tall" value="" class="form-control">
       </div>
 
       <!-- Trombocyttkonsentrat -->
@@ -819,8 +819,8 @@ function showtext(id,thetext){
     </div>
 
     <div id="trombocyttantall" style="display: none" class="form-group">
-      <label>Antall</label> 
-      <input type="text" name="p-blod-antalltrombocytt" size="80"  value="" class="form-control">
+      <label>Antall (Skriv kun tall)</label> 
+      <input type="number" min="0" max="110" name="p-blod-antalltrombocytt" size="80" placeholder="Skriv kun tall" value="" class="form-control">
     </div>
     
     <div id="tappingtypetromb" class="form-group" style="display: none">
@@ -980,7 +980,7 @@ function showtext(id,thetext){
     </div>
     <div id="blod-andreantall" style="display: none" class="form-group">
       <label>Antall</label> 
-      <input type="number" min="0" max="110" name="p-blod-antallandre" size="80" value="" class="form-control"/>
+      <input type="number" min="0" max="110" name="p-blod-antallandre" size="80" value="" placeholder="Skriv kun tall" class="form-control"/>
     </div> 
     
     <!-- pcv, 22.10.2015: Kan ikke se at denne er i bruk? -->
@@ -1031,7 +1031,7 @@ function showtext(id,thetext){
       </div>
       <div id="annenblod-erytrocyttantall" class="form-group" style="display: none">
         <label>Antall</label> 
-        <input type="number" min="0" max="110" name="p-annenblod-antallerytrocytt" size="80" value="" class="form-control"/>
+        <input type="number" min="0" max="110" name="p-annenblod-antallerytrocytt" size="80" value="" placeholder="Skriv kun tall" class="form-control"/>
       </div>
       <div id="annenblod-242" class="checkbox" style="display: none">
         <label>
@@ -1041,7 +1041,7 @@ function showtext(id,thetext){
       </div>
       <div id="annenblod-trombocyttantall" class="form-group" style="display: none">
         <label>Antall</label> 
-        <input type="number" min="0" max="110" name="p-annenblod-antalltrombocytt" size="80" value="" class="form-control"/>
+        <input type="number" min="0" max="110" name="p-annenblod-antalltrombocytt" size="80" value="" placeholder="Skriv kun tall" class="form-control"/>
       </div>          
       <div id="annenblod-245" class="checkbox" style="display: none">
         <label>
@@ -1051,7 +1051,7 @@ function showtext(id,thetext){
       </div>
       <div id="annenblod-plasmaantall" class="form-group" style="display: none">
         <label>Antall</label> 
-        <input type="number" min="0" max="110" name="p-annenblod-antallplasma" size="80" value="" class="form-control"/>
+        <input type="number" min="0" max="110" name="p-annenblod-antallplasma" size="80" value="" placeholder="Skriv kun tall" class="form-control"/>
       </div>
     </div>
 
@@ -1283,7 +1283,7 @@ function showtext(id,thetext){
 
       <div id="komp-annet-text" class="form-group" style="display: none">
         <label>Hvis annet, beskriv nærmere i fritekst:</label>
-        <textarea class="form-control" name="p-komp-annettext" rows="3"></textarea>
+        <textarea class="form-control" name="p-komp-annettext" rows="3" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
       </div>
     
       <!-- Mistenkt årsak og underkategorier -->
@@ -1432,7 +1432,7 @@ function showtext(id,thetext){
 
       <div id="ahtr-valg5" class="form-group" style="display: none">
         <label>Annet</label>
-        <textarea class="form-control" name="ah-akutt-hemotext" id="annet" rows="2"></textarea>
+        <textarea class="form-control" name="ah-akutt-hemotext" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
       </div>  
     </div>
 
@@ -1601,12 +1601,12 @@ function showtext(id,thetext){
       <!-- pcv, 20.12.2015: Er denne i bruk?-->
       <div id="ahtr1-spesifisitet" class="form-group" style="display: none">
         <label>Spesifisitet </label>
-        <textarea class="form-control" name="at-spesifisitet-text" id="annet" rows="2" ></textarea>
+        <textarea class="form-control" name="at-spesifisitet-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
       </div>  
       
       <div id="ahtr1-valg7" class="form-group" style="display: none">
         <label>Annet </label>
-        <textarea class="form-control" name="at-annet-text" id="annet" rows="2" ></textarea>
+        <textarea class="form-control" name="at-annet-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
       </div>    
     </div>
  
@@ -1750,13 +1750,13 @@ function showtext(id,thetext){
     </div>
   <div id="dhtr1-spesifisitet" class="form-group" style="display: none">
      <label>Spesifisitet</label>
-       <textarea class="form-control" name="dh-spesifisitet-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="dh-spesifisitet-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>      
   </div>   
     
   <div id="dhtr1-valg7" class="form-group" style="display: none">
      <label>Annet</label>
-       <textarea class="form-control" name="dh-annet-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="dh-annet-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>   
   </div>
 
@@ -1807,7 +1807,7 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
   </div>
    <div id="fhtr1-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser</label>
-       <textarea class="form-control" name="fh-spesifisert-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="fh-spesifisert-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>
   <div id="fhtr1-valg2" class="form-group" style="display: none">
      <label>Positiv blodkultur hos blodmottaker?</label>
@@ -1865,12 +1865,12 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
   </div>      
   <div id="fhtr1-spesifisitet" class="form-group" style="display: none">
      <label>Spesifisitet </label>
-       <textarea class="form-control" name="fh-spesifisitet-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="fh-spesifisitet-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div> 
   <!-- pcv, 20.11.2015: Må undersøkes av Oluf  -->
   <div id="fhtr1-valg5" class="form-group" style="display: none">
      <label>Annet </label>
-       <textarea class="form-control" name="fh-annet-hemotext" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="fh-annet-hemotext" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>
  
 
@@ -1997,7 +1997,7 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
       
   <div id="ihtr1-valg6" class="form-group" style="display: none">
      <label>Annet </label>
-       <textarea class="form-control" name="ih-annet-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="ih-annet-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>   
   </div>
 
@@ -2069,7 +2069,7 @@ Slike reaksjoner oppstår vanligvis under eller umiddelbart etter en transfusjon
   </div>  
    <div id="alhtr1-valg3" class="form-group" style="display: none">
      <label>Annet </label>
-       <textarea class="form-control" name="al-annet-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="al-annet-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>   
   </div>
 
@@ -2123,7 +2123,7 @@ Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
   </div>  
    <div id="khtr1-valg1" class="form-group" style="display: none">
      <label>Annet </label>
-       <textarea class="form-control" name="kh-annet-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="kh-annet-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>     
   </div>
 
@@ -2152,7 +2152,7 @@ Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
     </div>
    <div id="phtr1-spesifisitet" class="form-group" style="display: none">
      <label>Spesifisitet </label>
-       <textarea class="form-control" name="p-spesifisitet-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="p-spesifisitet-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div> 
   <div id="phtr1-valg1" class="form-group" style="display: none">
      <label>HPA typing av blodmottakeren utført </label>
@@ -2170,7 +2170,7 @@ Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
   </div>
    <div id="phtr2-spesifisitet" class="form-group" style="display: none">
      <label>Spesifisitet </label>
-       <textarea class="form-control" name="p-spesifisitet-blodmottakertext" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="p-spesifisitet-blodmottakertext" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div> 
     <div id="phtr1-valg2" class="form-group" style="display: none">
      <label>Anti-HPA hos blodmottakeren påvist </label>
@@ -2192,11 +2192,11 @@ Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
   </div> 
    <div id="phtr3-spesifisitet" class="form-group" style="display: none">
      <label>Spesifisitet </label>
-       <textarea class="form-control" name="ph-spesifisitet-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="ph-spesifisitet-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>    
    <div id="phtr1-valg3" class="form-group" style="display: none">
      <label>Annet </label>
-       <textarea class="form-control" name="ph-annet-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="ph-annet-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>   
  </div>
 
@@ -2279,7 +2279,7 @@ Se definisjonene for nærmere beskrivelse.
   </div>  
   <div id="trhtr1-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="p-spesifisert-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="p-spesifisert-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>
 <div id="trhtr1-valg3" class="form-group" style="display: none">
      <label>BNP eller N-T proBNP forhøyet </label>
@@ -2319,7 +2319,7 @@ Se definisjonene for nærmere beskrivelse.
   </div> 
    <div id="trhtr11-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="p-spesifisert-HLAantitext" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="p-spesifisert-HLAantitext" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>
  <div id="trhtr1-valg5" class="form-group" style="display: none">
      <label>HLA-antistoff hos blodmottaker påvist </label>
@@ -2341,7 +2341,7 @@ Se definisjonene for nærmere beskrivelse.
   </div>  
    <div id="trhtr12-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="p-spesifisert-antitext" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="p-spesifisert-antitext" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>    
 <div id="trhtr1-valg6" class="form-group" style="display: none">
      <label>HLA-typing av blodgiver/HLA-typing av blodmottaker utført </label>
@@ -2359,7 +2359,7 @@ Se definisjonene for nærmere beskrivelse.
   </div> 
     <div id="trhtr13-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="p-spesifisert-antigivertext" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="p-spesifisert-antigivertext" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>   
 <div id="trhtr1-valg7" class="form-group" style="display: none">
      <label>HNA-typing av blodgiver /HNA-typing av blodmottaker utført </label>
@@ -2377,7 +2377,7 @@ Se definisjonene for nærmere beskrivelse.
   </div>
    <div id="trhtr14-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="p-spesifisert-HNAtext" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="p-spesifisert-HNAtext" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div> 
   <div id="trhtr1-valg8" class="form-group" style="display: none">
      <label>HNA-antistoff hos blodgiver og/eller blodmottaker påvist </label>
@@ -2399,11 +2399,11 @@ Se definisjonene for nærmere beskrivelse.
   </div>    
    <div id="trhtr15-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="p-spesifisert-antistoffHNAtext" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="p-spesifisert-antistoffHNAtext" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient" ></textarea>
   </div>  
   <div id="trhtr1-valg9" class="form-group" style="display: none">
      <label>Annet </label>
-       <textarea class="form-control" name="p-akutt-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="p-akutt-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>         
  </div>
 
@@ -2466,7 +2466,7 @@ Se definisjonene for nærmere beskrivelse.
   </div>  
    <div id="tadhtr1-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="tad-spesifisert-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="tad-spesifisert-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>  
 <div id="tadhtr1-valg3" class="form-group" style="display: none">
      <label>BNP eller N-T proBNP forhøyet </label>
@@ -2488,7 +2488,7 @@ Se definisjonene for nærmere beskrivelse.
   </div>    
    <div id="tadhtr1-valg4" class="form-group" style="display: none">
      <label>Annet </label>
-       <textarea class="form-control" name="tad-akutt-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="tad-akutt-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>
   </div>
 
@@ -2563,7 +2563,7 @@ Forhøyet B-type natriuretisk peptid (BNP) støtter mistanken om TACO.
   </div>  
     <div id="tachtr1-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="tac-spesifisert-text" rows="2" ></textarea>
+       <textarea class="form-control" name="tac-spesifisert-text" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>  
 <div id="tachtr1-valg3" class="form-group" style="display: none">
      <label>BNP eller N-T proBNP forhøyet </label>
@@ -2585,7 +2585,7 @@ Forhøyet B-type natriuretisk peptid (BNP) støtter mistanken om TACO.
   </div>    
    <div id="tachtr1-valg4" class="form-group" style="display: none">
      <label>Annet </label>
-       <textarea class="form-control" name="tac-akutt-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="tac-akutt-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>
   </div>
 
@@ -2612,7 +2612,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
       </label>
     <div id="hemhtr1-valg0" class="form-group" style="display: none">
      <label>Angi ferritinverdi(er) </label>
-       <textarea class="form-control" name="hem-akutt-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="hem-akutt-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
     </div>         
   </div>
   
@@ -2624,7 +2624,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
       </label>
       <div id="hyphtr1-valg0" class="form-group" style="display: none">
      <label>Angi kaliumverdier </label>
-       <textarea class="form-control" name="hyp-akutt-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="hyp-akutt-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
     </div>    
     </div>
     
@@ -2655,7 +2655,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
   </div>
    <div id="bakhtr1-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="bak-spesifisert-hemotext" rows="2" ></textarea>
+       <textarea class="form-control" name="bak-spesifisert-hemotext" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>  
   <div id="bakhtr1-valg1" class="form-group" style="display: none">
      <label>Positiv blodkultur hos blodmottaker</label>
@@ -2677,7 +2677,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
   </div>
    <div id="bakhtr11-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="bak-spesifisert-text" rows="2" ></textarea>
+       <textarea class="form-control" name="bak-spesifisert-text" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>
   <div id="bakhtr1-valg2" class="form-group" style="display: none">
      <label>Økt CRP (i forhold til før transfusjonen)</label>
@@ -2699,7 +2699,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
   </div>    
    <div id="bakhtr1-valg3" class="form-group" style="display: none">
      <label>Annet </label>
-       <textarea class="form-control" name="bak-akutt-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="bak-akutt-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>
  </div>
 
@@ -2732,7 +2732,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
   </div>
    <div id="virhtr1-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="vir-spesifisert-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="vir-spesifisert-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>
   <div id="virhtr1-valg1" class="form-group" style="display: none">
      <label>Positiv virus/virusantistoff hos giver</label>
@@ -2754,12 +2754,12 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
   </div>
    <div id="virhtr11-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="vir-spesifisert-givertext" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="vir-spesifisert-givertext" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>
    
    <div id="virhtr1-valg2" class="form-group" style="display: none">
      <label>Annet </label>
-       <textarea class="form-control" name="vir-akutt-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="vir-akutt-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>      
   </div>
     
@@ -2791,7 +2791,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
   </div>
     <div id="asmhtr1-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="asm-spesifisert-hemotext" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="asm-spesifisert-hemotext" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>
   <div id="asmhtr1-valg1" class="form-group" style="display: none">
      <label>Påvist smittestoff/antistoff hos giver</label>
@@ -2813,12 +2813,12 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
   </div>
   <div id="asmhtr11-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-       <textarea class="form-control" name="asm-spesifisert-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="asm-spesifisert-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>
    
    <div id="asmhtr1-valg2" class="form-group" style="display: none">
      <label>Annet </label>
-       <textarea class="form-control" name="asm-akutt-text" id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="asm-akutt-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>    
       
   </div>
@@ -2957,11 +2957,11 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
   </div> 
    <div id="aihtr1-spesifisitet" class="form-group" style="display: none">
      <label>Spesifisitet </label>
-       <textarea class="form-control" name="ai-spesifisert-text"  id="annet" rows="2" ></textarea>
+       <textarea class="form-control" name="ai-spesifisert-text"  id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>
   <div id="aihtr-valg7" class="form-group" style="display: none">
      <label>Annet </label>
-       <textarea class="form-control" name="ai-akutt-text" id="annet" rows="2"></textarea>
+       <textarea class="form-control" name="ai-akutt-text" id="annet" rows="2" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div>     
   </div>
 
@@ -3308,7 +3308,7 @@ og/eller
 
       <div class="form-group" >
         <label>Beskriv hendelsen med egne ord</label>
-        <textarea class="form-control" name="beskrivelsetransfusjon" rows="3" id="hendelse_beskrivelse"></textarea>
+        <textarea class="form-control" name="beskrivelsetransfusjon" rows="3" id="hendelse_beskrivelse" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
       </div>      
     </div>    
   
@@ -3584,13 +3584,13 @@ og/eller
     </label>
     </div>    
    <label>Beskriv ev. forebyggende tiltak</label>
-   <textarea class="form-control" name="p-tiltaktext" rows="3"></textarea>    
+   <textarea class="form-control" name="p-tiltaktext" rows="3" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>    
     
 </div>  
 </div>  
  <div id="transfusjonforebyggtext" class="form-group" style="display: none">
     <label>Hvis ja, beskriv tiltak i fritekst:</label>
-   <textarea class="form-control" name="p-transfusjonforebygg" rows="3"></textarea>
+   <textarea class="form-control" name="p-transfusjonforebygg" rows="3" placeholder="Fritekstfelt skal ikke inneholde navn eller fødselsdato på giver eller pasient"></textarea>
   </div> 
 
   <div class="form-group" style="display: ${display}">
