@@ -208,6 +208,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 		String epost = "";
     	Long melderid = null; 
     	Parameter nyttPassord = form.getFirst("nyttpassord");
+    	Parameter endrePassord = form.getFirst("endrepassord");
         String page = "../hemovigilans/melder_rapport.html"; 
     	for (Parameter entry : form) {
 			if (entry.getValue() != null && !(entry.getValue().equals(""))){
@@ -264,7 +265,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 				boolean pwstrength = adminWebService.checkStrenghtPassword(melder);
 				melder.setPwStrength(pwstrength);
 				if (!pwstrength)
-					page = "../hemovigilans/passord.html";  // endret fra changepassword.html OLJ 21.01.19 
+					page = "../hemovigilans/endrepassord.html";  // endret fra changepassword.html OLJ 21.01.19 
 	     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
@@ -274,7 +275,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 			}else if(melderPassord == null || melderPassord.equals("")|| melderPassord.isEmpty()){
 				melder.setPwStrength(false);
 				sessionAdmin.setSessionObject(request, melder, melderNokkel);
-				page = "../hemovigilans/passord.html"; // endret fra changepassword.html OLJ 21.01.19 
+				page = "../hemovigilans/endrepassord.html"; // endret fra changepassword.html OLJ 21.01.19 
 	     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
@@ -290,7 +291,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 	    		return templateRep;
 	    	}
 		}
-		if (nyttPassord != null){
+		if (nyttPassord != null){ //Dersom bruker har glemt passord
      		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
     		Representation pasientkomplikasjonFtl = clres2.get();
     		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,

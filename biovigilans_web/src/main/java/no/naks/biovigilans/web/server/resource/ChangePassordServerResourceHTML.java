@@ -25,6 +25,11 @@ import no.naks.biovigilans.model.MelderImpl;
 
 /**
  * Denne resursen sørger for at bruker får anledning til å endre sitt passord.
+ * @since 09.05.19
+ * Denne funksjonen er tilpasset brukerscenarer beskrevet i Jira Meld-80
+ * 24.05.19:
+ * Tekst på endrepassord.html tilpasses brukerscenario 3, slik at samme html side kan benyttes for 
+ * både brukerscenario 1 og 3. 
  * @author olj
  *
  */
@@ -35,6 +40,9 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	private String genPWId = "passwordID"; // Session ID for generert passord
 	private String engangPWID = "engang"; //Denne til bruker for å angi engangspassord
 	private String tilKontaktId = "kontakt"; // denne brukes til å vise knapp for å gå tilbake til kontaktskjema
+	private String origpasswd;
+	private String origpasswdID = "orig";
+	
 	/**
 	 * getHemovigilans
 	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
@@ -49,6 +57,9 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	     Request request = getRequest();
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 	 	 String meldingsText = "";
+	 	 String correctPage = "/hemovigilans/endrepassordok.html";
+	 	 String page = "/hemovigilans/endrepassord.html";
+
 	  	 displayPart = "none";
 	  	 String displayOrd = "none";
 	  	 String engangDisplay = "block";
@@ -96,7 +107,7 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
     	 melderwebModel.distributeTerms();
     	 
 	     dataModel.put(melderId, melderwebModel);
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/changepassord.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
 	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 
 	     melderwebModel.setMelder(melder);
@@ -117,7 +128,9 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
     	TemplateRepresentation  templateRep = null;
  	    Map<String, Object> dataModel = new HashMap<String, Object>();
  	    String meldingsText = "Passordet har ikke nok styrke, vennligst prøv igjen";
-
+	 	 String correctPage = "/hemovigilans/endrepassordok.html";
+	 	 String incorrectPage = "/hemovigilans/endrepassordfeilpassord.html";
+	 	 String page = "/hemovigilans/endrepassord.html";
 	    Request request = getRequest();
 	    melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 	    String chPW = melderwebModel.getChangePasswd();
@@ -126,13 +139,14 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	    String genPasswd = (String) sessionAdmin.getSessionObject(request,genPWId);
 	    List<Melder> meldere = new ArrayList<Melder>();
 	    meldere.add(melder);
+	    String opprinneligPassord = melder.getMelderPassord();
 /*	    Map<String,List> alleMeldinger = new HashMap<String,List>();
  	    List<Vigilansmelding> meldinger = null;
  //	    List delMeldinger = null;
  	    List<Vigilansmelding> andreMeldinger = null;
  	    List<Vigilansmelding> pasientMeldinger = null;
  	    List<Vigilansmelding> giverMeldinger = null;*/
- 	    
+ 
     	if(form == null){
     		invalidateSessionobjects();
     	}
@@ -143,6 +157,9 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
     	String melderPassord = null;
     	String meldingsNokkel = null;
     	String passordGjentatt = null;
+	    origpasswd = (String) sessionAdmin.getSessionObject(getRequest(), origpasswdID);
+ 	    if (origpasswd != null)
+ 	    	melderPassord = origpasswd;
 /*
  * Verdier fra database
  */
@@ -154,13 +171,13 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
     	for (Parameter entry : form) {
 			if (entry.getValue() != null && !(entry.getValue().equals(""))){
 //					System.out.println(entry.getName() + "=" + entry.getValue());
-					if (entry.getName().equals("k-epost")){
+					if (entry.getName().equals("k-pwd")){
 						melderPassord = entry.getValue();
 					}
-					if (entry.getName().equals("k-gjentaepost")){
+					if (entry.getName().equals("k-bekreftpwd")){
 						passordGjentatt = entry.getValue();
 					}
-					if (entry.getName().equals("k-genpassword")){
+					if (entry.getName().equals("k-newpwd")){
 						userGenpasswd = entry.getValue();
 					}					
 					
@@ -171,12 +188,26 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 		Parameter meldOversikt = form.getFirst("meldoversikt"); // Bruker ønsker å gå til sin meldingsoversikt
 		Parameter tilKontaksSkjema = form.getFirst("kontaktskjema"); // Bruker ønsker å gå til tilbake til kontaktskjema
 //	    String page = "../hemovigilans/melder_rapport.html"; 
-		if (formValue != null && userGenpasswd != null){ // Bruker kommer fra kontaktskjema og oppgir tilsendt generert passord
-			if (genPasswd.equals(userGenpasswd)){
+		if (formValue != null && userGenpasswd != null && passordGjentatt != null ){ // Dette er nå tilpasset brukerscenarer beskrevet i Jira Meld-80
+			boolean bStrenght = false;
+			if (!(passordGjentatt.equals(userGenpasswd))){
+				origpasswd = melderPassord;
+				sessionAdmin.setSessionObject(getRequest(),origpasswd,origpasswdID);
+				page = incorrectPage;
+			}
+			if (passordGjentatt.equals(userGenpasswd)&& userGenpasswd.length() >= 8 && melderPassord != null && melderPassord.equals(opprinneligPassord) ){ //Dersom nytt passord er likt gjentatt passord
+				melderPassord = userGenpasswd;
+				melder.setMelderPassord(melderPassord);
+				bStrenght = adminWebService.checkStrenghtPassword(melder);
+				if (bStrenght){ //Nytt passord riktig etter gjeldende regler
+				     adminWebService.encyptmeldere(meldere); //Lagrer nytt passord
+					page = correctPage;
+				}
+			}
 			  	 String displayOrd = "block";
 			  	 String startPagekey = "start";
 			  	String engangDisplay = "none";
-			  	 meldingsText = "Engangpassord riktig! Vennligst lag et nytt passord etter gjeldende regler";
+			  	 meldingsText = "Nytt riktig etter gjeldende regler";
 				 SimpleScalar startPage = new SimpleScalar(displayOrd);
 				 String melderNavn = melder.getMeldernavn();
 				 melderEpost = melder.getMelderepost();
@@ -190,37 +221,14 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 				 SimpleScalar simple = new SimpleScalar(meldingsText);
 				 dataModel.put( meldeTxtId,simple);
 			     dataModel.put(melderId, melderwebModel);
-			     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/changepassord.html"));
+			     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
 			     Representation pasientkomplikasjonFtl = clres2.get();
 			        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
 			                MediaType.TEXT_HTML);
 				 return templatemapRep;
-			}else if (!genPasswd.equals(userGenpasswd)&& melderPassord == null){ // Engangspassord feil
-			  	 String displayOrd = "none";
-			  	 String engangDisplay = "block";
-			  	 String startPagekey = "start";
-			  	 meldingsText = "Engangpassord feil! Vennligst prøv igjen";
-				 SimpleScalar startPage = new SimpleScalar(displayOrd);
-				 String melderNavn = melder.getMeldernavn();
-				 melderEpost = melder.getMelderepost();
-			 	 SimpleScalar engangPage = new SimpleScalar(engangDisplay);
-			 	 dataModel.put(engangPWID, engangPage);
-			     SimpleScalar meldNavn = new SimpleScalar(melderNavn);
-			     SimpleScalar meldEpost = new SimpleScalar(melderEpost);
-				 dataModel.put( startPagekey,startPage);
-			     dataModel.put(meldernavnID,meldNavn);
-			     dataModel.put(melderepostID,meldEpost);
-				 SimpleScalar simple = new SimpleScalar(meldingsText);
-				 dataModel.put( meldeTxtId,simple);
-			     dataModel.put(melderId, melderwebModel);
-			     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/changepassord.html"));
-			     Representation pasientkomplikasjonFtl = clres2.get();
-			        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
-			                MediaType.TEXT_HTML);
-				 return templatemapRep;
-			}
+
 		}
-		if (formValue != null && melderPassord != null && passordGjentatt != null){
+/*		if (formValue != null && melderPassord != null && passordGjentatt != null){
 			boolean bStrenght = false;
 			if (melderPassord.equals(passordGjentatt) && melderPassord.length() >= 8){
 				melder.setMelderPassord(melderPassord);
@@ -289,9 +297,11 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 				 return templatemapRep;				
 			}
 	    
-		}
+		}*/
 		if(meldOversikt != null) {
-			String page = "../hemovigilans/melder_rapport.html";
+			page = "../hemovigilans/melder_rapport.html";
+			origpasswd = null;
+			sessionAdmin.setSessionObject(getRequest(),origpasswd,origpasswdID);
 		     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/changepassord.html"));
 		     Representation pasientkomplikasjonFtl = clres2.get();
 		        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
@@ -300,7 +310,9 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 			 return templatemapRep;		
 		}
 		if(tilKontaksSkjema != null) {
-			String page = "../hemovigilans/rapporter_kontakt.html";
+			page = "../hemovigilans/rapporter_kontakt.html";
+			origpasswd = null;
+			sessionAdmin.setSessionObject(getRequest(),origpasswd,origpasswdID);
 		     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/changepassord.html"));
 		     Representation pasientkomplikasjonFtl = clres2.get();
 		        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
