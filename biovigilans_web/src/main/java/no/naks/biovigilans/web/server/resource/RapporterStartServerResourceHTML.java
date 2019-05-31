@@ -41,6 +41,9 @@ import freemarker.template.SimpleScalar;
  * Meldingene hentes fra databasen og settes i sessionadmin
  * Velger bruker ny melding hentes siden rapporter_hendelse_main.html direkte
  * @author olj
+ * @since 24.05.19
+ * Melder kan selv velge å endre sitt passord, et eget valg ved oppfølgingsmeldinger
+ * 
  */
 public class RapporterStartServerResourceHTML extends SessionServerResource {
 
@@ -52,6 +55,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 	private String meldeTxtId = "melding"; // Peker til meldingstekst til bruker ved valgt av oppfølgingsmelding/meldingsoversikt og bruker oppgir feil passord
 	private String passordCheck = "none"; // Ikke i bruk
 	private String displayPassord = "passord"; // Ikke i bruk
+	private String endrePassordKey = "endrepassord"; // Bruker ønsker å endre passord
 
 	public String getDisplayPassord() {
 		return displayPassord;
@@ -207,8 +211,9 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 		String passord = "";
 		String epost = "";
     	Long melderid = null; 
-    	Parameter nyttPassord = form.getFirst("nyttpassord");
-    	Parameter endrePassord = form.getFirst("endrepassord");
+    	Parameter nyttPassord = form.getFirst("nyttpassord");//Bruker har glemt passordet sitt
+    	Parameter endrePassord = form.getFirst("endrepassord");//Bruker ønsker å endre passordet sitt OLJ 24.05.19
+    	
         String page = "../hemovigilans/melder_rapport.html"; 
     	for (Parameter entry : form) {
 			if (entry.getValue() != null && !(entry.getValue().equals(""))){
@@ -222,6 +227,50 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 
 			}
 			
+    	}
+    	if (endrePassord != null && melderEpost != null && melderPassord != null){ //Bruker må ha oppgitt sin epost adresse og passord
+			List<Melder> rows = melderWebService.selectMelder(melderEpost);
+			String passordEndring = "passordEndring";
+			sessionAdmin.setSessionObject(request, passordEndring, endrePassordKey); 
+			if(rows != null && rows.size() > 0){
+				for(Melder rowmelder :rows){
+					melderid = rowmelder.getMelderId();
+					name = rowmelder.getMeldernavn();
+					passord = rowmelder.getMelderPassord();
+					epost = rowmelder.getMelderepost();
+					passord = adminWebService.decryptMelderPassword(passord);
+					if (melderPassord != null && melderPassord.equals(passord)){
+//						Melder melder = new MelderImpl();
+						melder.setMelderId(melderid);
+						melder.setMeldernavn(name);
+						melder.setMelderPassord(passord);
+						melder.setMelderepost(epost);
+						sessionAdmin.setSessionObject(request, melder, melderNokkel); 
+						break;
+					}
+				}
+			}
+			if (melderPassord != null && !melderPassord.equals(passord)){
+	     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
+	    		Representation pasientkomplikasjonFtl = clres2.get();
+	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+	    				MediaType.TEXT_HTML);	
+	    		return templateRep;
+			}
+     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
+    		Representation pasientkomplikasjonFtl = clres2.get();
+    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+    				MediaType.TEXT_HTML);
+			page = "../hemovigilans/endrebrukerpassord.html"; 
+			redirectPermanent(page);
+			return templateRep;
+    	}
+    	if (endrePassord != null && (melderEpost == null || melderPassord == null)){
+     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
+    		Representation pasientkomplikasjonFtl = clres2.get();
+    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+    				MediaType.TEXT_HTML);	
+    		return templateRep;
     	}
 		Parameter formValue = form.getFirst("formValue"); // Bruker oppgir epost og passord
 	

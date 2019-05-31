@@ -518,8 +518,9 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		boolean found = false;
     		String encryptedPasswd = melderwebModel.getMelder().getMelderPassord();
     		if (result != null && !result.isEmpty()){
-    			String epost = melderwebModel.getMelderepost();
-    			Melder melder = melderwebModel.getMelder();
+    			 Melder melder = (Melder)sessionAdmin.getSessionObject(request,melderNokkel);
+    			String epost = melder.getMelderepost();
+
     			String passord = adminWebService.decryptMelderPassword(melder);
     			melder.setMelderPassord(passord);
     			List<Melder> rows = melderWebService.selectMelder(epost); // Korrekt kall 
@@ -720,6 +721,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 						name = rowmelder.getMeldernavn();
 						passord = rowmelder.getMelderPassord();
 						epost = rowmelder.getMelderepost();
+						melderwebModel.setMelder(rowmelder);//Added 30.05.19
 					}
 /*					for(Map row:rows){
 						melderid = Long.parseLong(row.get("melderid").toString());
@@ -732,11 +734,11 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 
 				}
     			Melder melder = melderwebModel.getMelder();
-				melder.setMeldernavn(name);
+/*				melder.setMeldernavn(name); Dette er unødvendig etter endring over (724) OLJ 30.05.19
 				melder.setMelderId(melderid);
     			if (melder_epost != null && (melder.getMelderepost() == null || melder.getMelderepost().isEmpty())){
     				melder.setMelderepost(melder_epost);
-    			}
+    			}*/
     			sessionAdmin.setSessionObject(request,melder,melderNokkel);
     			result = RandomStringUtils.randomAlphabetic(16);
     			sessionAdmin.setSessionObject(request,result,genPWId);
@@ -750,8 +752,8 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     			sessionAdmin.setSessionObject(request, melderwebModel, melderId);
         		dataModel.put(melderId, melderwebModel);
  */
-    			String page = "../hemovigilans/changepassord.html";
-   		     	ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/passord.html"));
+    			String page = "../hemovigilans/tilsendtpassord.html";
+   		     	ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
    		     	Representation pasientkomplikasjonFtl = clres2.get();
    		        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
    		                MediaType.TEXT_HTML);
