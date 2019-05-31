@@ -50,7 +50,7 @@ $( document ).ready(function(){
 function homePage(){
 	var curAddr = document.location.href;
 //	 alert(curAddr);
-	var newAddr = curAddr.replace("tilsendtpassord.html","");
+	var newAddr = curAddr.replace("endrepassord.html","");
 //	alert(newAddr);
 	document.location = newAddr;
 
@@ -70,11 +70,10 @@ function toggleDisplay(id, displayvalue)
 }
 </script>
 
-<h1>Glemt passord</h1>
+<h1>Passord er endret</h1>
   	<div class="form-group">
 
-  	<h4>Vi har nå sendt et nytt passord til e-postadressen du har oppgitt !!!!</h4>
-
+  	<h4>Passord er endret og lagret.</h4>
      <div class="form-group" id="labelnavn" >
   	    <label>Ditt navn:</label>
      	<label>${Mnavn}</label>
@@ -83,24 +82,15 @@ function toggleDisplay(id, displayvalue)
   	    <label>Din Epost adresse:</label>
      	<label>${Mepost}</label>
      </div>   	
-<!--         <label for="k-epost">Din e-post adresse:</label>
-        <div>
-          <input name="k-epost" type="email" value="" class="form-control" id="k-epost" placeholder="Email"  />
-        </div> -->
-      <div class="form-group" id="tilsendtpw" style="display: ${engang}">
-          	<label for="k-genpassword" >Vennligst skriv inn tilsendt passord</label><br />
-   
-          <input name="k-genpassword" type="password" value="" class="form-control" id="k-genpassword" placeholder="Passord" style="display: ${engang}" onchange="formSubmit('genpasswd');"/><br />
-    	<button name="tilsendtpassord" type="submit" value="tilsendtpassord" class="btn btn-primary">Bekreft tilsendt passord</button>
-    </div>
+
         <br /><br />        
-       <button name="passordpanytt" type="submit" value="passordpanytt"  class="btn btn-default btn-lg btn-back" >Send passord på nytt</button>           
+       <button name="kontaktskjema" type="submit" value="kontaktskjema"  class="btn btn-default btn-lg btn-back" >Tilbake til kontaktskjema</button>           
         
             
       </div>
  
     <div class="form-group" id="ingennokkel" >
-     	<label>${melding}</label>
+<!--      	<label>${melding}</label> -->
      </div>
 
 <div class="panel-group" id="accordion">

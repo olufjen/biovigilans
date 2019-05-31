@@ -28,8 +28,7 @@ import no.naks.biovigilans.model.MelderImpl;
  * @since 09.05.19
  * Denne funksjonen er tilpasset brukerscenarer beskrevet i Jira Meld-80
  * 24.05.19:
- * Tekst på endrepassord.html tilpasses brukerscenario 3, slik at samme html side kan benyttes for 
- * både brukerscenario 1 og 3. 
+ * Det lages en egen endrebrukerpassord.html som  tilpasses brukerscenario 3.
  * @author olj
  *
  */
@@ -42,6 +41,7 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	private String tilKontaktId = "kontakt"; // denne brukes til å vise knapp for å gå tilbake til kontaktskjema
 	private String origpasswd;
 	private String origpasswdID = "orig";
+	private String endrePassordKey = "endrepassord"; // Bruker ønsker å endre passord
 	
 	/**
 	 * getHemovigilans
@@ -59,13 +59,17 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	 	 String meldingsText = "";
 	 	 String correctPage = "/hemovigilans/endrepassordok.html";
 	 	 String page = "/hemovigilans/endrepassord.html";
-
+	 	String passordEndring = null;
 	  	 displayPart = "none";
 	  	 String displayOrd = "none";
 	  	 String engangDisplay = "block";
 	  	 String startPagekey = "start";
 	     String genPasswd = (String) sessionAdmin.getSessionObject(request,genPWId);
 	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
+	     passordEndring = (String)sessionAdmin.getSessionObject(request,endrePassordKey);
+	     if (passordEndring != null){
+	    	 page = "/hemovigilans/endrebrukerpassord.html";
+	     }
 	     if(melderwebModel == null){
 		     setMelderObject();
 	    	 melderwebModel.setFormNames(sessionParams);

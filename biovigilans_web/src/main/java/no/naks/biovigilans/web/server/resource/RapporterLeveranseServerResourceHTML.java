@@ -271,7 +271,7 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
        	    	 emailWebService.setMailTo(melderEpost);
        	    	 emailWebService.setSubject("Hemovigilans Endring av passord");
        	    	 emailWebService.setEmailText("For å bedre sikkerheten ved meldeordningen, ber vi deg endre ditt passord, slik at det følger Helsedirektoratets regler for passord"
-       	    	 		+ "%nVi ber om at du endrer ditt passord så snart det er praktisk mulig. %nVelg Oppfølgingsmelding/Meldingsoversikt. Der står det beskrevet hvordan du skal endre passordet");
+       	    	 		+ "\nVi ber om at du endrer ditt passord så snart det er praktisk mulig. \nVelg Oppfølgingsmelding/Meldingsoversikt. Der står det beskrevet hvordan du skal endre passordet");
        	    	 emailWebService.sendEmail(""); //Kommentert bort til stage !!
     	    	}
     	    }
