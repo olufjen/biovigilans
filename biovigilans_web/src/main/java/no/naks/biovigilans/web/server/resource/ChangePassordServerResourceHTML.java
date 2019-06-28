@@ -42,7 +42,8 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	private String origpasswd;
 	private String origpasswdID = "orig";
 	private String endrePassordKey = "endrepassord"; // Bruker ønsker å endre passord
-	
+	private String passordIGitt = "passordEndringum";
+	private String passordGitt = "passordEndring"; 
 	/**
 	 * getHemovigilans
 	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
@@ -57,6 +58,7 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	     Request request = getRequest();
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 	 	 String meldingsText = "";
+
 	 	 String correctPage = "/hemovigilans/endrepassordok.html";
 	 	 String page = "/hemovigilans/endrepassord.html";
 	 	String passordEndring = null;
@@ -67,9 +69,12 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	     String genPasswd = (String) sessionAdmin.getSessionObject(request,genPWId);
 	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 	     passordEndring = (String)sessionAdmin.getSessionObject(request,endrePassordKey);
-	     if (passordEndring != null){
+	     if (passordEndring != null && passordEndring.equals(passordGitt)){
 	    	 page = "/hemovigilans/endrebrukerpassord.html";
 	     }
+	     if (passordEndring != null && passordEndring.equals(passordIGitt)){
+	    	 page = "/hemovigilans/endrebrukerpassordutenmelderinfo.html";
+	     }	     
 	     if(melderwebModel == null){
 		     setMelderObject();
 	    	 melderwebModel.setFormNames(sessionParams);
@@ -90,10 +95,12 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 		 dataModel.put( displayKey,tilOversikt);
 		 dataModel.put( startPagekey,startPage);
 	     String melderNavn = "";
-	     if (melder.getMeldernavn()!= null){
+	     String melderEpost = "";
+	     if (melder != null && melder.getMeldernavn()!= null){
 	    	 melderNavn = melder.getMeldernavn();
+	    	 melderEpost = melder.getMelderepost();
 	     };
-	     String melderEpost = melder.getMelderepost();
+	     
 	     SimpleScalar meldNavn = new SimpleScalar(melderNavn);
 	     SimpleScalar meldEpost = new SimpleScalar(melderEpost);
 	     dataModel.put(meldernavnID,meldNavn);
@@ -138,12 +145,17 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	    Request request = getRequest();
 	    melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 	    String chPW = melderwebModel.getChangePasswd();
-
+	    String passordEndring = null;
+	    String opprinneligPassord = null;
+	    passordEndring = (String)sessionAdmin.getSessionObject(request,endrePassordKey);
 	    Melder melder = (Melder) sessionAdmin.getSessionObject(request,melderNokkel);
 	    String genPasswd = (String) sessionAdmin.getSessionObject(request,genPWId);
 	    List<Melder> meldere = new ArrayList<Melder>();
-	    meldere.add(melder);
-	    String opprinneligPassord = melder.getMelderPassord();
+	    if (melder != null){
+		    meldere.add(melder);
+		    opprinneligPassord = melder.getMelderPassord();
+	    }
+
 /*	    Map<String,List> alleMeldinger = new HashMap<String,List>();
  	    List<Vigilansmelding> meldinger = null;
  //	    List delMeldinger = null;
@@ -175,6 +187,9 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
     	for (Parameter entry : form) {
 			if (entry.getValue() != null && !(entry.getValue().equals(""))){
 //					System.out.println(entry.getName() + "=" + entry.getValue());
+				if (entry.getName().equals("k-epost")){
+					epost = entry.getValue();
+				}
 					if (entry.getName().equals("k-pwd")){
 						melderPassord = entry.getValue();
 					}
@@ -188,7 +203,31 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 			}
 			
     	}
+    	if (!epost.equals("")&& melderPassord != null && passordEndring != null && passordEndring.equals(passordIGitt)){
+			List<Melder> rows = melderWebService.selectMelder(epost);
+			if(rows != null && rows.size() > 0){
+				for(Melder rowmelder :rows){
+					melderid = rowmelder.getMelderId();
+					name = rowmelder.getMeldernavn();
+					passord = rowmelder.getMelderPassord();
+					epost = rowmelder.getMelderepost();
+					passord = adminWebService.decryptMelderPassword(passord);
+					if (melderPassord != null && melderPassord.equals(passord)){
+						if (melder == null)
+							melder = new MelderImpl();
+						melder.setMelderId(melderid);
+						melder.setMeldernavn(name);
+						melder.setMelderPassord(passord);
+						melder.setMelderepost(epost);
+						sessionAdmin.setSessionObject(request, melder, melderNokkel); 
+						opprinneligPassord = passord;
+						break;
+					}
+				}
+			}
+    	}
 		Parameter formValue = form.getFirst("passord"); // Bruker har endret passord
+		Parameter formValueuid = form.getFirst("passorduid"); // Bruker har endret passord fra endrebrukerpassordutenmelderinfo
 		Parameter meldOversikt = form.getFirst("meldoversikt"); // Bruker ønsker å gå til sin meldingsoversikt
 		Parameter tilKontaksSkjema = form.getFirst("kontaktskjema"); // Bruker ønsker å gå til tilbake til kontaktskjema
 //	    String page = "../hemovigilans/melder_rapport.html"; 
@@ -211,7 +250,7 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 			  	 String displayOrd = "block";
 			  	 String startPagekey = "start";
 			  	String engangDisplay = "none";
-			  	 meldingsText = "Nytt riktig etter gjeldende regler";
+			  	 meldingsText = "";
 				 SimpleScalar startPage = new SimpleScalar(displayOrd);
 				 String melderNavn = melder.getMeldernavn();
 				 melderEpost = melder.getMelderepost();
@@ -232,6 +271,56 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 				 return templatemapRep;
 
 		}
+		// Bruker har endret passord fra endrebrukerpassordutenmelderinfo
+		if (formValueuid != null && userGenpasswd != null && passordGjentatt != null ){ // Dette er nå tilpasset brukerscenarer beskrevet i Jira Meld-80
+			boolean bStrenght = false;
+			if (!(passordGjentatt.equals(userGenpasswd))){
+				origpasswd = melderPassord;
+				sessionAdmin.setSessionObject(getRequest(),origpasswd,origpasswdID);
+				page = incorrectPage;
+			}
+			if (passordGjentatt.equals(userGenpasswd)&& userGenpasswd.length() >= 8 && melderPassord != null && melderPassord.equals(opprinneligPassord) ){ //Dersom nytt passord er likt gjentatt passord
+				melderPassord = userGenpasswd;
+				melder.setMelderPassord(melderPassord);
+				bStrenght = adminWebService.checkStrenghtPassword(melder);
+				if (bStrenght){ //Nytt passord riktig etter gjeldende regler
+				     adminWebService.encyptmeldere(meldere); //Lagrer nytt passord
+					page = correctPage;
+				}
+			}
+			String melderNavn = "";
+			melderEpost = "";
+			meldingsText = "";
+			if (melder == null){
+				page = "/hemovigilans/endrebrukerpassordutenmelderinfo.html";
+				meldingsText = "Opprinnelig passord er ikke riktig. Vennligst prøv igjen";
+			}
+			String displayOrd = "block";
+			String startPagekey = "start";
+			String engangDisplay = "none";
+
+			SimpleScalar startPage = new SimpleScalar(displayOrd);
+			if (melder != null){
+				melderNavn = melder.getMeldernavn();
+				melderEpost = melder.getMelderepost();
+			}
+			SimpleScalar engangPage = new SimpleScalar(engangDisplay);
+			dataModel.put(engangPWID, engangPage);
+			SimpleScalar meldNavn = new SimpleScalar(melderNavn);
+			SimpleScalar meldEpost = new SimpleScalar(melderEpost);
+			dataModel.put( startPagekey,startPage);
+			dataModel.put(meldernavnID,meldNavn);
+			dataModel.put(melderepostID,meldEpost);
+			SimpleScalar simple = new SimpleScalar(meldingsText);
+			dataModel.put( meldeTxtId,simple);
+			dataModel.put(melderId, melderwebModel);
+			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
+			Representation pasientkomplikasjonFtl = clres2.get();
+			TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+					MediaType.TEXT_HTML);
+			return templatemapRep;
+
+		}		
 /*		if (formValue != null && melderPassord != null && passordGjentatt != null){
 			boolean bStrenght = false;
 			if (melderPassord.equals(passordGjentatt) && melderPassord.length() >= 8){

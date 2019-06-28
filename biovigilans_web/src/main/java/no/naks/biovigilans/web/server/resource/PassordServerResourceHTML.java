@@ -189,7 +189,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
 		Parameter tilkontaktSkjema = form.getFirst("kontaktskjema"); // Bruker har byttet passord og skal til kontaktskjema
 		boolean bStrenght = true;
 		String genPW = "";
-		if (tilkontaktSkjema != null){ // Bruker har byttet passord og kommer fr kontaktskjema
+		if (tilkontaktSkjema != null){ // Bruker har byttet passord og kommer fra kontaktskjema
 			String page = "../hemovigilans/rapporter_kontakt.html";
 //			Melder melder = melderwebModel.getMelder();
 //			sessionAdmin.setSessionObject(request,melder,melderNokkel); // Må settes for bruk i meldeoversikt.
@@ -410,7 +410,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
      	    	emailWebService.setEmailText("Ditt engangspassord er: "+result+ " Du må nå oppgi dette passordet og velge Bekreft tilsendt passord.");
     	    	 emailWebService.setMailTo(melder.getMelderepost());
     	    	 emailWebService.sendEmail("");
-				meldingsText = "Melding med et generert passord er sendt til oppgitt adresse";
+				meldingsText = "";
 			}
 			bStrenght = adminWebService.checkStrenghtPassword(melder);
 	    
