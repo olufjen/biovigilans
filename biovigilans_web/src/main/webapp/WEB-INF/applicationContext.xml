@@ -713,6 +713,17 @@
         <property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf},${kontakt.passord}"></property> 
        <property name="adminWebService" ref="adminWebService"></property>       
   </bean> 
+  <!-- Lagt til brukerfunksjon for å endre passord OLJ 08.05.19 -->  
+   <bean name="/hemovigilans/endrebrukerpassordutenmelderinfo.html" id="changebrukerpassordutenmelderServerResource"  autowire="byName" scope="prototype" 
+   class="no.naks.biovigilans.web.server.resource.ChangePassordServerResourceHTML">
+        <property name="sessionAdmin" ref="sessionAdmin"></property>
+        <property name="emailWebService" ref="emailWebService"></property>
+        <property name="tablewebservice" ref="tableWebService"></property>
+        <property name="innmeldingWebService" ref="hendelseWebService"></property>
+        <property name="icd10WebService" ref="ICD10WebService"></property>
+        <property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf},${kontakt.passord}"></property> 
+       <property name="adminWebService" ref="adminWebService"></property>       
+  </bean> 
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
                 <property name="sessionAdmin" ref="sessionAdmin"></property>
