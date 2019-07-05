@@ -190,7 +190,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
  	    List<Vigilansmelding> andreMeldinger = null;
  	    List<Vigilansmelding> pasientMeldinger = null;
  	    List<Vigilansmelding> giverMeldinger = null;*/
- 	    
+   	   	Melder melder = new MelderImpl();
     	if(form == null){
     		invalidateSessionobjects();
     	}
@@ -205,7 +205,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
  */
 		String name ="";
 		String passord = "";
-
+		String epost = "";
     	Long melderid = null; 
     	Parameter nyttPassord = form.getFirst("nyttpassord");
         String page = "../cellerogvev/melder_rapport.html"; 
@@ -225,30 +225,43 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 		Parameter formValue = form.getFirst("formValue"); // Bruker oppgir epost og passord
 	
 		if (formValue != null && melderEpost != null){
-			List<Map<String, Object>> rows = melderWebService.selectMelder(melderEpost);
 
-			if(rows.size() > 0){
-				for(Map row:rows){
-					melderid = Long.parseLong(row.get("melderid").toString());
+			List<Melder> rows = melderWebService.selectMelder(melderEpost);
+			if(rows != null && rows.size() > 0){
+				for(Melder rowmelder :rows){
+					melderid = rowmelder.getMelderId();
 	
-					if (row.get("meldernavn") != null)
+/*					if (row.get("meldernavn") != null)
 						name = row.get("meldernavn").toString();
 					if (row.get("melderpassord") != null)
-						passord = row.get("melderpassord").toString();
+						passord = row.get("melderpassord").toString();*/
+					name = rowmelder.getMeldernavn();
+					passord = rowmelder.getMelderPassord();
+					epost = rowmelder.getMelderepost();
+
 /*
-* Decrypting password OLJ 10.01.18					
-*/
-					passord = adminWebService.decryptMelderPassword(passord);					
+ * OLJ April 2018
+ * Hente alle opplysninger om melder fra DB!?					
+ */
+/*					if (row.get("melderepost") != null)
+						epost = row.get("melderepost").toString();		*/	
+/*
+ * Decrypting password OLJ 10.01.18					
+ */
+					passord = adminWebService.decryptMelderPassword(passord);
 					if (melderPassord != null && melderPassord.equals(passord)){
-						Melder melder = new MelderImpl();
+//						Melder melder = new MelderImpl();
 						melder.setMelderId(melderid);
 						melder.setMeldernavn(name);
 						melder.setMelderPassord(passord);
+						melder.setMelderepost(epost);
 						sessionAdmin.setSessionObject(request, melder, melderNokkel); 
 						break;
 					}
 				}
 			}
+
+			
 			if (melderPassord != null && melderPassord.equals(passord)){
 	     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/startside.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
