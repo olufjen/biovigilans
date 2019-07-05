@@ -205,7 +205,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
  */
 		String name ="";
 		String passord = "";
-
+		String epost = "";
     	Long melderid = null; 
     	Parameter nyttPassord = form.getFirst("nyttpassord");
         String page = "../organer/melder_rapport.html"; 
@@ -225,16 +225,20 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 		Parameter formValue = form.getFirst("formValue"); // Bruker oppgir epost og passord
 	
 		if (formValue != null && melderEpost != null){
-			List<Map<String, Object>> rows = melderWebService.selectMelder(melderEpost);
-
-			if(rows.size() > 0){
-				for(Map row:rows){
-					melderid = Long.parseLong(row.get("melderid").toString());
+//			List<Map<String, Object>> rows = melderWebService.selectMelder(melderEpost);
+			List<Melder> rows = melderWebService.selectMelder(melderEpost);
+			if(rows != null && rows.size() > 0){
+				for(Melder rowmelder :rows){
+					melderid = rowmelder.getMelderId();
 	
-					if (row.get("meldernavn") != null)
+/*					if (row.get("meldernavn") != null)
 						name = row.get("meldernavn").toString();
 					if (row.get("melderpassord") != null)
-						passord = row.get("melderpassord").toString();
+						passord = row.get("melderpassord").toString();*/
+					name = rowmelder.getMeldernavn();
+					passord = rowmelder.getMelderPassord();
+					epost = rowmelder.getMelderepost();
+
 /*
 * Decrypting password OLJ 10.01.18					
 */
