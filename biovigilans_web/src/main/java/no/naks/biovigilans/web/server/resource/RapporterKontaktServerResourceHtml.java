@@ -520,12 +520,13 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		if (result != null && !result.isEmpty()){
     			 Melder melder = (Melder)sessionAdmin.getSessionObject(request,melderNokkel);
     			String epost = melder.getMelderepost();
-
-    			String passord = adminWebService.decryptMelderPassword(melder);
+    			melderwebModel.getMelder().setMelderepost(epost);
+     			String passord = adminWebService.decryptMelderPassword(melder);
     			melder.setMelderPassord(passord);
     			List<Melder> rows = melderWebService.selectMelder(epost); // Korrekt kall 
 //    			List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
     			found = melderwebModel.kontaktValues( rows); // Found er true dersom riktig oppgitt passord og melder finnes fra før
+       			melderwebModel.setMelderepost(epost);
     			buttonValue = "enable";
     			melder.setMelderPassord(encryptedPasswd);
     			dataModel.put(melderId, melderwebModel);

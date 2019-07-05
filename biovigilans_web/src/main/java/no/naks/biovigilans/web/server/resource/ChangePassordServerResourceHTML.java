@@ -149,6 +149,8 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 	    String opprinneligPassord = null;
 	    passordEndring = (String)sessionAdmin.getSessionObject(request,endrePassordKey);
 	    Melder melder = (Melder) sessionAdmin.getSessionObject(request,melderNokkel);
+	    if (melder != null)
+	    	melderwebModel.setMelder(melder);
 	    String genPasswd = (String) sessionAdmin.getSessionObject(request,genPWId);
 	    List<Melder> meldere = new ArrayList<Melder>();
 	    if (melder != null){
@@ -220,6 +222,7 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 						melder.setMelderPassord(passord);
 						melder.setMelderepost(epost);
 						sessionAdmin.setSessionObject(request, melder, melderNokkel); 
+						melderwebModel.setMelder(melder);
 						opprinneligPassord = passord;
 						break;
 					}

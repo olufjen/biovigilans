@@ -329,6 +329,10 @@ public class PassordServerResourceHTML extends SessionServerResource {
 		}
 		if (changePassword != null ){
 			Melder melder = melderwebModel.getMelder();
+			if (melder == null || melder.getMeldernavn() == null){
+				melder = (Melder)sessionAdmin.getSessionObject(request,melderNokkel);
+				melderwebModel.setMelder(melder);
+			}
 			if (melder != null){
 				name = melder.getMeldernavn();
 				email = melder.getMelderepost();
