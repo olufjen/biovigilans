@@ -34,6 +34,7 @@ import no.naks.biovigilans.felles.model.DonasjonwebModel;
 import no.naks.biovigilans.felles.xml.Letter;
 import no.naks.biovigilans.felles.xml.MainTerm;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.restlet.Request;
 import org.restlet.data.Form;
 import org.restlet.data.LocalReference;
@@ -84,7 +85,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	private String foundKey = "funnet"; //Benyttes dersom melder er funnet, men bruker har oppgitt feil passord
 	private String extraPassordKey = "extra";
 	private String enableLagre = "lagre"; // Benyttes til å enable lagre knapp på kontaktskjema
-	
+	private String genPWId = "passwordID"; // Session ID for generert passord
 	public RapporterKontaktServerResourceHtml() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -544,6 +545,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     	TemplateRepresentation  templateRep = null;
         String meldingsNokkel = null;
 	     String datoLevert = null;
+	     String pwResult = null;
 //	   	 displayPart = "none";
 //      	 SimpleScalar simple = new SimpleScalar(displayPart);
     	if(form == null){
@@ -604,6 +606,8 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		Parameter valgtRegion = form.getFirst("regionValue");   //Bruker har valgt region
     		Parameter valgtForetak = form.getFirst("foretakValue"); //Bruker har valgt HF
     		Parameter nyttPassord = form.getFirst("nyttpassord");   // Bruker har glemt passord
+    		Parameter glemPassord = form.getFirst("glemtpass");   // Bruker har glemt passord: Bruker ny funksjon (22.10.18) for å få tilsendt engangspassord
+
     		Parameter provNy = form.getFirst("provnytt");
     		Parameter hentPassord = form.getFirst("hentpassord");
     		Parameter nymelder = form.getFirst("nymelder");			// Bruker ønsker å registrere ny melder til en eksisterende epost adresse
@@ -651,6 +655,73 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	    				MediaType.TEXT_HTML);
 	    		redirectPermanent("../cellerogvev/leveranse.html");
 	    		return templateRep;
+    		}else if(glemPassord != null){// Bruker har glemt passord: Bruker ny funksjon (22.10.18) for å få tilsendt engangspassord
+    			emailWebService.setSubject("Passord");
+     			String melder_epost = (String) melderwebModel.getFormMap().get("k-epost");
+     			if (melder_epost == null){
+    	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+    	    		Representation pasientkomplikasjonFtl = clres2.get();
+    	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
+    	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
+    	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+    			    				MediaType.TEXT_HTML);
+    	    		return templateRep;
+     			}
+     			List<Melder> rows = melderWebService.selectMelder(melder_epost);
+//				List<Map<String, Object>> rows = melderWebService.selectMelder(melder_epost);
+				String name = "";
+				Long melderid = null;
+				if(rows != null && rows.size() > 0){
+/*
+* Tilpasset kryptering OLJ 22.01.18						
+*/
+					String passord = "";
+					
+//					Long melderid = null;
+			   		String epost = "";
+					for(Melder rowmelder :rows){
+						melderid = rowmelder.getMelderId();
+						name = rowmelder.getMeldernavn();
+						passord = rowmelder.getMelderPassord();
+						epost = rowmelder.getMelderepost();
+						melderwebModel.setMelder(rowmelder);//Added 30.05.19
+					}
+/*					for(Map row:rows){
+						melderid = Long.parseLong(row.get("melderid").toString());
+						if (row.get("meldernavn") != null)
+							name = row.get("meldernavn").toString();
+						if (row.get("melderpassord") != null)
+							passord = row.get("melderpassord").toString();
+//						row.put(arg0, arg1)
+					}*/
+
+				}
+    			Melder melder = melderwebModel.getMelder();
+/*				melder.setMeldernavn(name); Dette er unødvendig etter endring over (724) OLJ 30.05.19
+				melder.setMelderId(melderid);
+    			if (melder_epost != null && (melder.getMelderepost() == null || melder.getMelderepost().isEmpty())){
+    				melder.setMelderepost(melder_epost);
+    			}*/
+    			sessionAdmin.setSessionObject(request,melder,melderNokkel);
+    			pwResult = RandomStringUtils.randomAlphabetic(16);
+    			sessionAdmin.setSessionObject(request,pwResult,genPWId);
+    			emailWebService.setEmailText("Ditt engangspassord er: "+pwResult+ " Du må nå oppgi dette passordet og deretter endre ditt passord.");
+    			emailWebService.setMailTo(melder.getMelderepost());
+    			emailWebService.sendEmail("");
+/*
+ * Legge til funksjon her for å lagre melding: 
+ *     			melderWebService.saveMelder(melderwebModel);
+    			SaveSkjema();
+    			sessionAdmin.setSessionObject(request, melderwebModel, melderId);
+        		dataModel.put(melderId, melderwebModel);
+ */
+    			String page = "../cellerogvev/tilsendtpassord.html";
+   		     	ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
+   		     	Representation pasientkomplikasjonFtl = clres2.get();
+   		        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+   		                MediaType.TEXT_HTML);
+   				redirectPermanent(page);
+   			 return templatemapRep;		    		
     		}else if(hentPassord != null){
     			Melder melder = melderwebModel.getMelder();
     			Long melderid = melder.getMelderId();
