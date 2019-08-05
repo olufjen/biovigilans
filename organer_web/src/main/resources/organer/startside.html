@@ -88,7 +88,7 @@
         </div>
         <div class="radio">
           <label>
-            <input name="k-nymelding" type="radio" id="k-oppfolging" value="oppfølgningsmelding" onclick="toggleDisplay('passord-div',this.checked);toggleDisplay('nyttpassord',1);toggleDisplay('btnnokkel',1)"> Oppfølgningsmelding/Meldingsoversikt
+            <input name="k-nymelding" type="radio" id="k-oppfolging" value="oppfølgningsmelding" onclick="toggleDisplay('passord-div',this.checked);toggleDisplay('nyttpassord',1);toggleDisplay('btnnokkel',1);toggleDisplay('endrepassord',1)"> Oppfølgningsmelding/Meldingsoversikt
           </label>
         </div>
       </div>
@@ -112,11 +112,14 @@
 
       <table align="left" border="0" cellspacing="0" cellpadding="3" class="table-condensed">
         <tr>
-          <td colspan="2" align="left">
+          <td colspan="3" align="left">
             <button type="submit" id="btnnokkel" value="nokkel" name="formValue" class="btn btn-primary btn-lg" style="display: none"> Log inn </button>
           </td>
-          <td colspan="2" align="left">
+          <td colspan="3" align="left">
             <button name="nyttpassord" type="submit" id="nyttpassord" class="btn btn-default btn-lg" style="display: none" >Glemt passord?</button>
+          </td>
+          <td colspan="3" align="left">
+            <button name="endrepassord" type="submit" id="endrepassord" class="btn btn-default btn-lg" style="display: none" >Endre passord</button>
           </td>
         </tr>
       </table>      

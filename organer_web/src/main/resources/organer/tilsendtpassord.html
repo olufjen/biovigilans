@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+   <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html;">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta content="Kunnskapssenteret oppsummerer forskning om effekt av helsetiltak, gjør helseøkonomiske analyser, måler kvalitet, og arbeider med kvalitetsforbedring og pasientsikkerhet. " name="description">
+
+  <link href="/biovigilans_web/resources/css/main.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link href="/biovigilans_web/resources/css/biovigilans.css" rel="stylesheet">
+  
+ 
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" /><!-- Viktig for dato !! -->
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> <!-- Viktig for dato !! -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" ></script>
+</head>
+
+<body>
+ <header>
+    <div class="container">
+      <figure class="main-logo">      
+       <img alt="Logo Nasjonalt kunnskapssenter for helsetjenesten" src="/biovigilans_web/resources/css/logo.png">  
+      </figure>
+    </div>    
+  </header>
+
+  <div class="container">
+  <div class="left hidden-print">        
+        <button type="button" class="btn btn-default btn-lg btn-back" onclick="homePage()">Tilbake</button>        
+  </div><form action="?method=PUT" method="post">
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+
+$( document ).ready(function(){ 
+//	alert("ready:");
+//	alert(reqFlag);
+	  if (reqFlag == 'block'){
+		  var endre = 'endrepassord';
+		  toggleDisplay(endre,1);
+	  }
+});
+function homePage(){
+	var curAddr = document.location.href;
+//	 alert(curAddr);
+	var newAddr = curAddr.replace("tilsendtpassord.html","");
+//	alert(newAddr);
+	document.location = newAddr;
+
+}
+function toggleDisplay(id, displayvalue)
+{    
+// alert("step 1 "+ id +" "+displayvalue);
+
+  if ( displayvalue == 1 ) {
+       document.getElementById(id).style.display = 'block';
+  //     alert("step 2");
+  } else if (displayvalue == 0) {
+       document.getElementById(id).style.display = 'none';
+  //     alert("step 3");
+  }
+//   alert("step 4");
+}
+</script>
+
+<h1>Glemt passord</h1>
+  	<div class="form-group">
+
+  	<h4>Vi har nå sendt et nytt passord til e-postadressen du har oppgitt!</h4>
+  	    <div class="form-group" id="ingennokkel" >
+     	<label>${melding}</label>
+     </div>
+
+     <div class="form-group" id="labelnavn" >
+  	    <label>Ditt navn:</label>
+     	<label>${Mnavn}</label>
+     </div>
+     <div class="form-group" id="labelepost" >
+  	    <label>Din Epost adresse:</label>
+     	<label>${Mepost}</label>
+     </div>   	
+<!--         <label for="k-epost">Din e-post adresse:</label>
+        <div>
+          <input name="k-epost" type="email" value="" class="form-control" id="k-epost" placeholder="Email"  />
+        </div> -->
+      <div class="form-group" id="tilsendtpw" style="display: ${engang}">
+          	<label for="k-genpassword" >Vennligst skriv inn tilsendt passord</label><br />
+   
+          <input name="k-genpassword" type="password" value="" class="form-control" id="k-genpassword" placeholder="Passord" style="display: ${engang}" onchange="formSubmit('genpasswd');"/><br />
+    	<button name="tilsendtpassord" type="submit" value="tilsendtpassord" class="btn btn-primary">Bekreft tilsendt passord</button>
+    </div>
+        <br /><br />        
+       <button name="passordpanytt" type="submit" value="passordpanytt"  class="btn btn-default btn-lg btn-back" >Send passord på nytt</button>           
+        
+            
+      </div>
+ 
+
+
+<div class="panel-group" id="accordion">
+
+</div>
+
+
+<!--<script src="js/bootstrap.min.js"></script>-->
+</form>
+</div> <!--slutt container-->
+</body>
+</html>
