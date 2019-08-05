@@ -1,9 +1,11 @@
 package no.naks.biovigilans.web.server.resource;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.restlet.Request;
 import org.restlet.data.Form;
 import org.restlet.data.LocalReference;
@@ -21,10 +23,26 @@ import no.naks.biovigilans.felles.model.MelderwebModel;
 import no.naks.biovigilans.felles.server.resource.SessionServerResource;
 import no.naks.biovigilans.model.Melder;
 import no.naks.biovigilans.model.MelderImpl;
-
+/**
+ * Denne resursen sørger for at bruker får tilsendt sitt passord, dersom bruker har glemt dette.
+ * @since 17.10.18:
+ * Genererer et engangspassord som sendes til bruker
+ * @since 20.05.19 Tipasset brukerscenario 2 beskrevet i Jira Meld-80
+ * Denne resrures er en del omarbeidet for denne tilpasningen.
+ * Gammel versjon finnes på google drive C:\Users\olj\Google Drive\jobb\hdir\biovigilans\jira\kildekode
+ * @author olj
+ *
+ */
 public class PassordServerResourceHTML extends SessionServerResource {
 	private String meldeTxtId = "melding";
+	private String changeId ="change"; // Flagg for å endre passord
+	private String buttonTxtId = "buttonTxt";
 	private String genPWId = "passwordID";
+//	private String email = "";
+	private String emailID = "email";
+	private String meldernavnID = "Mnavn";
+	private String melderepostID = "Mepost";
+	private String engangPWID = "engang"; //Denne til bruker for å angi engangspassord
 
 	/**
 	 * getHemovigilans
@@ -39,11 +57,41 @@ public class PassordServerResourceHTML extends SessionServerResource {
 	     Reference reference = new Reference(getReference(),"..").getTargetRef();
 	     Request request = getRequest();
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
+	     String page = "/organer/passord.html";
+	     String result = (String)sessionAdmin.getSessionObject(request,genPWId); //Sjekker om passord allerede er sendt
+	 	 Melder melder = (Melder)sessionAdmin.getSessionObject(request,melderNokkel);
+	     String name = "x";
+	     String email = "";
+	
+	 	 String engangs = "none";
+		
+	     if (result != null && melder != null){
+		     name = melder.getMeldernavn();
+			 email = melder.getMelderepost();
+	    	 page = "/organer/tilsendtpassord.html";
+	    	 engangs = "block";
+	     }
 	 	 String meldingsText = "";
+	 	 String pwFlag = "none";
+	 	 String buttonTxt = "Hent passord";
+	 	 SimpleScalar eepost = new SimpleScalar(email);
+	 	 SimpleScalar mNavn = new SimpleScalar(name);
+
 	 	 SimpleScalar simple = new SimpleScalar(meldingsText);
+	 	 SimpleScalar changePW = new SimpleScalar(pwFlag);
+	 	 SimpleScalar hentPW = new SimpleScalar(buttonTxt);
+	 	 SimpleScalar epost = new SimpleScalar(email);
+		 SimpleScalar engangPage = new SimpleScalar(engangs);
+		 dataModel.put(melderepostID, eepost);
+	     dataModel.put(meldernavnID,mNavn);
+	 	 dataModel.put(buttonTxtId, hentPW);
+		 dataModel.put(meldeTxtId,simple);
+		 dataModel.put(changeId, changePW);
+	     dataModel.put(engangPWID,engangPage);
+		 dataModel.put(emailID, epost);
 		 dataModel.put( meldeTxtId,simple);
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
-                 "/cellerogvev");
+                 "/organer");
 	    
 	     LocalReference localUri = new LocalReference(reference);
 	
@@ -54,7 +102,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
     	 melderwebModel.distributeTerms();
     	 
 	     dataModel.put(melderId, melderwebModel);
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/organer/passord.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
 	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 
 	     sessionAdmin.setSessionObject(getRequest(), melderwebModel,melderId);
@@ -73,14 +121,15 @@ public class PassordServerResourceHTML extends SessionServerResource {
     public Representation storeHemovigilans(Form form) {
     	TemplateRepresentation  templateRep = null;
  	    Map<String, Object> dataModel = new HashMap<String, Object>();
- 	    String meldingsText = "Melders epost finnes ikke, prøv igjen";
+ 	    String meldingsText = "";
+ 	    String result = "";
+ 	    String email = "";
+ 	   String engangs = "none";
 	    Request request = getRequest();
-	    String result = "";
+
 	    result = (String)sessionAdmin.getSessionObject(request,genPWId);
 	    melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 	    Melder kontaktMelder = (Melder)sessionAdmin.getSessionObject(request,melderNokkel);
-
- 	    String email = "";
 	    
 /*	    Map<String,List> alleMeldinger = new HashMap<String,List>();
  	    List<Vigilansmelding> meldinger = null;
@@ -88,7 +137,18 @@ public class PassordServerResourceHTML extends SessionServerResource {
  	    List<Vigilansmelding> andreMeldinger = null;
  	    List<Vigilansmelding> pasientMeldinger = null;
  	    List<Vigilansmelding> giverMeldinger = null;*/
- 	    
+	    
+		SimpleScalar simple = new SimpleScalar(meldingsText);
+	 	 String pwFlag = "block";
+	 	 String buttonTxt = "Hent passord på nytt";
+	 	 SimpleScalar hentPW = new SimpleScalar(buttonTxt);
+	 	 dataModel.put(buttonTxtId, hentPW);
+	 	 SimpleScalar changePW = new SimpleScalar(pwFlag);
+//	 	 SimpleScalar eepost = new SimpleScalar(email);
+		 dataModel.put( meldeTxtId,simple);
+		 dataModel.put(changeId, changePW);
+//		 dataModel.put(melderepostID, eepost);
+	    
     	if(form == null){
     		invalidateSessionobjects();
     	}
@@ -116,9 +176,200 @@ public class PassordServerResourceHTML extends SessionServerResource {
 			}
 			
     	}
-		Parameter formValue = form.getFirst("passord"); // Bruker oppgir epostadresse
-//	    String page = "../hemovigilans/melder_rapport.html"; 
-		if (formValue != null && melderEpost != null){
+
+    	email = melderEpost;
+    	if (email == null){
+    		pwFlag = "none";
+    		meldingsText = "Epost adresse må oppgis!!";
+    		changePW = null;
+    		changePW = new SimpleScalar(pwFlag);
+    	}
+		Parameter formValue = form.getFirst("passord"); // Bruker oppgir epostadresse kommer fra siden passord.html
+		Parameter changePassword = form.getFirst("tilsendtpassord"); // Bruker sender inn tilsendt passord
+		Parameter savePassord = form.getFirst("lagrenyttpassord"); // Bruker har angitt nytt passord
+		Parameter tilOversikt = form.getFirst("meldoversikt"); // Bruker ønsker å gå til meldingsoversikt (fra endrepassordok)
+		Parameter passordPanytt = form.getFirst("passordpanytt"); // Bruker ønsker å få tilsendt generert passord på nytt
+		Parameter tilkontaktSkjema = form.getFirst("kontaktskjema"); // Bruker har byttet passord og skal til kontaktskjema
+		boolean bStrenght = true;
+		String genPW = "";
+		if (tilkontaktSkjema != null){ // Bruker har byttet passord og kommer fra kontaktskjema
+			String page = "../organer/rapporter_kontakt.html";
+//			Melder melder = melderwebModel.getMelder();
+//			sessionAdmin.setSessionObject(request,melder,melderNokkel); // Må settes for bruk i meldeoversikt.
+//			origpasswd = null;
+//			sessionAdmin.setSessionObject(getRequest(),origpasswd,origpasswdID);
+		     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/organer/rapporter_kontakt.html"));
+		     Representation pasientkomplikasjonFtl = clres2.get();
+		        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+		                MediaType.TEXT_HTML);
+				redirectPermanent(page);
+			 return templatemapRep;		
+		}
+		if (passordPanytt != null){ // Bruker ønsker å få tilsendt generert passord på nytt
+			Melder melder = melderwebModel.getMelder();
+			melderid = melder.getMelderId();
+			if (melderid != null && melder != null ){ // Sender epost til bruker
+				emailWebService.setSubject("Passord");
+				
+/*
+ * Decrypt passord før sending OLJ 26.01.18				
+ */
+				passord = adminWebService.decryptMelderPassword(melder);
+			 	result = RandomStringUtils.randomAlphabetic(16);
+			 	sessionAdmin.setSessionObject(request,result,genPWId);
+     	    	emailWebService.setEmailText("Ditt engangspassord er: "+result+ " Du må nå oppgi dette passordet og velge Bekreft tilsendt passord.");
+    	    	 emailWebService.setMailTo(melder.getMelderepost());
+    	    	 emailWebService.sendEmail("");
+				meldingsText = "Melding med et generert passord er sendt til oppgitt adresse";
+			}
+		}
+		if (tilOversikt != null){// Bruker ønsker å gå til meldingsoversikt (fra endrepassordok)
+			String page = "../organer/melder_rapport.html";
+			Melder melder = melderwebModel.getMelder();
+			sessionAdmin.setSessionObject(request,melder,melderNokkel); // Må settes for bruk i meldeoversikt.
+//			origpasswd = null;
+//			sessionAdmin.setSessionObject(getRequest(),origpasswd,origpasswdID);
+		     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/organer/melder_rapport.html"));
+		     Representation pasientkomplikasjonFtl = clres2.get();
+		        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+		                MediaType.TEXT_HTML);
+				redirectPermanent(page);
+			 return templatemapRep;		
+		}
+		if (savePassord != null){// Bruker har angitt nytt passord
+			String newPW = "x";
+			String newPW2 = "y";
+			Melder melder = melderwebModel.getMelder();
+			if (melder != null){
+				name = melder.getMeldernavn();
+				email = melder.getMelderepost();
+			}
+			for (Parameter entry : form) {
+				if (entry.getValue() != null && !(entry.getValue().equals(""))){
+					//	System.out.println(entry.getName() + "=" + entry.getValue()+" "+result);
+						if (entry.getName().equals("k-newpwd")){
+							newPW = entry.getValue();
+						}
+						if (entry.getName().equals("k-bekreftpwd")){
+							newPW2 = entry.getValue();
+						}
+				}
+	    	}
+			if (newPW.equals(newPW2)){
+				melder.setMelderPassord(newPW);
+				bStrenght = adminWebService.checkStrenghtPassword(melder);
+				if (bStrenght){
+				    List<Melder> meldere = new ArrayList<Melder>();
+				    meldere.add(melder);
+				    adminWebService.encyptmeldere(meldere); //Lagrer nytt passord
+				    melder.setPwStrength(bStrenght);
+					String page = "../organer/endrepassordok.html";
+					if (kontaktMelder != null){
+						page = "../organer/endrepassordokfrakontakt.html";
+						name = kontaktMelder.getMeldernavn();
+						email = kontaktMelder.getMelderepost();
+					}
+					simple = new SimpleScalar(meldingsText);
+				 	 SimpleScalar eepost = new SimpleScalar(email);
+					 engangs = "block";
+					 SimpleScalar engangPage = new SimpleScalar(engangs);
+					 dataModel.put( meldeTxtId,simple);
+					 dataModel.put(changeId, changePW);
+					 dataModel.put(melderepostID, eepost);
+				     dataModel.put(meldernavnID,name);
+				     dataModel.put(engangPWID,engangPage);
+//				     dataModel.put(melderepostID,meldEpost);
+					//Feil passord går til startside.
+			 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
+					Representation pasientkomplikasjonFtl = clres2.get();
+					templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+							MediaType.TEXT_HTML);
+					return templateRep;
+				}
+				if (!bStrenght){
+					String page = "../organer/endrepassordvglemtpassord.html";
+					pwFlag = "none";
+					String feilmelding = "Det nye passordet tilfredstiller ikke krav satt. Vennligst prøv igjen";
+					 melderwebModel.setChangePasswd("pw");
+					 sessionAdmin.setSessionObject(request,melderwebModel,melderId);
+				 	 SimpleScalar eepost = new SimpleScalar(email);
+				 	 SimpleScalar mNavn = new SimpleScalar(name);
+					 SimpleScalar feil = new SimpleScalar(feilmelding);
+					 dataModel.put(melderepostID, eepost);
+				     dataModel.put(meldernavnID,mNavn);
+				     dataModel.put(meldeTxtId, feil);
+	/*			 	 SimpleScalar changePW = new SimpleScalar(pwFlag);
+				 	 dataModel.put(changeId, changePW);*/
+				     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
+				     Representation pasientkomplikasjonFtl = clres2.get();
+				        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+				                MediaType.TEXT_HTML);
+
+					 return templatemapRep;	
+				}
+			}
+			if (!newPW.equals(newPW2)){
+				String page = "../organer/endrepassordvglemtpassord.html";
+				pwFlag = "none";
+				String feilmelding = "Passordene er ikke like og ble ikke lagret. Vennligst skriv passordet på nytt";
+				 melderwebModel.setChangePasswd("pw");
+				 sessionAdmin.setSessionObject(request,melderwebModel,melderId);
+			 	 SimpleScalar eepost = new SimpleScalar(email);
+			 	 SimpleScalar mNavn = new SimpleScalar(name);
+				 SimpleScalar feil = new SimpleScalar(feilmelding);
+				 dataModel.put(melderepostID, eepost);
+			     dataModel.put(meldernavnID,mNavn);
+			     dataModel.put(meldeTxtId, feil);
+/*			 	 SimpleScalar changePW = new SimpleScalar(pwFlag);
+			 	 dataModel.put(changeId, changePW);*/
+			     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
+			     Representation pasientkomplikasjonFtl = clres2.get();
+			        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+			                MediaType.TEXT_HTML);
+
+				 return templatemapRep;	
+			}
+		}
+		if (changePassword != null ){
+			Melder melder = melderwebModel.getMelder();
+			if (melder == null || melder.getMeldernavn() == null){
+				melder = (Melder)sessionAdmin.getSessionObject(request,melderNokkel);
+				melderwebModel.setMelder(melder);
+			}
+			if (melder != null){
+				name = melder.getMeldernavn();
+				email = melder.getMelderepost();
+			}
+			for (Parameter entry : form) {
+				if (entry.getValue() != null && !(entry.getValue().equals(""))){
+					//	System.out.println(entry.getName() + "=" + entry.getValue()+" "+result);
+						if (entry.getName().equals("k-genpassword")){
+							genPW = entry.getValue();
+						}
+				}
+	    	}
+			if (result != null && result.equals(genPW)){
+				String page = "../organer/endrepassordvglemtpassord.html";
+				pwFlag = "none";
+				 melderwebModel.setChangePasswd("pw");
+				 sessionAdmin.setSessionObject(request,melderwebModel,melderId);
+			 	 SimpleScalar eepost = new SimpleScalar(email);
+			 	 SimpleScalar mNavn = new SimpleScalar(name);
+				 dataModel.put(melderepostID, eepost);
+			     dataModel.put(meldernavnID,mNavn);
+/*			 	 SimpleScalar changePW = new SimpleScalar(pwFlag);
+			 	 dataModel.put(changeId, changePW);*/
+			     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
+			     Representation pasientkomplikasjonFtl = clres2.get();
+			        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+			                MediaType.TEXT_HTML);
+
+				 return templatemapRep;	
+			}
+
+		}
+//	    String page = "../organer/melder_rapport.html"; 
+		if (formValue != null && melderEpost != null){ // 22.05.19 Bruker oppgitt sin epostadresse
 			List<Melder> rows = melderWebService.selectMelder(melderEpost);
 //			List<Map<String, Object>> rows = melderWebService.selectMelder(melderEpost);
 			Melder melder = new MelderImpl();
@@ -154,31 +405,59 @@ public class PassordServerResourceHTML extends SessionServerResource {
 				
 
 			}
-
-			
-			if (melderid != null && melder != null ){
+			if (melderid != null && melder != null ){ // Sender epost til bruker
 				emailWebService.setSubject("Passord");
+				
 /*
  * Decrypt passord før sending OLJ 26.01.18				
-*/
-				passord = adminWebService.decryptMelderPassword(melder);				
-     	    	emailWebService.setEmailText("Ditt passord er: "+passord);
+ */
+				passord = adminWebService.decryptMelderPassword(melder);
+			 	result = RandomStringUtils.randomAlphabetic(16);
+			 	sessionAdmin.setSessionObject(request,result,genPWId);
+     	    	emailWebService.setEmailText("Ditt engangspassord er: "+result+ " Du må nå oppgi dette passordet og velge Bekreft tilsendt passord.");
     	    	 emailWebService.setMailTo(melder.getMelderepost());
     	    	 emailWebService.sendEmail("");
-				meldingsText = "Melding med passord er sendt til oppgitt adresse";
+				meldingsText = "";
 			}
-	
+			bStrenght = adminWebService.checkStrenghtPassword(melder);
 	    
 		}
-	 SimpleScalar simple = new SimpleScalar(meldingsText);
-	 dataModel.put( meldeTxtId,simple);
-	
-		//Feil passord går til startside.
- 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/organer/passord.html"));
-		Representation pasientkomplikasjonFtl = clres2.get();
-		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
-				MediaType.TEXT_HTML);
-		return templateRep;
+		if (bStrenght){
+			String page = "../organer/tilsendtpassord.html";
+			//Havner her om melders passord har riktig styrke fra før.
+//		    meldingsText = "Melders epost finnes ikke, prøv igjen";
+			simple = new SimpleScalar(meldingsText);
+/*		 	 String pwFlag = "block";
+		 	 String buttonTxt = "Hent passord på nytt";
+		 	 SimpleScalar hentPW = new SimpleScalar(buttonTxt);
+		 	 dataModel.put(buttonTxtId, hentPW);
+		 	 SimpleScalar changePW = new SimpleScalar(pwFlag);*/
+		 	 SimpleScalar eepost = new SimpleScalar(email);
+			 engangs = "block";
+			 SimpleScalar engangPage = new SimpleScalar(engangs);
+			 dataModel.put( meldeTxtId,simple);
+			 dataModel.put(changeId, changePW);
+			 dataModel.put(melderepostID, eepost);
+		     dataModel.put(meldernavnID,name);
+		     dataModel.put(engangPWID,engangPage);
+//		     dataModel.put(melderepostID,meldEpost);
+			//Feil passord går til startside.
+	 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
+			Representation pasientkomplikasjonFtl = clres2.get();
+			templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+					MediaType.TEXT_HTML);
+			return templateRep;
+		} else {
+			String page = "../organer/passord.html";
+			melderwebModel.setChangePasswd("pw");
+			sessionAdmin.setSessionObject(request,melderwebModel,melderId);
+		     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/organer/passord.html"));
+		     Representation pasientkomplikasjonFtl = clres2.get();
+		        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+		                MediaType.TEXT_HTML);
+//				redirectPermanent(page);
+			 return templatemapRep;	
+		}
     }
     
 }
