@@ -278,6 +278,18 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 			redirectPermanent(page);
 			return templateRep;
     	}
+    	if (endrePassord != null && melderEpost != null && melderPassord == null){
+    		String passordEndring = "passordEndringum";    		//Bruker skal ikke trenge å oppgi sin epost adresse og passord olj 25.06.19
+			sessionAdmin.setSessionObject(request, passordEndring, endrePassordKey); 
+ 
+    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
+    		Representation pasientkomplikasjonFtl = clres2.get();
+    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+    				MediaType.TEXT_HTML);
+			page = "../hemovigilans/endrebrukerpassordutenmelderinfo.html"; 
+			redirectPermanent(page);
+			return templateRep;
+    	}	
     	if (endrePassord != null && (melderEpost == null || melderPassord == null)){
      		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
     		Representation pasientkomplikasjonFtl = clres2.get();

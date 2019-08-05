@@ -85,7 +85,7 @@ public class PassordServerResourceHTML extends SessionServerResource {
 		 dataModel.put(melderepostID, eepost);
 	     dataModel.put(meldernavnID,mNavn);
 	 	 dataModel.put(buttonTxtId, hentPW);
-		 dataModel.put( meldeTxtId,simple);
+		 dataModel.put(meldeTxtId,simple);
 		 dataModel.put(changeId, changePW);
 	     dataModel.put(engangPWID,engangPage);
 		 dataModel.put(emailID, epost);
