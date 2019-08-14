@@ -671,6 +671,12 @@ public class MelderwebModel extends VigilansModel {
 		this.meldernavn = meldernavn;
 	}
 
+	public String getMelderepostfrommelder(){
+		if (melder != null && melder.getMelderepost() != null && !melder.getMelderepost().isEmpty()){
+			melderepost = melder.getMelderepost();
+		}
+		return melderepost;
+	}
 	public String getMelderepost() {
 		Map<String,String> userEntries = getFormMap();
 		String field = "k-epost";
@@ -683,6 +689,15 @@ public class MelderwebModel extends VigilansModel {
 			melderepost = "";
 		}else if (!anonymEpost.equals("")) {
 			melderepost = anonymEpost;
+		}
+/*
+ * Lagt til 07.08.2019		
+ */
+		if (melderepost == null || melderepost.equals("")){
+			if (melder != null && melder.getMelderepost() != null && !melder.getMelderepost().isEmpty()){
+				melderepost = melder.getMelderepost();
+			}
+
 		}
 		return melderepost;
 	}
