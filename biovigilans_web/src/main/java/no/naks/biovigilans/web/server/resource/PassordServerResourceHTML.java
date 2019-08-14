@@ -419,7 +419,11 @@ public class PassordServerResourceHTML extends SessionServerResource {
 			bStrenght = adminWebService.checkStrenghtPassword(melder);
 	    
 		}
-		if (bStrenght){
+/*
+ * Hva skjer dersom melder ikke har passord som har riktig styrke?
+ * 			
+ */
+		if (bStrenght || !bStrenght){
 			String page = "../hemovigilans/tilsendtpassord.html";
 			//Havner her om melders passord har riktig styrke fra før.
 //		    meldingsText = "Melders epost finnes ikke, prøv igjen";
