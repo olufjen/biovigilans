@@ -224,7 +224,9 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	    emailWebService.setSubject(emailSubject);
     	    if(melderEpost != null || !melderEpost.equals("")){
     	    	 emailWebService.setMailTo(melderEpost);
-    	    	 emailWebService.sendEmail(meldingsNokkel); //Kommentert bort til stage !!
+    	    	 emailWebService.setSubject("Organer Meldeordningen");
+    	    	 emailWebService.setEmailText("Takk for meldingen. Ditt meldingsnummer er: ");
+     	    	 emailWebService.sendEmail(meldingsNokkel); //Kommentert bort til stage !!
     	    }
     	   
     	  
