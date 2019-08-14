@@ -54,7 +54,10 @@ import freemarker.template.SimpleScalar;
  *  Denne resursen er knyttet til kontaksiden. Her rapporterer man kontaktinformasjon
  */
 public class RapporterKontaktServerResourceHtml extends SessionServerResource {
-	private String anonymEpost = "meldeordningen@kunnskapssenteret.no";
+	/**
+	 * Epost adresse som blir benyttet når bruker velger å melde anonymt
+	 */
+	private String anonymEpost = "hemovigilans@helsedir.no";
 	private String[] helseRegioner;
 	private String[] hfeneNord;
 	private String[]hfeneMidt;
@@ -470,13 +473,38 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     	 melderwebModel.setFormNames(sessionParams);
     	 setMelderparams();
     	 melderwebModel.distributeTerms();
+   		String buttonValue = "disable";
+	     Map<String, Object> dataModel = new HashMap<String, Object>();
+     	 String result = ""; // Inneholder generert passord, dersom bruker har endret sitt passord, og kommer tilbake for å lagre skjema
+     	/*
+     	 * Sjekker om melder kommer fra "endre passord" funksjonen  OLJ 07.11.18
+     	*/
+     	    		result = (String) sessionAdmin.getSessionObject(request, genPWId);
+     	    		boolean found = false;
+     	    		String encryptedPasswd = melderwebModel.getMelder().getMelderPassord();
+     	    		if (result != null && !result.isEmpty()){
+     	    			 Melder melder = (Melder)sessionAdmin.getSessionObject(request,melderNokkel);
+     	    			String epost = melder.getMelderepost();
+     	    			melderwebModel.getMelder().setMelderepost(epost);
+     	    			melderwebModel.setMelderepost(epost);
+     	     			String passord = adminWebService.decryptMelderPassword(melder);
+     	    			melder.setMelderPassord(passord);
+     	    			List<Melder> rows = melderWebService.selectMelder(epost); // Korrekt kall 
+//     	    			List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
+     	    			found = melderwebModel.kontaktValues( rows); // Found er true dersom riktig oppgitt passord og melder finnes fra før
+     	       			melderwebModel.setMelderepost(epost);
+     	       			
+     	    			buttonValue = "enable";
+     	    			melder.setMelderPassord(encryptedPasswd);
+     	    			dataModel.put(melderId, melderwebModel);
+     	    		}  
     	 
 /*
  * En Hashmap benyttes dersom en html side henter data fra flere javaklasser.	
  * Hver javaklasse får en id (ex pasientkomplikasjonId) som er tilgjengelig for html
  *      
 */	     
-	     Map<String, Object> dataModel = new HashMap<String, Object>();
+
 
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/cellerogvev");
@@ -507,7 +535,6 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
        	 SimpleScalar melderFound = new SimpleScalar(displayFound);
       	 SimpleScalar simple = new SimpleScalar(displayPart);
        	 SimpleScalar extraPassord = new SimpleScalar(extrapwd);
-     	String buttonValue = "disable";
 		SimpleScalar lagreButton = new SimpleScalar(buttonValue);
 		dataModel.put(enableLagre, lagreButton);
      	 dataModel.put(displayKey, simple);
@@ -659,7 +686,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     			emailWebService.setSubject("Passord");
      			String melder_epost = (String) melderwebModel.getFormMap().get("k-epost");
      			if (melder_epost == null){
-    	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+    	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/rapporter_kontakt.html"));
     	    		Representation pasientkomplikasjonFtl = clres2.get();
     	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
     	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
@@ -686,14 +713,6 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 						epost = rowmelder.getMelderepost();
 						melderwebModel.setMelder(rowmelder);//Added 30.05.19
 					}
-/*					for(Map row:rows){
-						melderid = Long.parseLong(row.get("melderid").toString());
-						if (row.get("meldernavn") != null)
-							name = row.get("meldernavn").toString();
-						if (row.get("melderpassord") != null)
-							passord = row.get("melderpassord").toString();
-//						row.put(arg0, arg1)
-					}*/
 
 				}
     			Melder melder = melderwebModel.getMelder();

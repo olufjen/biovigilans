@@ -244,6 +244,7 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 			if (passordGjentatt.equals(userGenpasswd)&& userGenpasswd.length() >= 8 && melderPassord != null && melderPassord.equals(opprinneligPassord) ){ //Dersom nytt passord er likt gjentatt passord
 				melderPassord = userGenpasswd;
 				melder.setMelderPassord(melderPassord);
+				meldere.add(melder);
 				bStrenght = adminWebService.checkStrenghtPassword(melder);
 				if (bStrenght){ //Nytt passord riktig etter gjeldende regler
 				     adminWebService.encyptmeldere(meldere); //Lagrer nytt passord
@@ -285,6 +286,7 @@ public class ChangePassordServerResourceHTML extends SessionServerResource {
 			if (passordGjentatt.equals(userGenpasswd)&& userGenpasswd.length() >= 8 && melderPassord != null && melderPassord.equals(opprinneligPassord) ){ //Dersom nytt passord er likt gjentatt passord
 				melderPassord = userGenpasswd;
 				melder.setMelderPassord(melderPassord);
+				meldere.add(melder);
 				bStrenght = adminWebService.checkStrenghtPassword(melder);
 				if (bStrenght){ //Nytt passord riktig etter gjeldende regler
 				     adminWebService.encyptmeldere(meldere); //Lagrer nytt passord

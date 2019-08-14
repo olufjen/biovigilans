@@ -405,28 +405,69 @@ public class PassordServerResourceHTML extends SessionServerResource {
 						break;
 					}
 				}
-				
+				bStrenght = adminWebService.checkStrenghtPassword(melder);
 
 			}
-			if (melderid != null && melder != null ){
+			if (melderid != null && melder != null ){ // Sender epost til bruker
 				emailWebService.setSubject("Passord");
-				passord = adminWebService.decryptMelderPassword(melder); // Tilpasset encrypted passord OLJ 25.01.18
-     	    	emailWebService.setEmailText("Ditt passord er: "+passord); // Tilpasset encrypted passord OLJ 25.01.18
+				
+/*
+ * Decrypt passord før sending OLJ 26.01.18				
+ */
+				passord = adminWebService.decryptMelderPassword(melder);
+			 	result = RandomStringUtils.randomAlphabetic(16);
+			 	sessionAdmin.setSessionObject(request,result,genPWId);
+     	    	emailWebService.setEmailText("Ditt engangspassord er: "+result+ " Du må nå oppgi dette passordet og velge Bekreft tilsendt passord.");
     	    	 emailWebService.setMailTo(melder.getMelderepost());
     	    	 emailWebService.sendEmail("");
-				meldingsText = "Melding med passord er sendt til oppgitt adresse";
+				meldingsText = "";
 			}
-	
-	    
+			bStrenght = adminWebService.checkStrenghtPassword(melder);
+			
 		}
-	 dataModel.put( meldeTxtId,simple);
-	
-		//Feil passord går til startside.
- 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/passord.html"));
-		Representation pasientkomplikasjonFtl = clres2.get();
-		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
-				MediaType.TEXT_HTML);
-		return templateRep;
+/*
+ * Hva skjer dersom melder ikke har passord som har riktig styrke?
+ * 			
+ */
+			if (bStrenght || !bStrenght){ // Se kommentar over
+				String page = "../cellerogvev/tilsendtpassord.html";
+				//Havner her om melders passord har riktig styrke fra før.
+//			    meldingsText = "Melders epost finnes ikke, prøv igjen";
+				simple = new SimpleScalar(meldingsText);
+	/*		 	 String pwFlag = "block";
+			 	 String buttonTxt = "Hent passord på nytt";
+			 	 SimpleScalar hentPW = new SimpleScalar(buttonTxt);
+			 	 dataModel.put(buttonTxtId, hentPW);
+			 	 SimpleScalar changePW = new SimpleScalar(pwFlag);*/
+			 	 SimpleScalar eepost = new SimpleScalar(email);
+				 engangs = "block";
+				 SimpleScalar engangPage = new SimpleScalar(engangs);
+				 dataModel.put( meldeTxtId,simple);
+				 dataModel.put(changeId, changePW);
+				 dataModel.put(melderepostID, eepost);
+			     dataModel.put(meldernavnID,name);
+			     dataModel.put(engangPWID,engangPage);
+//			     dataModel.put(melderepostID,meldEpost);
+				//Feil passord går til startside.
+		 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
+				Representation pasientkomplikasjonFtl = clres2.get();
+				templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+						MediaType.TEXT_HTML);
+				return templateRep;
+			} else {
+/*
+ * Vi bytter ut dette med tilsendtpassord		!!!!		
+ */
+				String page = "../cellerogvev/passord.html";
+				melderwebModel.setChangePasswd("pw");
+				sessionAdmin.setSessionObject(request,melderwebModel,melderId);
+			     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/cellerogvev/passord.html"));
+			     Representation pasientkomplikasjonFtl = clres2.get();
+			        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+			                MediaType.TEXT_HTML);
+//					redirectPermanent(page);
+				 return templatemapRep;	
+			}			
+
+		}
     }
-    
-}
